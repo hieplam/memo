@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.2.0](https://github.com/hieplam/memo/compare/astro-paper-v6-v6.1.0...astro-paper-v6-v6.2.0) (2026-06-13)
+
+
+### Features
+
+* deploy to GitHub Pages via Actions ([#1](https://github.com/hieplam/memo/issues/1)) ([1c4a1f4](https://github.com/hieplam/memo/commit/1c4a1f42b8e1512e922df59a2b7b8f7626fd56be))
+* **i18n:** Vietnamese UI locale + warm coffee OG share cards ([#9](https://github.com/hieplam/memo/issues/9)) ([3d36809](https://github.com/hieplam/memo/commit/3d36809ecaec6b71d62148cc51be7ecb029a6075))
+* multilingual posts — language filter, badge, and switch button ([#6](https://github.com/hieplam/memo/issues/6)) ([6495806](https://github.com/hieplam/memo/commit/64958063919d0906d087bdd24b1230ae54d7f65c))
+* **posts:** import research markdown notes as blog posts ([#4](https://github.com/hieplam/memo/issues/4)) ([13136ca](https://github.com/hieplam/memo/commit/13136cada96aba57f817aa54585e6ab10ed4b8b1))
+* **theme:** warm coffee re-theme + end-of-post reading wayfinding ([#8](https://github.com/hieplam/memo/issues/8)) ([ac752a9](https://github.com/hieplam/memo/commit/ac752a937c58517acd803fbccde9bc4836493a3e))
+
 ## v6.1.0 (2026-06-06)
 
 ### Feat
