@@ -13,6 +13,7 @@ import { getPostLanguages } from "@/utils/getPostLanguages";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { postFilter } from "@/utils/postFilter";
 import { useTranslations } from "@/i18n";
+import { getUiLocale } from "@/utils/getUiLocale";
 import config from "@/config";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
@@ -35,7 +36,9 @@ export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
 const { page, langLabel, languages } = Astro.props;
 const { lang } = Astro.params;
 
-const locale = Astro.currentLocale ?? config.site.lang;
+// Localize the chrome to the language being filtered on this route.
+Astro.locals.uiLang = lang;
+const locale = getUiLocale(Astro);
 const t = useTranslations(locale);
 ---
 
