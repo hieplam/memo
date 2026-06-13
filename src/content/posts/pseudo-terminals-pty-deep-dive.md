@@ -22,8 +22,8 @@ tags:
 ## 1. The big picture — in one breath
 
 A **pseudo-terminal** is a fake terminal made of software. It's a pair of
-connected virtual devices that lets one program *pretend to be a
-keyboard-and-screen terminal* for another program, while a third program quietly
+connected virtual devices that lets one program _pretend to be a
+keyboard-and-screen terminal_ for another program, while a third program quietly
 sits in the middle reading and writing everything.
 
 That's the whole trick. A shell like `bash` is written to talk to a physical
@@ -61,7 +61,7 @@ The kernel piece that manages a terminal has three layers:
 ```
 
 The middle layer, the **line discipline**, is the important one.
-✅ *(Verified, kernel docs)* It "processes all incoming and outgoing characters
+✅ _(Verified, kernel docs)_ It "processes all incoming and outgoing characters
 from/to a tty device." Concretely it does the stuff you take for granted at a
 shell prompt:
 
@@ -76,11 +76,11 @@ A program can switch the line discipline to **raw mode** (vim, less, a password
 prompt) to handle keystrokes itself.
 
 **So: a TTY is the broader concept — the kernel terminal subsystem.** A PTY is a
-*specific kind of TTY* whose "hardware" is replaced by software.
+_specific kind of TTY_ whose "hardware" is replaced by software.
 
 > ⚠️ **Refuted (0–3):** the neat claim that "TTY = physical terminals + PTYs as
 > two subcategories." It's a useful teaching simplification, but the kernel
-> doesn't carve the world that cleanly — a PTY *is* a tty device that happens to
+> doesn't carve the world that cleanly — a PTY _is_ a tty device that happens to
 > be backed by a software driver, not a separate sibling category. Treat the
 > TTY/PTY split as "general concept vs. software-backed instance," not a strict
 > taxonomy.
@@ -89,7 +89,7 @@ prompt) to handle keystrokes itself.
 
 ## 3. What a PTY actually is (verified core)
 
-✅ *(Verified, pty(7) man page + HandWiki, voted 3–0)*
+✅ _(Verified, pty(7) man page + HandWiki, voted 3–0)_
 
 A PTY is **a pair of virtual character devices providing a bidirectional
 channel**:
@@ -111,11 +111,11 @@ channel**:
                             /dev/ptmx              /dev/pts/N
 ```
 
-- **The slave end** behaves *exactly like a classical terminal*. The shell opens
+- **The slave end** behaves _exactly like a classical terminal_. The shell opens
   `/dev/pts/N`, gets all the line-discipline goodies (cooked mode, signals,
   window size), and is none the wiser.
-- **The master end** is the puppeteer. Whatever the master *writes* arrives at
-  the slave as if typed on a keyboard; whatever the slave program *prints* comes
+- **The master end** is the puppeteer. Whatever the master _writes_ arrives at
+  the slave as if typed on a keyboard; whatever the slave program _prints_ comes
   back out of the master to be displayed or forwarded.
 
 So when you type `ls` in your terminal window:
@@ -133,11 +133,11 @@ So when you type `ls` in your terminal window:
 > master writes `\x03`, the ldisc turns it into SIGINT), not from the master
 > "sending signals" directly.
 
-**Driver-level fact** ✅ *(Verified, kernel tty_internals, voted 3–0):* PTY
-drivers need *special handling* inside the kernel, distinct from ordinary TTY
+**Driver-level fact** ✅ _(Verified, kernel tty_internals, voted 3–0):_ PTY
+drivers need _special handling_ inside the kernel, distinct from ordinary TTY
 drivers — they don't allocate the usual port arrays, they apply a special
 termios reset on first open, and they refuse to let the master be re-opened
-(returns `-EIO`). A PTY only *looks* like ordinary terminal hardware from the
+(returns `-EIO`). A PTY only _looks_ like ordinary terminal hardware from the
 outside.
 
 ---
@@ -147,7 +147,7 @@ outside.
 There are two layers: the **portable POSIX (Unix98) sequence**, and the **BSD
 convenience wrappers** that hide it.
 
-### 4a. The canonical POSIX / Unix98 sequence ✅ *(Verified 3–0)*
+### 4a. The canonical POSIX / Unix98 sequence ✅ _(Verified 3–0)_
 
 ```c
 int master = posix_openpt(O_RDWR | O_NOCTTY); // open an unused master (/dev/ptmx)
@@ -157,25 +157,26 @@ char *slave_name = ptsname(master);           // get the slave's path, e.g. /dev
 int slave = open(slave_name, O_RDWR);         // open the slave end
 ```
 
-| Call | What it does | Verified detail |
-|---|---|---|
-| `posix_openpt()` | Opens an unused master device, returns an fd. Reference impl is literally `open("/dev/ptmx", flags)`. | ✅ 3–0 |
-| `grantpt()` | Sets the slave's **owner = your real UID**, group = unspecified (e.g. `tty`), **mode = 0620** (`crw--w----`). | ✅ 3–0 |
-| `unlockpt()` | Clears the internal lock so the slave can be opened. | ✅ (sequence 3–0) |
-| `ptsname()` | Returns the slave device's pathname. | ✅ |
+| Call             | What it does                                                                                                  | Verified detail   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------- | ----------------- |
+| `posix_openpt()` | Opens an unused master device, returns an fd. Reference impl is literally `open("/dev/ptmx", flags)`.         | ✅ 3–0            |
+| `grantpt()`      | Sets the slave's **owner = your real UID**, group = unspecified (e.g. `tty`), **mode = 0620** (`crw--w----`). | ✅ 3–0            |
+| `unlockpt()`     | Clears the internal lock so the slave can be opened.                                                          | ✅ (sequence 3–0) |
+| `ptsname()`      | Returns the slave device's pathname.                                                                          | ✅                |
 
-✅ *(Verified 3–0)* The **slave pathname only exists while the master is open** —
+✅ _(Verified 3–0)_ The **slave pathname only exists while the master is open** —
 close the master and the slave node disappears. This is a lifecycle guarantee,
 not a convention.
 
-**Historical footnote** ✅ *(Verified 3–0):* `grantpt()` used to run a
+**Historical footnote** ✅ _(Verified 3–0):_ `grantpt()` used to run a
 set-user-ID helper binary named **`pt_chown`** to fix slave permissions (since a
 normal user can't `chown` a device node). glibc carried this until **version
 2.33**, when it was **removed** — on modern Linux the kernel sets permissions at
 allocation time, so `grantpt()` is effectively a **no-op**. But portable code
-*must still call it*, because other Unixes (Solaris, the BSDs) may still need it.
+_must still call it_, because other Unixes (Solaris, the BSDs) may still need it.
 
 > ⚠️ Three POSIX-detail claims were **refuted (0–3)** — useful corrections:
+>
 > - `posix_openpt()` does **not** accept "only O_RDWR and O_NOCTTY." Other flags
 >   exist/are permitted.
 > - It's **not** accurate to say posix_openpt + grantpt + unlockpt + ptsname is
@@ -183,7 +184,7 @@ allocation time, so `grantpt()` is effectively a **no-op**. But portable code
 > - The controlling-terminal setup is **not** a single fixed
 >   `TIOCNOTTY → setsid → TIOCSCTTY` recipe; it's more situational.
 
-### 4b. The BSD convenience wrappers ✅ *(Verified 3–0)*
+### 4b. The BSD convenience wrappers ✅ _(Verified 3–0)_
 
 Almost nobody writes the five-step dance by hand. They use:
 
@@ -192,8 +193,8 @@ Almost nobody writes the five-step dance by hand. They use:
 - **`forkpty()`** — combines `openpty()` + `fork()` + `login_tty()`: it allocates
   a PTY, forks a child, and attaches the child to the slave as its controlling
   terminal. This is how a terminal emulator spawns your shell in one shot.
-- **`login_tty()`** — the glue that makes the slave the child's *controlling
-  terminal*. ✅ *(Verified 3–0)* It performs exactly four steps on the slave fd:
+- **`login_tty()`** — the glue that makes the slave the child's _controlling
+  terminal_. ✅ _(Verified 3–0)_ It performs exactly four steps on the slave fd:
   1. `setsid()` — start a new session,
   2. make the fd the session's controlling terminal,
   3. `dup` it onto stdin/stdout/stderr,
@@ -222,8 +223,8 @@ carrying a `struct winsize` (rows, cols, pixels). The kernel then sends
 
 > **⚠️ Honesty marker:** this is the one section the verification pass left thin.
 > Two specific historical claims were actively **refuted** (the "1967 DEC PDP-6"
-> origin and the "1983 Eighth Edition Unix" origin both failed, 1–2), and *no
-> surviving verified claim* covered the BSD → System V → Unix98 → devpts
+> origin and the "1983 Eighth Edition Unix" origin both failed, 1–2), and _no
+> surviving verified claim_ covered the BSD → System V → Unix98 → devpts
 > timeline. The workflow flagged the history as **substantively unanswered**.
 > What follows is the standard, widely-documented account from background
 > knowledge — **treat it as well-established lore, not machine-verified.**
@@ -283,7 +284,7 @@ infrastructure:
   real terminal, and can detach (keep the slaves alive with no master attached)
   and reattach later.
 - **Automation — Expect / pexpect.** Many programs behave differently when they
-  detect they're *not* talking to a terminal (e.g. `ssh`/`sudo` password prompts
+  detect they're _not_ talking to a terminal (e.g. `ssh`/`sudo` password prompts
   read straight from the tty, not stdin). ✅ The cited `pexpect` drives such
   programs by putting a PTY between itself and the target, so the program thinks
   a human is at a terminal. This is also why CI tools allocate a PTY to get
@@ -303,13 +304,13 @@ terminal).** PTY is the answer every time.
 
 ## 7. TTY vs PTY — the crisp summary
 
-| | TTY (general) | PTY (pseudo) |
-|---|---|---|
-| Backing | The kernel terminal subsystem; classically real hardware (serial, console) | Pure software — a master/slave device pair |
-| "Hardware" end | A UART / physical console | A program holding the **master** fd |
-| Program-facing end | The terminal device | The **slave** (`/dev/pts/N`), indistinguishable to the program |
-| Line discipline | Yes | Yes — that's the whole point of the impersonation |
-| Examples | `/dev/ttyS0` (serial), `/dev/tty1` (console) | `/dev/pts/3` behind your terminal window, SSH session, tmux pane |
+|                    | TTY (general)                                                              | PTY (pseudo)                                                     |
+| ------------------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| Backing            | The kernel terminal subsystem; classically real hardware (serial, console) | Pure software — a master/slave device pair                       |
+| "Hardware" end     | A UART / physical console                                                  | A program holding the **master** fd                              |
+| Program-facing end | The terminal device                                                        | The **slave** (`/dev/pts/N`), indistinguishable to the program   |
+| Line discipline    | Yes                                                                        | Yes — that's the whole point of the impersonation                |
+| Examples           | `/dev/ttyS0` (serial), `/dev/tty1` (console)                               | `/dev/pts/3` behind your terminal window, SSH session, tmux pane |
 
 Mental model: **TTY is the interface contract; PTY is a software implementation
 of that contract with another program standing in for the hardware.**
@@ -337,33 +338,33 @@ to go deeper:
 
 1. **PTY = master/slave pair of virtual character devices.** Master controlled by
    emulator/login server; slave emulates a hardware serial port and is used by
-   shells. *(3–0)*
+   shells. _(3–0)_
 2. **Line discipline is the intermediate layer; PTY drivers need special kernel
-   handling at init.** *(2–1 ldisc, 3–0 special handling)*
+   handling at init.** _(2–1 ldisc, 3–0 special handling)_
 3. **Canonical allocation sequence** `posix_openpt → grantpt → unlockpt →
-   ptsname → open(slave)`; slave pathname exists only while master is open.
-   *(3–0 sequence, 2–1 slave lifetime)*
+ptsname → open(slave)`; slave pathname exists only while master is open.
+   _(3–0 sequence, 2–1 slave lifetime)_
 4. **`grantpt()` sets slave owner=real UID, group=unspecified, mode=0620; used
    `pt_chown` historically, removed in glibc 2.33, no-op on modern Linux; POSIX.1
-   conformant.** *(3–0)*
+   conformant.** _(3–0)_
 5. **BSD wrappers:** `openpty()` returns two fds; `forkpty()` = openpty + fork +
-   login_tty; `login_tty()` does setsid → set controlling tty → dup to
-   stdio → close. *(3–0)*
+   login*tty; `login_tty()` does setsid → set controlling tty → dup to
+   stdio → close. *(3–0)\_
 
 ## Appendix B — Refuted claims (killed by verification)
 
-| Claim | Vote |
-|---|---|
-| "TTY = physical terminals + PTYs as two clean subcategories" | 0–3 |
-| "posix_openpt() accepts only O_RDWR and O_NOCTTY" | 0–3 |
-| "posix_openpt + grantpt + ptsname + unlockpt = the complete standardized API" | 0–3 |
-| "Master can directly generate SIGINT to slave's foreground group" | 1–2 |
-| "openpty() is implemented as posix_openpt→grantpt→unlockpt→ptsname internally" | 0–3 |
-| "Controlling-terminal setup is a fixed TIOCNOTTY→setsid→TIOCSCTTY sequence" | 0–3 |
-| "TIOCSWINSZ applies to the master fd, never anywhere else" | 0–3 |
-| Specific `tty_struct` field list | 1–2 |
-| "Line discipline attached with refcount 1, locked during read+write" | 0–3 |
-| "PTYs originated 1967 DEC PDP-6 / modern PTYs 1983 Eighth Edition Unix" | 1–2 |
+| Claim                                                                          | Vote |
+| ------------------------------------------------------------------------------ | ---- |
+| "TTY = physical terminals + PTYs as two clean subcategories"                   | 0–3  |
+| "posix_openpt() accepts only O_RDWR and O_NOCTTY"                              | 0–3  |
+| "posix_openpt + grantpt + ptsname + unlockpt = the complete standardized API"  | 0–3  |
+| "Master can directly generate SIGINT to slave's foreground group"              | 1–2  |
+| "openpty() is implemented as posix_openpt→grantpt→unlockpt→ptsname internally" | 0–3  |
+| "Controlling-terminal setup is a fixed TIOCNOTTY→setsid→TIOCSCTTY sequence"    | 0–3  |
+| "TIOCSWINSZ applies to the master fd, never anywhere else"                     | 0–3  |
+| Specific `tty_struct` field list                                               | 1–2  |
+| "Line discipline attached with refcount 1, locked during read+write"           | 0–3  |
+| "PTYs originated 1967 DEC PDP-6 / modern PTYs 1983 Eighth Edition Unix"        | 1–2  |
 
 ## Appendix C — Sources
 

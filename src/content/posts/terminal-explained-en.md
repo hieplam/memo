@@ -8,7 +8,7 @@ tags:
 ---
 
 > A plain-language explainer building up from the physical device to the
-> abstract idea, and answering: *is my keyboard + monitor a terminal today?*
+> abstract idea, and answering: _is my keyboard + monitor a terminal today?_
 >
 > Companion to the PTY deep-dive. Date: 2026-05-30
 
@@ -17,7 +17,7 @@ tags:
 ## 1. A terminal is the "end point" where a human meets a computer
 
 The word comes from **"terminal point"** — literally the end of the wire. It's
-the device a person uses to *send input to* and *receive output from* a computer.
+the device a person uses to _send input to_ and _receive output from_ a computer.
 Keyboard in, text out. Nothing more.
 
 The key historical fact: **in the early days, the terminal was NOT the
@@ -48,7 +48,7 @@ A **hardware terminal** is a real, physical device — an actual piece of equipm
 you could put on a desk. Two generations:
 
 **Teletype (TTY), ~1900s–1960s** — an electromechanical typewriter. You typed, it
-sent the characters over a wire and *physically printed* the computer's responses
+sent the characters over a wire and _physically printed_ the computer's responses
 onto a roll of paper. This is literally where the abbreviation **TTY**
 (teletypewriter) comes from. There was no screen — your "scrollback" was the
 paper coming out of the machine.
@@ -60,7 +60,7 @@ cable** (RS-232). Still no real computing power of its own — just "send keys,
 show text."
 
 So "hardware terminal" = **the actual physical keyboard-and-screen appliance**,
-as opposed to a *program* pretending to be one.
+as opposed to a _program_ pretending to be one.
 
 ---
 
@@ -84,25 +84,25 @@ desk. Instead you have:
 ```
 
 A **terminal emulator** (iTerm, GNOME Terminal, the VS Code terminal) is a piece
-of software that *imitates* a VT100 in a window — it even still speaks the
+of software that _imitates_ a VT100 in a window — it even still speaks the
 VT100's control codes for colors and cursor movement.
 
 But the operating system and your shell still expect a real terminal device to
 talk to. **That gap is exactly what the PTY (pseudo-terminal) fills.** The PTY is
 the kernel object that lets the shell believe it's wired to a hardware terminal,
-while in reality a terminal-emulator *program* is holding the other end.
+while in reality a terminal-emulator _program_ is holding the other end.
 
 The three meanings, stacked:
 
-| Term | What it is |
-|---|---|
-| **Terminal** (the abstract idea) | The endpoint where a human types in and reads out — a contract: keys in, text out |
-| **Hardware terminal** | The *physical* device that fulfilled that contract — teletype, then VT100-style video terminal |
-| **Terminal emulator** | A *program* that imitates a hardware terminal in a window |
-| **PTY** | The kernel plumbing that lets a program (emulator, SSH, tmux) stand in for the now-absent hardware terminal |
+| Term                             | What it is                                                                                                  |
+| -------------------------------- | ----------------------------------------------------------------------------------------------------------- |
+| **Terminal** (the abstract idea) | The endpoint where a human types in and reads out — a contract: keys in, text out                           |
+| **Hardware terminal**            | The _physical_ device that fulfilled that contract — teletype, then VT100-style video terminal              |
+| **Terminal emulator**            | A _program_ that imitates a hardware terminal in a window                                                   |
+| **PTY**                          | The kernel plumbing that lets a program (emulator, SSH, tmux) stand in for the now-absent hardware terminal |
 
-In one line: **a terminal is the *role* (the human's I/O endpoint); a hardware
-terminal was the *physical device* that used to play that role; a PTY is what
+In one line: **a terminal is the _role_ (the human's I/O endpoint); a hardware
+terminal was the _physical device_ that used to play that role; a PTY is what
 lets software play that role today.**
 
 ---
@@ -122,7 +122,7 @@ Your keyboard and monitor today are **dumber than a VT100**. They know nothing
 about characters or terminals:
 
 - **The keyboard** just sends "key #38 was pressed" over USB. It doesn't send the
-  letter "k", it sends a *scancode*.
+  letter "k", it sends a _scancode_.
 - **The monitor** just receives an array of pixels over HDMI and lights up. It
   has no concept of "text" — it only paints colored dots.
 
@@ -161,26 +161,26 @@ reads scancodes straight from the keyboard and draws text straight to the screen
 
 In this case you could say the **whole combo of "keyboard + monitor + the
 kernel's terminal-emulation code" is one terminal** — and it's the closest thing
-to the spirit of an old physical terminal. But note: what *makes* it a terminal
+to the spirit of an old physical terminal. But note: what _makes_ it a terminal
 is still the software in the kernel, not the keyboard and monitor themselves.
 
 ### Direct answer
 
 > Are my physical keyboard and monitor a terminal today?
 
-**No.** By themselves they are just raw input/output devices. The thing that *is*
+**No.** By themselves they are just raw input/output devices. The thing that _is_
 a terminal is the **software** playing that role:
 
 - In a GUI → the **terminal emulator program**.
 - Outside a GUI (full-screen console) → the **Linux kernel's virtual console** code.
 
-The keyboard and monitor merely *participate in* a terminal; they are not the
+The keyboard and monitor merely _participate in_ a terminal; they are not the
 terminal.
 
-| Era | What the "terminal" actually is |
-|---|---|
-| Old VT100 | The hardware box — keyboard + screen + logic, all in one |
-| Today, in a GUI | The **terminal emulator** program (iTerm, etc.) |
+| Era                             | What the "terminal" actually is                                  |
+| ------------------------------- | ---------------------------------------------------------------- |
+| Old VT100                       | The hardware box — keyboard + screen + logic, all in one         |
+| Today, in a GUI                 | The **terminal emulator** program (iTerm, etc.)                  |
 | Today, full-screen text console | The **virtual console** emulated by the Linux kernel in software |
 
 Memory hook: in the old days a terminal was **something you touched**; today a

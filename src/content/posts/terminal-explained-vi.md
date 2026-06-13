@@ -9,8 +9,8 @@ tags:
 ---
 
 > Bài giải thích bằng ngôn ngữ đời thường, đi từ thiết bị vật lý đến ý niệm trừu
-> tượng, và trả lời câu hỏi: *bàn phím + màn hình của tôi ngày nay có phải là
-> terminal không?*
+> tượng, và trả lời câu hỏi: _bàn phím + màn hình của tôi ngày nay có phải là
+> terminal không?_
 >
 > Đi kèm với bài deep-dive về PTY. Ngày: 2026-05-30
 
@@ -19,7 +19,7 @@ tags:
 ## 1. Terminal là "điểm cuối" nơi con người gặp máy tính
 
 Từ này bắt nguồn từ **"terminal point"** — nghĩa đen là điểm cuối của sợi dây. Nó
-là thiết bị mà một người dùng để *gửi dữ liệu vào* và *nhận kết quả ra* từ máy
+là thiết bị mà một người dùng để _gửi dữ liệu vào_ và _nhận kết quả ra_ từ máy
 tính. Gõ phím vào, chữ hiện ra. Chỉ vậy thôi.
 
 Sự thật lịch sử quan trọng: **thời kỳ đầu, terminal KHÔNG phải là máy tính.** Máy
@@ -49,7 +49,7 @@ dây để in/hiển thị ra.
 món thiết bị thật mà bạn có thể đặt lên bàn. Có hai thế hệ:
 
 **Teletype (TTY), khoảng 1900s–1960s** — một máy đánh chữ cơ điện. Bạn gõ, nó gửi
-ký tự qua dây và *in vật lý* câu trả lời của máy tính lên một cuộn giấy. Đây chính
+ký tự qua dây và _in vật lý_ câu trả lời của máy tính lên một cuộn giấy. Đây chính
 là nguồn gốc của chữ viết tắt **TTY** (teletypewriter — máy đánh chữ từ xa). Không
 có màn hình — "lịch sử cuộn lên xuống" của bạn chính là tờ giấy chui ra từ máy.
 
@@ -60,7 +60,7 @@ phím và màn hình chữ xanh trên nền đen gộp thành một khối, nố
 hiện chữ".
 
 Vậy "hardware terminal" = **cái thiết bị bàn phím-và-màn hình vật lý thật sự**,
-khác với một *chương trình* giả vờ làm terminal.
+khác với một _chương trình_ giả vờ làm terminal.
 
 ---
 
@@ -84,26 +84,26 @@ cả. Thay vào đó bạn có:
 ```
 
 Một **terminal emulator** (iTerm, GNOME Terminal, terminal trong VS Code) là một
-phần mềm *bắt chước* chiếc VT100 trong một cửa sổ — nó thậm chí vẫn nói "ngôn ngữ"
+phần mềm _bắt chước_ chiếc VT100 trong một cửa sổ — nó thậm chí vẫn nói "ngôn ngữ"
 mã điều khiển của VT100 để hiển thị màu sắc và di chuyển con trỏ.
 
 Nhưng hệ điều hành và shell của bạn vẫn mong đợi có một thiết bị terminal thật để
 nói chuyện. **Khoảng trống đó chính là cái mà PTY (pseudo-terminal) lấp vào.** PTY
 là đối tượng trong nhân giúp shell tin rằng nó đang được nối với một hardware
-terminal, trong khi thực tế thì một *chương trình* terminal emulator đang giữ đầu
+terminal, trong khi thực tế thì một _chương trình_ terminal emulator đang giữ đầu
 dây bên kia.
 
 Ba ý nghĩa, xếp chồng lên nhau:
 
-| Thuật ngữ | Nó là gì |
-|---|---|
-| **Terminal** (ý niệm trừu tượng) | Điểm cuối nơi con người gõ vào và đọc ra — một "hợp đồng": phím vào, chữ ra |
-| **Hardware terminal** | Thiết bị *vật lý* từng thực hiện hợp đồng đó — teletype, rồi đến video terminal kiểu VT100 |
-| **Terminal emulator** | Một *chương trình* bắt chước hardware terminal trong một cửa sổ |
-| **PTY** | Đường ống trong nhân giúp một chương trình (emulator, SSH, tmux) đóng thế vai trò của hardware terminal nay đã không còn |
+| Thuật ngữ                        | Nó là gì                                                                                                                 |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| **Terminal** (ý niệm trừu tượng) | Điểm cuối nơi con người gõ vào và đọc ra — một "hợp đồng": phím vào, chữ ra                                              |
+| **Hardware terminal**            | Thiết bị _vật lý_ từng thực hiện hợp đồng đó — teletype, rồi đến video terminal kiểu VT100                               |
+| **Terminal emulator**            | Một _chương trình_ bắt chước hardware terminal trong một cửa sổ                                                          |
+| **PTY**                          | Đường ống trong nhân giúp một chương trình (emulator, SSH, tmux) đóng thế vai trò của hardware terminal nay đã không còn |
 
-Tóm gọn một câu: **terminal là *vai trò* (điểm vào/ra của con người); hardware
-terminal là *thiết bị vật lý* từng đóng vai trò đó; còn PTY là thứ giúp phần mềm
+Tóm gọn một câu: **terminal là _vai trò_ (điểm vào/ra của con người); hardware
+terminal là _thiết bị vật lý_ từng đóng vai trò đó; còn PTY là thứ giúp phần mềm
 đóng vai trò đó ngày nay.**
 
 ---
@@ -123,7 +123,7 @@ Bàn phím và màn hình trên bàn bạn ngày nay thì **"câm" hơn cả VT1
 biết gì về ký tự, về terminal cả:
 
 - **Bàn phím** chỉ gửi đi tín hiệu "phím số 38 vừa được nhấn xuống" qua cổng USB.
-  Nó không gửi chữ "k", nó gửi một *mã quét* (scancode).
+  Nó không gửi chữ "k", nó gửi một _mã quét_ (scancode).
 - **Màn hình** chỉ nhận một mảng điểm ảnh (pixel) qua cáp HDMI và sáng đèn lên. Nó
   không biết "chữ" là gì — nó chỉ vẽ các chấm màu.
 
@@ -162,27 +162,27 @@ một terminal bằng phần mềm, gọi là **virtual console** (console ảo,
 
 Trong trường hợp này, có thể nói **toàn bộ tổ hợp "bàn phím + màn hình + đoạn code
 giả lập terminal trong nhân" mới là một terminal** — và nó gần với tinh thần
-"terminal vật lý" ngày xưa nhất. Nhưng lưu ý: cái làm cho nó *thành* terminal vẫn
+"terminal vật lý" ngày xưa nhất. Nhưng lưu ý: cái làm cho nó _thành_ terminal vẫn
 là phần mềm trong nhân, không phải bản thân cái bàn phím với màn hình.
 
 ### Trả lời thẳng
 
 > Bàn phím và màn hình vật lý ngày nay có phải là terminal không?
 
-**Không.** Tự thân chúng chỉ là thiết bị nhập/xuất thô. Cái *là* terminal là
+**Không.** Tự thân chúng chỉ là thiết bị nhập/xuất thô. Cái _là_ terminal là
 **phần mềm** đóng vai trò đó:
 
 - Trong giao diện đồ họa → là **chương trình terminal emulator**.
 - Ngoài giao diện đồ họa (console toàn màn hình) → là **đoạn code virtual console
   trong nhân Linux**.
 
-Bàn phím và màn hình chỉ "tham gia" vào terminal, chứ không *là* terminal.
+Bàn phím và màn hình chỉ "tham gia" vào terminal, chứ không _là_ terminal.
 
-| Thời | "Terminal" thực sự là gì |
-|---|---|
-| VT100 ngày xưa | Cái hộp phần cứng — bàn phím + màn hình + logic, tất cả trong một |
-| Ngày nay, trong GUI | Chương trình **terminal emulator** (iTerm, v.v.) |
-| Ngày nay, console đen toàn màn hình | **Virtual console** do nhân Linux giả lập bằng phần mềm |
+| Thời                                | "Terminal" thực sự là gì                                          |
+| ----------------------------------- | ----------------------------------------------------------------- |
+| VT100 ngày xưa                      | Cái hộp phần cứng — bàn phím + màn hình + logic, tất cả trong một |
+| Ngày nay, trong GUI                 | Chương trình **terminal emulator** (iTerm, v.v.)                  |
+| Ngày nay, console đen toàn màn hình | **Virtual console** do nhân Linux giả lập bằng phần mềm           |
 
 Cách nhớ gọn: ngày xưa terminal là **đồ vật bạn chạm tay vào**; ngày nay terminal
 là **phần mềm chạy bên trong máy**, còn bàn phím với màn hình chỉ là cửa ra vào
