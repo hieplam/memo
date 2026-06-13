@@ -45,7 +45,7 @@ export default defineConfig({
       rehypePlugins: [rehypeCallouts],
     }),
     shikiConfig: {
-      themes: { light: "min-light", dark: "night-owl" },
+      themes: { light: "gruvbox-light-soft", dark: "gruvbox-dark-soft" },
       defaultColor: false,
       wrap: false,
       transformers: [
@@ -61,6 +61,17 @@ export default defineConfig({
   },
   fonts: [
     {
+      // Warm reading serif: body & headings (the coffee-chill reading voice)
+      name: "Spectral",
+      cssVariable: "--font-spectral",
+      provider: fontProviders.google(),
+      fallbacks: ["Georgia", "Cambria", "serif"],
+      weights: [400, 500, 600, 700],
+      styles: ["normal", "italic"],
+      formats: ["woff", "ttf"],
+    },
+    {
+      // Kept from the original identity: code blocks & small UI labels
       name: "Google Sans Code",
       cssVariable: "--font-google-sans-code",
       provider: fontProviders.google(),

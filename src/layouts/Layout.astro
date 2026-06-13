@@ -46,11 +46,12 @@ const rssHref = getRelativeLocaleUrl(
     <link rel="canonical" href={canonicalURL} />
     <meta name="generator" content={Astro.generator} />
 
-    <!-- Font -->
+    <!-- Fonts: reading serif (preloaded) + mono for code & labels -->
     <Font
-      cssVariable="--font-google-sans-code"
+      cssVariable="--font-spectral"
       preload={[{ subset: "latin", weight: 400, style: "normal" }]}
     />
+    <Font cssVariable="--font-google-sans-code" />
 
     <!-- Primary meta -->
     <title>{title}</title>
@@ -119,7 +120,7 @@ const rssHref = getRelativeLocaleUrl(
     <ClientRouter />
   </head>
   <body
-    class="bg-background font-app text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
+    class="bg-background font-reading text-foreground selection:bg-accent/75 selection:text-accent-foreground flex min-h-svh flex-col"
   >
     <slot />
     <script>
