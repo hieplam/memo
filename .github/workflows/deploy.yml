@@ -1,5 +1,10 @@
 name: Deploy to GitHub Pages
 
+# Run the bundled JS actions (checkout, configure-pages, upload-pages-artifact,
+# deploy-pages) on Node 24 ahead of the Node 20 runner deprecation (forced 2026-06-16).
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 on:
   push:
     branches:
