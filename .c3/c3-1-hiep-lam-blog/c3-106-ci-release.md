@@ -1,6 +1,6 @@
 ---
 id: c3-106
-c3-seal: 86147d76aa208b766d23a5ae3cf4d2a9c54fdc34fe6fd2c0f05a55a0ca29139c
+c3-seal: cac29ae00bb522dfbd4a1118025f56d69a855db9a32293008f855c1da896ecc5
 title: ci-release
 type: component
 category: foundation
@@ -20,12 +20,12 @@ Automate continuous-integration checks and conventional-commit-driven releases f
 | --- | --- |
 | Container | Hiep Lam Blog (c3-1) |
 | Category | Foundation (06) |
-| Owned files | .github/workflows/ci.yml, .github/workflows/release-please.yml, release-please-config.json, .release-please-manifest.json |
-| Depended on by | All components — the delivery gate (lint/format/build) and the release process apply repo-wide |
+| Owned files | .github/workflows/ci.yml, .github/workflows/deploy.yml, .github/workflows/release-please.yml, release-please-config.json, .release-please-manifest.json |
+| Depended on by | All components — the delivery gate (lint/format/build), the GitHub Pages deployment, and the release process apply repo-wide |
 
 ## Purpose
 
-Owns the GitHub Actions delivery pipeline. ci.yml runs eslint, prettier --check, and the bun-based Astro build on every push and pull request; release-please.yml together with release-please-config.json and .release-please-manifest.json automate version bumps, CHANGELOG.md generation, git tags, and GitHub Releases derived from Conventional Commit messages. Does NOT own application source, the Astro build configuration (astro.config.ts), or the Docker/compose deployment images.
+Owns the GitHub Actions delivery pipeline. ci.yml runs eslint, prettier --check, and the bun-based Astro build on every push and pull request; deploy.yml builds the site with bun and publishes the dist/ artifact to GitHub Pages on every push to main (served at https://hieplam.github.io/memo/); release-please.yml together with release-please-config.json and .release-please-manifest.json automate version bumps, CHANGELOG.md generation, git tags, and GitHub Releases derived from Conventional Commit messages. Does NOT own application source or the Astro build configuration (astro.config.ts / astro-paper.config.ts) — it consumes the package.json build script as a black box.
 
 ## Foundational Flow
 
@@ -57,6 +57,7 @@ Owns the GitHub Actions delivery pipeline. ci.yml runs eslint, prettier --check,
 | Surface | Direction | Contract | Boundary | Evidence |
 | --- | --- | --- | --- | --- |
 | ci.yml status checks | OUT | Lint, format check, and build must pass before a PR merges to main | GitHub PR status checks | .github/workflows/ci.yml |
+| deploy.yml Pages deployment | OUT | On push to main (or manual dispatch), builds with bun and publishes dist/ to GitHub Pages at https://hieplam.github.io/memo/; a build failure blocks the deploy job | GitHub Pages (github-pages environment) | .github/workflows/deploy.yml |
 | release-please PR | OUT | Produces a version bump + CHANGELOG entry + GitHub Release when merged | git tags / GitHub Releases | .github/workflows/release-please.yml + release-please-config.json |
 
 ## Change Safety

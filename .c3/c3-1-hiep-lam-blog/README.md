@@ -1,6 +1,6 @@
 ---
 id: c3-1
-c3-seal: 44f035aaee718a41af48e80bcb518254c48a51ec5215fc9370ccd5e67228854f
+c3-seal: fbf8faaae25ecb7e41052a3729e091c87c9b42ddf635e120f8ee1008b62a79d7
 title: Hiep Lam Blog
 type: container
 boundary: service
@@ -44,7 +44,7 @@ Serve as the single Astro 6 static site that builds all blog content, routes, an
 - Build all pages to static HTML via `astro build` using bun as the package manager and task runner.
 - Validate content frontmatter at build time via Zod schemas defined in `src/content.config.ts`.
 - Serve a Pagefind search index generated as a post-build step.
-- Deploy deterministically to Cloudflare Pages from the `dist/` output.
+- Deploy deterministically to GitHub Pages from the `dist/` output on every push to `main`, served from the `/memo/` project subpath (Astro `base`).
 - Maintain SEO correctness: canonical URLs, sitemap, RSS feed, robots.txt, and OG images.
 - Enforce accessibility and responsive layout via TailwindCSS 4 utility classes and semantic HTML.
 - Run CI (lint, format check, build) on every push and pull request, and automate releases via release-please on merges to `main`.
