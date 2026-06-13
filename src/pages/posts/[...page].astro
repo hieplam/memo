@@ -8,7 +8,9 @@ import Main from "@/components/Main.astro";
 import Card from "@/components/Card.astro";
 import Footer from "@/components/Footer.astro";
 import Pagination from "@/components/Pagination.astro";
+import LangFilter from "@/components/LangFilter.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
+import { getPostLanguages } from "@/utils/getPostLanguages";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
@@ -21,6 +23,9 @@ const { page } = Astro.props;
 
 const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
+
+const allPosts = await getCollection("posts");
+const languages = getPostLanguages(allPosts);
 ---
 
 <Layout title={`${t.pages.postsTitle} | ${config.site.title}`}>
@@ -29,6 +34,7 @@ const t = useTranslations(locale);
   <Breadcrumb />
 
   <Main pageTitle={t.pages.postsTitle} pageDesc={t.pages.postsDesc}>
+    <LangFilter {languages} active="all" />
     <ul>
       {page.data.map(data => <Card {...data} />)}
     </ul>

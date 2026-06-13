@@ -1,6 +1,6 @@
 ---
 id: ref-content-schema
-c3-seal: 56bd6dbd7dba730257d54315e305533b33a0f46bd19cdd8271e4de4afc502932
+c3-seal: 3ea5ebe9eb32401ef24fff5a29d0f82c79edbb29ec106a079d9e0dc18c57f305
 title: content-schema
 type: ref
 goal: Standardize the frontmatter schema contract for blog posts so every content file has consistent, type-safe, Zod-validated fields that all pages and utilities can rely on without defensive null checks.
@@ -40,8 +40,10 @@ const posts = defineCollection({
       canonicalURL: z.string().optional(),
       hideEditPost: z.boolean().optional(),
       timezone: z.string().optional(),
+      lang: z.enum(["vi", "en"]).default("vi"),
+      multiLangKey: z.string().optional(),
     }),
 });
 ```
 
-REQUIRED: author, pubDatetime, title, description. OPTIONAL with defaults: tags defaults to ["others"]. OPTIONAL nullable: modDatetime. The image() helper enables Astro's image optimization for local assets.
+REQUIRED: author, pubDatetime, title, description. OPTIONAL with defaults: tags defaults to ["others"]; lang defaults to "vi" (so language-unmarked posts are Vietnamese with no edits). OPTIONAL nullable: modDatetime. OPTIONAL: multiLangKey — posts sharing the same multiLangKey but a different lang are treated as a translation pair (powers the language switch button and per-language filter pages). The image() helper enables Astro's image optimization for local assets.

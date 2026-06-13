@@ -1,6 +1,6 @@
 ---
 id: c3-101
-c3-seal: a1894ba7033f811034fe2c277708abd4a53b3bbee5875fde5e2c223c839b6aed
+c3-seal: d216c7a8f273580e93c9c14be82816617819858b9ec4b9604d5b0bdcca283001
 title: content-collections
 type: component
 category: foundation
@@ -25,7 +25,7 @@ Define and validate all content entry schemas for blog posts and static pages us
 
 ## Purpose
 
-Owns the Zod schema definitions for posts (fields: author, pubDatetime, modDatetime, title, featured, draft, tags, ogImage, description, canonicalURL, hideEditPost, timezone) and pages (title, description, ogImage, canonicalURL). Owns the raw markdown/MDX source files under src/content/. Does NOT own rendering, routing, or sorting logic.
+Owns the Zod schema definitions for the posts collection (fields: author, pubDatetime, modDatetime, title, featured, draft, tags, ogImage, description, canonicalURL, hideEditPost, timezone, lang, multiLangKey) and the pages collection (title, description, ogImage, canonicalURL). The lang field is an enum of Vietnamese or English that defaults to Vietnamese, recording the natural language each post is written in. The multiLangKey field is a string set only on posts that have a translation; two posts that share one multiLangKey value but declare different lang values form a translation pair that drives the per-language filter pages and the in-post language switch button. Also owns the raw markdown and MDX source files under src/content/. Does NOT own rendering, routing, or sorting logic.
 
 ## Foundational Flow
 
