@@ -60,6 +60,10 @@ type Props = {
 };
 
 const { post, prevPost, nextPost } = Astro.props;
+
+// Localize the whole page chrome to the post's content language. Routing/URL
+// locale stays the configured `en`; only the UI strings follow `uiLang`.
+Astro.locals.uiLang = post.data.lang;
 const locale = Astro.currentLocale ?? config.site.lang;
 
 const allPosts = await getCollection("posts");

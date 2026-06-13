@@ -5,6 +5,7 @@ import IconArrowLeft from "@/assets/icons/IconArrowLeft.svg";
 import IconArrowRight from "@/assets/icons/IconArrowRight.svg";
 import LinkButton from "./LinkButton.astro";
 import { useTranslations } from "@/i18n";
+import { getUiLocale } from "@/utils/getUiLocale";
 
 type Props = {
   page: Page<CollectionEntry<"posts">>;
@@ -12,7 +13,7 @@ type Props = {
 
 const { page } = Astro.props;
 
-const t = useTranslations(Astro.currentLocale);
+const t = useTranslations(getUiLocale(Astro));
 ---
 
 {

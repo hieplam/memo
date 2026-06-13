@@ -49,12 +49,13 @@ export const GET: APIRoute = async ({ props, url }) => {
       type: "div",
       props: {
         style: {
-          background: "#fefbfb",
+          background: "#f8f3ea",
           width: "100%",
           height: "100%",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
+          color: "#312822",
         },
         children: [
           {
@@ -64,8 +65,8 @@ export const GET: APIRoute = async ({ props, url }) => {
                 position: "absolute",
                 top: "-1px",
                 right: "-1px",
-                border: "4px solid #000",
-                background: "#ecebeb",
+                border: "4px solid #312822",
+                background: "#ece3d7",
                 opacity: "0.9",
                 borderRadius: "4px",
                 display: "flex",
@@ -80,8 +81,8 @@ export const GET: APIRoute = async ({ props, url }) => {
             type: "div",
             props: {
               style: {
-                border: "4px solid #000",
-                background: "#fefbfb",
+                border: "4px solid #312822",
+                background: "#f8f3ea",
                 borderRadius: "4px",
                 display: "flex",
                 justifyContent: "center",
@@ -122,6 +123,7 @@ export const GET: APIRoute = async ({ props, url }) => {
                           width: "100%",
                           marginBottom: "8px",
                           fontSize: 28,
+                          color: "#9a5328",
                         },
                         children: [
                           {

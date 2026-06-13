@@ -4,8 +4,8 @@ import { getRelatedPosts } from "@/utils/getRelatedPosts";
 import { getPostUrl } from "@/utils/getPostPaths";
 import { toTransitionName } from "@/utils/toTransitionName";
 import { useTranslations } from "@/i18n";
+import { getUiLocale } from "@/utils/getUiLocale";
 import Datetime from "./Datetime.astro";
-import config from "@/config";
 
 type Props = {
   post: CollectionEntry<"posts">;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 const { post, allPosts, limit = 3 } = Astro.props;
-const locale = Astro.currentLocale ?? config.site.lang;
+const locale = getUiLocale(Astro);
 const t = useTranslations(locale);
 
 const related = getRelatedPosts(post, allPosts, limit);
