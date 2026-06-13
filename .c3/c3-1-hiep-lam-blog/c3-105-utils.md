@@ -1,6 +1,6 @@
 ---
 id: c3-105
-c3-seal: e038b49669ac9690c091f81f0d2aacb0d3c9c01ff3c11fa1794d03e071f35249
+c3-seal: 12594d2ee5b0037229a1013c10400ab9958e5dbcf5a552e0e896886e216389a8
 title: utils
 type: component
 category: foundation
@@ -25,7 +25,7 @@ Provide pure TypeScript helper functions for post filtering, sorting, tag extrac
 
 ## Purpose
 
-Owns the following utilities: postFilter.ts (excludes drafts and future-dated posts), getSortedPosts.ts (sorts posts by pubDatetime desc), getUniqueTags.ts (extracts deduplicated tag list), getPostPaths.ts (generates static path params for post routes), slugify.ts (converts titles to URL-safe slugs), withBase.ts (prepends base URL), resolveDefaultOgImagePath.ts (resolves fallback OG image), getFontPathByWeight.ts (locates font file by weight for Satori), toTransitionName.ts (generates view transition names), transformers/fileName.js (Shiki code block filename transformer). Does NOT own route templates or content schemas.
+Owns the following utilities: postFilter.ts (excludes drafts and future-dated posts), getSortedPosts.ts (sorts posts by pubDatetime desc), getUniqueTags.ts (extracts deduplicated tag list), getPostPaths.ts (generates static path params for post routes), getPostLanguages.ts (lists the languages present in the post set, for the filter bar), getTranslationSibling.ts (finds a post's translation sibling by multiLangKey), slugify.ts (converts titles to URL-safe slugs), withBase.ts (prepends base URL), resolveDefaultOgImagePath.ts (resolves fallback OG image), getFontPathByWeight.ts (locates font file by weight for Satori), toTransitionName.ts (generates view transition names), transformers/fileName.js (Shiki code block filename transformer). Does NOT own route templates or content schemas.
 
 ## Foundational Flow
 

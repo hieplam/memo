@@ -1,6 +1,6 @@
 ---
 id: c3-110
-c3-seal: 97f2179b736c8dac0e47f3e66802fc79bb90407bc3a270b75056ef0db15d05e6
+c3-seal: cfb12280a976e6f38c488fd60358636ff41e975437c9c2befa16dca400c42477
 title: pages-routing
 type: component
 category: feature
@@ -26,7 +26,7 @@ Define all Astro file-based routes that produce the static pages of the blog: ho
 
 ## Purpose
 
-Owns all files under src/pages/ that become URL endpoints: index.astro (home feed), posts/[...page].astro (paginated list), posts/[...slug]/index.astro (post detail), tags/index.astro (all tags), tags/[tag]/[...page].astro (per-tag pagination), archives/index.astro (archive grouped by year/month), about.astro, search.astro, 404.astro, rss.xml.ts, robots.txt.ts, og.png.ts (default OG image), posts/[...slug]/index.png.ts (per-post OG). Does NOT own the Layout or shared UI components it imports.
+Owns all files under src/pages/ that become URL endpoints: index.astro (home feed), posts/[...page].astro (paginated list), posts/lang/[lang]/[...page].astro (per-language paginated list), posts/[...slug]/index.astro (post detail), tags/index.astro (all tags), tags/[tag]/[...page].astro (per-tag pagination), archives/index.astro (archive grouped by year/month), about.astro, search.astro, 404.astro, rss.xml.ts, robots.txt.ts, og.png.ts (default OG image), posts/[...slug]/index.png.ts (per-post OG). Also owns co-located feature components under posts/[...slug]/_components/ including LangSwitch.astro (the language switch button). Does NOT own the Layout or shared UI components it imports.
 
 ## Foundational Flow
 

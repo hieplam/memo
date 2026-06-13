@@ -11,6 +11,12 @@ type Props = {
 const { variant: Heading = "h2", id, data, filePath } = Astro.props;
 
 const { title, description, ...props } = data;
+
+const LANG_BADGE: Record<string, { flag: string; label: string }> = {
+  vi: { flag: "🇻🇳", label: "VI" },
+  en: { flag: "🇺🇸", label: "EN" },
+};
+const langBadge = LANG_BADGE[data.lang ?? "vi"] ?? LANG_BADGE["vi"];
 ---
 
 <li class="my-6">
@@ -26,6 +32,14 @@ const { title, description, ...props } = data;
       {title}
     </Heading>
   </a>
-  <Datetime {...props} />
+  <div class="mt-1 flex items-center gap-2">
+    <Datetime {...props} />
+    <span
+      class="text-muted-foreground border-border rounded border px-1 py-0.5 text-xs leading-none font-medium"
+    >
+      {langBadge.flag}
+      {langBadge.label}
+    </span>
+  </div>
   <p>{description}</p>
 </li>

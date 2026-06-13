@@ -1,0 +1,25 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { getPostUrl } from "@/utils/getPostPaths";
+
+type Props = {
+  sibling: CollectionEntry<"posts"> | null;
+  currentLang: "vi" | "en";
+};
+
+const { sibling, currentLang } = Astro.props;
+
+const targetLabel = currentLang === "vi" ? "🇺🇸 English" : "🇻🇳 Tiếng Việt";
+---
+
+{
+  sibling && (
+    <a
+      href={getPostUrl(sibling.id, sibling.filePath)}
+      class="hover:text-accent text-muted-foreground flex items-center gap-1 text-sm"
+      title={targetLabel}
+    >
+      {targetLabel}
+    </a>
+  )
+}

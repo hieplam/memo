@@ -1,0 +1,52 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import config from "@/config";
+
+type PostLanguage = {
+  lang: "vi" | "en";
+  label: string;
+};
+
+type Props = {
+  languages: PostLanguage[];
+  active: string | null;
+};
+
+const { languages, active } = Astro.props;
+
+const locale = Astro.currentLocale ?? config.site.lang;
+
+const LANG_FLAG: Record<string, string> = {
+  vi: "🇻🇳",
+  en: "🇺🇸",
+};
+---
+
+<nav aria-label="Filter posts by language" class="mb-6 flex flex-wrap gap-2">
+  <a
+    href={getRelativeLocaleUrl(locale, "posts")}
+    class:list={[
+      "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
+      !active || active === "all"
+        ? "border-accent bg-accent text-accent-foreground"
+        : "border-border text-foreground hover:border-accent hover:text-accent",
+    ]}
+  >
+    All
+  </a>
+  {
+    languages.map(({ lang, label }) => (
+      <a
+        href={getRelativeLocaleUrl(locale, `posts/lang/${lang}`)}
+        class:list={[
+          "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
+          active === lang
+            ? "border-accent bg-accent text-accent-foreground"
+            : "border-border text-foreground hover:border-accent hover:text-accent",
+        ]}
+      >
+        {LANG_FLAG[lang]} {label}
+      </a>
+    ))
+  }
+</nav>

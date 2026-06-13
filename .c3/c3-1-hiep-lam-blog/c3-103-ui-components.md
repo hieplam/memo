@@ -1,6 +1,6 @@
 ---
 id: c3-103
-c3-seal: 034c1c1656060057c2d9b679b01db6d64a128573a10c53f2a37acabfc5a4f48a
+c3-seal: 9a729455460390dd91b83caf45940277212c19308ec939a104f4e228ad3d0f15
 title: ui-components
 type: component
 category: foundation
@@ -25,7 +25,7 @@ Provide shared, reusable presentational Astro components for headers, footers, c
 
 ## Purpose
 
-Owns all Astro components in src/components/: Header.astro, Footer.astro, Card.astro, Pagination.astro, Tag.astro, Breadcrumb.astro, Socials.astro, Datetime.astro, Main.astro, LinkButton.astro, ResponsiveTable.astro. Does NOT own page-level route components under src/pages/posts/[...slug]/_components/ which are co-located feature-level components.
+Owns all Astro components in src/components/: Header.astro, Footer.astro, Card.astro, Pagination.astro, Tag.astro, Breadcrumb.astro, Socials.astro, Datetime.astro, Main.astro, LinkButton.astro, ResponsiveTable.astro, LangFilter.astro (post-language filter bar). Card.astro additionally renders a per-post language badge. Does NOT own page-level route components under src/pages/posts/[...slug]/_components/ which are co-located feature-level components.
 
 ## Foundational Flow
 
