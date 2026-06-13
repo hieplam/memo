@@ -1,0 +1,25 @@
+name: release-please
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      # Manifest mode: config is read from release-please-config.json and
+      # .release-please-manifest.json. Uses the default GITHUB_TOKEN.
+      #
+      # Note: PRs opened with GITHUB_TOKEN do not trigger other workflows, so
+      # ci.yml will not run on the release PR itself (CI still runs on the
+      # source feature PRs before they are merged). To run CI on release PRs,
+      # swap in a PAT or GitHub App token here.
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}

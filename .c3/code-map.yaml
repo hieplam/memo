@@ -1,0 +1,30 @@
+c3-101:
+  - src/content/**
+c3-102:
+  - src/layouts/**
+c3-103:
+  - src/components/**
+c3-104:
+  - src/styles/**
+c3-105:
+  - src/utils/**
+c3-106:
+  - .github/workflows/**
+c3-110:
+  - src/pages/**
+c3-111:
+  - src/i18n/**
+c3-112:
+  - src/pages/og.png.ts
+ref-content-schema:
+  - src/content.config.ts
+ref-i18n-strategy:
+  - src/i18n/**
+ref-og-image-generation:
+  - src/pages/og.png.ts
+ref-tailwind-design-system:
+  - src/styles/**
+rule-no-console:
+  - src/**
+rule-prettier-format:
+  - src/**

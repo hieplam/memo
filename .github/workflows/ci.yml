@@ -1,0 +1,38 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - synchronize
+      - reopened
+  workflow_call:
+
+jobs:
+  build:
+    name: Code standards & build
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+
+    steps:
+      - name: "☁️ Checkout repository"
+        uses: actions/checkout@v4
+
+      - name: "📦 Setup bun"
+        uses: oven-sh/setup-bun@v2
+
+      - name: "📦 Install dependencies"
+        run: bun install --frozen-lockfile
+
+      - name: "🔎 Lint code"
+        run: bun run lint
+
+      - name: "📝 Checking code format"
+        run: bun run format:check
+
+      - name: "🚀 Build the project"
+        run: bun run build
