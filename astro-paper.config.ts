@@ -6,7 +6,7 @@ export default defineAstroPaperConfig({
     title: "Hiep Lam",
     description: "A minimal, responsive and SEO-friendly Astro blog theme.",
     author: "Hiep Lam",
-    profile: "https://satna.ing",
+    profile: "https://hieplam.github.io/memo/",
     ogImage: "default-og.jpg",
     lang: "en",
     timezone: "Asia/Bangkok",
@@ -24,15 +24,13 @@ export default defineAstroPaperConfig({
     showBackButton: true,
     editPost: {
       enabled: true,
-      url: "https://github.com/satnaing/astro-paper/edit/main/",
+      url: "https://github.com/hieplam/memo/edit/main/",
     },
     search: "pagefind",
   },
   socials: [
-    { name: "github",   url: "https://github.com/satnaing/astro-paper" },
-    { name: "x",        url: "https://x.com/username" },
-    { name: "linkedin", url: "https://www.linkedin.com/in/username/" },
-    { name: "mail",     url: "mailto:yourmail@gmail.com" },
+    { name: "github", url: "https://github.com/hieplam" },
+    { name: "mail", url: "mailto:lamhiep16@gmail.com" },
   ],
   shareLinks: [
     { name: "whatsapp", url: "https://wa.me/?text=" },
