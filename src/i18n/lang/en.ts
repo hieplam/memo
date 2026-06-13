@@ -21,6 +21,10 @@ export default {
     editPage: "Edit page",
     previousPost: "Previous Post",
     nextPost: "Next Post",
+    keepReading: "Keep reading",
+    keepReadingDesc: "A few more pieces in the same vein.",
+    subscribePrompt: "Rather read on your own time?",
+    subscribeCta: "Subscribe via RSS",
   },
   pagination: {
     prev: "Prev",

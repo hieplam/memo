@@ -19,6 +19,10 @@ export interface UIStrings {
     editPage: string;
     previousPost: string;
     nextPost: string;
+    keepReading: string;
+    keepReadingDesc: string;
+    subscribePrompt: string;
+    subscribeCta: string;
   };
   pagination: {
     prev: string;

@@ -7,28 +7,35 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
+  --color-surface: var(--surface);
+  /* Warm reading serif for body & headings; mono kept for code and labels */
+  --font-reading: var(--font-spectral);
   --font-app: var(--font-google-sans-code);
 }
 
-/* Light theme values */
+/* ===== Latte (light) ===== */
+/* Warm paper, espresso ink, a single cinnamon-roast accent. */
 :root,
 [data-theme="light"] {
-  --background: #fdfdfd;
-  --foreground: #282728;
-  --accent: #006cac;
-  --accent-foreground: #ffffff;
-  --muted: #e6e6e6;
-  --muted-foreground: #6b7280;
-  --border: #ece9e9;
+  --background: oklch(0.965 0.013 80); /* #f8f3ea milk-foam paper */
+  --foreground: oklch(0.285 0.018 55); /* #312822 espresso ink    */
+  --accent: oklch(0.52 0.11 50); /* #9a5328 cinnamon roast  */
+  --accent-foreground: oklch(0.98 0.01 85); /* #fdf8ef on accent       */
+  --muted: oklch(0.91 0.018 75); /* #ece3d7 soft tint       */
+  --muted-foreground: oklch(0.505 0.025 55); /* #706157 taupe meta      */
+  --border: oklch(0.885 0.015 75); /* #dfd8ce hairline        */
+  --surface: oklch(0.935 0.016 78); /* #f0e8de raised panel    */
 }
 
-/* Dark theme values */
+/* ===== Mocha (dark) ===== */
+/* Roasted-brown surface, warm milk text, caramel accent. */
 [data-theme="dark"] {
-  --background: #212737;
-  --foreground: #eaedf3;
-  --accent: #ff6b01;
-  --accent-foreground: #ffffff;
-  --muted: #343f60;
-  --muted-foreground: #afb9ca;
-  --border: #ab4b08;
+  --background: oklch(0.255 0.018 55); /* #2a211b roasted brown   */
+  --foreground: oklch(0.92 0.013 82); /* #e9e4db warm milk       */
+  --accent: oklch(0.8 0.095 72); /* #e4b478 caramel / honey */
+  --accent-foreground: oklch(0.255 0.018 55); /* #2a211b on accent       */
+  --muted: oklch(0.33 0.02 55); /* #3a2f27 soft tint       */
+  --muted-foreground: oklch(0.745 0.022 72); /* #b5aa9e latte gray      */
+  --border: oklch(0.38 0.02 58); /* #4b4038 hairline        */
+  --surface: oklch(0.305 0.02 55); /* #372d26 raised panel    */
 }
