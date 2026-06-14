@@ -1,108 +1,121 @@
 # Design
 
-The visual system for `memo` — a coffee-warm, unhurried reading environment.
-Two first-class themes: **Latte** (light) and **Mocha** (dark). Built on
-Tailwind v4 design tokens (`src/styles/theme.css`) and the Astro Fonts API.
+The visual system for `memo` — a calm, unhurried, eye-comfortable reading
+environment. Two first-class themes: **Sage / Fog** (light) and **Sage / Dusk**
+(dark). Built on Tailwind v4 design tokens (`src/styles/theme.css`), a
+color-wheel-derived scale + motion layer (`src/styles/tokens.css`), and the
+Astro Fonts API.
 
 ## Design Direction
 
-A worn paperback on a café table, read slowly on a Sunday. Warm paper, espresso
-ink, a single cinnamon-roast accent. Calm, low-glare, never neon, never
-"developer-terminal." Color is used sparingly and warmly; the prose leads and
-the chrome recedes.
+A quiet study with the blinds half-drawn — soft daylight on warm paper, read
+without hurry. Low-contrast, warm-neutral surfaces, a single muted sage-teal
+accent. Never harsh, never neon, never "developer-terminal." Color is used
+sparingly; the prose leads and the chrome recedes.
 
-Color strategy: **Restrained, warmed.** Tinted warm neutrals carry the surface;
-one coffee accent does the emphatic work (links, focus, key CTAs). Warmth lives
-in the hues and the typography, not in loud fills.
+Color strategy: **Restrained, warmed, low-contrast.** Warm fog-gray neutrals
+carry the surfaces; one sage-teal accent does the emphatic work (links, focus,
+key CTAs). Everything else whispers — even the semantic states are deliberately
+muted.
 
 ## Color
 
-All values authored in OKLCH; hex shown for reference. Contrast verified against
-WCAG 2.1 AA (body ≥ 4.5:1, large/UI ≥ 3:1).
+Semantic tokens are authored as hex in `src/styles/theme.css`; the underlying
+tonal ramps and harmonized state colors live in `src/styles/tokens.css`.
+Contrast is verified against WCAG 2.1 AA (body ≥ 4.5:1, large/UI ≥ 3:1).
 
-### Latte (light) — `:root`, `[data-theme="light"]`
+### Sage / Fog (light) — `:root`, `[data-theme="light"]`
 
-| Token                 | OKLCH                  | Hex       | Role                                    |
-| --------------------- | ---------------------- | --------- | --------------------------------------- |
-| `--background`        | `0.965 0.013 80`       | `#f8f3ea` | Milk-foam paper (warm, not stark white) |
-| `--foreground`        | `0.285 0.018 55`       | `#312822` | Espresso ink (body) — 13.0:1            |
-| `--muted`             | `0.91 0.018 75`        | `#ece3d7` | Soft tint: code bg, inline fills        |
-| `--muted-foreground`  | `0.505 0.025 55`       | `#706157` | Taupe meta text — 5.4:1                 |
-| `--accent`            | `0.520 0.110 50`       | `#9a5328` | Cinnamon-roast: links, focus, CTAs — 5.2:1 |
-| `--accent-foreground` | `0.98 0.01 85`         | `#fdf8ef` | Text on accent fills                    |
-| `--border`            | `0.885 0.015 75`       | `#dfd8ce` | Hairlines, dividers                     |
-| `--surface`           | `0.935 0.016 78`       | `#f0e8de` | Raised cards / wayfinding panels        |
+| Token                 | Hex       | Role                                      |
+| --------------------- | --------- | ----------------------------------------- |
+| `--background`        | `#f3f2ec` | Fog paper (warm, not stark white)         |
+| `--foreground`        | `#2c2e2a` | Soft charcoal ink (body + headings)       |
+| `--accent`            | `#4f7c6b` | Muted sage-teal: links, focus, CTAs       |
+| `--accent-foreground` | `#f7f8f4` | Text on accent fills                      |
+| `--muted`             | `#eeede5` | Soft tint: code bg, inline fills          |
+| `--muted-foreground`  | `#85857a` | Taupe meta text, captions, dates          |
+| `--border`            | `#e1e0d6` | Hairlines, dividers                       |
+| `--surface`           | `#f9f8f3` | Raised cards / wayfinding panels          |
 
-### Mocha (dark) — `[data-theme="dark"]`
+### Sage / Dusk (dark) — `[data-theme="dark"]`
 
-| Token                 | OKLCH                  | Hex       | Role                                    |
-| --------------------- | ---------------------- | --------- | --------------------------------------- |
-| `--background`        | `0.255 0.018 55`       | `#2a211b` | Roasted-brown (warm, not navy/black)    |
-| `--foreground`        | `0.920 0.013 82`       | `#e9e4db` | Warm milk text — 12.5:1                 |
-| `--muted`             | `0.33 0.020 55`        | `#3a2f27` | Soft tint: code bg, inline fills        |
-| `--muted-foreground`  | `0.745 0.022 72`       | `#b5aa9e` | Latte-gray meta text — 6.9:1            |
-| `--accent`            | `0.800 0.095 72`       | `#e4b478` | Caramel/honey: links, focus, CTAs — 8.3:1 |
-| `--accent-foreground` | `0.255 0.018 55`       | `#2a211b` | Dark text on accent fills               |
-| `--border`            | `0.380 0.020 58`       | `#4b4038` | Hairlines, dividers                     |
-| `--surface`           | `0.305 0.020 55`       | `#372d26` | Raised cards / wayfinding panels        |
+| Token                 | Hex       | Role                                      |
+| --------------------- | --------- | ----------------------------------------- |
+| `--background`        | `#1b1e1b` | Dusk green-charcoal (warm, not navy)      |
+| `--foreground`        | `#e5e6dd` | Warm off-white text                       |
+| `--accent`            | `#8fb6a3` | Soft eucalyptus: links, focus, CTAs       |
+| `--accent-foreground` | `#1b1e1b` | Dark text on accent fills                 |
+| `--muted`             | `#2b2f29` | Soft tint: code bg, inline fills          |
+| `--muted-foreground`  | `#8f9085` | Latte-gray meta text                      |
+| `--border`            | `#2d3029` | Hairlines, dividers                       |
+| `--surface`           | `#22251f` | Raised cards / wayfinding panels          |
 
-Note: `--surface` is a new token added for the wayfinding panels; the existing
-`--color-*` Tailwind bridge in `theme.css` gains a matching `--color-surface`.
+### Tonal ramps (`tokens.css`)
+
+The semantic tokens above are drawn from two color-wheel-derived ramps:
+
+- **Sage** (primary, hue 162°) `--sage-50…900`:
+  `#eff8f3 #dff0e7 #c5dfd1 #a5c7b5 #79a28d #5a846f #456c58 #345444 #263c31 #1c2c24`
+- **Fog** (warm neutral, hue 95°) `--fog-50…900`:
+  `#f8f7f3 #f1f0eb #e1e0db #cccac5 #a09e98 #7d7c76 #5c5b56 #41403b #2f2e2a #22221e`
+
+### Harmonized semantic colors (muted on purpose — a callout should *whisper*)
+
+| Token       | Light                     | Dark                      |
+| ----------- | ------------------------- | ------------------------- |
+| `--success` | `#4e8164` / `#d8eee0`     | `#7fb295` / `#23362b`     |
+| `--info`    | `#5a8297` / `#d6ecf8`     | `#86b0c6` / `#22323a`     |
+| `--warning` | `#bd9761` / `#f8e5c7`     | `#d8b27e` / `#3a3122`     |
+| `--danger`  | `#aa6259` / `#fedbd5`     | `#d29086` / `#3a2622`     |
+
+(Each pair is `--<state>` / `--<state>-soft`. Derived from the wheel: analogous
+green, split-complement blue, triadic amber, complementary clay.)
 
 ### Code blocks (Shiki)
 
-Replace any cool/neon syntax theme with a **warm pair** so code reads as part of
-the paper, not a glowing terminal: light = a warm cream theme; dark = a warm
-brown/amber theme. Code background follows `--muted`; selection/highlight tints
-stay warm.
+Warm, soft syntax pair so code reads as part of the paper, not a glowing
+terminal: light = `gruvbox-light-soft`, dark = `gruvbox-dark-soft`. Code
+background follows `--muted`; selection/highlight tints stay warm. (Set in
+`astro.config.ts → markdown.shikiConfig.themes`.)
 
 ## Typography
 
-The current site sets monospace everywhere. For comfortable long-form reading we
-introduce a warm reading serif as the base, and keep monospace only where it
-earns its place (code, and small metadata labels), giving gentle texture without
-the terminal costume the brand bans.
+A single calm, all-sans family carries both reading and headings. No serif. The
+mono earns its place only where it adds texture (code, small metadata labels).
 
-- **Reading family (body + headings): `Spectral`** — a calm, warm screen-reading
-  serif (off the reflex-reject list). Weights 400 / 500 / 600 / 700, with
-  italic. Hierarchy comes from weight + size contrast within one family.
-  - Loaded via the Astro Fonts API (Google provider) alongside the existing mono;
-    consumed by `Layout.astro` and the Satori OG-image generators.
-- **Mono family: `Google Sans Code`** (kept from the existing identity) — code
-  blocks, inline code, and small UI metadata (datetime, tags) as a subtle label
-  texture.
+- **Reading family (body + headings): `Hanken Grotesk`** — a warm, low-contrast
+  grotesk that reads gently at length. Weights 400 / 500 / 600 / 700, italic
+  available. Hierarchy comes from weight + size contrast within the one family;
+  headings are **not** italic.
+  - Loaded via the Astro Fonts API (Google provider) as `--font-hanken`,
+    preloaded in `Layout.astro`, mapped to `--font-reading` in `theme.css`.
+- **Mono family: `Google Sans Code`** (kept from the original identity) — code
+  blocks, inline code, and small UI metadata (datetime, tags, labels). Also the
+  family used by the Satori OG-image generators.
 - **Scale:** modular, ≥ 1.25 ratio between steps; fluid `clamp()` on headings.
-  Hero/display `clamp()` max ≤ 6rem; display letter-spacing ≥ -0.04em.
-- **Reading measure:** body capped ~65–75ch (existing `max-w-app` ≈ `max-w-3xl`
-  is in range). `text-wrap: balance` on h1–h3; `text-wrap: pretty` on prose.
+  Body ~17px, line-height ~1.65.
+- **Reading measure:** body capped ~65–75ch (`max-w-app` ≈ `max-w-3xl`).
+  `text-wrap: balance` on h1–h3; `text-wrap: pretty` on prose.
 
 ## Components
 
-Existing AstroPaper components are preserved and re-skinned, not rewritten:
-`Header`, `Footer`, `Card`, `Tag`, `Datetime`, `Pagination`, `LangFilter`,
-`Breadcrumb`, `Socials`, `LinkButton`, search (Pagefind).
-
-New for the wayfinding work:
-
-- **RelatedPosts** — at the end of each article, 2–3 posts in the same
-  language, matched by shared tags, on a `--surface` panel. The path to a
-  second read.
-- **Post-end "keep reading" footer** — calm prompt: continue reading + subscribe
-  (RSS), no hard sell.
-- **Richer empty/landing wayfinding** — tags and archives made discoverable from
-  the post reading flow.
+Existing AstroPaper components are preserved and re-skinned via tokens, not
+rewritten: `Header`, `Footer`, `Card`, `Tag`, `Datetime`, `Pagination`,
+`LangFilter`, `Breadcrumb`, `Socials`, `LinkButton`, `RelatedPosts`, search
+(Pagefind). Because every component reads the semantic tokens, re-theming is a
+values-only swap — no component changes.
 
 Component conventions:
 
 - Borders: 1px hairlines at `--border`. **Never** pair a 1px border with a wide
   (≥16px) drop shadow on the same element. Prefer borders + surface tint over
   shadow.
-- Radius: cards/panels 8–12px; tags/buttons may be pill. No 24px+ on cards.
+- Radius: cards/panels 8–14px; tags/buttons may be pill. No 24px+ on cards.
 - Accent side-stripes are banned; use full borders or surface tints.
 
 ## Layout
 
-- `app-layout` container (`max-w-3xl`, centered, `px-4`) stays the reading column.
+- `app-layout` container (`max-w-3xl`, centered, `px-4`) is the reading column.
 - Flex for 1D, Grid for 2D. Related-posts grid:
   `repeat(auto-fit, minmax(260px, 1fr))`.
 - Fluid spacing with `clamp()`; vary rhythm (generous section separation, tight
@@ -110,14 +123,35 @@ Component conventions:
 
 ## Motion
 
-- Quiet by default, in keeping with the unhurried voice. Subtle, purposeful
-  transitions only (hover/focus affordances, a gentle reveal on the
-  related-posts panel).
-- Ease-out curves; no bounce/elastic. Respect `prefers-reduced-motion` with a
-  crossfade/instant fallback for anything added.
+A calm, token-driven motion system lives in `tokens.css` and is wired into the
+live components in `global.css`. Slow + soft by default, in keeping with the
+unhurried voice. No bounce/elastic.
+
+- **Durations:** `--dur-1` 120ms (micro) · `--dur-2` 200ms (hover/links) ·
+  `--dur-3` 320ms (cards/panels) · `--dur-4` 500ms (theme cross-fade) ·
+  `--dur-5` 700ms (entrance/reveal).
+- **Easings:** `--ease-standard` (general UI) · `--ease-out` (enters) ·
+  `--ease-gentle` (soft settle) · `--ease-in` (exits).
+- **Ready-made transitions:** `--t-colors`, `--t-transform`, `--t-theme`.
+- **Keyframes:** `fade-up`, `fade-in`, `rise`.
+- **Where it's used:** post-stream cards enter with a staggered `fade-up`
+  (`.post-stream`), post links carry a token-driven color transition, and the
+  reading-progress bar smooths its width.
+- **Reduced motion:** all animation/transition is globally disabled under
+  `prefers-reduced-motion: reduce` (media query in `tokens.css`).
 
 ## Focus & States
 
-- Keep the project's accessible focus model (dashed accent outline, offset).
-  Re-tint to the coffee `--accent`; preserve visibility in both themes.
+- Keep the project's accessible focus model (dashed accent outline, offset),
+  retinted to the sage `--accent`; visible in both themes.
 - Active nav: wavy accent underline (existing), retinted.
+
+## Token files at a glance
+
+- `src/styles/theme.css` — semantic tokens (the contract every component reads)
+  + the Tailwind `@theme inline` bridge and font mapping.
+- `src/styles/tokens.css` — Sage/Fog tonal ramps, harmonized state colors, and
+  the full motion scale (durations, easings, transitions, keyframes).
+- `src/styles/global.css` — base layer, utilities, and the motion wiring that
+  connects the primitives to components.
+- `src/styles/typography.css` — long-form prose (`.app-prose`) and code blocks.

@@ -1,0 +1,122 @@
+/* ============================================================
+   memo — design tokens
+   Color system (color-wheel derived) + motion system.
+   Import AFTER theme.css. Semantic --* tokens live in theme.css;
+   these are the underlying scales + motion primitives.
+   ============================================================ */
+:root {
+  /* ---- Primary ramp · Sage (hue 162°) ---- */
+  --sage-50: #eff8f3;
+  --sage-100: #dff0e7;
+  --sage-200: #c5dfd1;
+  --sage-300: #a5c7b5;
+  --sage-400: #79a28d;
+  --sage-500: #5a846f;
+  --sage-600: #456c58;
+  --sage-700: #345444;
+  --sage-800: #263c31;
+  --sage-900: #1c2c24;
+
+  /* ---- Neutral ramp · Fog (warm gray, hue 95°) ---- */
+  --fog-50: #f8f7f3;
+  --fog-100: #f1f0eb;
+  --fog-200: #e1e0db;
+  --fog-300: #cccac5;
+  --fog-400: #a09e98;
+  --fog-500: #7d7c76;
+  --fog-600: #5c5b56;
+  --fog-700: #41403b;
+  --fog-800: #2f2e2a;
+  --fog-900: #22221e;
+
+  /* ---- Harmonized semantics (muted, low-chroma) ---- */
+  --success: #4e8164;
+  --success-soft: #d8eee0; /* analogous green     */
+  --info: #5a8297;
+  --info-soft: #d6ecf8; /* split-comp blue     */
+  --warning: #bd9761;
+  --warning-soft: #f8e5c7; /* triadic amber       */
+  --danger: #aa6259;
+  --danger-soft: #fedbd5; /* complementary clay  */
+
+  /* ============ Motion system ============ */
+  /* durations — calm, never snappy/harsh */
+  --dur-1: 120ms; /* micro: icon, color swap        */
+  --dur-2: 200ms; /* default: hover, link underline */
+  --dur-3: 320ms; /* cards, panels, transforms      */
+  --dur-4: 500ms; /* theme (light/dark) cross-fade  */
+  --dur-5: 700ms; /* entrance / reveal              */
+
+  /* easings */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1); /* general UI            */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1); /* decelerate (enters)  */
+  --ease-gentle: cubic-bezier(0.33, 1, 0.68, 1); /* soft settle (cards)  */
+  --ease-in: cubic-bezier(0.55, 0.06, 0.68, 0.19); /* accelerate (exits)   */
+
+  /* ready-made transitions */
+  --t-colors:
+    color var(--dur-2) var(--ease-standard),
+    background-color var(--dur-2) var(--ease-standard),
+    border-color var(--dur-2) var(--ease-standard);
+  --t-transform: transform var(--dur-3) var(--ease-gentle);
+  --t-theme: background-color var(--dur-4) ease, color var(--dur-4) ease;
+}
+
+/* Semantic tokens in dark mode reuse softer values */
+[data-theme="dark"] {
+  --success: #7fb295;
+  --success-soft: #23362b;
+  --info: #86b0c6;
+  --info-soft: #22323a;
+  --warning: #d8b27e;
+  --warning-soft: #3a3122;
+  --danger: #d29086;
+  --danger-soft: #3a2622;
+}
+
+/* ============ Motion primitives ============ */
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.99);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* utility classes (optional) */
+.anim-fade-up {
+  animation: fade-up var(--dur-5) var(--ease-out) both;
+}
+.anim-fade-in {
+  animation: fade-in var(--dur-4) var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  .anim-fade-up,
+  .anim-fade-in {
+    animation: none !important;
+    transition: none !important;
+  }
+}

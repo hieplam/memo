@@ -52,7 +52,7 @@ const t = useTranslations(locale);
     pageDesc={t.pages.postsDesc}
   >
     <LangFilter {languages} active={lang} />
-    <ul>
+    <ul class="post-stream">
       {page.data.map(data => <Card {...data} />)}
     </ul>
   </Main>

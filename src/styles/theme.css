@@ -8,34 +8,34 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
   --color-surface: var(--surface);
-  /* Warm reading serif for body & headings; mono kept for code and labels */
-  --font-reading: var(--font-spectral);
+  /* Calm all-sans reading voice; mono kept for code and labels */
+  --font-reading: var(--font-hanken);
   --font-app: var(--font-google-sans-code);
 }
 
-/* ===== Latte (light) ===== */
-/* Warm paper, espresso ink, a single cinnamon-roast accent. */
+/* ===== Sage / Fog (light) ===== */
+/* Warm fog paper, soft charcoal ink, a single muted sage-teal accent. */
 :root,
 [data-theme="light"] {
-  --background: oklch(0.965 0.013 80); /* #f8f3ea milk-foam paper */
-  --foreground: oklch(0.285 0.018 55); /* #312822 espresso ink    */
-  --accent: oklch(0.52 0.11 50); /* #9a5328 cinnamon roast  */
-  --accent-foreground: oklch(0.98 0.01 85); /* #fdf8ef on accent       */
-  --muted: oklch(0.91 0.018 75); /* #ece3d7 soft tint       */
-  --muted-foreground: oklch(0.505 0.025 55); /* #706157 taupe meta      */
-  --border: oklch(0.885 0.015 75); /* #dfd8ce hairline        */
-  --surface: oklch(0.935 0.016 78); /* #f0e8de raised panel    */
+  --background: #f3f2ec; /* fog paper        */
+  --foreground: #2c2e2a; /* soft charcoal    */
+  --accent: #4f7c6b; /* muted sage-teal  */
+  --accent-foreground: #f7f8f4; /* on accent        */
+  --muted: #eeede5; /* soft tint        */
+  --muted-foreground: #85857a; /* taupe meta       */
+  --border: #e1e0d6; /* hairline         */
+  --surface: #f9f8f3; /* raised panel     */
 }
 
-/* ===== Mocha (dark) ===== */
-/* Roasted-brown surface, warm milk text, caramel accent. */
+/* ===== Sage / Dusk (dark) ===== */
+/* Deep green-charcoal, warm off-white text, soft eucalyptus accent. */
 [data-theme="dark"] {
-  --background: oklch(0.255 0.018 55); /* #2a211b roasted brown   */
-  --foreground: oklch(0.92 0.013 82); /* #e9e4db warm milk       */
-  --accent: oklch(0.8 0.095 72); /* #e4b478 caramel / honey */
-  --accent-foreground: oklch(0.255 0.018 55); /* #2a211b on accent       */
-  --muted: oklch(0.33 0.02 55); /* #3a2f27 soft tint       */
-  --muted-foreground: oklch(0.745 0.022 72); /* #b5aa9e latte gray      */
-  --border: oklch(0.38 0.02 58); /* #4b4038 hairline        */
-  --surface: oklch(0.305 0.02 55); /* #372d26 raised panel    */
+  --background: #1b1e1b; /* dusk             */
+  --foreground: #e5e6dd; /* warm off-white   */
+  --accent: #8fb6a3; /* soft eucalyptus  */
+  --accent-foreground: #1b1e1b; /* on accent        */
+  --muted: #2b2f29; /* soft tint        */
+  --muted-foreground: #8f9085; /* latte gray       */
+  --border: #2d3029; /* hairline         */
+  --surface: #22251f; /* raised panel     */
 }
