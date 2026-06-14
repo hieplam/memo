@@ -61,11 +61,11 @@ export default defineConfig({
   },
   fonts: [
     {
-      // Warm reading serif: body & headings (the coffee-chill reading voice)
-      name: "Spectral",
-      cssVariable: "--font-spectral",
+      // Calm all-sans reading voice: body & headings
+      name: "Hanken Grotesk",
+      cssVariable: "--font-hanken",
       provider: fontProviders.google(),
-      fallbacks: ["Georgia", "Cambria", "serif"],
+      fallbacks: ["system-ui", "Segoe UI", "sans-serif"],
       weights: [400, 500, 600, 700],
       styles: ["normal", "italic"],
       formats: ["woff", "ttf"],

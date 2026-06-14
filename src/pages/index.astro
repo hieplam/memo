@@ -91,7 +91,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
           <h2 class="text-2xl font-semibold tracking-wide">
             {t.home.featured}
           </h2>
-          <ul>
+          <ul class="post-stream">
             {featuredPosts.map(data => (
               <Card variant="h3" {...data} />
             ))}
@@ -106,7 +106,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
           <h2 class="text-2xl font-semibold tracking-wide">
             {t.home.recentPosts}
           </h2>
-          <ul>
+          <ul class="post-stream">
             {recentPosts.slice(0, postsConfig.perIndex).map(data => (
               <Card variant="h3" {...data} />
             ))}

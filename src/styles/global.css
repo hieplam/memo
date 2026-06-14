@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "./theme.css";
+@import "./tokens.css";
 @import "./typography.css";
 @import "rehype-callouts/theme/obsidian";
 
@@ -35,4 +36,37 @@
 
 :target {
   scroll-margin-block: 1rem;
+}
+
+/* ===== Motion wiring =====
+   Calm, staggered entrance for streams of post cards. Wires the motion
+   primitives from tokens.css into the live components. Globally disabled
+   under prefers-reduced-motion (see the media query in tokens.css). */
+.post-stream > li {
+  animation: fade-up var(--dur-5) var(--ease-out) both;
+}
+.post-stream > li:nth-child(2) {
+  animation-delay: 70ms;
+}
+.post-stream > li:nth-child(3) {
+  animation-delay: 140ms;
+}
+.post-stream > li:nth-child(4) {
+  animation-delay: 210ms;
+}
+.post-stream > li:nth-child(5) {
+  animation-delay: 280ms;
+}
+.post-stream > li:nth-child(n + 6) {
+  animation-delay: 340ms;
+}
+
+/* Token-driven hover colour transition on post links. */
+.post-stream a {
+  transition: var(--t-colors);
+}
+
+/* Reading-progress bar: gently smooth the width tracking as you scroll. */
+#myBar {
+  transition: width var(--dur-1) linear;
 }
