@@ -23,10 +23,10 @@ one piece and chooses to read a second, then remembers where they read it.
 
 ## Brand Personality
 
-Chill, comfortable, unhurried. The voice of a good notebook over coffee, not a
-lecture and not a launch. Calm and confident: it knows the material well enough
-to explain it plainly, without theatrics. Three words: **warm, considered,
-unhurried.**
+Chill, comfortable, unhurried. The voice of a good notebook read in a quiet
+study, not a lecture and not a launch. Calm and confident: it knows the material
+well enough to explain it plainly, without theatrics. Three words: **warm,
+considered, unhurried.**
 
 ## Anti-references
 
@@ -44,7 +44,7 @@ unhurried.**
 1. **The reading is the product.** Every decision serves comfortable, sustained
    long-form reading. Chrome recedes; prose leads.
 2. **Warm restraint, not cold minimalism.** Calm and quiet, but with the warmth
-   of paper and coffee, never sterile or gray.
+   of worn paper and soft daylight, never sterile or gray.
 3. **Path to the second post.** The site actively, gently helps a reader who
    finished one piece find the next worthwhile one.
 4. **Bilingual by default, never an afterthought.** EN/VI parity is a
@@ -55,7 +55,7 @@ unhurried.**
 ## Accessibility & Inclusion
 
 - WCAG 2.1 AA as the floor: body text ≥ 4.5:1 contrast, large text ≥ 3:1, even
-  within the deliberately soft "low-contrast" coffee palette. "Easy on the eyes"
+  within the deliberately soft "low-contrast" Sage palette. "Easy on the eyes"
   is achieved with warm hues and reduced glare, **not** by dropping below legible
   contrast.
 - Full keyboard and screen-reader support (already a project feature); preserve
