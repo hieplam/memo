@@ -24,16 +24,16 @@ tags:
 
 **Cross-cutting concern** (mối quan tâm xuyên suốt) là những khía cạnh của một chương trình **ảnh hưởng tới nhiều phần / nhiều module khác nhau**, nhưng bản thân chúng **không thuộc về logic nghiệp vụ chính** (core business logic) của bất kỳ module nào.
 
-Nói cách khác: đó là những thứ mà *mọi nơi trong hệ thống đều cần*, nhưng *không nơi nào thực sự "sở hữu" nó*.
+Nói cách khác: đó là những thứ mà _mọi nơi trong hệ thống đều cần_, nhưng _không nơi nào thực sự "sở hữu" nó_.
 
 ### Phân biệt hai loại concern
 
-| Loại | Mô tả | Ví dụ |
-|------|-------|-------|
-| **Core concern** (mối quan tâm cốt lõi) | Logic nghiệp vụ riêng của từng module | Tính tiền đơn hàng, xử lý thanh toán, tính lương |
-| **Cross-cutting concern** (xuyên suốt) | Yêu cầu kỹ thuật lặp lại ở nhiều module | Logging, security, transaction, caching |
+| Loại                                    | Mô tả                                   | Ví dụ                                            |
+| --------------------------------------- | --------------------------------------- | ------------------------------------------------ |
+| **Core concern** (mối quan tâm cốt lõi) | Logic nghiệp vụ riêng của từng module   | Tính tiền đơn hàng, xử lý thanh toán, tính lương |
+| **Cross-cutting concern** (xuyên suốt)  | Yêu cầu kỹ thuật lặp lại ở nhiều module | Logging, security, transaction, caching          |
 
-Hình dung trực quan: nếu bạn vẽ hệ thống thành các "cột dọc" (mỗi cột là một module nghiệp vụ: Order, Payment, User...), thì cross-cutting concern chính là những "lát cắt ngang" đi xuyên qua *tất cả* các cột đó.
+Hình dung trực quan: nếu bạn vẽ hệ thống thành các "cột dọc" (mỗi cột là một module nghiệp vụ: Order, Payment, User...), thì cross-cutting concern chính là những "lát cắt ngang" đi xuyên qua _tất cả_ các cột đó.
 
 ```
         Order      Payment     User      Inventory
@@ -110,7 +110,7 @@ Cùng một đoạn code kỹ thuật bị **copy-paste lặp đi lặp lại** 
 
 ## 4. Cách giải quyết
 
-Mục tiêu chung: **tách (separate)** cross-cutting concern ra khỏi logic nghiệp vụ — gọi là *Separation of Concerns (SoC)*. Có nhiều kỹ thuật:
+Mục tiêu chung: **tách (separate)** cross-cutting concern ra khỏi logic nghiệp vụ — gọi là _Separation of Concerns (SoC)_. Có nhiều kỹ thuật:
 
 ### 4.1. AOP — Aspect-Oriented Programming
 
@@ -189,14 +189,14 @@ public async Task<Unit> Handle(CreateOrderCommand cmd, CancellationToken ct)
 
 ## 6. Tóm tắt
 
-| Câu hỏi | Trả lời ngắn gọn |
-|---------|------------------|
-| **Là gì?** | Khía cạnh kỹ thuật lặp lại, xuyên suốt nhiều module, không thuộc logic nghiệp vụ riêng của module nào |
-| **Ví dụ?** | Logging, security, transaction, caching, validation, monitoring |
-| **Vấn đề nếu bỏ qua?** | Tangling (rối) + Scattering (lặp) → khó đọc, khó bảo trì, vi phạm DRY & SRP |
-| **Tại sao quan tâm?** | Để tách bạch (Separation of Concerns) → code sạch, dễ bảo trì, dễ test, tái sử dụng |
-| **Giải quyết bằng?** | AOP, Middleware/Pipeline, MediatR Behavior, Decorator, DI Interceptor |
+| Câu hỏi                | Trả lời ngắn gọn                                                                                      |
+| ---------------------- | ----------------------------------------------------------------------------------------------------- |
+| **Là gì?**             | Khía cạnh kỹ thuật lặp lại, xuyên suốt nhiều module, không thuộc logic nghiệp vụ riêng của module nào |
+| **Ví dụ?**             | Logging, security, transaction, caching, validation, monitoring                                       |
+| **Vấn đề nếu bỏ qua?** | Tangling (rối) + Scattering (lặp) → khó đọc, khó bảo trì, vi phạm DRY & SRP                           |
+| **Tại sao quan tâm?**  | Để tách bạch (Separation of Concerns) → code sạch, dễ bảo trì, dễ test, tái sử dụng                   |
+| **Giải quyết bằng?**   | AOP, Middleware/Pipeline, MediatR Behavior, Decorator, DI Interceptor                                 |
 
 ---
 
-> **Ý chính:** Cross-cutting concern không xấu — chúng *cần thiết*. Vấn đề nằm ở chỗ **đặt chúng ở đâu**. Mục tiêu là tách chúng ra khỏi logic nghiệp vụ để mỗi phần code chỉ làm đúng một việc, theo nguyên tắc *Separation of Concerns*.
+> **Ý chính:** Cross-cutting concern không xấu — chúng _cần thiết_. Vấn đề nằm ở chỗ **đặt chúng ở đâu**. Mục tiêu là tách chúng ra khỏi logic nghiệp vụ để mỗi phần code chỉ làm đúng một việc, theo nguyên tắc _Separation of Concerns_.
