@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 720" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Visual companion architecture: agent, filesystem, server, and browser data flow">
+  <style>
+    .laneA { fill:#f5f7ff; }
+    .laneB { fill:#f8fafc; }
+    .laneC { fill:#f0fdf4; }
+    .laneD { fill:#faf5ff; }
+    .hdrA  { fill:#e0e7ff; stroke:#6366f1; stroke-width:2; }
+    .hdrB  { fill:#e2e8f0; stroke:#64748b; stroke-width:2; }
+    .hdrC  { fill:#dcfce7; stroke:#16a34a; stroke-width:2; }
+    .hdrD  { fill:#f3e8ff; stroke:#a855f7; stroke-width:2; }
+    .ht    { font-size:14px; font-weight:700; fill:#0f172a; }
+    .hs    { font-size:11px; fill:#475569; }
+    .life  { stroke:#cbd5e1; stroke-width:1.5; stroke-dasharray:4 4; }
+    .afile { stroke:#94a3b8; stroke-width:2; fill:none; }
+    .ahttp { stroke:#10b981; stroke-width:2; fill:none; }
+    .aws   { stroke:#a855f7; stroke-width:2; fill:none; }
+    .lf    { font-size:10.5px; fill:#475569; font-weight:600; }
+    .lh    { font-size:10.5px; fill:#047857; font-weight:600; }
+    .lw    { font-size:10.5px; fill:#7e22ce; font-weight:600; }
+    .bound { font-size:10.5px; fill:#64748b; font-style:italic; }
+  </style>
+  <defs>
+    <marker id="mf" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="mh" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#10b981"/></marker>
+    <marker id="mw" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a855f7"/></marker>
+  </defs>
+
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Why the skill ships a server — the data flow</text>
+  <text x="30" y="54" font-size="13" fill="#64748b">The agent and server never talk directly; only through files. The server talks to the browser live. Source: server.cjs, helper.js</text>
+
+  <!-- lane bodies -->
+  <rect class="laneA" x="30"  y="66" width="200" height="566" rx="8"/>
+  <rect class="laneB" x="262" y="66" width="206" height="566" rx="8"/>
+  <rect class="laneC" x="502" y="66" width="206" height="566" rx="8"/>
+  <rect class="laneD" x="742" y="66" width="206" height="566" rx="8"/>
+
+  <!-- lifelines -->
+  <line class="life" x1="130" y1="122" x2="130" y2="628"/>
+  <line class="life" x1="365" y1="122" x2="365" y2="628"/>
+  <line class="life" x1="605" y1="122" x2="605" y2="628"/>
+  <line class="life" x1="845" y1="122" x2="845" y2="628"/>
+
+  <!-- headers -->
+  <rect class="hdrA" x="30"  y="66" width="200" height="50" rx="8"/>
+  <text class="ht" x="130" y="89"  text-anchor="middle">Coding agent</text>
+  <text class="hs" x="130" y="106" text-anchor="middle">turn-based · reads/writes files</text>
+
+  <rect class="hdrB" x="262" y="66" width="206" height="50" rx="8"/>
+  <text class="ht" x="365" y="89"  text-anchor="middle">Session directory</text>
+  <text class="hs" x="365" y="106" text-anchor="middle">content/ screens · state/events</text>
+
+  <rect class="hdrC" x="502" y="66" width="206" height="50" rx="8"/>
+  <text class="ht" x="605" y="89"  text-anchor="middle">server.cjs</text>
+  <text class="hs" x="605" y="106" text-anchor="middle">zero-dep bridge · HTTP + WS</text>
+
+  <rect class="hdrD" x="742" y="66" width="206" height="50" rx="8"/>
+  <text class="ht" x="845" y="89"  text-anchor="middle">Browser + helper.js</text>
+  <text class="hs" x="845" y="106" text-anchor="middle">real-time · the human</text>
+
+  <!-- boundary labels -->
+  <text class="bound" x="246" y="136" text-anchor="middle">↔ files</text>
+  <text class="bound" x="485" y="136" text-anchor="middle">↔ files</text>
+  <text class="bound" x="725" y="136" text-anchor="middle">↔ live HTTP / WS</text>
+
+  <!-- step arrows -->
+  <path class="afile" d="M136,175 L357,175" marker-end="url(#mf)"/>
+  <text class="lf" x="247" y="168" text-anchor="middle">① write screen.html → content/</text>
+
+  <path class="afile" d="M371,228 L599,228" marker-end="url(#mf)"/>
+  <text class="lf" x="485" y="221" text-anchor="middle">② fs.watch fires (100ms debounce)</text>
+
+  <path class="aws" d="M611,288 L839,288" marker-end="url(#mw)"/>
+  <text class="lw" x="725" y="281" text-anchor="middle">③ WS push: {type:"reload"}</text>
+
+  <path class="ahttp" d="M839,348 L611,348" marker-end="url(#mh)"/>
+  <text class="lh" x="725" y="341" text-anchor="middle">④ GET /?key=… (reload)</text>
+
+  <path class="ahttp" d="M611,408 L839,408" marker-end="url(#mh)"/>
+  <text class="lh" x="725" y="401" text-anchor="middle">⑤ serve screen + inject helper.js</text>
+
+  <path class="aws" d="M839,468 L611,468" marker-end="url(#mw)"/>
+  <text class="lw" x="725" y="461" text-anchor="middle">⑥ click [data-choice] → WS event</text>
+
+  <path class="afile" d="M599,528 L371,528" marker-end="url(#mf)"/>
+  <text class="lf" x="485" y="521" text-anchor="middle">⑦ append → state/events</text>
+
+  <path class="afile" d="M357,588 L136,588" marker-end="url(#mf)"/>
+  <text class="lf" x="247" y="581" text-anchor="middle">⑧ next turn: read state/events</text>
+
+  <!-- legend + caption -->
+  <g transform="translate(30,648)">
+    <line class="afile" x1="0" y1="8" x2="26" y2="8" marker-end="url(#mf)"/><text x="32" y="12" font-size="11" fill="#475569">filesystem</text>
+    <line class="ahttp" x1="120" y1="8" x2="146" y2="8" marker-end="url(#mh)"/><text x="152" y="12" font-size="11" fill="#475569">HTTP</text>
+    <line class="aws"  x1="210" y1="8" x2="236" y2="8" marker-end="url(#mw)"/><text x="242" y="12" font-size="11" fill="#475569">WebSocket</text>
+  </g>
+  <text x="350" y="660" font-size="11.5" fill="#334155">The filesystem is the seam between the agent's turn-based world and the</text>
+  <text x="350" y="676" font-size="11.5" fill="#334155">browser's real-time one. That seam is exactly why a long-lived server exists.</text>
+</svg>

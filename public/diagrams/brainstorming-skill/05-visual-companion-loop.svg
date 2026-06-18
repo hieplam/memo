@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 770" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="The visual companion browser screen loop">
+  <style>
+    .proc  { fill:#eef2ff; stroke:#6366f1; stroke-width:2; }
+    .start { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .term  { fill:#f1f5f9; stroke:#64748b; stroke-width:2.5; }
+    .dec   { fill:#fff7ed; stroke:#f59e0b; stroke-width:2; }
+    .iter  { fill:#faf5ff; stroke:#a855f7; stroke-width:2; }
+    .info  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .t     { fill:#1e293b; font-size:13px; font-weight:600; }
+    .ts    { fill:#334155; font-size:11.5px; }
+    .dt    { fill:#7c2d12; font-size:12px; font-weight:600; }
+    .it    { fill:#6b21a8; font-size:12.5px; font-weight:600; }
+    .edge  { fill:none; stroke:#94a3b8; stroke-width:2; }
+    .loop  { fill:none; stroke:#f59e0b; stroke-width:2.5; stroke-dasharray:6 4; }
+    .iedge { fill:none; stroke:#a855f7; stroke-width:2; stroke-dasharray:5 3; }
+    .el    { fill:#475569; font-size:12px; font-weight:600; }
+    .elo   { fill:#b45309; font-size:12px; font-weight:700; }
+    .elv   { fill:#7e22ce; font-size:12px; font-weight:600; }
+  </style>
+  <defs>
+    <marker id="a"  markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
+    <marker id="av" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a855f7"/></marker>
+  </defs>
+
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">The browser screen loop</text>
+  <text x="30" y="54" font-size="13" fill="#64748b">One turn = one screen. Write HTML → end turn → read clicks next turn. Source: visual-companion.md 105–137</text>
+
+  <!-- spine edges -->
+  <path class="edge" d="M340,120 L340,144" marker-end="url(#a)"/>
+  <path class="edge" d="M340,194 L340,226" marker-end="url(#a)"/>
+  <path class="edge" d="M340,278 L340,310" marker-end="url(#a)"/>
+  <path class="edge" d="M340,358 L340,390" marker-end="url(#a)"/>
+  <path class="edge" d="M340,446 L340,468" marker-end="url(#a)"/>
+  <path class="edge" d="M340,536 L340,576" marker-end="url(#a)"/>
+  <text class="el" x="348" y="560">yes</text>
+  <path class="edge" d="M340,644 L340,684" marker-end="url(#a)"/>
+  <text class="el" x="348" y="668">no · done</text>
+
+  <!-- iterate branch -->
+  <path class="iedge" d="M460,502 L560,502" marker-end="url(#av)"/>
+  <text class="elv" x="468" y="494">no · iterate</text>
+  <path class="iedge" d="M700,476 L700,334 L500,334" marker-end="url(#av)"/>
+
+  <!-- next-screen loop -->
+  <path class="loop" d="M220,610 L100,610 L100,169 L180,169" marker-end="url(#al)"/>
+  <text class="elo" x="110" y="396">yes ·</text>
+  <text class="elo" x="110" y="412">next</text>
+  <text class="elo" x="110" y="428">screen</text>
+
+  <!-- nodes -->
+  <rect class="start" x="200" y="80" width="280" height="40" rx="20"/>
+  <text class="t" x="340" y="105" text-anchor="middle">Companion running — browser open</text>
+
+  <rect class="proc" x="180" y="144" width="320" height="50" rx="10"/>
+  <text class="t" x="340" y="166" text-anchor="middle">Check the server is alive</text>
+  <text class="ts" x="340" y="184" text-anchor="middle">restart with the same --project-dir if it's down</text>
+
+  <rect class="proc" x="180" y="226" width="320" height="52" rx="10"/>
+  <text class="t" x="340" y="250" text-anchor="middle">Write a NEW semantic .html to screen_dir</text>
+  <text class="ts" x="340" y="269" text-anchor="middle">never reuse a filename · server serves the newest</text>
+
+  <rect class="proc" x="180" y="310" width="320" height="48" rx="10"/>
+  <text class="t" x="340" y="332" text-anchor="middle">Tell the user · remind the URL · end the turn</text>
+  <text class="ts" x="340" y="350" text-anchor="middle">give a one-line summary of what's on screen</text>
+
+  <rect class="proc" x="180" y="390" width="320" height="56" rx="10"/>
+  <text class="t" x="340" y="414" text-anchor="middle">Next turn: read state_dir/events</text>
+  <text class="ts" x="340" y="433" text-anchor="middle">merge the browser clicks with the terminal reply</text>
+
+  <polygon class="dec" points="340,468 460,502 340,536 220,502"/>
+  <text class="dt" x="340" y="498" text-anchor="middle">Screen</text>
+  <text class="dt" x="340" y="513" text-anchor="middle">validated?</text>
+
+  <rect class="iter" x="560" y="476" width="280" height="52" rx="10"/>
+  <text class="it" x="700" y="500" text-anchor="middle">Write layout-v2.html</text>
+  <text class="ts" x="700" y="518" text-anchor="middle">iterate, then re-present (back to “end turn”)</text>
+
+  <polygon class="dec" points="340,576 460,610 340,644 220,610"/>
+  <text class="dt" x="340" y="606" text-anchor="middle">More visual</text>
+  <text class="dt" x="340" y="621" text-anchor="middle">questions?</text>
+
+  <rect class="term" x="180" y="684" width="320" height="52" rx="10"/>
+  <text class="t" x="340" y="707" text-anchor="middle">Unload: push a “waiting” screen</text>
+  <text class="ts" x="340" y="725" text-anchor="middle">clears stale content → continue in the terminal</text>
+
+  <!-- events side note -->
+  <g>
+    <rect class="info" x="560" y="144" width="290" height="150" rx="8"/>
+    <text x="574" y="166" font-size="12.5" font-weight="700" fill="#0f172a">How selections arrive</text>
+    <text x="574" y="190" font-size="11.5" fill="#334155">• clicks → state_dir/events</text>
+    <text x="574" y="210" font-size="11.5" fill="#334155">• one JSON object per line</text>
+    <text x="574" y="230" font-size="11.5" fill="#334155">• file cleared when you push a</text>
+    <text x="592" y="246" font-size="11.5" fill="#334155">new screen</text>
+    <text x="574" y="266" font-size="11.5" fill="#334155">• last choice ≈ final selection;</text>
+    <text x="592" y="282" font-size="11.5" fill="#334155">terminal text is primary</text>
+  </g>
+</svg>

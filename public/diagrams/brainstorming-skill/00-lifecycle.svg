@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 1140" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="End-to-end lifecycle of the brainstorming skill">
+  <style>
+    .proc  { fill:#eef2ff; stroke:#6366f1; stroke-width:2; }
+    .start { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .term  { fill:#d1fae5; stroke:#059669; stroke-width:3; }
+    .gate  { fill:#fef2f2; stroke:#ef4444; stroke-width:2; }
+    .dec   { fill:#fff7ed; stroke:#f59e0b; stroke-width:2; }
+    .side  { fill:#faf5ff; stroke:#a855f7; stroke-width:1.5; stroke-dasharray:4 3; }
+    .t     { fill:#1e293b; font-size:14px; font-weight:600; }
+    .ts    { fill:#334155; font-size:12.5px; }
+    .gt    { fill:#991b1b; font-size:13px; font-weight:700; }
+    .dt    { fill:#7c2d12; font-size:12.5px; font-weight:600; }
+    .nt    { fill:#6b21a8; font-size:12px; }
+    .edge  { fill:none; stroke:#94a3b8; stroke-width:2; }
+    .loop  { fill:none; stroke:#f59e0b; stroke-width:2; stroke-dasharray:6 4; }
+    .el    { fill:#475569; font-size:12px; font-weight:600; }
+    .elo   { fill:#b45309; font-size:12px; font-weight:600; }
+    .star  { fill:#6366f1; font-size:13px; font-weight:700; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
+  </defs>
+
+  <text x="30" y="34" font-size="22" font-weight="700" fill="#0f172a">The brainstorming skill — end-to-end lifecycle</text>
+  <text x="30" y="56" font-size="13" fill="#64748b">From a creative request to the single legal exit: invoking writing-plans. Source: skills/brainstorming/SKILL.md</text>
+
+  <!-- spine edges -->
+  <path class="edge" d="M290,124 L290,148" marker-end="url(#a)"/>
+  <path class="edge" d="M290,196 L290,232" marker-end="url(#a)"/>
+  <path class="edge" d="M290,276 L290,300" marker-end="url(#a)"/>
+  <path class="edge" d="M290,364 L290,400" marker-end="url(#a)"/>
+  <path class="edge" d="M290,456 L290,496" marker-end="url(#a)"/>
+  <path class="edge" d="M290,552 L290,592" marker-end="url(#a)"/>
+  <path class="edge" d="M290,648 L290,668" marker-end="url(#a)"/>
+  <path class="edge" d="M290,732 L290,760" marker-end="url(#a)"/>
+  <path class="edge" d="M290,812 L290,842" marker-end="url(#a)"/>
+  <path class="edge" d="M290,894 L290,914" marker-end="url(#a)"/>
+  <path class="edge" d="M290,978 L290,1006" marker-end="url(#a)"/>
+
+  <!-- scope branch: yes -> decompose -> back into ask -->
+  <path class="loop" d="M400,332 L520,332" marker-end="url(#al)"/>
+  <text class="elo" x="430" y="324">yes</text>
+  <path class="loop" d="M650,364 L650,428 L450,428" marker-end="url(#al)"/>
+  <text class="elo" x="455" y="420">brainstorm 1st sub-project →</text>
+  <text class="el" x="300" y="388">no</text>
+
+  <!-- approve loop: no revise -->
+  <path class="loop" d="M400,700 L560,700 L560,620 L450,620" marker-end="url(#al)"/>
+  <text class="elo" x="468" y="694">no · revise</text>
+  <text class="el" x="298" y="752">yes</text>
+
+  <!-- review loop: changes -->
+  <path class="loop" d="M400,946 L560,946 L560,786 L450,786" marker-end="url(#al)"/>
+  <text class="elo" x="468" y="940">changes</text>
+  <text class="el" x="298" y="998">approved</text>
+
+  <!-- nodes -->
+  <rect class="start" x="130" y="80" width="320" height="44" rx="22"/>
+  <text class="t" x="290" y="107" text-anchor="middle">Creative request → brainstorming auto-triggers</text>
+
+  <rect class="gate" x="120" y="148" width="340" height="48" rx="8"/>
+  <text class="gt" x="290" y="170" text-anchor="middle">⛔ HARD-GATE: no code · no scaffolding · no skill calls</text>
+  <text class="gt" x="290" y="188" text-anchor="middle">until a design is presented AND approved</text>
+
+  <rect class="proc" x="130" y="232" width="320" height="44" rx="10"/>
+  <text class="t" x="290" y="259" text-anchor="middle">1 · Explore project context</text>
+
+  <polygon class="dec" points="290,300 400,332 290,364 180,332"/>
+  <text class="dt" x="290" y="329" text-anchor="middle">Multiple independent</text>
+  <text class="dt" x="290" y="344" text-anchor="middle">subsystems?</text>
+
+  <rect class="proc" x="520" y="300" width="260" height="64" rx="10"/>
+  <text class="ts" x="650" y="328" text-anchor="middle">Decompose into sub-projects;</text>
+  <text class="ts" x="650" y="346" text-anchor="middle">each gets its own spec→plan cycle</text>
+
+  <!-- the Socratic heart -->
+  <rect class="proc" x="130" y="400" width="320" height="56" rx="10" stroke-width="3"/>
+  <text class="star" x="290" y="424" text-anchor="middle">★ 3 · Ask clarifying questions — ONE at a time</text>
+  <text class="ts" x="290" y="444" text-anchor="middle">the Socratic loop · see Diagram 02</text>
+
+  <rect class="side" x="476" y="402" width="300" height="52" rx="8"/>
+  <text class="nt" x="490" y="424">2 · Visual companion offered just-in-time —</text>
+  <text class="nt" x="490" y="442">only when a question is clearer shown than told</text>
+
+  <rect class="proc" x="130" y="496" width="320" height="56" rx="10"/>
+  <text class="t" x="290" y="520" text-anchor="middle">4 · Propose 2–3 approaches + trade-offs</text>
+  <text class="ts" x="290" y="540" text-anchor="middle">recommendation first, with reasoning</text>
+
+  <rect class="proc" x="130" y="592" width="320" height="56" rx="10"/>
+  <text class="t" x="290" y="616" text-anchor="middle">5 · Present design in sections</text>
+  <text class="ts" x="290" y="636" text-anchor="middle">each scaled to its own complexity</text>
+
+  <polygon class="dec" points="290,668 400,700 290,732 180,700"/>
+  <text class="dt" x="290" y="697" text-anchor="middle">Section</text>
+  <text class="dt" x="290" y="712" text-anchor="middle">approved?</text>
+
+  <rect class="proc" x="130" y="760" width="320" height="52" rx="10"/>
+  <text class="t" x="290" y="782" text-anchor="middle">6 · Write design doc &amp; commit</text>
+  <text class="ts" x="290" y="800" text-anchor="middle">docs/superpowers/specs/YYYY-MM-DD-…</text>
+
+  <rect class="proc" x="130" y="842" width="320" height="52" rx="10"/>
+  <text class="t" x="290" y="864" text-anchor="middle">7 · Spec self-review (fix inline)</text>
+  <text class="ts" x="290" y="882" text-anchor="middle">placeholders · contradictions · scope · ambiguity</text>
+
+  <polygon class="dec" points="290,914 400,946 290,978 180,946"/>
+  <text class="dt" x="290" y="943" text-anchor="middle">8 · User approves</text>
+  <text class="dt" x="290" y="958" text-anchor="middle">the written spec?</text>
+
+  <rect class="term" x="130" y="1006" width="320" height="52" rx="10"/>
+  <text class="t" x="290" y="1028" text-anchor="middle" font-weight="700">9 · Invoke writing-plans skill</text>
+  <text class="ts" x="290" y="1046" text-anchor="middle">the ONLY exit — no other implementation skill</text>
+
+  <!-- legend -->
+  <g transform="translate(610,150)">
+    <rect x="0" y="0" width="230" height="120" rx="8" fill="#f8fafc" stroke="#e2e8f0"/>
+    <text x="12" y="20" font-size="12" font-weight="700" fill="#0f172a">Legend</text>
+    <rect x="12" y="30" width="22" height="13" rx="3" class="proc"/><text x="42" y="41" font-size="11.5" fill="#334155">process step</text>
+    <polygon points="23,52 34,59 23,66 12,59" class="dec"/><text x="42" y="63" font-size="11.5" fill="#334155">decision</text>
+    <rect x="12" y="74" width="22" height="13" rx="3" class="gate"/><text x="42" y="85" font-size="11.5" fill="#334155">hard gate</text>
+    <rect x="12" y="96" width="22" height="13" rx="6" class="term"/><text x="42" y="107" font-size="11.5" fill="#334155">terminal exit</text>
+  </g>
+</svg>

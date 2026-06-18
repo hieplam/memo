@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 680" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="From answers to design: approaches and incremental validation">
+  <style>
+    .proc  { fill:#eef2ff; stroke:#6366f1; stroke-width:2; }
+    .start { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .term  { fill:#d1fae5; stroke:#059669; stroke-width:2.5; }
+    .dec   { fill:#fff7ed; stroke:#f59e0b; stroke-width:2; }
+    .info  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .rec   { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .alt   { fill:#f1f5f9; stroke:#94a3b8; stroke-width:1.5; }
+    .t     { fill:#1e293b; font-size:13.5px; font-weight:600; }
+    .ts    { fill:#334155; font-size:12px; }
+    .dt    { fill:#7c2d12; font-size:12px; font-weight:600; }
+    .edge  { fill:none; stroke:#94a3b8; stroke-width:2; }
+    .loop  { fill:none; stroke:#f59e0b; stroke-width:2.5; stroke-dasharray:6 4; }
+    .el    { fill:#475569; font-size:12px; font-weight:600; }
+    .elo   { fill:#b45309; font-size:12px; font-weight:700; }
+  </style>
+  <defs>
+    <marker id="a"  markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
+  </defs>
+
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">From answers to design — incremental validation</text>
+  <text x="30" y="54" font-size="13" fill="#64748b">Approaches first, then the design is approved one section at a time. Source: SKILL.md 75–87, 137–139</text>
+
+  <!-- spine edges -->
+  <path class="edge" d="M340,126 L340,146" marker-end="url(#a)"/>
+  <path class="edge" d="M340,218 L340,270" marker-end="url(#a)"/>
+  <path class="edge" d="M340,326 L340,366" marker-end="url(#a)"/>
+  <path class="edge" d="M340,434 L340,476" marker-end="url(#a)"/>
+  <text class="el" x="348" y="460">yes</text>
+  <path class="edge" d="M340,544 L340,578" marker-end="url(#a)"/>
+  <text class="el" x="348" y="566">no — done</text>
+
+  <!-- merged loop back to "present section" -->
+  <path class="loop" d="M220,400 L100,400" />
+  <path class="loop" d="M220,510 L100,510" />
+  <path class="loop" d="M100,510 L100,298 L180,298" marker-end="url(#al)"/>
+  <text class="elo" x="120" y="392">no · revise</text>
+  <text class="elo" x="120" y="502">yes · next section</text>
+
+  <!-- nodes -->
+  <rect class="start" x="180" y="86" width="320" height="40" rx="20"/>
+  <text class="t" x="340" y="111" text-anchor="middle">from: shared understanding (interview complete)</text>
+
+  <rect class="proc" x="180" y="146" width="320" height="72" rx="10"/>
+  <text class="t" x="340" y="174" text-anchor="middle">Propose 2–3 approaches + trade-offs</text>
+  <text class="ts" x="340" y="194" text-anchor="middle">lead with your recommendation and the</text>
+  <text class="ts" x="340" y="210" text-anchor="middle">reasoning behind it</text>
+
+  <!-- A/B/C side -->
+  <g>
+    <rect class="rec" x="560" y="146" width="280" height="22" rx="5"/>
+    <text x="572" y="161" font-size="11.5" font-weight="700" fill="#065f46">A ★ recommended — explain why</text>
+    <rect class="alt" x="560" y="172" width="280" height="22" rx="5"/>
+    <text x="572" y="187" font-size="11.5" fill="#475569">B alternative — trade-offs</text>
+    <rect class="alt" x="560" y="198" width="280" height="22" rx="5"/>
+    <text x="572" y="213" font-size="11.5" fill="#475569">C alternative — trade-offs</text>
+  </g>
+
+  <rect class="proc" x="180" y="270" width="320" height="56" rx="10"/>
+  <text class="t" x="340" y="294" text-anchor="middle">Present the NEXT design section</text>
+  <text class="ts" x="340" y="313" text-anchor="middle">scaled to complexity — a sentence … up to ~300 words</text>
+
+  <!-- coverage checklist -->
+  <g>
+    <rect class="info" x="560" y="270" width="280" height="150" rx="8"/>
+    <text x="574" y="292" font-size="12.5" font-weight="700" fill="#0f172a">Cover across the sections</text>
+    <text x="574" y="316" font-size="12" fill="#334155">▢ architecture</text>
+    <text x="574" y="338" font-size="12" fill="#334155">▢ components</text>
+    <text x="574" y="360" font-size="12" fill="#334155">▢ data flow</text>
+    <text x="574" y="382" font-size="12" fill="#334155">▢ error handling</text>
+    <text x="574" y="404" font-size="12" fill="#334155">▢ testing</text>
+  </g>
+
+  <polygon class="dec" points="340,366 460,400 340,434 220,400"/>
+  <text class="dt" x="340" y="396" text-anchor="middle">Section looks</text>
+  <text class="dt" x="340" y="411" text-anchor="middle">right so far?</text>
+
+  <polygon class="dec" points="340,476 460,510 340,544 220,510"/>
+  <text class="dt" x="340" y="506" text-anchor="middle">More sections</text>
+  <text class="dt" x="340" y="521" text-anchor="middle">to cover?</text>
+
+  <rect class="term" x="180" y="578" width="320" height="48" rx="10"/>
+  <text class="t" x="340" y="607" text-anchor="middle" font-weight="700">All sections approved → Write design doc</text>
+</svg>
