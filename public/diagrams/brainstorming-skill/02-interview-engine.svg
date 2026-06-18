@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 860" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="The Socratic interview engine: the one-question-at-a-time loop">
+  <style>
+    .proc  { fill:#eef2ff; stroke:#6366f1; stroke-width:2; }
+    .start { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .term  { fill:#d1fae5; stroke:#059669; stroke-width:2.5; }
+    .dec   { fill:#fff7ed; stroke:#f59e0b; stroke-width:2; }
+    .vis   { fill:#faf5ff; stroke:#a855f7; stroke-width:2; }
+    .t     { fill:#1e293b; font-size:13.5px; font-weight:600; }
+    .ts    { fill:#334155; font-size:12px; }
+    .dt    { fill:#7c2d12; font-size:12px; font-weight:600; }
+    .vt    { fill:#6b21a8; font-size:12.5px; font-weight:600; }
+    .edge  { fill:none; stroke:#94a3b8; stroke-width:2; }
+    .loop  { fill:none; stroke:#f59e0b; stroke-width:2.5; stroke-dasharray:6 4; }
+    .vedge { fill:none; stroke:#a855f7; stroke-width:2; stroke-dasharray:5 3; }
+    .el    { fill:#475569; font-size:12px; font-weight:600; }
+    .elo   { fill:#b45309; font-size:12px; font-weight:700; }
+    .elv   { fill:#7e22ce; font-size:12px; font-weight:600; }
+  </style>
+  <defs>
+    <marker id="a"  markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
+    <marker id="av" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#a855f7"/></marker>
+  </defs>
+
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">The Socratic interview engine</text>
+  <text x="30" y="54" font-size="13" fill="#64748b">The one-question-at-a-time loop that converts a rough idea into shared understanding. Source: SKILL.md 65–73, 142–157</text>
+
+  <!-- edges spine -->
+  <path class="edge" d="M320,126 L320,138" marker-end="url(#a)"/>
+  <path class="edge" d="M320,204 L320,232" marker-end="url(#a)"/>
+  <text class="el" x="328" y="223">no</text>
+  <path class="edge" d="M320,284 L320,320" marker-end="url(#a)"/>
+  <path class="edge" d="M320,372 L320,388" marker-end="url(#a)"/>
+  <path class="edge" d="M320,452 L320,508" marker-end="url(#a)"/>
+  <text class="el" x="328" y="482">no · tell in terminal</text>
+  <path class="edge" d="M320,560 L320,596" marker-end="url(#a)"/>
+  <path class="edge" d="M320,648 L320,662" marker-end="url(#a)"/>
+  <path class="edge" d="M320,730 L320,766" marker-end="url(#a)"/>
+  <text class="el" x="328" y="752">yes</text>
+
+  <!-- scope branch -->
+  <path class="loop" d="M440,170 L540,170" marker-end="url(#al)"/>
+  <text class="elo" x="468" y="162">yes</text>
+  <path class="loop" d="M690,198 L690,258 L470,258" marker-end="url(#al)"/>
+  <text class="elo" x="556" y="250">first sub-project</text>
+
+  <!-- visual companion branch -->
+  <path class="vedge" d="M440,420 L540,420" marker-end="url(#av)"/>
+  <text class="elv" x="452" y="412">yes · show</text>
+  <path class="vedge" d="M690,448 L690,534 L470,534" marker-end="url(#av)"/>
+
+  <!-- the loop back-edge -->
+  <path class="loop" d="M190,696 L80,696 L80,258 L170,258" marker-end="url(#al)"/>
+  <text class="elo" x="92" y="455">no — a gap remains,</text>
+  <text class="elo" x="92" y="471">or an answer contradicted</text>
+  <text class="elo" x="92" y="487">earlier → re-clarify</text>
+  <text class="elo" x="92" y="503">(be flexible)</text>
+
+  <!-- nodes -->
+  <rect class="start" x="190" y="86" width="260" height="40" rx="20"/>
+  <text class="t" x="320" y="111" text-anchor="middle">from: Explore project context</text>
+
+  <polygon class="dec" points="320,136 440,170 320,204 200,170"/>
+  <text class="dt" x="320" y="166" text-anchor="middle">Multiple independent</text>
+  <text class="dt" x="320" y="181" text-anchor="middle">subsystems?</text>
+
+  <rect class="proc" x="540" y="142" width="300" height="56" rx="10"/>
+  <text class="ts" x="690" y="168" text-anchor="middle">Decompose → brainstorm the</text>
+  <text class="ts" x="690" y="186" text-anchor="middle">first sub-project through this loop</text>
+
+  <rect class="proc" x="170" y="232" width="300" height="52" rx="10"/>
+  <text class="t" x="320" y="256" text-anchor="middle">Pick the next most valuable unknown</text>
+  <text class="ts" x="320" y="275" text-anchor="middle">purpose · constraint · success criterion</text>
+
+  <rect class="proc" x="170" y="320" width="300" height="52" rx="10"/>
+  <text class="t" x="320" y="344" text-anchor="middle">Frame it as ONE question</text>
+  <text class="ts" x="320" y="363" text-anchor="middle">multiple-choice when possible</text>
+
+  <polygon class="dec" points="320,388 440,420 320,452 200,420"/>
+  <text class="dt" x="320" y="416" text-anchor="middle">Clearer shown</text>
+  <text class="dt" x="320" y="431" text-anchor="middle">than told?</text>
+
+  <rect class="vis" x="540" y="392" width="300" height="56" rx="10"/>
+  <text class="vt" x="690" y="418" text-anchor="middle">Render it as a screen in</text>
+  <text class="vt" x="690" y="436" text-anchor="middle">the visual companion (browser)</text>
+
+  <rect class="proc" x="170" y="508" width="300" height="52" rx="10"/>
+  <text class="t" x="320" y="532" text-anchor="middle">Ask · end the turn · wait</text>
+  <text class="ts" x="320" y="551" text-anchor="middle">for the human's answer</text>
+
+  <rect class="proc" x="170" y="596" width="300" height="52" rx="10"/>
+  <text class="t" x="320" y="620" text-anchor="middle">Integrate the answer → update</text>
+  <text class="ts" x="320" y="639" text-anchor="middle">understanding → YAGNI-prune</text>
+
+  <polygon class="dec" points="320,662 450,696 320,730 190,696"/>
+  <text class="dt" x="320" y="692" text-anchor="middle">Purpose + constraints +</text>
+  <text class="dt" x="320" y="707" text-anchor="middle">success all clear?</text>
+
+  <rect class="term" x="170" y="766" width="300" height="48" rx="10"/>
+  <text class="t" x="320" y="795" text-anchor="middle" font-weight="700">→ Propose 2–3 approaches</text>
+</svg>

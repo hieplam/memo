@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 650" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="The spec pipeline: write, self-review, user gate, handoff">
+  <style>
+    .proc  { fill:#eef2ff; stroke:#6366f1; stroke-width:2; }
+    .start { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .term  { fill:#d1fae5; stroke:#059669; stroke-width:2.5; }
+    .dec   { fill:#fff7ed; stroke:#f59e0b; stroke-width:2; }
+    .opt   { fill:#f5f3ff; stroke:#a855f7; stroke-width:2; stroke-dasharray:6 4; }
+    .info  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .t     { fill:#1e293b; font-size:13.5px; font-weight:600; }
+    .ts    { fill:#334155; font-size:12px; }
+    .dt    { fill:#7c2d12; font-size:12px; font-weight:600; }
+    .ot    { fill:#6b21a8; font-size:12.5px; font-weight:600; }
+    .edge  { fill:none; stroke:#94a3b8; stroke-width:2; }
+    .loop  { fill:none; stroke:#f59e0b; stroke-width:2.5; stroke-dasharray:6 4; }
+    .el    { fill:#475569; font-size:12px; font-weight:600; }
+    .elo   { fill:#b45309; font-size:12px; font-weight:700; }
+  </style>
+  <defs>
+    <marker id="a"  markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
+    <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
+  </defs>
+
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Locking it down — the spec pipeline</text>
+  <text x="30" y="54" font-size="13" fill="#64748b">Capture the design as a committed spec, self-review, then a human gate before handoff. Source: SKILL.md 102–131</text>
+
+  <!-- spine -->
+  <path class="edge" d="M340,126 L340,146" marker-end="url(#a)"/>
+  <path class="edge" d="M340,210 L340,240" marker-end="url(#a)"/>
+  <path class="edge" d="M340,296 L340,334" marker-end="url(#a)"/>
+  <path class="edge" d="M340,398 L340,434" marker-end="url(#a)"/>
+  <path class="edge" d="M340,506 L340,540" marker-end="url(#a)"/>
+  <text class="el" x="348" y="528">approved</text>
+
+  <!-- loop -->
+  <path class="loop" d="M220,470 L90,470 L90,178 L180,178" marker-end="url(#al)"/>
+  <text class="elo" x="100" y="320">changes requested</text>
+  <text class="elo" x="100" y="336">→ fix &amp; re-review</text>
+
+  <!-- nodes -->
+  <rect class="start" x="180" y="86" width="320" height="40" rx="20"/>
+  <text class="t" x="340" y="111" text-anchor="middle">from: design approved by the human</text>
+
+  <rect class="proc" x="180" y="146" width="320" height="64" rx="10"/>
+  <text class="t" x="340" y="174" text-anchor="middle">Write the spec &amp; commit to git</text>
+  <text class="ts" x="340" y="194" text-anchor="middle">docs/superpowers/specs/YYYY-MM-DD-&lt;topic&gt;-design.md</text>
+
+  <rect class="proc" x="180" y="240" width="320" height="56" rx="10"/>
+  <text class="t" x="340" y="264" text-anchor="middle">Spec self-review — fresh eyes</text>
+  <text class="ts" x="340" y="283" text-anchor="middle">fix issues inline · no re-review needed</text>
+
+  <g>
+    <rect class="info" x="560" y="232" width="290" height="118" rx="8"/>
+    <text x="574" y="252" font-size="12.5" font-weight="700" fill="#0f172a">Self-review checks</text>
+    <text x="574" y="274" font-size="12" fill="#334155">1 · placeholders / TODO / TBD?</text>
+    <text x="574" y="294" font-size="12" fill="#334155">2 · internal contradictions?</text>
+    <text x="574" y="314" font-size="12" fill="#334155">3 · scope — one plan, or split?</text>
+    <text x="574" y="334" font-size="12" fill="#334155">4 · ambiguous two ways? pick one</text>
+  </g>
+
+  <rect class="opt" x="180" y="334" width="320" height="64" rx="10"/>
+  <text class="ot" x="340" y="362" text-anchor="middle">Optional: dispatch a spec-reviewer subagent</text>
+  <text class="ot" x="340" y="382" text-anchor="middle">template: spec-document-reviewer-prompt.md</text>
+
+  <g>
+    <rect class="info" x="560" y="334" width="290" height="64" rx="8"/>
+    <text x="574" y="356" font-size="12.5" font-weight="700" fill="#0f172a">Reviewer returns</text>
+    <text x="574" y="378" font-size="12" fill="#334155">Status · Issues · Recommendations</text>
+  </g>
+
+  <polygon class="dec" points="340,434 470,470 340,506 210,470"/>
+  <text class="dt" x="340" y="466" text-anchor="middle">User approves the</text>
+  <text class="dt" x="340" y="481" text-anchor="middle">written spec?</text>
+
+  <rect class="term" x="180" y="540" width="320" height="52" rx="10"/>
+  <text class="t" x="340" y="563" text-anchor="middle" font-weight="700">Invoke writing-plans skill</text>
+  <text class="ts" x="340" y="581" text-anchor="middle">the only exit — implementation planning begins</text>
+</svg>

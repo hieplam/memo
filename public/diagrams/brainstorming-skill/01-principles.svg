@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 640" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="The six principles of the Socratic brainstorming dialogue">
+  <style>
+    .card { fill:#f8fafc; stroke:#e2e8f0; stroke-width:1.5; }
+    .accent { fill:#6366f1; }
+    .h { fill:#3730a3; font-size:15px; font-weight:700; }
+    .b { fill:#334155; font-size:12.5px; }
+    .banner { fill:#eef2ff; stroke:#6366f1; stroke-width:2; }
+    .target { fill:#ecfdf5; stroke:#10b981; stroke-width:1.5; }
+    .th { fill:#065f46; font-size:13px; font-weight:700; }
+    .tb { fill:#334155; font-size:12px; }
+  </style>
+
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Six principles behind the Socratic dialogue</text>
+  <text x="30" y="54" font-size="13" fill="#64748b">What shapes every question. Source: SKILL.md lines 133–140 (Key Principles) &amp; 73; README.md:232</text>
+
+  <!-- banner -->
+  <rect class="banner" x="40" y="74" width="780" height="50" rx="8"/>
+  <text x="430" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="#3730a3">“Dialogue, not interrogation.”</text>
+  <text x="430" y="114" text-anchor="middle" font-size="12.5" fill="#475569">Natural collaborative dialogue that refines a rough idea into a validated design — the project calls it “Socratic design refinement.”</text>
+
+  <!-- 6 cards -->
+  <!-- row 1 -->
+  <g>
+    <rect class="card" x="40" y="146" width="380" height="92" rx="8"/>
+    <rect class="accent" x="40" y="146" width="6" height="92" rx="3"/>
+    <text class="h" x="62" y="174">1 · One question at a time</text>
+    <text class="b" x="62" y="196">Never batch. Exactly one question per message;</text>
+    <text class="b" x="62" y="214">split a big topic across several turns instead.</text>
+  </g>
+  <g>
+    <rect class="card" x="440" y="146" width="380" height="92" rx="8"/>
+    <rect class="accent" x="440" y="146" width="6" height="92" rx="3"/>
+    <text class="h" x="462" y="174">2 · Multiple-choice preferred</text>
+    <text class="b" x="462" y="196">Offer A/B/C options when you can — easier to</text>
+    <text class="b" x="462" y="214">answer. Open-ended is allowed, not the default.</text>
+  </g>
+  <!-- row 2 -->
+  <g>
+    <rect class="card" x="40" y="250" width="380" height="92" rx="8"/>
+    <rect class="accent" x="40" y="250" width="6" height="92" rx="3"/>
+    <text class="h" x="62" y="278">3 · YAGNI ruthlessly</text>
+    <text class="b" x="62" y="300">Actively strip unrequested features out of every</text>
+    <text class="b" x="62" y="318">design. The dialogue removes scope, not just adds.</text>
+  </g>
+  <g>
+    <rect class="card" x="440" y="250" width="380" height="92" rx="8"/>
+    <rect class="accent" x="440" y="250" width="6" height="92" rx="3"/>
+    <text class="h" x="462" y="278">4 · Explore alternatives</text>
+    <text class="b" x="462" y="300">Always float 2–3 approaches before settling —</text>
+    <text class="b" x="462" y="318">lead with a recommendation and the reasoning.</text>
+  </g>
+  <!-- row 3 -->
+  <g>
+    <rect class="card" x="40" y="354" width="380" height="92" rx="8"/>
+    <rect class="accent" x="40" y="354" width="6" height="92" rx="3"/>
+    <text class="h" x="62" y="382">5 · Incremental validation</text>
+    <text class="b" x="62" y="404">Present a piece, get approval, then move on —</text>
+    <text class="b" x="62" y="422">never dump the whole design in one go.</text>
+  </g>
+  <g>
+    <rect class="card" x="440" y="354" width="380" height="92" rx="8"/>
+    <rect class="accent" x="440" y="354" width="6" height="92" rx="3"/>
+    <text class="h" x="462" y="382">6 · Be flexible</text>
+    <text class="b" x="462" y="404">When an answer doesn't fit, loop back and</text>
+    <text class="b" x="462" y="422">re-clarify. The flow bends; it isn't a straight line.</text>
+  </g>
+
+  <!-- elicitation targets strip -->
+  <text x="40" y="486" font-size="13" font-weight="700" fill="#0f172a">Every question aims at one of three targets:</text>
+  <g>
+    <rect class="target" x="40" y="500" width="246" height="96" rx="8"/>
+    <text class="th" x="163" y="530" text-anchor="middle">◆ Purpose</text>
+    <text class="tb" x="163" y="556" text-anchor="middle">Why are we building this?</text>
+    <text class="tb" x="163" y="574" text-anchor="middle">What problem does it solve?</text>
+  </g>
+  <g>
+    <rect class="target" x="307" y="500" width="246" height="96" rx="8"/>
+    <text class="th" x="430" y="530" text-anchor="middle">◆ Constraints</text>
+    <text class="tb" x="430" y="556" text-anchor="middle">What limits the solution?</text>
+    <text class="tb" x="430" y="574" text-anchor="middle">Tech, time, existing patterns.</text>
+  </g>
+  <g>
+    <rect class="target" x="574" y="500" width="246" height="96" rx="8"/>
+    <text class="th" x="697" y="530" text-anchor="middle">◆ Success criteria</text>
+    <text class="tb" x="697" y="556" text-anchor="middle">How do we know it worked?</text>
+    <text class="tb" x="697" y="574" text-anchor="middle">What does “done” look like?</text>
+  </g>
+</svg>
