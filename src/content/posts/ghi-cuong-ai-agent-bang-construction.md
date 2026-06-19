@@ -1,6 +1,6 @@
 ---
 title: "Ghì cương AI agent bằng kiến trúc, không bằng lời dặn"
-description: 'Kết series "Gỡ rối chữ semantic": tầng ngữ nghĩa (semantic model) + lint AST trở thành cái harness máy móc ghì cương AI coding agent. Tại sao lời dặn trong markdown lờ được, còn compiler + type-checker thì không. Phân biệt grammar-constrained decoding (chặn lúc sinh token) vs analyzer/lint (hậu kiểm ngữ nghĩa) — hai thứ bổ sung, không thay nhau.'
+description: 'Kết series "Giải mã chữ semantic": tầng ngữ nghĩa (semantic model) + lint AST trở thành cái harness máy móc ghì cương AI coding agent. Tại sao lời dặn trong markdown lờ được, còn compiler + type-checker thì không. Phân biệt grammar-constrained decoding (chặn lúc sinh token) vs analyzer/lint (hậu kiểm ngữ nghĩa) — hai thứ bổ sung, không thay nhau.'
 pubDatetime: 2026-06-19T01:00:00Z
 tags:
   [
@@ -28,7 +28,7 @@ lang: "vi"
 
 ---
 
-Có một câu hỏi tôi bị hỏi nhiều nhất kể từ khi AI coding agent nổi lên: _"Làm sao biết nó không tự tiện làm bậy?"_ Câu trả lời ngắn là: **đừng tin lời dặn, dựng đường ray**. Câu trả lời dài là cả series này — và bài kết sẽ buộc mấy đầu mối lại.
+Có một câu hỏi tui bị hỏi nhiều nhất kể từ khi AI coding agent nổi lên: _"Làm sao biết nó không tự tiện làm bậy?"_ Câu trả lời ngắn là: **đừng tin lời dặn, dựng đường ray**. Câu trả lời dài là cả series này — và bài kết sẽ buộc mấy đầu mối lại.
 
 ## 1. Vấn đề gốc: LLM code bằng cách bắt chước
 
@@ -45,7 +45,7 @@ Cái "lời dặn trong markdown" là **by instruction** (kiểm soát bằng ch
 
 Nguyên lý đối lập là **by construction** (ghì bằng kiến trúc): thay vì _dặn_, hãy _xây_ — để **cách sai không gọi được, không biên dịch được**.
 
-Tôi hay dùng cái phép so sánh Entity Framework (EF) này: nếu codebase quy định _chỉ được đụng database qua EF_, và mọi thứ trực tiếp vào `SqlConnection` đều bị type system chặn hoặc lint đá ra trước khi vào CI — thì ngoài EF còn cửa nào đâu? Không phải vì ai "nhớ rule" mà vì con đường đó **bị bịt lại bằng máy**. AI agent hay người thật cũng vậy — cổng là cổng.
+Tui hay dùng cái phép so sánh Entity Framework (EF) này: nếu codebase quy định _chỉ được đụng database qua EF_, và mọi thứ trực tiếp vô `SqlConnection` đều bị type system chặn hoặc lint đá ra trước khi vô CI — thì ngoài EF còn cửa nào đâu? Không phải vì ai "nhớ rule" mà vì con đường đó **bị bịt lại bằng máy**. AI agent hay người thật cũng vậy — cổng là cổng.
 
 Cái cổng đó trong codebase là **exit 1**: compile lỗi, type-check lỗi, lint lỗi. Bất kỳ code nào sinh ra — từ AI hay từ tay người — đều phải qua đó. Không qua được thì không merge được.
 
@@ -84,7 +84,7 @@ Rule A (cấm import `net/http`) chỉ cần AST — đơn giản, đủ. Rule B
 
 ## 4. Phân biệt quan trọng: grammar-constrained decoding vs analyzer/type-checker
 
-Đây là chỗ tôi thấy hay bị gộp nhầm nhất trong các bài viết về "AI agent an toàn".
+Đây là chỗ tui thấy hay bị gộp lộn nhất trong các bài viết về "AI agent an toàn".
 
 **Grammar-constrained decoding** (còn gọi là structured decoding — giải mã có cấu trúc) là kỹ thuật ép _từng bước sinh token_ của LLM phải hợp một ngữ pháp cho trước (ví dụ GBNF, Outlines, llama.cpp grammar). Ở mỗi bước, chỉ những token hợp lệ theo ngữ pháp hiện tại mới được phép chọn — rác cú pháp bị loại **ngay lúc đẻ ra**. Đây là can thiệp ở tầng **sinh** (generation-time).
 
@@ -99,14 +99,14 @@ Hai thứ này **bổ sung nhau, không thay thế nhau** ([nguồn: pkg.go.dev/
 | **Ví dụ**                      | JSON không đóng ngoặc, GBNF sai nhịp | Gọi `os.Getenv` bị cấm, import không được phép |
 | **Cần full compiler context?** | Không — chỉ cần ngữ pháp             | Có — cần type info, symbol resolution          |
 
-Nói gọn: structured decoding là cái **rào trước cổng** (đừng để rác vào), analyzer là cái **bộ lọc trong kho** (thứ vào được rồi nhưng sai rule thì không qua).
+Nói gọn: structured decoding là cái **rào trước cổng** (đừng để rác vô), analyzer là cái **bộ lọc trong kho** (thứ vô được rồi nhưng sai rule thì không qua).
 
 > [!NOTE]
-> Hai cách can thiệp này tôi đối chiếu nguồn [pkg.go.dev/golang.org/x/tools/go/analysis](https://pkg.go.dev/golang.org/x/tools/go/analysis) và [Roslyn analyzer docs](https://github.com/dotnet/roslyn/blob/main/docs/wiki/How-To-Write-a-C%23-Analyzer-and-Code-Fix.md). Blog của factory.ai có đề cập đến việc dùng linter để hướng agent ([factory.ai/news/using-linters-to-direct-agents](https://factory.ai/news/using-linters-to-direct-agents)) — đó là góc nhìn thực hành (practitioner), không phải nguồn quyền uy kỹ thuật.
+> Hai cách can thiệp này tui đối chiếu nguồn [pkg.go.dev/golang.org/x/tools/go/analysis](https://pkg.go.dev/golang.org/x/tools/go/analysis) và [Roslyn analyzer docs](https://github.com/dotnet/roslyn/blob/main/docs/wiki/How-To-Write-a-C%23-Analyzer-and-Code-Fix.md). Blog của factory.ai có đề cập đến việc dùng linter để hướng agent ([factory.ai/news/using-linters-to-direct-agents](https://factory.ai/news/using-linters-to-direct-agents)) — đó là góc nhìn thực hành (practitioner), không phải nguồn quyền uy kỹ thuật.
 
 ## 5. Harness thực tế trông như thế nào
 
-Tôi kiểm lại điều này trong một audit thực tế trên repo `ai-dict` (kinh nghiệm cá nhân tác giả — local provenance, không phải web fact): rule cấm gọi `chrome.runtime.onMessage.addListener` trực tiếp được encode thành ESLint `no-restricted-syntax` với AST selector. Không phải comment trong code, không phải dòng chữ trong `CONTRIBUTING.md` — mà là **ESLint rule chạy trong CI**, bắt đúng node shape trong AST (ESTree), exit 1 nếu vi phạm.
+Tui kiểm lại điều này trong một audit thực tế trên repo `ai-dict` (kinh nghiệm cá nhân tác giả — local provenance, không phải web fact): rule cấm gọi `chrome.runtime.onMessage.addListener` trực tiếp được encode thành ESLint `no-restricted-syntax` với AST selector. Không phải comment trong code, không phải dòng chữ trong `CONTRIBUTING.md` — mà là **ESLint rule chạy trong CI**, bắt đúng node shape trong AST (ESTree), exit 1 nếu vi phạm.
 
 ESLint xử lý ở tầng cú pháp (AST đủ để match node shape). Nhưng nguyên lý giống hệt Rule B ở Phần 4 — quyết định "cho qua hay không" được đưa ra bởi máy, không phải bởi con người nhớ rule.
 
@@ -115,13 +115,13 @@ Khi AI agent viết code cho repo đó:
 1. Nó sinh code (có thể dùng grammar-constrained decoding để đảm bảo code parse được).
 2. Nó chạy `bun run lint` — cổng đầu tiên (AST rule, dependency rule).
 3. Nó chạy compile/type-check — cổng thứ hai (semantic rule: gọi đúng hàm không? kiểu đúng không?).
-4. Nếu cả hai qua thì mới vào CI.
+4. Nếu cả hai qua thì mới vô CI.
 
 Bước nào fail là bước đó explain lại bằng machine-readable error. Agent đọc error, sửa, chạy lại. Vòng lặp này không cần "tin tưởng" agent — nó **ép buộc** về mặt cơ học.
 
 ## 6. Khép series: chữ "semantic" đã được gỡ
 
-Hồi Phần 1, tôi đặt câu hỏi: tại sao một ông kỹ sư già lại đi viết sáu bài về một chữ?
+Hồi Phần 1, tui đặt câu hỏi: tại sao một ông kỹ sư già lại đi viết sáu bài về một chữ?
 
 Đây là đáp án đầy đủ:
 
@@ -130,7 +130,7 @@ Hồi Phần 1, tôi đặt câu hỏi: tại sao một ông kỹ sư già lại
 - Tầng semantic đó (Phần 3) + lint viết từ nó (Phần 4) = **harness ghì cương AI** (bài này).
 - Và cái ghì đó hoạt động bởi nó là **by construction** — không phải by instruction.
 
-Series anh em _"Bắt LLM code đúng bằng kiến trúc"_ đi sâu hơn vào mặt kiến trúc: port/adapter pattern, dependency injection, rule viết bằng lint thay vì viết bằng comment — tất cả đều cùng một nguyên lý. Nếu series này gỡ được cái chữ cho bạn, series đó sẽ chỉ cho bạn cách dùng cái gỡ được đó.
+Series liên kết _"Bắt LLM code đúng bằng kiến trúc"_ đi sâu hơn vô mặt kiến trúc: port/adapter pattern, dependency injection, rule viết bằng lint thay vì viết bằng comment — tất cả đều cùng một nguyên lý. Nếu series này gỡ được cái chữ cho bạn, series đó sẽ chỉ cho bạn cách dùng cái gỡ được đó.
 
 ---
 
