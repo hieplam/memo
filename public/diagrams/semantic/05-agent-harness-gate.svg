@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 480" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="LLM sinh code, một cổng gồm compiler type-checker và lint dựa trên AST kiểm tra; code sai bị chặn exit 1; lời dặn trong markdown thì LLM đi vòng qua được; grammar-constrained decoding nằm ở khâu sinh token, khác với cổng hậu kiểm">
+  <rect width="100%" height="100%" fill="#c2c2bd"/>
   <style>
     .title { fill:#0f172a; font-size:23px; font-weight:700; }
     .sub   { fill:#64748b; font-size:13px; }
