@@ -1,0 +1,68 @@
+meta:
+  project: memo
+  generated_by: ymir
+  generated_at: 2026-06-17
+  spec_version: 1
+
+project:
+  language: typescript
+  runtime: bun
+  layer: frontend
+  host: github
+
+concerns:
+  rules:
+    status: captured
+    obey:
+      - typescript-strict          # tsconfig extends astro/tsconfigs/strict; no implicit any
+      - explicit-return-types      # exported functions declare return types
+      - path-alias-imports         # import from "@/*" (maps to ./src/*), not deep relatives
+      - ordered-imports            # grouped, ordered imports (std/3rd-party/internal)
+      - prettier-formatting        # all source formatted per .prettierrc
+    avoid:
+      - console-usage              # no console.* in src/ (rule-no-console)
+      - implicit-any               # no untyped values that resolve to any
+      - unused-vars                # no unused variables or imports
+
+  lint:
+    status: captured
+    tool: eslint
+    config: eslint.config.js        # flat config (ESLint 10 + @typescript-eslint + eslint-plugin-astro)
+    formatter: prettier             # prettier 3 with prettier-plugin-astro + prettier-plugin-tailwindcss
+    strict: true
+    style:
+      indent: 2
+      quotes: double                # singleQuote: false
+      semicolons: true
+      print_width: 80
+      trailing_comma: es5
+      end_of_line: lf
+      arrow_parens: avoid
+    scripts:
+      lint: eslint .
+      format: prettier --write .
+      format_check: prettier --check .
+
+  ci:
+    status: captured
+    provider: github-actions
+    workflow: .github/workflows/ci.yml
+    runs:
+      - lint
+      - format:check
+      - build
+
+  wiki:
+    status: captured
+    enabled: true
+    collection: memo-wiki
+    note: coexists with the existing C3 architecture knowledge base in .c3/
+
+  claude_md:
+    status: captured
+    steer:
+      - point-to-rules
+      - point-to-wiki
+      - point-to-c3
+      - lint-before-commit
+      - format-before-commit
