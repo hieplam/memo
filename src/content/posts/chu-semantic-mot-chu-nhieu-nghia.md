@@ -82,7 +82,7 @@ Và đó là cú nối tới một series anh em của bài này — _"Bắt LLM
 
 Tôi có một tật nghề: **không tin câu "nó hoạt động vậy đó".** Cái gì kiểm được thì kiểm. Nên series này theo đúng tinh thần đó:
 
-- **Go là ngôn ngữ trụ, và code Go _chạy thật_.** Mọi output bạn thấy trong bài là copy từ terminal ra, không phải tôi tự gõ cho đẹp. Bạn cài Go vào chạy lại y hệt.
+- **Go là ngôn ngữ trụ, và code Go _chạy thật_.** Mọi output bạn thấy trong bài là copy từ terminal ra, không phải tôi tự gõ cho đẹp. Bạn cài Go vào chạy lại y hệt. Toàn bộ code demo nằm ở **[github.com/hieplam/semantic-series-go-proof](https://github.com/hieplam/semantic-series-go-proof)** — `go run ./0N-*/` là đủ, không dependency ngoài standard library.
 - **C#/Roslyn ở vai phụ, dạng minh hoạ.** Máy tôi không có .NET, nên tôi không dám nói "tôi chạy rồi"; mấy đoạn C# là đối chiếu thẳng tài liệu Microsoft Learn (vì "semantic model" vốn là thuật ngữ gốc của Roslyn, bỏ qua thì phí).
 - **Mọi khẳng định về compiler/embeddings đều có nguồn**, và tôi sẽ chỉ rõ chỗ nào là sự thật có-thể-tra, chỗ nào là kinh nghiệm cá nhân tôi.
 

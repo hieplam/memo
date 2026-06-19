@@ -85,7 +85,7 @@ func demo() {
 }`
 ```
 
-Chạy:
+Chạy ([source trên GitHub](https://github.com/hieplam/semantic-series-go-proof/blob/main/01-ast/main.go)):
 
 ```
 go run ./01-ast

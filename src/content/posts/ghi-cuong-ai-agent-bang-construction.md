@@ -76,7 +76,7 @@ Phần 4 đã dựng một harness Go nhỏ để chứng minh đúng điều đ
 Real violations: 2. Build blocked — exit 1.
 ```
 
-_(Chạy thật: `go run ./03-harness/main.go` — exit 1 là đúng, đó là cổng hoạt động.)_
+_(Chạy thật: [`go run ./03-harness/main.go`](https://github.com/hieplam/semantic-series-go-proof/blob/main/03-harness/main.go) — exit 1 là đúng, đó là cổng hoạt động.)_
 
 Rule A (cấm import `net/http`) chỉ cần AST — đơn giản, đủ. Rule B (cấm gọi `os.Getenv`) thì AST không đủ: naive match cũng chặn cả method `f.Getenv()` của một struct nội bộ (false positive). Chỉ khi đi qua tầng semantic — dùng `info.ObjectOf(sel.Sel)` để hỏi `go/types` "cái selector này thực chất trỏ về object nào, ở package nào?" — thì mới bắt đúng và bỏ qua decoy.
 
