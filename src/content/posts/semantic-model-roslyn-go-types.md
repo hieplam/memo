@@ -63,7 +63,7 @@ Bốn câu trên là việc của tầng **semantic** — và Go gọi tầng đ
 
 ## 2. Demo Go: go/types phân giải shadowing
 
-Chạy thật:
+Chạy thật ([source trên GitHub](https://github.com/hieplam/semantic-series-go-proof/blob/main/02-types/main.go)):
 
 ```bash
 go run ./02-types

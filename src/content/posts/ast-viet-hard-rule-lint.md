@@ -49,7 +49,7 @@ Tôi chuẩn bị sẵn một harness nhỏ (`03-harness`) với đoạn code gi
 
 Quan trọng: trong đoạn code dưới kiểm tra có **một cái bẫy** — một method `f.Getenv(...)` trên một struct giả tên `fake`. Cái bẫy đó **không vi phạm** Luật B vì nó không phải `os.Getenv` thật, chỉ là một method cùng tên. Một luật viết kém (khớp tên thô) sẽ dính cái bẫy này.
 
-Chạy harness:
+Chạy harness ([source trên GitHub](https://github.com/hieplam/semantic-series-go-proof/blob/main/03-harness/main.go)):
 
 ```bash
 go run ./03-harness; echo "exit=$?"
