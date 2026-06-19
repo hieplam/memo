@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Đường ống compiler: mã nguồn qua lexer thành tokens, qua parser thành AST (đây là phần cú pháp), rồi qua phân tích ngữ nghĩa mới ra semantic model (phần ý nghĩa)">
+  <style>
+    .title { fill:#0f172a; font-size:23px; font-weight:700; }
+    .sub   { fill:#64748b; font-size:13px; }
+    .bxt   { fill:#1e293b; font-size:15px; font-weight:700; }
+    .mono  { font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:11.5px; }
+    .know  { fill:#475569; font-size:11.5px; }
+    .arrow { fill:#94a3b8; font-size:11px; font-style:italic; }
+    .brk   { font-size:13px; font-weight:700; letter-spacing:0.5px; }
+    .note  { fill:#64748b; font-size:12.5px; }
+    .synbox{ fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .embox { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+  </style>
+
+  <text class="title" x="30" y="40">Đường ống compiler: cú pháp trước, ý nghĩa sau</text>
+  <text class="sub" x="30" y="64">AST nằm ở cuối phần “cú pháp”. Cái biết “x là kiểu gì, trỏ tới đâu” là tầng SAU đó — semantic model.</text>
+
+  <!-- brackets -->
+  <path d="M30 96 L30 86 L650 86 L650 96" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+  <text class="brk" x="300" y="80" fill="#64748b">SYNTAX — cú pháp (hình thức)</text>
+  <path d="M690 96 L690 86 L870 86 L870 96" fill="none" stroke="#10b981" stroke-width="1.5"/>
+  <text class="brk" x="700" y="80" fill="#047857">SEMANTICS — ý nghĩa</text>
+
+  <!-- Box 1: source -->
+  <rect class="synbox" x="30" y="110" width="180" height="78" rx="10"/>
+  <text class="bxt" x="120" y="138" text-anchor="middle">mã nguồn</text>
+  <text class="mono" x="120" y="162" text-anchor="middle" fill="#475569">x := 2 + 3</text>
+  <text class="mono" x="120" y="178" text-anchor="middle" fill="#94a3b8">(chuỗi ký tự)</text>
+
+  <!-- arrow -->
+  <line x1="214" y1="149" x2="246" y2="149" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+  <text class="arrow" x="230" y="142" text-anchor="middle">lexer</text>
+
+  <!-- Box 2: tokens -->
+  <rect class="synbox" x="250" y="110" width="180" height="78" rx="10"/>
+  <text class="bxt" x="340" y="138" text-anchor="middle">tokens</text>
+  <text class="mono" x="340" y="162" text-anchor="middle" fill="#475569">[x] [:=] [2] [+] [3]</text>
+  <text class="mono" x="340" y="178" text-anchor="middle" fill="#94a3b8">(các “từ” rời)</text>
+
+  <line x1="434" y1="149" x2="466" y2="149" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#a)"/>
+  <text class="arrow" x="450" y="142" text-anchor="middle">parser</text>
+
+  <!-- Box 3: AST -->
+  <rect class="synbox" x="470" y="110" width="180" height="78" rx="10"/>
+  <text class="bxt" x="560" y="138" text-anchor="middle">AST</text>
+  <text class="mono" x="560" y="162" text-anchor="middle" fill="#475569">Assign(x, Add(2,3))</text>
+  <text class="mono" x="560" y="178" text-anchor="middle" fill="#94a3b8">(cây cấu trúc)</text>
+
+  <line x1="654" y1="149" x2="686" y2="149" stroke="#10b981" stroke-width="2" marker-end="url(#g)"/>
+  <text class="arrow" x="668" y="142" text-anchor="middle" fill="#047857">bind</text>
+
+  <!-- Box 4: semantic model -->
+  <rect class="embox" x="690" y="110" width="180" height="78" rx="10"/>
+  <text class="bxt" x="780" y="138" text-anchor="middle" fill="#047857">semantic model</text>
+  <text class="mono" x="780" y="162" text-anchor="middle" fill="#047857">x : int = 5</text>
+  <text class="mono" x="780" y="178" text-anchor="middle" fill="#059669">(nghĩa + kiểu)</text>
+
+  <!-- "knows" row -->
+  <text class="know" x="120" y="226" text-anchor="middle">biết: chuỗi ký tự</text>
+  <text class="know" x="340" y="226" text-anchor="middle">biết: ranh giới từ</text>
+  <text class="know" x="560" y="226" text-anchor="middle">biết: HÌNH DẠNG lệnh</text>
+  <text class="know" x="780" y="226" text-anchor="middle" fill="#047857" font-weight="700">biết: x trỏ đâu, kiểu gì</text>
+
+  <text class="know" x="560" y="246" text-anchor="middle" fill="#b45309">KHÔNG biết: x kiểu gì, “+” là gì</text>
+
+  <!-- the key insight box -->
+  <rect x="30" y="286" width="840" height="92" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+  <text x="50" y="314" font-size="14" font-weight="700" fill="#0f172a">Điểm mấu chốt (và là chỗ blog hay nói sai):</text>
+  <text class="note" x="50" y="338">Semantic model KHÔNG “tô màu” lên AST. Nó là một CẤU TRÚC RIÊNG trỏ vào các node của AST.</text>
+  <text class="note" x="50" y="358">Roslyn giữ SyntaxTree bất biến, tách hẳn SemanticModel. Go để thông tin kiểu trong types.Info — một map riêng.</text>
+
+  <text class="note" x="30" y="408" fill="#94a3b8">Nguồn: craftinginterpreters.com · Microsoft Learn (Roslyn compiler API) · pkg.go.dev/go/types</text>
+
+  <defs>
+    <marker id="a" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#94a3b8"/></marker>
+    <marker id="g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#10b981"/></marker>
+  </defs>
+</svg>

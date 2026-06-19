@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 500" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Chữ semantic có hai nghĩa khác hẳn nhau: bên trái là semantic model của thế giới compiler dựng trên AST, bên phải là semantic search của thế giới IR/ML dùng embeddings; hai bên chỉ chung một gốc chữ Hy Lạp semantikos">
+  <style>
+    .title { fill:#0f172a; font-size:23px; font-weight:700; }
+    .sub   { fill:#64748b; font-size:13px; }
+    .panelh{ font-size:15px; font-weight:700; }
+    .lbl   { fill:#1e293b; font-size:13px; font-weight:600; }
+    .meta  { fill:#475569; font-size:12px; }
+    .mono  { font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:12px; }
+    .root  { fill:#ffffff; font-size:13.5px; font-weight:700; }
+    .note  { fill:#64748b; font-size:12.5px; }
+    .cbox  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .cstep { fill:#ecfdf5; stroke:#10b981; stroke-width:1.5; }
+    .mbox  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .mstep { fill:#eef2ff; stroke:#6366f1; stroke-width:1.5; }
+  </style>
+
+  <text class="title" x="30" y="40">Một chữ “semantic”, hai thế giới không liên quan</text>
+  <text class="sub" x="30" y="64">Người ta hay trộn lẫn “Roslyn có semantic model” với “tool này không có semantic search”. Chúng KHÁC nhau.</text>
+
+  <!-- shared root chip -->
+  <rect x="306" y="86" width="288" height="34" rx="17" fill="#0f172a"/>
+  <text class="root" x="450" y="108" text-anchor="middle">gốc Hy Lạp “semantikos” = ý nghĩa</text>
+  <line x1="256" y1="103" x2="306" y2="103" stroke="#94a3b8" stroke-width="1.5"/>
+  <line x1="594" y1="103" x2="644" y2="103" stroke="#94a3b8" stroke-width="1.5"/>
+
+  <!-- LEFT: compiler world -->
+  <rect class="cbox" x="30" y="138" width="400" height="312" rx="14"/>
+  <circle cx="58" cy="168" r="7" fill="#10b981"/>
+  <text class="panelh" x="74" y="173" fill="#047857">Thế giới COMPILER — “semantic model”</text>
+  <text class="meta" x="50" y="196">Tầng Ý NGHĨA của chương trình, dựng TRÊN cây cú pháp (AST).</text>
+
+  <rect class="cbox" x="60" y="212" width="340" height="34" rx="8"/>
+  <text class="mono" x="76" y="234" fill="#1e293b">source code:  x := 2 + 3</text>
+
+  <text x="80" y="266" font-size="16" fill="#94a3b8">↓ lexer + parser</text>
+
+  <rect class="cbox" x="60" y="276" width="340" height="34" rx="8"/>
+  <text class="mono" x="76" y="298" fill="#475569">AST: Ident("x") = BinaryExpr(2, +, 3)</text>
+
+  <text x="80" y="330" font-size="16" fill="#94a3b8">↓ name resolution + type check (semantic)</text>
+
+  <rect class="cstep" x="60" y="340" width="340" height="56" rx="8"/>
+  <text class="mono" x="76" y="362" fill="#047857">semantic model trả lời:</text>
+  <text class="mono" x="76" y="382" fill="#047857">  x : int = 5   ·   “x” trỏ tới khai báo nào?</text>
+
+  <text class="meta" x="50" y="424">Cấu trúc: bảng ký hiệu, kiểu, ràng buộc tên.</text>
+  <text class="meta" x="50" y="442">Roslyn: SemanticModel · Go: go/types (types.Info).</text>
+
+  <!-- RIGHT: IR/ML world -->
+  <rect class="mbox" x="470" y="138" width="400" height="312" rx="14"/>
+  <circle cx="498" cy="168" r="7" fill="#6366f1"/>
+  <text class="panelh" x="514" y="173" fill="#4338ca">Thế giới IR/ML — “semantic search”</text>
+  <text class="meta" x="490" y="196">Tìm theo NGHĨA bằng vector, không dính gì tới compiler.</text>
+
+  <rect class="mbox" x="500" y="212" width="340" height="34" rx="8"/>
+  <text class="mono" x="516" y="234" fill="#1e293b">câu hỏi:  “làm sao tăng tốc app?”</text>
+
+  <text x="520" y="266" font-size="16" fill="#94a3b8">↓ embedding model</text>
+
+  <rect class="mbox" x="500" y="276" width="340" height="34" rx="8"/>
+  <text class="mono" x="516" y="298" fill="#475569">vector: [0.12, -0.04, 0.91, … ] (vài trăm chiều)</text>
+
+  <text x="520" y="330" font-size="16" fill="#94a3b8">↓ cosine similarity (đo độ gần nghĩa)</text>
+
+  <rect class="mstep" x="500" y="340" width="340" height="56" rx="8"/>
+  <text class="mono" x="516" y="362" fill="#4338ca">khớp “tối ưu hiệu năng”, “giảm latency”</text>
+  <text class="mono" x="516" y="382" fill="#4338ca">  dù KHÔNG trùng một từ khoá nào</text>
+
+  <text class="meta" x="490" y="424">Cấu trúc: vector embeddings + vector DB.</text>
+  <text class="meta" x="490" y="442">Đối lập: lexical/keyword search (grep, BM25).</text>
+
+  <line x1="30" y1="470" x2="870" y2="470" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="note" x="30" y="492">Cùng một gốc chữ “ý nghĩa”, nhưng hai cái máy hoàn toàn khác: bảng ký hiệu vs vector. Đừng gộp làm một.</text>
+</svg>

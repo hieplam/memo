@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Hai loại luật lint: luật cú pháp cấm import net/http chỉ cần AST; luật ngữ nghĩa cấm os.Getenv thì khớp tên thô bị dính cả method giả f.Getenv, phải dùng go/types phân giải mới đúng">
+  <style>
+    .title { fill:#0f172a; font-size:23px; font-weight:700; }
+    .sub   { fill:#64748b; font-size:13px; }
+    .ph    { font-size:15px; font-weight:700; }
+    .mono  { font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:11.5px; }
+    .meta  { fill:#475569; font-size:12px; }
+    .ok    { fill:#065f46; font-size:12px; }
+    .bad   { fill:#b45309; font-size:12px; }
+    .note  { fill:#64748b; font-size:12.5px; }
+    .gbox  { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .nbox  { fill:#fff7ed; stroke:#f59e0b; stroke-width:1.5; }
+    .sbox  { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .code  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+  </style>
+
+  <text class="title" x="30" y="40">Hai loại luật: cú pháp thì AST đủ, ngữ nghĩa thì cần kiểu</text>
+  <text class="sub" x="30" y="64">Viết “cái lint đơn giản, thấy code sai thì ban” — nhưng có luật AST làm được, có luật phải nhờ semantic.</text>
+
+  <!-- code under audit -->
+  <rect class="code" x="30" y="84" width="840" height="74" rx="10"/>
+  <text class="mono" x="48" y="106" fill="#475569">import "net/http"           // ← luật A soi đây</text>
+  <text class="mono" x="48" y="126" fill="#475569">os.Getenv("API_KEY")        // ← os.Getenv THẬT</text>
+  <text class="mono" x="48" y="146" fill="#475569">f.Getenv("API_KEY")         // ← method giả, KHÔNG phải os</text>
+
+  <!-- Rule A -->
+  <rect class="gbox" x="30" y="178" width="400" height="120" rx="12"/>
+  <text class="ph" x="50" y="206" fill="#047857">Luật A — CÚ PHÁP (chỉ cần AST)</text>
+  <text class="meta" x="50" y="230">“Cấm import net/http.” Import là cấu trúc thuần.</text>
+  <text class="ok" x="50" y="258">✓ Duyệt file.Imports, so chuỗi → bắt trúng.</text>
+  <text class="mono" x="50" y="282" fill="#047857">✖ svc.go:4  forbidden import "net/http"</text>
+
+  <!-- Rule B -->
+  <rect class="code" x="470" y="178" width="400" height="252" rx="12"/>
+  <text class="ph" x="490" y="206" fill="#334155">Luật B — NGỮ NGHĨA (cần go/types)</text>
+  <text class="meta" x="490" y="228">“Cấm gọi os.Getenv.” Tên thôi thì lừa được.</text>
+
+  <rect class="nbox" x="490" y="242" width="360" height="78" rx="8"/>
+  <text class="mono" x="506" y="263" fill="#b45309">khớp tên thô "Getenv":</text>
+  <text class="bad" x="506" y="284">? os.Getenv  → trúng</text>
+  <text class="bad" x="506" y="304">? f.Getenv   → DÍNH OAN (false positive)</text>
+
+  <rect class="sbox" x="490" y="334" width="360" height="80" rx="8"/>
+  <text class="mono" x="506" y="355" fill="#047857">phân giải callee qua types.Info:</text>
+  <text class="ok" x="506" y="376">✓ os.Getenv  → đúng là package "os" → ban</text>
+  <text class="ok" x="506" y="396">✓ f.Getenv   → method nội bộ → bỏ qua</text>
+
+  <text class="note" x="30" y="318">Bài học: luật về</text>
+  <text class="note" x="30" y="336">cấu trúc → AST đủ.</text>
+  <text class="note" x="30" y="354">Luật về “cái này</text>
+  <text class="note" x="30" y="372">thực chất là gì”</text>
+  <text class="note" x="30" y="390">→ phải có tầng</text>
+  <text class="note" x="30" y="408" fill="#047857" font-weight="700">ngữ nghĩa.</text>
+</svg>

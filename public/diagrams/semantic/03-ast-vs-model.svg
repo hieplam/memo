@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Bốn node Ident x giống hệt nhau trong AST được semantic model phân giải thành hai biến riêng biệt x#1 kiểu int và x#2 kiểu string qua một map riêng types.Info, chứ không phải tô màu lên cây AST">
+  <style>
+    .title { fill:#0f172a; font-size:23px; font-weight:700; }
+    .sub   { fill:#64748b; font-size:13px; }
+    .ph    { font-size:14px; font-weight:700; }
+    .mono  { font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:12.5px; }
+    .smono { font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:11px; }
+    .note  { fill:#64748b; font-size:12.5px; }
+    .astbox{ fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .node  { fill:#ffffff; stroke:#94a3b8; stroke-width:1.5; }
+    .obj1  { fill:#ecfdf5; stroke:#10b981; stroke-width:2; }
+    .obj2  { fill:#eff6ff; stroke:#3b82f6; stroke-width:2; }
+  </style>
+
+  <text class="title" x="30" y="40">AST thấy 4 chữ “x” giống hệt — semantic model biết là 2 biến</text>
+  <text class="sub" x="30" y="64">Cùng một tên, nhờ shadowing (che biến). Chỉ tầng ngữ nghĩa mới phân giải đúng. Và nó là MAP RIÊNG.</text>
+
+  <!-- LEFT: AST -->
+  <rect class="astbox" x="30" y="92" width="300" height="350" rx="14"/>
+  <text class="ph" x="50" y="120" fill="#475569">AST (cú pháp) — 4 node y hệt</text>
+
+  <rect class="node" x="50" y="138" width="260" height="40" rx="8"/>
+  <text class="mono" x="66" y="163" fill="#1e293b">Ident{"x"} @6:2</text>
+  <rect class="node" x="50" y="190" width="260" height="40" rx="8"/>
+  <text class="mono" x="66" y="215" fill="#1e293b">Ident{"x"} @8:3</text>
+  <rect class="node" x="50" y="242" width="260" height="40" rx="8"/>
+  <text class="mono" x="66" y="267" fill="#1e293b">Ident{"x"} @9:15</text>
+  <rect class="node" x="50" y="294" width="260" height="40" rx="8"/>
+  <text class="mono" x="66" y="319" fill="#1e293b">Ident{"x"} @11:14</text>
+
+  <text class="smono" x="50" y="366" fill="#94a3b8">cả 4 chỉ có .Name = "x"</text>
+  <text class="smono" x="50" y="384" fill="#94a3b8">— không kiểu, không “trỏ đâu”</text>
+  <text class="smono" x="50" y="416" fill="#b45309">AST bất biến — KHÔNG bị tô màu</text>
+
+  <!-- RIGHT: semantic side-map -->
+  <rect class="astbox" x="560" y="92" width="310" height="350" rx="14"/>
+  <text class="ph" x="580" y="120" fill="#047857" font-size="13">semantic model = map RIÊNG (go/types)</text>
+
+  <rect class="obj1" x="580" y="150" width="270" height="60" rx="8"/>
+  <text class="smono" x="596" y="172" fill="#047857" font-weight="700">x#1 : int   (object)</text>
+  <text class="smono" x="596" y="192" fill="#059669">khai báo tại 6:2 · giá trị hằng = 5</text>
+
+  <rect class="obj2" x="580" y="262" width="270" height="60" rx="8"/>
+  <text class="smono" x="596" y="284" fill="#1d4ed8" font-weight="700">x#2 : string   (object)</text>
+  <text class="smono" x="596" y="304" fill="#2563eb">khai báo tại 8:3 (che x#1 trong block)</text>
+
+  <text class="smono" x="580" y="356" fill="#475569">Defs: node@6:2 → x#1 · node@8:3 → x#2</text>
+  <text class="smono" x="580" y="376" fill="#475569">Uses: node@9:15 → x#2 · node@11:14 → x#1</text>
+  <text class="smono" x="580" y="408" fill="#047857" font-weight="700">map node → object, AST nằm yên một chỗ</text>
+
+  <!-- arrows from AST nodes to objects -->
+  <line x1="310" y1="158" x2="580" y2="172" stroke="#10b981" stroke-width="2" marker-end="url(#g)"/>
+  <line x1="310" y1="210" x2="580" y2="284" stroke="#3b82f6" stroke-width="2" marker-end="url(#b)"/>
+  <line x1="310" y1="262" x2="580" y2="298" stroke="#3b82f6" stroke-width="1.5" marker-end="url(#b)" stroke-dasharray="4 3"/>
+  <line x1="310" y1="314" x2="580" y2="186" stroke="#10b981" stroke-width="1.5" marker-end="url(#g)" stroke-dasharray="4 3"/>
+
+  <text x="445" y="118" text-anchor="middle" font-size="11" fill="#94a3b8" font-style="italic">phân giải</text>
+
+  <text class="note" x="30" y="462">Nét liền = nơi khai báo (Defs) · nét đứt = nơi dùng (Uses). Đây là output thật của go/types, chạy được.</text>
+
+  <defs>
+    <marker id="g" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#10b981"/></marker>
+    <marker id="b" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#3b82f6"/></marker>
+  </defs>
+</svg>
