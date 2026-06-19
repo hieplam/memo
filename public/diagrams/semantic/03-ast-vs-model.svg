@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Bốn node Ident x giống hệt nhau trong AST được semantic model phân giải thành hai biến riêng biệt x#1 kiểu int và x#2 kiểu string qua một map riêng types.Info, chứ không phải tô màu lên cây AST">
+  <rect width="100%" height="100%" fill="#c2c2bd"/>
   <style>
     .title { fill:#0f172a; font-size:23px; font-weight:700; }
     .sub   { fill:#64748b; font-size:13px; }

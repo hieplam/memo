@@ -1,4 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 430" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="So sánh tìm kiếm lexical theo từ khoá trùng khớp với tìm kiếm semantic theo nghĩa bằng vector embeddings; cùng một câu hỏi, lexical bỏ sót tài liệu cùng nghĩa khác chữ, semantic tìm được">
+  <rect width="100%" height="100%" fill="#c2c2bd"/>
   <style>
     .title { fill:#0f172a; font-size:23px; font-weight:700; }
     .sub   { fill:#64748b; font-size:13px; }
