@@ -7,7 +7,7 @@ tags:
 lang: "vi"
 ---
 
-> **Series "Gỡ rối chữ semantic" — Phần 4/5.**
+> **Series "Giải mã chữ semantic" — Phần 4/5.**
 > ← [Phần 3: "Roslyn có semantic model" — tầng nghĩa dựng trên AST](/memo/posts/semantic-model-roslyn-go-types/)
 > → [Phần 5: Ghì cương AI agent bằng kiến trúc, không bằng lời dặn](/memo/posts/ghi-cuong-ai-agent-bang-construction/)
 > Đọc từ đầu: [mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
@@ -18,11 +18,11 @@ lang: "vi"
 - **Luật về cấu trúc** (cấm import package X, cấm câu `for-range` trên loại Y) → **AST là đủ**, không cần tầng semantic.
 - **Luật về ý nghĩa** (cấm gọi hàm `os.Getenv` thật sự) → **phải qua go/types** (hoặc SemanticModel trong Roslyn), vì chỉ có tầng đó mới biết cái `.Getenv()` đó là của `os` hay của một struct giả tên giống.
 - Demo Go chạy thật, **exit 1 là cố ý** — đúng như harness phải làm: có vi phạm thì chặn.
-- Đây chính là cái cổng mà [Phần 5](/memo/posts/ghi-cuong-ai-agent-bang-construction/) sẽ gắn vào để ghì cương AI agent.
+- Đây chính là cái cổng mà [Phần 5](/memo/posts/ghi-cuong-ai-agent-bang-construction/) sẽ gắn vô để ghì cương AI agent.
 
 ---
 
-Có một câu tôi nghe nhiều trong các buổi review gần đây: _"Mình đã để trong prompt rồi, nó không được dùng package đó."_ Rồi một tuần sau: _"Sao con agent nó lại gọi `os.Getenv` thẳng vậy?"_
+Có một câu tui nghe nhiều trong các buổi review gần đây: _"Mình đã để trong prompt rồi, nó không được dùng package đó."_ Rồi một tuần sau: _"Sao con agent nó lại gọi `os.Getenv` thẳng vậy?"_
 
 Chuyện hiển nhiên — nó **không tuân theo lời dặn**, vì markdown trong prompt không có enforcement mechanism (cơ chế cưỡng bức). Muốn thật sự chặn, phải dùng máy: lint, type-checker, analyzer. Và đây là chỗ hiểu biết về AST và tầng semantic có giá trị thực tế.
 
@@ -30,7 +30,7 @@ Bài này là bằng chứng cụ thể. Code Go ~63 dòng logic (105 dòng file
 
 ## 1. Tinh thần: "viết cái lint nhỏ, thấy code sai thì ban"
 
-Một **hard-rule lint** — tôi hay gọi vui là "luật thép" — không phải cái gì ghê gớm. Nó chỉ là một chương trình con làm ba việc:
+Một **hard-rule lint** — tui hay gọi vui là "luật thép" — không phải cái gì ghê gớm. Nó chỉ là một chương trình con làm ba việc:
 
 1. **Parse** đoạn code cần kiểm tra thành AST (cây cú pháp trừu tượng — abstract syntax tree).
 2. **Duyệt** cái cây đó (và nếu cần, truy vấn tầng semantic).
@@ -42,7 +42,7 @@ Giá trị thực là ở chỗ nào thì phải dùng AST thôi, và chỗ nào
 
 ## 2. Demo Go: hai luật, hai mức sâu
 
-Tôi chuẩn bị sẵn một harness nhỏ (`03-harness`) với đoạn code giả bị đem đi "kiểm tra". Đoạn code đó vi phạm **hai luật**:
+Tui chuẩn bị sẵn một harness nhỏ (`03-harness`) với đoạn code giả bị đem đi "kiểm tra". Đoạn code đó vi phạm **hai luật**:
 
 - **Luật A (cú pháp):** Không được `import "net/http"` trong file service.
 - **Luật B (ngữ nghĩa):** Không được gọi `os.Getenv` trực tiếp (phải đọc config qua wrapper).
@@ -120,7 +120,7 @@ _Luật cú pháp (Luật A) chỉ cần đi qua AST — khớp node là xong. L
 
 ## 4. Bài học: cấu trúc vs ý nghĩa — chọn đúng tầng
 
-Sau demo trên, quy tắc ngón tay cái tôi dùng:
+Sau demo trên, quy tắc ngón tay cái tui dùng:
 
 | Câu hỏi luật hỏi                                                                                            | Tầng cần dùng                                    |
 | ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
@@ -129,7 +129,7 @@ Sau demo trên, quy tắc ngón tay cái tôi dùng:
 
 Nói ngắn hơn: **luật về cấu trúc → AST; luật về danh tính → semantic layer.**
 
-Đây không phải tôi tự bịa — đây là đúng kiến trúc các công cụ phân tích code thật sự xây dựng.
+Đây không phải tui tự bịa — đây là đúng kiến trúc các công cụ phân tích code thật sự xây dựng.
 
 ## 5. Các công cụ thật làm đúng vậy
 
@@ -146,30 +146,30 @@ Framework chuẩn để viết analyzer trong Go ecosystem là [`golang.org/x/to
 
 ESLint rules duyệt **AST theo chuẩn ESTree** (JavaScript AST). Rule `no-restricted-syntax` cho phép viết **CSS-selector-like syntax** để cấm các node shape nhất định — ví dụ cấm `SequenceExpression`, cấm `WithStatement`.
 
-Trong series anh em của series này — _"Bắt LLM code đúng bằng kiến trúc"_ — tôi có một luật thật: dùng `no-restricted-syntax` với selector cấm raw `chrome.runtime.onMessage.addListener` trực tiếp trong content script, ép mọi listener phải đi qua một wrapper có validation. _(Đây là ví dụ từ audit của chính tôi trên `ai-dict`, không phải nguồn web nào.)_
+Trong series liên kết của series này — _"Bắt LLM code đúng bằng kiến trúc"_ — tui có một luật thật: dùng `no-restricted-syntax` với selector cấm raw `chrome.runtime.onMessage.addListener` trực tiếp trong content script, ép mọi listener phải đi qua một wrapper có validation. _(Đây là ví dụ từ audit của chính tui trên `ai-dict`, không phải nguồn web nào.)_
 
 Với ESLint, phần lớn luật kiểu "cấm cấu trúc này" đều dừng ở tầng AST — tương đương Luật A của demo. ESLint không có type inference mạnh như Go/TypeScript; để đạt độ chính xác của Luật B, cần dùng typescript-eslint với type-aware rules (mới đi qua được TypeScript's type checker).
 
 ### Roslyn: SemanticModel sẵn có trong mọi analyzer
 
-Trong C#/Roslyn, khi viết analyzer, bạn luôn có quyền truy cập `SemanticModel`. Như Roslyn docs nói (tôi trích nguyên văn): _"Syntax trees represent the lexical and syntactic structure of source code. Although this information alone is enough to describe all the declarations and logic in the source, it is **not enough information to identify what is being referenced**."_ ([Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/work-with-semantics))
+Trong C#/Roslyn, khi viết analyzer, bạn luôn có quyền truy cập `SemanticModel`. Như Roslyn docs nói (tui trích nguyên văn): _"Syntax trees represent the lexical and syntactic structure of source code. Although this information alone is enough to describe all the declarations and logic in the source, it is **not enough information to identify what is being referenced**."_ ([Microsoft Learn](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/work-with-semantics))
 
-Vì vậy, Roslyn analyzer thường lấy `SemanticModel` qua `context.SemanticModel` (trong diagnostic analyzer callback) rồi gọi `GetSymbolInfo(node)` để biết symbol thật — tương đương `info.ObjectOf()` trong Go. _(Minh hoạ, đối chiếu Microsoft Learn — máy tôi không có .NET để chạy.)_
+Vì vậy, Roslyn analyzer thường lấy `SemanticModel` qua `context.SemanticModel` (trong diagnostic analyzer callback) rồi gọi `GetSymbolInfo(node)` để biết symbol thật — tương đương `info.ObjectOf()` trong Go. _(Minh hoạ, đối chiếu Microsoft Learn — máy tui không có .NET để chạy.)_
 
 > [!WARNING]
-> Một lỗi phổ biến: dùng `GetTypeInfo()` rồi mong nhận `INamedTypeSymbol` trực tiếp. Sai — `GetTypeInfo()` trả về `TypeInfo` **struct**, `.Type` của nó mới là `ITypeSymbol`. Sự khác biệt nhỏ nhưng code sẽ không compile nếu gán nhầm.
+> Một lỗi phổ biến: dùng `GetTypeInfo()` rồi mong nhận `INamedTypeSymbol` trực tiếp. Sai — `GetTypeInfo()` trả về `TypeInfo` **struct**, `.Type` của nó mới là `ITypeSymbol`. Sự khác biệt nhỏ nhưng code sẽ không compile nếu gán lộn.
 
 ## 6. Tại sao ranh giới này quan trọng cho AI agent
 
-Nếu bạn đã đọc các phần trước, câu hỏi tự nhiên là: _"Vậy viết hard-rule kiểu này thì dùng vào AI agent chỗ nào?"_
+Nếu bạn đã đọc các phần trước, câu hỏi tự nhiên là: _"Vậy viết hard-rule kiểu này thì dùng vô AI agent chỗ nào?"_
 
 Câu trả lời đơn giản: **đây chính là cái cổng kiểm tra output của agent.**
 
-AI agent viết code xong → code đó chạy qua lint/type-checker → nếu vi phạm luật kiến trúc → build đỏ → agent phải viết lại. Không cần tin vào lời dặn trong prompt. Không cần review tay. Máy chặn.
+AI agent viết code xong → code đó chạy qua lint/type-checker → nếu vi phạm luật kiến trúc → build đỏ → agent phải viết lại. Không cần tin vô lời dặn trong prompt. Không cần review tay. Máy chặn.
 
 Nhưng để cái cổng đó chặn đúng chỗ (không dính oan, không bỏ sót), bạn cần hiểu luật nào cần AST và luật nào cần tầng semantic — đúng cái bài học của demo trên.
 
-Phần 5 sẽ đi sâu vào cách nối cái cổng đó vào luồng AI agent thực tế — không phải lý thuyết, mà là pattern cụ thể từ series anh em _"Bắt LLM code đúng bằng kiến trúc"_ mà tôi đang làm trên chính codebase `ai-dict`.
+Phần 5 sẽ đi sâu vô cách nối cái cổng đó vô luồng AI agent thực tế — không phải lý thuyết, mà là pattern cụ thể từ series liên kết _"Bắt LLM code đúng bằng kiến trúc"_ mà tui đang làm trên chính codebase `ai-dict`.
 
 ---
 
