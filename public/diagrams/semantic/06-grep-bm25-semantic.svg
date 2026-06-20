@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" role="img" aria-label="Ba tầng tìm kiếm trên cùng một truy vấn: grep lọc theo ký tự cho ra các hit ngang nhau không thứ hạng; BM25 xếp hạng theo từ bằng TF IDF và độ dài; semantic xếp hạng theo nghĩa bằng vector embedding, bắt được câu khác chữ cùng nghĩa">
+  <rect width="100%" height="100%" fill="#c2c2bd"/>
+  <style>
+    .title { fill:#0f172a; font-size:23px; font-weight:700; }
+    .sub   { fill:#475569; font-size:13px; }
+    .ph    { font-size:14.5px; font-weight:700; }
+    .mono  { font-family:'SF Mono','Cascadia Code',Consolas,monospace; font-size:11.5px; }
+    .meta  { fill:#475569; font-size:12px; }
+    .hit   { fill:#065f46; font-size:12.5px; }
+    .note  { fill:#64748b; font-size:12px; }
+    .gbox  { fill:#f8fafc; stroke:#cbd5e1; stroke-width:1.5; }
+    .bbox  { fill:#ecfdf5; stroke:#10b981; stroke-width:1.5; }
+    .sbox  { fill:#eef2ff; stroke:#6366f1; stroke-width:1.5; }
+  </style>
+
+  <text class="title" x="30" y="42">grep · BM25 · semantic — ba tầng tìm kiếm</text>
+  <text class="sub" x="30" y="66">Cùng một truy vấn. grep chia hai phe theo ký tự; BM25 xếp hạng theo từ; semantic xếp hạng theo nghĩa.</text>
+
+  <rect x="330" y="86" width="300" height="32" rx="8" fill="#0f172a"/>
+  <text class="mono" x="480" y="107" text-anchor="middle" fill="#ffffff">truy vấn: “token”</text>
+
+  <!-- COL 1: grep -->
+  <rect class="gbox" x="25" y="150" width="290" height="262" rx="14"/>
+  <circle cx="52" cy="182" r="7" fill="#64748b"/>
+  <text class="ph" x="68" y="187" fill="#334155">grep — LỌC theo ký tự</text>
+  <text class="meta" x="45" y="212">Doc có chứa chữ → in ra. Có/không.</text>
+
+  <text class="hit" x="45" y="246">✓ auth-token</text>
+  <text class="hit" x="45" y="272">✓ login-flow</text>
+  <text class="hit" x="45" y="298">✓ middleware</text>
+
+  <line x1="45" y1="318" x2="295" y2="318" stroke="#e2e8f0" stroke-width="1"/>
+  <text class="note" x="45" y="344">3 hit — mọi cái NGANG NHAU.</text>
+  <text class="note" x="45" y="362">Theo thứ tự kho, không thứ hạng.</text>
+  <text class="mono" x="45" y="392" fill="#94a3b8">đơn vị: ký tự / regex</text>
+
+  <!-- COL 2: BM25 -->
+  <rect class="bbox" x="335" y="150" width="290" height="262" rx="14"/>
+  <circle cx="362" cy="182" r="7" fill="#10b981"/>
+  <text class="ph" x="378" y="187" fill="#047857">BM25 — XẾP HẠNG theo từ</text>
+  <text class="meta" x="355" y="212">Chấm điểm: TF · IDF · độ dài doc.</text>
+
+  <!-- ranked bars -->
+  <text class="mono" x="355" y="250" fill="#334155">1. auth-token</text>
+  <rect x="355" y="256" width="230" height="11" rx="3" fill="#10b981"/>
+  <text class="mono" x="592" y="265" fill="#047857">0.90</text>
+
+  <text class="mono" x="355" y="288" fill="#334155">2. middleware</text>
+  <rect x="355" y="294" width="160" height="11" rx="3" fill="#34d399"/>
+  <text class="mono" x="592" y="303" fill="#047857">0.63</text>
+
+  <text class="mono" x="355" y="326" fill="#334155">3. login-flow</text>
+  <rect x="355" y="332" width="109" height="11" rx="3" fill="#6ee7b7"/>
+  <text class="mono" x="592" y="341" fill="#047857">0.43</text>
+
+  <line x1="355" y1="356" x2="605" y2="356" stroke="#a7f3d0" stroke-width="1"/>
+  <text class="note" x="355" y="380">Biết doc nào liên quan hơn.</text>
+  <text class="mono" x="355" y="400" fill="#94a3b8">đơn vị: từ (token)</text>
+
+  <!-- COL 3: semantic -->
+  <rect class="sbox" x="645" y="150" width="290" height="262" rx="14"/>
+  <circle cx="672" cy="182" r="7" fill="#6366f1"/>
+  <text class="ph" x="688" y="187" fill="#4338ca">semantic — HIỂU NGHĨA</text>
+  <text class="meta" x="665" y="212">Câu → vector; gần nghĩa = gần nhau.</text>
+
+  <text class="hit" x="665" y="248" fill="#4338ca">✓ “xe hơi” khi hỏi “ô tô”</text>
+  <text class="note" x="683" y="266">— khác chữ, CÙNG nghĩa → bắt được</text>
+  <text class="hit" x="665" y="298" fill="#4338ca">✓ “đăng nhập” ≈ “authentication”</text>
+
+  <line x1="665" y1="318" x2="915" y2="318" stroke="#c7d2fe" stroke-width="1"/>
+  <text class="note" x="665" y="344">Xếp hạng theo cosine similarity.</text>
+  <text class="note" x="665" y="362">Cần một mô hình embedding.</text>
+  <text class="mono" x="665" y="392" fill="#94a3b8">đơn vị: nghĩa (embedding)</text>
+
+  <!-- bottom boundary note -->
+  <text class="sub" x="480" y="446" text-anchor="middle" fill="#475569">Ranh giới NGHĨA nằm giữa BM25 và semantic — grep và BM25 đều “theo chữ”, đều mù trước nghĩa.</text>
+</svg>
