@@ -12,13 +12,29 @@ tags:
 multiLangKey: "transcript-anatomy"
 ---
 
+<aside class="ev-legend" data-pagefind-ignore aria-label="Evidence-tag legend">
+  <span class="ev-legend__title">Evidence tags — hover or tap for meaning</span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Green — file-verified: observed directly in the 1,107 real transcripts." data-tip="File-verified — observed directly in the 1,107 real transcripts, reproducible from the corpus.">
+    <span class="ev-legend__dot" aria-hidden="true">🟢</span><span class="ev-legend__label">file-verified</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Check — docs-verified: backed by official Anthropic documentation." data-tip="Docs-verified — backed by official Anthropic documentation.">
+    <span class="ev-legend__dot" aria-hidden="true">✅</span><span class="ev-legend__label">docs-verified</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Yellow — inference: reasoned, not directly observable because Claude Code is closed-source." data-tip="Inference — reasoned, not directly observable (Claude Code is closed-source).">
+    <span class="ev-legend__dot" aria-hidden="true">🟡</span><span class="ev-legend__label">inference</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Red — refuted: a claim from the original survey that the audit disproved." data-tip="Refuted — a claim from the original survey the audit disproved outright. See the Errata (→ E#) table below.">
+    <span class="ev-legend__dot" aria-hidden="true">🔴</span><span class="ev-legend__label">refuted</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+</aside>
+
 Every Claude Code session writes itself to disk as a `.jsonl` file — one JSON object per line, appended in real time. It looks simple enough to reverse-engineer in an afternoon: find the user line, find the assistant line, count the tokens, done.
 
 It isn't that simple. A line that says `role:"user"` is not necessarily a human. A "turn" is not one API call. A tiny `input_tokens` count doesn't mean a small prompt. And an entire subagent can run, compact its own context, and report back — without a single byte of it appearing in the file you started with.
 
 This post is a full anatomy of the format: what the original inspection found, and what held up (or didn't) when it was adversarially audited against **1,107 real transcripts** spanning CLI versions 2.1.168 → 2.1.197.
 
-Evidence tags used throughout: 🟢 **file-verified** (observed in real transcripts), ✅ **docs-verified** (official Anthropic docs), 🟡 **inference** (reasoned — Claude Code is closed-source). Corrections found by the audit are tagged **→ E#** and collected in the Errata table below.
+Evidence tags (🟢 / ✅ / 🟡 / 🔴) are pinned in the legend at the top of the page — hover, tab to, or tap any tag to see what it means. Corrections found by the audit are tagged **→ E#** and collected in the Errata table below.
 
 ## TL;DR
 

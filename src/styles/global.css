@@ -70,3 +70,126 @@
 #myBar {
   transition: width var(--dur-1) linear;
 }
+
+/* ===== Evidence-tag legend =====
+   A compact caption that pins to the top of the viewport while a long audited
+   post scrolls under it (used on the transcript-anatomy posts). Each tag reveals
+   its definition on hover / keyboard focus / tap, so a reader who doesn't know
+   what a coloured dot means can ask for it in place. iOS-friendly: sticky with
+   the -webkit- fallback, notch-safe top padding, and a frosted backdrop. */
+.ev-legend {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.6rem;
+  margin: 0 0 1.75rem;
+  padding: 0.5rem 0.7rem;
+  /* keep clear of the iOS status bar / notch when pinned */
+  padding-top: max(0.5rem, env(safe-area-inset-top));
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  background: color-mix(in srgb, var(--surface) 90%, transparent);
+  -webkit-backdrop-filter: saturate(1.25) blur(10px);
+  backdrop-filter: saturate(1.25) blur(10px);
+  box-shadow:
+    0 1px 0 color-mix(in srgb, var(--border) 55%, transparent),
+    0 8px 20px -14px rgb(0 0 0 / 0.45);
+  font-size: 0.8rem;
+  line-height: 1.2;
+  /* smoother pin/unpin edge on iOS momentum scroll */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.ev-legend__title {
+  font-family: var(--font-app);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-inline-end: 0.15rem;
+}
+
+.ev-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.4rem;
+  color: var(--foreground);
+  cursor: help;
+  -webkit-tap-highlight-color: transparent;
+  transition: background-color var(--dur-1) var(--ease-standard);
+}
+.ev-legend__item:hover,
+.ev-legend__item:focus,
+.ev-legend__item:focus-visible {
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+  outline: none;
+}
+
+.ev-legend__dot {
+  font-size: 0.9rem;
+  line-height: 1;
+}
+.ev-legend__label {
+  font-weight: 600;
+}
+.ev-legend__info {
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+  opacity: 0.7;
+}
+
+/* Tooltip — pure CSS, driven by the item's data-tip attribute. Anchored to the
+   legend bar itself (a positioned/transformed containing block), not the chip, so
+   it can never spill past the bar's — and therefore the viewport's — edge. */
+.ev-legend__item::after {
+  content: attr(data-tip);
+  position: absolute;
+  top: calc(100% + 0.45rem);
+  inset-inline-start: 0.6rem;
+  inset-inline-end: auto;
+  z-index: 30;
+  width: max-content;
+  max-width: min(24rem, calc(100% - 1.2rem));
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.55);
+  font-family: var(--font-reading);
+  font-size: 0.78rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: 1.45;
+  white-space: normal;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity var(--dur-2) var(--ease-standard),
+    transform var(--dur-2) var(--ease-standard);
+  pointer-events: none;
+}
+.ev-legend__item:hover::after,
+.ev-legend__item:focus::after,
+.ev-legend__item:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ev-legend__item,
+  .ev-legend__item::after {
+    transition: none;
+  }
+}

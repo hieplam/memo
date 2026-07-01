@@ -13,13 +13,29 @@ tags:
 multiLangKey: "transcript-anatomy"
 ---
 
+<aside class="ev-legend" data-pagefind-ignore aria-label="Chú thích nhãn bằng chứng">
+  <span class="ev-legend__title">Nhãn bằng chứng — hover/chạm để xem nghĩa</span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Xanh lá — kiểm-chứng-file: quan sát trực tiếp trong 1.107 transcript thật." data-tip="Kiểm-chứng-file — quan sát trực tiếp trong 1.107 transcript thật, tái lập được từ corpus.">
+    <span class="ev-legend__dot" aria-hidden="true">🟢</span><span class="ev-legend__label">kiểm-chứng-file</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Dấu tick — kiểm-chứng-tài-liệu: có tài liệu chính thức của Anthropic xác nhận." data-tip="Kiểm-chứng-tài-liệu — có tài liệu chính thức của Anthropic xác nhận.">
+    <span class="ev-legend__dot" aria-hidden="true">✅</span><span class="ev-legend__label">kiểm-chứng-tài-liệu</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Vàng — suy luận: lập luận, không quan sát trực tiếp được vì Claude Code là mã đóng." data-tip="Suy luận — lập luận, không quan sát trực tiếp được (Claude Code là mã đóng).">
+    <span class="ev-legend__dot" aria-hidden="true">🟡</span><span class="ev-legend__label">suy luận</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+  <span class="ev-legend__item" tabindex="0" aria-label="Đỏ — bị bác bỏ: một tuyên bố ở khảo sát gốc bị audit chứng minh là sai." data-tip="Bị bác bỏ (REFUTED) — một tuyên bố ở khảo sát gốc bị audit chứng minh là sai. Xem bảng Errata (→ E#) bên dưới.">
+    <span class="ev-legend__dot" aria-hidden="true">🔴</span><span class="ev-legend__label">bị bác bỏ</span><span class="ev-legend__info" aria-hidden="true">ⓘ</span>
+  </span>
+</aside>
+
 Mỗi phiên Claude Code tự ghi xuống đĩa thành một file `.jsonl` — mỗi dòng một object JSON, được nối thêm (append) theo thời gian thực. Nhìn thì có vẻ chỉ cần một buổi chiều là dịch ngược xong: tìm dòng của user, tìm dòng của assistant, đếm token, xong.
 
 Không đơn giản vậy. Một dòng ghi `role:"user"` chưa chắc là con người. Một "turn" (lượt xử lý prompt) không phải là một lần gọi API. Một `input_tokens` bé xíu không có nghĩa là prompt nhỏ. Và cả một subagent (tác nhân con) có thể chạy, tự nén ngữ cảnh của nó, rồi báo cáo lại — mà không một byte nào của nó xuất hiện trong file bạn đang đọc.
 
 Bài này mổ xẻ toàn bộ định dạng: bản khảo sát gốc tìm ra gì, và điều gì trụ vững (hay không) khi nó bị **kiểm chứng đối kháng (adversarial audit)** trên **1.107 transcript thật**, trải các phiên bản CLI 2.1.168 → 2.1.197.
 
-Nhãn bằng chứng dùng xuyên suốt: 🟢 **kiểm-chứng-file** (quan sát trực tiếp trong transcript thật), ✅ **kiểm-chứng-tài-liệu** (tài liệu chính thức của Anthropic), 🟡 **suy luận** (lập luận — Claude Code là mã đóng). Các đính chính do audit tìm ra được gom trong bảng Errata bên dưới.
+Các nhãn bằng chứng (🟢 / ✅ / 🟡 / 🔴) được ghim trong phần chú thích ở đầu trang — hover, tab tới, hoặc chạm vào bất kỳ nhãn nào để xem nghĩa. Các đính chính do audit tìm ra được gom trong bảng **Errata** bên dưới.
 
 ## Tóm tắt nhanh (TL;DR)
 
