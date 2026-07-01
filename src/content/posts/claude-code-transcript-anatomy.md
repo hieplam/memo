@@ -1,7 +1,7 @@
 ---
 title: "Inside a Claude Code Transcript: How Turns, Tokens & Actors Actually Work"
 description: "A line-by-line anatomy of the Claude Code .jsonl session format — how turns are reconstructed, what a token count really means, and the seven things that masquerade as a user prompt — audited against 1,107 real transcripts."
-pubDatetime: 2026-07-01T12:00:00Z
+pubDatetime: 2026-07-01T09:45:00Z
 lang: en
 tags:
   - claude-code

@@ -1,7 +1,7 @@
 ---
 title: "Giải phẫu một transcript Claude Code: turn, token và các tác nhân thực sự hoạt động thế nào"
 description: "Mổ xẻ từng dòng định dạng .jsonl của phiên Claude Code — cách tái dựng một turn, ý nghĩa thật của số đếm token, và bảy thứ đội lốt prompt của người dùng — đã kiểm chứng trên 1.107 transcript thật."
-pubDatetime: 2026-07-01T12:00:00Z
+pubDatetime: 2026-07-01T09:45:00Z
 lang: vi
 tags:
   - claude-code
