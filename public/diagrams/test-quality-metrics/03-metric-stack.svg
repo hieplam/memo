@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif">
+  <rect width="960" height="600" fill="#ffffff"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0f172a">The test-quality metric stack</text>
+  <text x="40" y="74" font-size="15" fill="#475569">No single number is &#8220;test quality.&#8221; Read the suite as four layers &#8212; each answers a different question.</text>
+
+  <!-- Layer 4: Health -->
+  <g>
+    <rect x="40" y="100" width="600" height="92" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="60" y="128" font-size="17" font-weight="700" fill="#6d28d9">4 &#183; Trust &amp; health</text>
+    <text x="60" y="150" font-size="12.5" fill="#5b21b6">Is the signal reliable enough to gate a merge automatically?</text>
+    <g font-size="12.5" fill="#4c1d95">
+      <rect x="60" y="160" width="120" height="24" rx="12" fill="#ede9fe"/><text x="120" y="176" text-anchor="middle">Flakiness rate</text>
+      <rect x="190" y="160" width="140" height="24" rx="12" fill="#ede9fe"/><text x="260" y="176" text-anchor="middle">Suite speed / health</text>
+      <rect x="340" y="160" width="130" height="24" rx="12" fill="#ede9fe"/><text x="405" y="176" text-anchor="middle">Determinism</text>
+      <rect x="480" y="160" width="140" height="24" rx="12" fill="#ede9fe"/><text x="550" y="176" text-anchor="middle">Pass-on-rerun (5&#215;)</text>
+    </g>
+  </g>
+
+  <!-- Layer 3: Confidence / scope -->
+  <g>
+    <rect x="40" y="204" width="600" height="92" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="60" y="232" font-size="17" font-weight="700" fill="#1d4ed8">3 &#183; Risk targeting</text>
+    <text x="60" y="254" font-size="12.5" fill="#1e40af">Are the parts that matter &#8212; and the parts that just changed &#8212; actually tested?</text>
+    <g font-size="12.5" fill="#1e3a8a">
+      <rect x="60" y="264" width="150" height="24" rx="12" fill="#dbeafe"/><text x="135" y="280" text-anchor="middle">Diff / changed-line cov</text>
+      <rect x="220" y="264" width="150" height="24" rx="12" fill="#dbeafe"/><text x="295" y="280" text-anchor="middle">Critical-path coverage</text>
+      <rect x="380" y="264" width="160" height="24" rx="12" fill="#dbeafe"/><text x="460" y="280" text-anchor="middle">Property-based testing</text>
+    </g>
+  </g>
+
+  <!-- Layer 2: Effectiveness (the heart) -->
+  <g>
+    <rect x="40" y="308" width="600" height="112" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="60" y="336" font-size="17" font-weight="700" fill="#15803d">2 &#183; Effectiveness &#8212; the oracle layer  &#9733;</text>
+    <text x="60" y="358" font-size="12.5" fill="#166534">Would the tests actually NOTICE if the code were wrong? (This is the layer coverage ignores.)</text>
+    <g font-size="12.5" fill="#14532d">
+      <rect x="60" y="368" width="150" height="26" rx="13" fill="#16a34a"/><text x="135" y="385" text-anchor="middle" fill="#fff" font-weight="700">Mutation score</text>
+      <rect x="220" y="368" width="160" height="26" rx="13" fill="#dcfce7"/><text x="300" y="385" text-anchor="middle">Assertion density/quality</text>
+      <rect x="390" y="368" width="150" height="26" rx="13" fill="#dcfce7"/><text x="465" y="385" text-anchor="middle">Test-smell freedom</text>
+      <rect x="60" y="400" width="160" height="14" rx="7" fill="#bbf7d0"/>
+    </g>
+    <text x="232" y="411" font-size="11.5" fill="#166534" font-style="italic">strong oracle = detects deviations from intended behaviour, not just &#8220;no exception thrown&#8221;</text>
+  </g>
+
+  <!-- Layer 1: Coverage (foundation, negative indicator) -->
+  <g>
+    <rect x="40" y="432" width="600" height="120" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="60" y="460" font-size="17" font-weight="700" fill="#b91c1c">1 &#183; Reachability &#8212; coverage (foundation only)</text>
+    <text x="60" y="482" font-size="12.5" fill="#7f1d1d">Did the test even run this code? A valid NEGATIVE indicator, a useless POSITIVE one.</text>
+    <g font-size="12.5" fill="#7f1d1d">
+      <rect x="60" y="492" width="140" height="24" rx="12" fill="#fee2e2"/><text x="130" y="508" text-anchor="middle">Line / statement</text>
+      <rect x="210" y="492" width="150" height="24" rx="12" fill="#fee2e2"/><text x="285" y="508" text-anchor="middle">Branch / condition</text>
+      <rect x="370" y="492" width="90" height="24" rx="12" fill="#fee2e2"/><text x="415" y="508" text-anchor="middle">MC/DC</text>
+    </g>
+    <text x="60" y="538" font-size="12" fill="#b91c1c" font-style="italic">Low coverage &#8594; definitely under-tested. High coverage &#8594; proves nothing about correctness.</text>
+  </g>
+
+  <!-- Right rail: "reads as" arrow -->
+  <g>
+    <rect x="664" y="100" width="256" height="452" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
+    <text x="680" y="128" font-size="15" font-weight="700" fill="#0f172a">How to read it</text>
+    <text x="680" y="156" font-size="12.5" fill="#334155">Build UP, gate DOWN-to-UP:</text>
+
+    <text x="680" y="190" font-size="12.5" fill="#dc2626" font-weight="700">Floor (L1)</text>
+    <text x="680" y="208" font-size="12" fill="#475569">Coverage tells you where you</text>
+    <text x="680" y="224" font-size="12" fill="#475569">are blind. Fix zeros first.</text>
+
+    <text x="680" y="256" font-size="12.5" fill="#15803d" font-weight="700">Heart (L2)</text>
+    <text x="680" y="274" font-size="12" fill="#475569">Mutation score + assertions tell</text>
+    <text x="680" y="290" font-size="12" fill="#475569">you the tests can actually catch</text>
+    <text x="680" y="306" font-size="12" fill="#475569">a regression. This is &#8220;good.&#8221;</text>
+
+    <text x="680" y="338" font-size="12.5" fill="#1d4ed8" font-weight="700">Aim (L3)</text>
+    <text x="680" y="356" font-size="12" fill="#475569">Point that power at the diff and</text>
+    <text x="680" y="372" font-size="12" fill="#475569">the money-critical paths.</text>
+
+    <text x="680" y="404" font-size="12.5" fill="#6d28d9" font-weight="700">Trust (L4)</text>
+    <text x="680" y="422" font-size="12" fill="#475569">A flaky suite can&#8217;t gate a merge.</text>
+    <text x="680" y="438" font-size="12" fill="#475569">Reliability is a hard prerequisite</text>
+    <text x="680" y="454" font-size="12" fill="#475569">for the agentic loop.</text>
+
+    <line x1="680" y1="478" x2="904" y2="478" stroke="#e2e8f0"/>
+    <text x="680" y="502" font-size="12" fill="#0f172a" font-weight="600">For an autonomous merge gate</text>
+    <text x="680" y="520" font-size="12" fill="#475569">you need all four. Coverage alone</text>
+    <text x="680" y="536" font-size="12" fill="#475569">is necessary, never sufficient.</text>
+  </g>
+</svg>

@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 660" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif">
+  <rect width="980" height="660" fill="#ffffff"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0f172a">Agentic merge-gate readiness scorecard</text>
+  <text x="40" y="74" font-size="15" fill="#475569">&#8220;Is my legacy suite good enough to merge AI changes without manual testing?&#8221; Score the diff, not the whole repo.</text>
+
+  <!-- table header -->
+  <g>
+    <rect x="40" y="96" width="900" height="34" rx="6" fill="#0f172a"/>
+    <text x="56" y="118" font-size="13" font-weight="700" fill="#fff">Dimension</text>
+    <text x="300" y="118" font-size="13" font-weight="700" fill="#fff">Metric</text>
+    <text x="540" y="118" font-size="13" font-weight="700" fill="#fca5a5">Not ready</text>
+    <text x="700" y="118" font-size="13" font-weight="700" fill="#fde68a">Workable</text>
+    <text x="840" y="118" font-size="13" font-weight="700" fill="#86efac">Loop-ready</text>
+  </g>
+
+  <!-- rows -->
+  <!-- row template -->
+  <g font-size="12.5" fill="#0f172a">
+    <!-- 1 -->
+    <rect x="40" y="130" width="900" height="40" fill="#f8fafc"/>
+    <text x="56" y="148" font-weight="600">Oracle strength &#9733;</text>
+    <text x="56" y="164" font-size="11" fill="#64748b">do tests catch a regression?</text>
+    <text x="300" y="155">Mutation score (on diff)</text>
+    <text x="540" y="155" fill="#b91c1c">&lt; 50%</text>
+    <text x="700" y="155" fill="#b45309">60&#8211;75%</text>
+    <text x="840" y="155" fill="#15803d" font-weight="700">&#8805; 80%</text>
+    <!-- 2 -->
+    <rect x="40" y="170" width="900" height="40" fill="#ffffff"/>
+    <text x="56" y="188" font-weight="600">Change is exercised</text>
+    <text x="56" y="204" font-size="11" fill="#64748b">new/changed lines run</text>
+    <text x="300" y="195">Diff / changed-line coverage</text>
+    <text x="540" y="195" fill="#b91c1c">&lt; 60%</text>
+    <text x="700" y="195" fill="#b45309">70&#8211;80%</text>
+    <text x="840" y="195" fill="#15803d" font-weight="700">&#8805; 90%</text>
+    <!-- 3 -->
+    <rect x="40" y="210" width="900" height="40" fill="#f8fafc"/>
+    <text x="56" y="228" font-weight="600">Assertions exist</text>
+    <text x="56" y="244" font-size="11" fill="#64748b">no empty / assertion-free tests</text>
+    <text x="300" y="235">Assertion density &amp; smell scan</text>
+    <text x="540" y="235" fill="#b91c1c">smells present</text>
+    <text x="700" y="235" fill="#b45309">&#8805;1 assert/test</text>
+    <text x="840" y="235" fill="#15803d" font-weight="700">0 smells, behavioural</text>
+    <!-- 4 -->
+    <rect x="40" y="250" width="900" height="40" fill="#ffffff"/>
+    <text x="56" y="268" font-weight="600">Reliability</text>
+    <text x="56" y="284" font-size="11" fill="#64748b">a flaky gate is no gate</text>
+    <text x="300" y="275">Flakiness rate (5&#215; rerun)</text>
+    <text x="540" y="275" fill="#b91c1c">&gt; 1%</text>
+    <text x="700" y="275" fill="#b45309">&#8804; 0.5%</text>
+    <text x="840" y="275" fill="#15803d" font-weight="700">&#8776; 0%, quarantined</text>
+    <!-- 5 -->
+    <rect x="40" y="290" width="900" height="40" fill="#f8fafc"/>
+    <text x="56" y="308" font-weight="600">Critical paths</text>
+    <text x="56" y="324" font-size="11" fill="#64748b">money / auth / data-loss</text>
+    <text x="300" y="315">Critical-path mutation + cases</text>
+    <text x="540" y="315" fill="#b91c1c">gaps</text>
+    <text x="700" y="315" fill="#b45309">covered</text>
+    <text x="840" y="315" fill="#15803d" font-weight="700">&#8805; 90% mutation + props</text>
+    <!-- 6 -->
+    <rect x="40" y="330" width="900" height="40" fill="#ffffff"/>
+    <text x="56" y="348" font-weight="600">Speed</text>
+    <text x="56" y="364" font-size="11" fill="#64748b">fast enough to gate every PR</text>
+    <text x="300" y="355">Suite + diff-mutation runtime</text>
+    <text x="540" y="355" fill="#b91c1c">hours</text>
+    <text x="700" y="355" fill="#b45309">~10 min</text>
+    <text x="840" y="355" fill="#15803d" font-weight="700">diff-scoped, minutes</text>
+  </g>
+  <rect x="40" y="130" width="900" height="240" fill="none" stroke="#e2e8f0" stroke-width="1"/>
+  <line x1="290" y1="130" x2="290" y2="370" stroke="#e2e8f0"/>
+  <line x1="525" y1="130" x2="525" y2="370" stroke="#e2e8f0"/>
+  <line x1="685" y1="130" x2="685" y2="370" stroke="#e2e8f0"/>
+  <line x1="825" y1="130" x2="825" y2="370" stroke="#e2e8f0"/>
+
+  <!-- maturity ladder -->
+  <text x="40" y="412" font-size="17" font-weight="700" fill="#0f172a">Autonomy ladder &#8212; earn each rung with evidence</text>
+  <g>
+    <rect x="40" y="428" width="216" height="120" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="148" y="454" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">L0 &#183; Manual</text>
+    <text x="148" y="478" font-size="11.5" fill="#7f1d1d" text-anchor="middle">Coverage only, smells</text>
+    <text x="148" y="495" font-size="11.5" fill="#7f1d1d" text-anchor="middle">present, flaky.</text>
+    <text x="148" y="520" font-size="11.5" fill="#7f1d1d" text-anchor="middle">Human tests every PR.</text>
+  </g>
+  <g>
+    <rect x="268" y="428" width="216" height="120" rx="12" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="376" y="454" font-size="14" font-weight="700" fill="#b45309" text-anchor="middle">L1 &#183; Assisted</text>
+    <text x="376" y="478" font-size="11.5" fill="#78350f" text-anchor="middle">Diff coverage gate +</text>
+    <text x="376" y="495" font-size="11.5" fill="#78350f" text-anchor="middle">smell scan green.</text>
+    <text x="376" y="520" font-size="11.5" fill="#78350f" text-anchor="middle">Human reviews, light test.</text>
+  </g>
+  <g>
+    <rect x="496" y="428" width="216" height="120" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+    <text x="604" y="454" font-size="14" font-weight="700" fill="#1d4ed8" text-anchor="middle">L2 &#183; Supervised auto</text>
+    <text x="604" y="478" font-size="11.5" fill="#1e3a8a" text-anchor="middle">Diff-mutation gate +</text>
+    <text x="604" y="495" font-size="11.5" fill="#1e3a8a" text-anchor="middle">flakiness budget held.</text>
+    <text x="604" y="520" font-size="11.5" fill="#1e3a8a" text-anchor="middle">Merge on green, spot-check.</text>
+  </g>
+  <g>
+    <rect x="724" y="428" width="216" height="120" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="832" y="454" font-size="14" font-weight="700" fill="#15803d" text-anchor="middle">L3 &#183; Autonomous</text>
+    <text x="832" y="478" font-size="11.5" fill="#14532d" text-anchor="middle">All six dimensions green</text>
+    <text x="832" y="495" font-size="11.5" fill="#14532d" text-anchor="middle">on the diff + crit-path props.</text>
+    <text x="832" y="520" font-size="11.5" fill="#14532d" text-anchor="middle" font-weight="700">No manual test pre-merge.</text>
+  </g>
+  <g fill="#94a3b8">
+    <path d="M257 488 l8 0 l0 -7 l12 11 l-12 11 l0 -7 l-8 0 z"/>
+    <path d="M485 488 l8 0 l0 -7 l12 11 l-12 11 l0 -7 l-8 0 z"/>
+    <path d="M713 488 l8 0 l0 -7 l12 11 l-12 11 l0 -7 l-8 0 z"/>
+  </g>
+
+  <text x="40" y="588" font-size="12.5" fill="#475569"><tspan font-weight="700" fill="#0f172a">Rule of thumb:</tspan> thresholds apply to the CHANGED code in a PR, not the whole legacy repo. You reach the loop file-by-file,</text>
+  <text x="40" y="608" font-size="12.5" fill="#475569">starting with the highest-risk modules &#8212; never by chasing a single repo-wide percentage.</text>
+  <text x="40" y="636" font-size="11.5" fill="#94a3b8">Thresholds are starting defaults (Stryker.NET baseline high:80/low:60; Meta/industry diff gates), to be tuned per module risk &#8212; not laws of nature.</text>
+</svg>
