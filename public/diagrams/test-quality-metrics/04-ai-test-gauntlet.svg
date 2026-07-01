@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 620" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif">
+  <rect width="980" height="620" fill="#ffffff"/>
+  <text x="40" y="46" font-size="26" font-weight="700" fill="#0f172a">The AI-generated-test gauntlet</text>
+  <text x="40" y="74" font-size="15" fill="#475569">Never trust raw LLM output. Only a test that survives every filter earns a place in the suite. (After Meta TestGen-LLM, FSE 2024.)</text>
+
+  <!-- pipeline of filters -->
+  <!-- helper: each stage box -->
+  <!-- Stage 0 -->
+  <g>
+    <rect x="40" y="110" width="170" height="100" rx="12" fill="#f5f3ff" stroke="#7c3aed" stroke-width="2"/>
+    <text x="125" y="138" font-size="14" font-weight="700" fill="#6d28d9" text-anchor="middle">0 &#183; Generate</text>
+    <text x="125" y="162" font-size="12" fill="#5b21b6" text-anchor="middle">LLM proposes</text>
+    <text x="125" y="178" font-size="12" fill="#5b21b6" text-anchor="middle">candidate tests for</text>
+    <text x="125" y="194" font-size="12" fill="#5b21b6" text-anchor="middle">a class / function</text>
+  </g>
+  <!-- Stage 1 build -->
+  <g>
+    <rect x="240" y="110" width="170" height="100" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="325" y="138" font-size="14" font-weight="700" fill="#b91c1c" text-anchor="middle">1 &#183; Builds?</text>
+    <text x="325" y="162" font-size="12" fill="#7f1d1d" text-anchor="middle">Must compile.</text>
+    <text x="325" y="184" font-size="12.5" fill="#7f1d1d" text-anchor="middle" font-weight="700">~25% fail here</text>
+  </g>
+  <!-- Stage 2 pass -->
+  <g>
+    <rect x="440" y="110" width="170" height="100" rx="12" fill="#fff7ed" stroke="#ea580c" stroke-width="2"/>
+    <text x="525" y="138" font-size="14" font-weight="700" fill="#c2410c" text-anchor="middle">2 &#183; Passes?</text>
+    <text x="525" y="162" font-size="12" fill="#7c2d12" text-anchor="middle">Green on first run.</text>
+    <text x="525" y="184" font-size="12.5" fill="#7c2d12" text-anchor="middle" font-weight="700">only ~57% pass</text>
+  </g>
+  <!-- Stage 3 flake -->
+  <g>
+    <rect x="640" y="110" width="170" height="100" rx="12" fill="#fffbeb" stroke="#d97706" stroke-width="2"/>
+    <text x="725" y="138" font-size="14" font-weight="700" fill="#b45309" text-anchor="middle">3 &#183; Stable?</text>
+    <text x="725" y="162" font-size="12" fill="#78350f" text-anchor="middle">Run 5&#215;, same result.</text>
+    <text x="725" y="184" font-size="12.5" fill="#78350f" text-anchor="middle" font-weight="700">kill flakes</text>
+  </g>
+  <!-- Stage 4 improvement -->
+  <g>
+    <rect x="40" y="250" width="770" height="120" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+    <text x="60" y="278" font-size="15" font-weight="700" fill="#15803d">4 &#183; Does it strengthen the suite?  &#8212; the decisive filter</text>
+    <text x="60" y="300" font-size="12.5" fill="#166534">Keep ONLY if it kills a mutant no existing test killed, or covers a genuinely new branch. Otherwise it is noise.</text>
+    <g font-size="12.5">
+      <rect x="60" y="312" width="330" height="44" rx="10" fill="#dcfce7" stroke="#16a34a"/>
+      <text x="76" y="332" fill="#14532d" font-weight="700">&#9989; Kills a new mutant</text>
+      <text x="76" y="349" fill="#166534">behaviour is now pinned down</text>
+      <rect x="410" y="312" width="380" height="44" rx="10" fill="#fef2f2" stroke="#dc2626"/>
+      <text x="426" y="332" fill="#7f1d1d" font-weight="700">&#10060; Adds coverage but kills nothing</text>
+      <text x="426" y="349" fill="#7f1d1d">vacuous / tautological &#8212; reject even if &#8220;coverage went up&#8221;</text>
+    </g>
+  </g>
+
+  <!-- arrows top row -->
+  <g fill="#94a3b8">
+    <path d="M213 160 l16 0 l0 -8 l16 12 l-16 12 l0 -8 l-16 0 z"/>
+    <path d="M413 160 l16 0 l0 -8 l16 12 l-16 12 l0 -8 l-16 0 z"/>
+    <path d="M613 160 l16 0 l0 -8 l16 12 l-16 12 l0 -8 l-16 0 z"/>
+  </g>
+  <path d="M725 210 L725 232 L420 232 L420 248" fill="none" stroke="#94a3b8" stroke-width="2"/>
+  <polygon points="420,250 414,238 426,238" fill="#94a3b8"/>
+
+  <!-- key insight box -->
+  <g>
+    <rect x="40" y="392" width="380" height="190" rx="12" fill="#ecfeff" stroke="#0891b2" stroke-width="2"/>
+    <text x="60" y="420" font-size="15" font-weight="700" fill="#0e7490">Why coverage cannot be the AI gate</text>
+    <text x="60" y="446" font-size="13" fill="#155e75">In Meta&#8217;s mutation-guided runs, of 571</text>
+    <text x="60" y="466" font-size="13" fill="#155e75">tests that found faults missed by every</text>
+    <text x="60" y="486" font-size="13" fill="#155e75">existing test, <tspan font-weight="700">277 (~half) added ZERO</tspan></text>
+    <text x="60" y="506" font-size="13" fill="#155e75"><tspan font-weight="700">new line coverage.</tspan></text>
+    <text x="60" y="534" font-size="13" fill="#155e75">A coverage-gated pipeline would have</text>
+    <text x="60" y="554" font-size="13" fill="#155e75">thrown away half of your best regression</text>
+    <text x="60" y="574" font-size="13" fill="#155e75">tests. Gate on mutants killed, not %.</text>
+  </g>
+
+  <!-- bias warning box -->
+  <g>
+    <rect x="440" y="392" width="370" height="190" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2"/>
+    <text x="460" y="420" font-size="15" font-weight="700" fill="#b91c1c">The bug-locking trap</text>
+    <text x="460" y="446" font-size="13" fill="#7f1d1d">LLM oracles drift toward the CURRENT</text>
+    <text x="460" y="466" font-size="13" fill="#7f1d1d">(possibly buggy) implementation, not the</text>
+    <text x="460" y="486" font-size="13" fill="#7f1d1d">INTENDED behaviour. Accuracy drops</text>
+    <text x="460" y="506" font-size="13" fill="#7f1d1d">sharply on buggy code.</text>
+    <text x="460" y="534" font-size="13" fill="#7f1d1d" font-weight="700">&#8594; An AI test that just asserts &#8220;what the</text>
+    <text x="460" y="554" font-size="13" fill="#7f1d1d">code does today&#8221; freezes the bug in place.</text>
+    <text x="460" y="574" font-size="13" fill="#7f1d1d">A human/spec must own the oracle.</text>
+  </g>
+
+  <!-- right rail accept -->
+  <g>
+    <rect x="828" y="250" width="120" height="120" rx="12" fill="#16a34a"/>
+    <text x="888" y="300" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">MERGE</text>
+    <text x="888" y="322" font-size="12" fill="#dcfce7" text-anchor="middle">survivors</text>
+    <text x="888" y="338" font-size="12" fill="#dcfce7" text-anchor="middle">only</text>
+  </g>
+  <path d="M810 310 L826 310" stroke="#16a34a" stroke-width="3"/>
+  <polygon points="828,310 818,304 818,316" fill="#16a34a"/>
+</svg>

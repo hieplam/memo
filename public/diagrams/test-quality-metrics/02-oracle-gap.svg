@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif">
+  <rect width="960" height="560" fill="#ffffff"/>
+  <text x="40" y="48" font-size="26" font-weight="700" fill="#0f172a">The &#8220;oracle gap&#8221;: covered &#8800; checked</text>
+  <text x="40" y="76" font-size="15" fill="#475569">Each dot is a source file. The vertical distance below the diagonal is how much code is run but not actually verified.</text>
+
+  <!-- Axes -->
+  <g stroke="#cbd5e1" stroke-width="1.5">
+    <line x1="120" y1="120" x2="120" y2="460"/>
+    <line x1="120" y1="460" x2="620" y2="460"/>
+  </g>
+  <!-- grid -->
+  <g stroke="#eef2f6" stroke-width="1">
+    <line x1="120" y1="120" x2="620" y2="120"/>
+    <line x1="120" y1="205" x2="620" y2="205"/>
+    <line x1="120" y1="290" x2="620" y2="290"/>
+    <line x1="120" y1="375" x2="620" y2="375"/>
+    <line x1="245" y1="120" x2="245" y2="460"/>
+    <line x1="370" y1="120" x2="370" y2="460"/>
+    <line x1="495" y1="120" x2="495" y2="460"/>
+  </g>
+
+  <!-- axis labels -->
+  <text x="370" y="498" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle">Line coverage  &#8594;</text>
+  <text x="70" y="290" font-size="14" font-weight="600" fill="#0f172a" text-anchor="middle" transform="rotate(-90 70 290)">Mutation score  &#8594;</text>
+  <text x="120" y="478" font-size="11" fill="#64748b" text-anchor="middle">0%</text>
+  <text x="620" y="478" font-size="11" fill="#64748b" text-anchor="middle">100%</text>
+  <text x="104" y="464" font-size="11" fill="#64748b" text-anchor="end">0%</text>
+  <text x="104" y="124" font-size="11" fill="#64748b" text-anchor="end">100%</text>
+
+  <!-- gap region (under diagonal) -->
+  <path d="M120 460 L620 120 L620 460 Z" fill="#fef2f2" opacity="0.7"/>
+  <!-- ideal diagonal -->
+  <line x1="120" y1="460" x2="620" y2="120" stroke="#16a34a" stroke-width="2.5" stroke-dasharray="7 5"/>
+  <text x="470" y="200" font-size="12.5" fill="#15803d" font-weight="600" transform="rotate(-34 470 200)">ideal: coverage = mutation</text>
+
+  <text x="430" y="430" font-size="13" fill="#b91c1c" font-weight="700" text-anchor="middle">ORACLE GAP</text>
+  <text x="430" y="448" font-size="11.5" fill="#b91c1c" text-anchor="middle">executed but not asserted</text>
+
+  <!-- dots: low coverage tracks diagonal -->
+  <g fill="#16a34a">
+    <circle cx="170" cy="430" r="6"/>
+    <circle cx="210" cy="405" r="6"/>
+    <circle cx="250" cy="380" r="6"/>
+    <circle cx="300" cy="350" r="6"/>
+  </g>
+  <!-- dots: high coverage spreads down into the gap (the danger zone) -->
+  <g fill="#dc2626">
+    <circle cx="560" cy="410" r="7"/>
+    <circle cx="585" cy="430" r="7"/>
+    <circle cx="600" cy="395" r="7"/>
+    <circle cx="540" cy="380" r="6.5"/>
+    <circle cx="575" cy="360" r="6.5"/>
+  </g>
+  <g fill="#d97706">
+    <circle cx="470" cy="300" r="6"/>
+    <circle cx="510" cy="280" r="6"/>
+    <circle cx="430" cy="270" r="6"/>
+  </g>
+
+  <!-- callout to danger cluster -->
+  <line x1="600" y1="412" x2="660" y2="430" stroke="#dc2626" stroke-width="1.5"/>
+  <rect x="648" y="420" width="280" height="84" rx="10" fill="#fef2f2" stroke="#dc2626" stroke-width="1.5"/>
+  <text x="664" y="444" font-size="12.5" font-weight="700" fill="#b91c1c">The danger zone (real finding)</text>
+  <text x="664" y="464" font-size="11.5" fill="#7f1d1d">26 files had &gt;80% coverage &amp; &lt;20% mutation.</text>
+  <text x="664" y="481" font-size="11.5" fill="#7f1d1d">&#8805;12 of them simply had missing</text>
+  <text x="664" y="498" font-size="11.5" fill="#7f1d1d">assert statements. Green dashboards, blind tests.</text>
+
+  <!-- legend -->
+  <g font-size="12" fill="#334155">
+    <circle cx="135" cy="525" r="6" fill="#16a34a"/><text x="148" y="529">low-coverage files (metrics agree)</text>
+    <circle cx="360" cy="525" r="6" fill="#dc2626"/><text x="373" y="529">high-coverage files that assert little (gap opens)</text>
+    <circle cx="700" cy="525" r="6" fill="#d97706"/><text x="713" y="529">partial oracles</text>
+  </g>
+
+  <text x="648" y="150" font-size="13" fill="#475569" font-weight="600">Source: Sapozhnikov et al.,</text>
+  <text x="648" y="170" font-size="13" fill="#475569">&#8220;TCE / Oracle Gap&#8221; (arXiv 2309.02395):</text>
+  <text x="648" y="194" font-size="12.5" fill="#64748b">coverage &amp; mutation correlate at LOW</text>
+  <text x="648" y="212" font-size="12.5" fill="#64748b">coverage, but well-covered files show</text>
+  <text x="648" y="230" font-size="12.5" fill="#64748b">large, frequent gaps &#8212; code that is</text>
+  <text x="648" y="248" font-size="12.5" fill="#64748b">executed but poorly checked.</text>
+</svg>
