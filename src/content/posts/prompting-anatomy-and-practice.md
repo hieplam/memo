@@ -12,7 +12,7 @@ tags:
 multiLangKey: "prompting-anatomy-and-practice"
 ---
 
-Most advice about "better prompting" is a list of tricks: be polite, tell it to take a deep breath, add "you are an expert." Some of that folklore even worked, once, on older models — but treating it as the craft is like learning to cook by memorizing seasoning brands instead of understanding heat, acid, and time. Underneath the tricks there is an actual mental model, a small set of load-bearing components, and — more importantly — a *practice* for getting measurably better instead of guessing. This is a field guide to all three.
+Most advice about "better prompting" is a list of tricks: be polite, tell it to take a deep breath, add "you are an expert." Some of that folklore even worked, once, on older models — but treating it as the craft is like learning to cook by memorizing seasoning brands instead of understanding heat, acid, and time. Underneath the tricks there is an actual mental model, a small set of load-bearing components, and — more importantly — a _practice_ for getting measurably better instead of guessing. This is a field guide to all three.
 
 ## TL;DR
 
@@ -45,7 +45,7 @@ flowchart LR
     H -.->|"same words, different outcome"| P
 ```
 
-**Second, the model is a non-situated reader:** a brilliant contractor teleported into your project with amnesia. Enormous general skill, zero hallway context. It has not read your Slack threads, does not know what "the usual way" means, and in an agentic run often cannot ask. The single most useful test in prompting: *would a world-class stranger, given only this document plus whatever the harness supplies, produce what I want?* If the answer is no, the gap is in the document, not in the reader.
+**Second, the model is a non-situated reader:** a brilliant contractor teleported into your project with amnesia. Enormous general skill, zero hallway context. It has not read your Slack threads, does not know what "the usual way" means, and in an agentic run often cannot ask. The single most useful test in prompting: _would a world-class stranger, given only this document plus whatever the harness supplies, produce what I want?_ If the answer is no, the gap is in the document, not in the reader.
 
 **Third, ambiguity fails silently.** A human collaborator asks a clarifying question; the model picks one reading — confidently — and builds on it. Every ambiguous clause is a branch point, and the expected damage equals the probability of the wrong branch times the cost of everything built on top of it. You will never remove all ambiguity, and you should not try (more on why below). The skill is closing ambiguity on the load-bearing dimensions and forcing disclosure everywhere else — "state your assumptions before you start" is one sentence and pays for itself constantly.
 
@@ -59,7 +59,7 @@ Not every prompt needs all of these. Every good prompt has consciously decided w
 
 **Constraints and anti-goals.** Constraints define the target; anti-goals prune the search space, and they are most powerful when each one encodes a failure you have actually observed, with the reason attached. One caution: a bare "don't do X" puts X into the context and can raise its salience — the pink-elephant problem. The robust form is a triple: not X; instead Y; because Z. Prohibition, replacement, rationale.
 
-**Examples.** The highest-bandwidth channel you have. A description transmits a boundary; an example transmits a distribution. But examples leak: models copy tone, length, and structural incidentals along with the intent, so diversify them unless you want the incidentals cloned too. A negative example labeled with *why it fails* is worth several abstract principles — one falsifiable failure case anchors a constraint better than a paragraph about it.
+**Examples.** The highest-bandwidth channel you have. A description transmits a boundary; an example transmits a distribution. But examples leak: models copy tone, length, and structural incidentals along with the intent, so diversify them unless you want the incidentals cloned too. A negative example labeled with _why it fails_ is worth several abstract principles — one falsifiable failure case anchors a constraint better than a paragraph about it.
 
 **An output contract.** Structure, schema, sections, length, tags. The cheapest way to state a contract is to show one: a filled-in skeleton of the expected output beats three sentences describing it.
 
