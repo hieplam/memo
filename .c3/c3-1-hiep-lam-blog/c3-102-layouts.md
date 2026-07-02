@@ -1,6 +1,6 @@
 ---
 id: c3-102
-c3-seal: 8fb4b39b5b1a48005e85ec72aa4b071b7df63c275cd69629b6249b56d88d2140
+c3-seal: 8b5358e953805eb477f02b36d4e6d03b90eaa783b9ccf95df6c6cb7439b3517e
 title: layouts
 type: component
 category: foundation
@@ -20,12 +20,12 @@ Provide the base HTML shell and post-specific wrapper that all Astro pages compo
 | --- | --- |
 | Container | Hiep Lam Blog (c3-1) |
 | Category | Foundation (02) |
-| Owned files | src/layouts/Layout.astro, src/layouts/PostLayout.astro |
+| Owned files | src/layouts/Layout.astro, src/layouts/PostLayout.astro, src/scripts/mermaid.ts |
 | Depended on by | All pages in src/pages/ import Layout or PostLayout |
 
 ## Purpose
 
-Owns the base Layout.astro (document head, SEO meta, canonical URL, OG tags, viewport, theme init script, body wrapper) and PostLayout.astro (post-specific title, author, datetime, tags, breadcrumb, adjacent navigation, share links, edit link). Does NOT own individual UI widgets or content collection queries.
+Owns the base Layout.astro (document head, SEO meta, canonical URL, OG tags, viewport, theme init script, body wrapper) and PostLayout.astro (post-specific title, author, datetime, tags, breadcrumb, adjacent navigation, share links, edit link). Also owns the client-side scripts Layout.astro loads: src/scripts/theme.ts (light/dark preference) and src/scripts/mermaid.ts (lazily renders ```mermaid fenced code blocks into inline SVG diagrams, theme-aware, re-running after each ClientRouter view transition). Does NOT own individual UI widgets or content collection queries.
 
 ## Foundational Flow
 

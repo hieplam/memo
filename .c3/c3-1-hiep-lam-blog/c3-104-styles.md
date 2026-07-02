@@ -1,6 +1,6 @@
 ---
 id: c3-104
-c3-seal: fde73affa3be543fffd14cb64af33610621d3e4f77599cc7b80c77707a556f41
+c3-seal: 8bfba72ea9830428df91cd1e456c08d1d70cbdbc921b16105b603977f0e90c0b
 title: styles
 type: component
 category: foundation
@@ -25,7 +25,7 @@ Define the global CSS reset, TailwindCSS 4 theme tokens, typography styles, and 
 
 ## Purpose
 
-Owns the three CSS files that form the design system: global.css (base reset and global rules), theme.css (CSS custom properties for light and dark color palettes referenced by components), typography.css (prose typography for rendered markdown). Does NOT own component-level utility class usage; that is governed by ref-tailwind-design-system.
+Owns the three CSS files that form the design system: global.css (base reset, global rules, and layout-only presentation for rendered Mermaid diagrams under the `.mermaid` class — centring, responsive SVG sizing, and horizontal overflow; diagram colours come from the Mermaid theme chosen by src/scripts/mermaid.ts, not from here), theme.css (CSS custom properties for light and dark color palettes referenced by components), typography.css (prose typography for rendered markdown). Does NOT own component-level utility class usage; that is governed by ref-tailwind-design-system.
 
 ## Foundational Flow
 

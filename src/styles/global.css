@@ -71,6 +71,22 @@
   transition: width var(--dur-1) linear;
 }
 
+/* ===== Mermaid diagrams =====
+   src/scripts/mermaid.ts swaps each ```mermaid code block for a
+   <div class="mermaid"> and renders an inline SVG, themed light/dark by the
+   script itself. These rules only handle layout: centre the diagram, keep it
+   inside the content column, and let a wide graph scroll horizontally. */
+.mermaid {
+  display: flex;
+  justify-content: center;
+  margin-block: 1.5rem;
+  overflow-x: auto;
+}
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
 /* ===== Evidence-tag legend =====
    A compact caption that pins to the top of the viewport while a long audited
    post scrolls under it (used on the transcript-anatomy posts). Each tag reveals

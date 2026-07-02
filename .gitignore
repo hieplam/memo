@@ -31,3 +31,6 @@ compose.override.yaml
 
 # C3 architecture cache (canonical docs are the .md files; db is rebuildable via `c3 repair`)
 .c3/c3.db
+
+# playwright-mcp evidence/artifacts (local only)
+.playwright-mcp/

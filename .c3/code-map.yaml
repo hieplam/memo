@@ -2,6 +2,7 @@ c3-101:
   - src/content/**
 c3-102:
   - src/layouts/**
+  - src/scripts/mermaid.ts
 c3-103:
   - src/components/**
 c3-104:
