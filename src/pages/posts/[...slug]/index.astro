@@ -235,6 +235,10 @@ const ogImage = ogImageUrl
     const codeBlocks = Array.from(document.querySelectorAll("pre"));
 
     for (const codeBlock of codeBlocks) {
+      // Mermaid blocks are replaced with rendered SVG diagrams; skip them so a
+      // diagram never gets a stray "Copy" button.
+      if (codeBlock.getAttribute("data-language") === "mermaid") continue;
+
       const wrapper = document.createElement("div");
       wrapper.style.position = "relative";
 
