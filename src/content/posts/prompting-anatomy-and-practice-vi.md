@@ -13,11 +13,11 @@ tags:
 multiLangKey: "prompting-anatomy-and-practice"
 ---
 
-Phần lớn lời khuyên về "prompt tốt hơn" là một danh sách mẹo vặt: lịch sự vào, bảo model "hít thở sâu", thêm câu "bạn là chuyên gia". Vài mẹo trong đó từng có tác dụng thật, ít nhất là trên các model đời cũ — nhưng coi đó là cả cái nghề thì chẳng khác gì học nấu ăn bằng cách thuộc lòng tên hãng gia vị thay vì hiểu về nhiệt, vị chua, và thời gian. Bên dưới đống mẹo vặt đó là một mental model thật sự, một bộ thành phần chịu lực nhỏ gọn, và — quan trọng hơn — một *cách luyện tập* để lên trình có đo lường được, thay vì đoán mò. Đây là cẩm nang cho cả ba thứ đó.
+Phần lớn lời khuyên về "prompt tốt hơn" là một danh sách mẹo vặt: lịch sự vào, bảo model "hít thở sâu", thêm câu "bạn là chuyên gia". Vài mẹo trong đó từng có tác dụng thật, ít nhất là trên các model đời cũ — nhưng coi đó là cả cái nghề thì chẳng khác gì học nấu ăn bằng cách thuộc lòng tên hãng gia vị thay vì hiểu về nhiệt, vị chua, và thời gian. Bên dưới đống mẹo vặt đó là một mental model thật sự, một bộ thành phần chịu lực nhỏ gọn, và — quan trọng hơn — một _cách luyện tập_ để lên trình có đo lường được, thay vì đoán mò. Đây là cẩm nang cho cả ba thứ đó.
 
 ## TL;DR
 
-1. **Prompt không phải lệnh — nó nắn một phân phối xác suất (probability distribution).** Model *tiếp tục* một văn bản, không execute một cây instruction. Prompting là nghề dịch khối xác suất về phía output bạn chấp nhận được.
+1. **Prompt không phải lệnh — nó nắn một phân phối xác suất (probability distribution).** Model _tiếp tục_ một văn bản, không execute một cây instruction. Prompting là nghề dịch khối xác suất về phía output bạn chấp nhận được.
 2. **Đơn vị phân tích là bộ (prompt, context, model, harness), không bao giờ là prompt đứng một mình.** Cùng một đoạn chữ hành xử khác nhau giữa API call trần, chat có memory, và agentic loop có tools/skills.
 3. **Model là một non-situated reader** (người đọc không có bối cảnh) — cực giỏi, tổng quát, nhưng context "hành lang" bằng không. Bài test quan trọng nhất: một người lạ trình độ world-class, chỉ cầm văn bản này cộng những gì harness cung cấp, có ra được thứ bạn muốn không?
 4. **Ambiguity (sự mơ hồ) chết trong im lặng.** Model không hỏi lại — nó chọn một cách đọc, đầy tự tin, rồi xây tiếp. Đóng ambiguity trên các chiều load-bearing (chịu lực); ép phần còn lại phải lộ diện ("nêu giả định trước khi bắt đầu").
@@ -32,7 +32,7 @@ Phần lớn lời khuyên về "prompt tốt hơn" là một danh sách mẹo v
 
 ## 1. Chỉnh mental model trước đã
 
-Bắt đầu từ đây, vì gần như toàn bộ phần còn lại của bài suy ra từ đúng một ý: prompt không phải là lệnh. Model không parse chữ của bạn thành cây instruction rồi execute; nó *tiếp tục một văn bản*. Mọi thứ trong context window — chữ của bạn, system prompt, tool results, kể cả lỗi chính tả — đều dịch chuyển phân phối xác suất của những gì sinh ra tiếp theo. Prompting là nghề nắn phân phối đó sao cho phần lớn khối lượng xác suất rơi vào vùng output bạn chấp nhận được.
+Bắt đầu từ đây, vì gần như toàn bộ phần còn lại của bài suy ra từ đúng một ý: prompt không phải là lệnh. Model không parse chữ của bạn thành cây instruction rồi execute; nó _tiếp tục một văn bản_. Mọi thứ trong context window — chữ của bạn, system prompt, tool results, kể cả lỗi chính tả — đều dịch chuyển phân phối xác suất của những gì sinh ra tiếp theo. Prompting là nghề nắn phân phối đó sao cho phần lớn khối lượng xác suất rơi vào vùng output bạn chấp nhận được.
 
 Ba hệ quả kéo theo.
 
@@ -46,13 +46,13 @@ flowchart LR
     H -.->|"cùng chữ, kết quả khác"| P
 ```
 
-**Hai, model là một non-situated reader** — một contractor cực giỏi bị teleport vào project trong tình trạng mất trí nhớ. Skill tổng quát khổng lồ, context "hành lang" bằng không. Nó chưa đọc Slack của team, không biết "cách vẫn hay làm" là cách nào, và trong agentic run thường không hỏi lại được. Bài test hữu dụng nhất của prompting: *một người lạ trình độ world-class, chỉ cầm đúng văn bản này cộng những gì harness cung cấp, có ra được thứ mình muốn không?* Nếu câu trả lời là không, lỗ hổng nằm ở văn bản, không nằm ở người đọc.
+**Hai, model là một non-situated reader** — một contractor cực giỏi bị teleport vào project trong tình trạng mất trí nhớ. Skill tổng quát khổng lồ, context "hành lang" bằng không. Nó chưa đọc Slack của team, không biết "cách vẫn hay làm" là cách nào, và trong agentic run thường không hỏi lại được. Bài test hữu dụng nhất của prompting: _một người lạ trình độ world-class, chỉ cầm đúng văn bản này cộng những gì harness cung cấp, có ra được thứ mình muốn không?_ Nếu câu trả lời là không, lỗ hổng nằm ở văn bản, không nằm ở người đọc.
 
 **Ba, ambiguity chết trong im lặng.** Đồng nghiệp người thật sẽ hỏi lại; model thì chọn một cách đọc — đầy tự tin — rồi xây tiếp lên đó. Mỗi câu mơ hồ là một branch point (điểm rẽ nhánh), và thiệt hại kỳ vọng bằng xác suất chọn nhầm nhánh nhân với chi phí của mọi thứ xây bên trên. Không bao giờ khử được hết ambiguity, và cũng không nên cố (xem phần thuế overspecification bên dưới). Kỹ năng nằm ở chỗ: đóng ambiguity trên các chiều load-bearing, và ép phần còn lại phải lộ diện — "nêu các giả định trước khi bắt đầu" chỉ tốn một câu mà hoàn vốn liên tục.
 
 ## 2. Giải phẫu: các thành phần chịu lực
 
-Không phải prompt nào cũng cần đủ bộ. Nhưng prompt tốt nào cũng đã *chủ động quyết định* nó cần những phần nào.
+Không phải prompt nào cũng cần đủ bộ. Nhưng prompt tốt nào cũng đã _chủ động quyết định_ nó cần những phần nào.
 
 **Một mục tiêu falsifiable.** Gọi tên deliverable và định nghĩa "done", ở dạng có thể đối chiếu output vào để kiểm. "Phân tích PR này" là một điều ước. "Đưa recommendation go/no-go cho việc merge, liệt kê ba thay đổi rủi ro cao nhất, và đề xuất một test có khả năng falsify claim về coverage" mới là một task. Nếu bạn không phát biểu được acceptance criteria, model không thể bắn trúng — nó chỉ có thể đoán.
 
@@ -60,9 +60,9 @@ Không phải prompt nào cũng cần đủ bộ. Nhưng prompt tốt nào cũng
 
 **Constraints và anti-goals.** Constraints định nghĩa đích; anti-goals cắt tỉa search space, và chúng mạnh nhất khi mỗi cái encode một failure đã thực sự xảy ra, kèm lý do. Một cảnh báo: "đừng làm X" trơ trọi lại đặt X vào context và có thể tăng salience của nó — hiệu ứng con voi hồng (pink-elephant problem). Dạng bền là bộ ba: không X; thay bằng Y; vì Z. Cấm, thay thế, lý do.
 
-**Examples.** Kênh băng thông cao nhất bạn có. Mô tả truyền đi một đường biên; example truyền đi cả một phân phối. Nhưng example bị rò rỉ: model copy cả tone, độ dài, và các chi tiết cấu trúc ngẫu nhiên cùng với ý định, nên hãy đa dạng hóa nếu không muốn mấy chi tiết ngẫu nhiên đó bị clone theo. Một negative example dán nhãn *vì sao nó fail* đáng giá hơn vài nguyên tắc trừu tượng — một ca thất bại falsifiable neo constraint chắc hơn cả một đoạn văn nói về nó.
+**Examples.** Kênh băng thông cao nhất bạn có. Mô tả truyền đi một đường biên; example truyền đi cả một phân phối. Nhưng example bị rò rỉ: model copy cả tone, độ dài, và các chi tiết cấu trúc ngẫu nhiên cùng với ý định, nên hãy đa dạng hóa nếu không muốn mấy chi tiết ngẫu nhiên đó bị clone theo. Một negative example dán nhãn _vì sao nó fail_ đáng giá hơn vài nguyên tắc trừu tượng — một ca thất bại falsifiable neo constraint chắc hơn cả một đoạn văn nói về nó.
 
-**Một output contract.** Cấu trúc, schema, sections, độ dài, tags. Cách rẻ nhất để phát biểu contract là *cho xem* một cái: bộ khung output đã điền mẫu thắng đứt ba câu mô tả nó.
+**Một output contract.** Cấu trúc, schema, sections, độ dài, tags. Cách rẻ nhất để phát biểu contract là _cho xem_ một cái: bộ khung output đã điền mẫu thắng đứt ba câu mô tả nó.
 
 **Process và vị trí.** Khi thứ tự quan trọng, đánh số các bước — sequencing chôn trong văn nối là thứ chết đầu tiên trong một run dài. Và attention không đồng đều: đầu và cuối prompt có trọng lượng vượt cỡ trong khi phần giữa võng xuống (hiệu ứng lost-in-the-middle), và một item xếp nhầm dưới header sai sẽ thừa hưởng attention weight sai. Invariants đặt trên đầu; yêu cầu trực tiếp đặt gần cuối; thứ gì bắt buộc nằm giữa mà phải sống sót thì nên ngắn, có header riêng, hoặc được nhắc lại.
 
@@ -72,7 +72,7 @@ Không phải prompt nào cũng cần đủ bộ. Nhưng prompt tốt nào cũng
 
 Vì sao phần giải phẫu ở trên hoạt động? Vài lực giải thích điều đó, và đáng nắm trực tiếp vì chúng tổng quát hơn mọi template — không chỉ "làm theo mẫu này".
 
-**Có một thứ bậc băng thông giữa các kênh.** Worked example thắng bộ khung output, bộ khung output thắng constraint tường minh, constraint tường minh thắng mô tả bằng văn, mô tả bằng văn thắng role và vibe. Thứ gì quan trọng, đẩy nó lên bậc cao hơn — đừng chỉ nói nó *to giọng* hơn.
+**Có một thứ bậc băng thông giữa các kênh.** Worked example thắng bộ khung output, bộ khung output thắng constraint tường minh, constraint tường minh thắng mô tả bằng văn, mô tả bằng văn thắng role và vibe. Thứ gì quan trọng, đẩy nó lên bậc cao hơn — đừng chỉ nói nó _to giọng_ hơn.
 
 ```mermaid
 flowchart TD
