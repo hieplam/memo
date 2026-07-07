@@ -21,12 +21,12 @@ Bài này chưng cất từ một phiên deep-research (108 sub-agent, 25 nguồ
 
 ## Bốn loại loop, chia theo cái bạn giao lại
 
-| Loop | Bạn giao lại | Dùng khi | Dùng công cụ |
-|---|---|---|---|
-| Turn-based | Bước kiểm tra | Bạn đang khám phá hoặc cân nhắc | Verification skill tự viết |
-| Goal-based | Điều kiện dừng | Bạn biết rõ "xong" trông ra sao | `/goal` |
-| Time-based | Yếu tố kích hoạt | Việc diễn ra ngoài project, theo lịch | `/loop`, `/schedule` |
-| Proactive | Cả câu prompt | Việc lặp lại và đã định nghĩa rõ | Tất cả trên, cộng dynamic workflows |
+| Loop       | Bạn giao lại     | Dùng khi                              | Dùng công cụ                        |
+| ---------- | ---------------- | ------------------------------------- | ----------------------------------- |
+| Turn-based | Bước kiểm tra    | Bạn đang khám phá hoặc cân nhắc       | Verification skill tự viết          |
+| Goal-based | Điều kiện dừng   | Bạn biết rõ "xong" trông ra sao       | `/goal`                             |
+| Time-based | Yếu tố kích hoạt | Việc diễn ra ngoài project, theo lịch | `/loop`, `/schedule`                |
+| Proactive  | Cả câu prompt    | Việc lặp lại và đã định nghĩa rõ      | Tất cả trên, cộng dynamic workflows |
 
 Mọi prompt bình thường bạn gõ đã là một loop thủ công rồi — Claude gom context, hành động, tự kiểm việc mình làm, lặp lại nếu cần, rồi trả quyền lại cho bạn. Ba cơ chế bên dưới chỉ là lần lượt nhận thêm phần việc đó, đổi lại bạn nói ít hơn ở từng lượt.
 
@@ -38,8 +38,8 @@ Mọi prompt bình thường bạn gõ đã là một loop thủ công rồi —
 
 Hai chuyện nên biết trước khi dựa vô cái này cho việc gì không có người canh:
 
-- **Không có turn cap hay time cap tích hợp sẵn.** Ví dụ trong docs — `/goal get the homepage Lighthouse score to 90 or above, stop after 5 tries` — chạy được là vì *chính bạn* viết "stop after 5 tries" vô câu điều kiện. Có một cầu dao cứng khoảng 500 lần Stop-hook tiếp tục để chặn chạy vô hạn, nhưng đó là lưới an toàn cuối cùng, không phải cái nút bạn chỉnh được. Không viết cap vô điều kiện thì coi như không có cap.
-- **Evaluator chỉ thấy transcript — không tool, không đụng được file.** Nó đang chấm cái Claude *nói* là đã xảy ra, chứ không tự kiểm tra xem thiệt sự có xảy ra không. Điều kiện của bạn là "build pass" thì phải viết sao cho Claude buộc phải dán exit code hay output test thiệt vô hội thoại — không thì evaluator đang chấm một lời khẳng định, không phải một sự thiệt. Điều kiện giới hạn 4.000 ký tự, và hướng dẫn chính thức của Anthropic là nó phải xác định (deterministic): một trạng thái kết thúc đo được, một phép kiểm Claude chứng minh được qua output, các bất biến (invariant) rõ ràng không được đổi dọc đường.
+- **Không có turn cap hay time cap tích hợp sẵn.** Ví dụ trong docs — `/goal get the homepage Lighthouse score to 90 or above, stop after 5 tries` — chạy được là vì _chính bạn_ viết "stop after 5 tries" vô câu điều kiện. Có một cầu dao cứng khoảng 500 lần Stop-hook tiếp tục để chặn chạy vô hạn, nhưng đó là lưới an toàn cuối cùng, không phải cái nút bạn chỉnh được. Không viết cap vô điều kiện thì coi như không có cap.
+- **Evaluator chỉ thấy transcript — không tool, không đụng được file.** Nó đang chấm cái Claude _nói_ là đã xảy ra, chứ không tự kiểm tra xem thiệt sự có xảy ra không. Điều kiện của bạn là "build pass" thì phải viết sao cho Claude buộc phải dán exit code hay output test thiệt vô hội thoại — không thì evaluator đang chấm một lời khẳng định, không phải một sự thiệt. Điều kiện giới hạn 4.000 ký tự, và hướng dẫn chính thức của Anthropic là nó phải xác định (deterministic): một trạng thái kết thúc đo được, một phép kiểm Claude chứng minh được qua output, các bất biến (invariant) rõ ràng không được đổi dọc đường.
 
 ## `/loop`: nó là một Skill, và chết theo session của bạn
 
@@ -51,11 +51,11 @@ Chi tiết quan trọng về mặt vận hành: **`/loop` chạy local và gắn
 
 `/schedule` đưa cùng ý tưởng đó lên hạ tầng cloud do Anthropic quản lý, dưới dạng một "routine" (thói quen) — cấu hình bằng hội thoại, không cần file config. Cái đổi lấy so với `/loop`: routine sống sót qua việc bạn tắt laptop và chạy **không một permission prompt (hộp thoại xin quyền) nào** — một mô hình tin cậy khác hẳn. Ba cơ chế lên lịch khác nhau rõ rệt ở chỗ này:
 
-| Cơ chế | Permission prompt |
-|---|---|
-| Cloud routine (`/schedule`) | Không có — chạy hoàn toàn tự động |
-| Desktop scheduled task | Cấu hình được theo từng task |
-| `/loop` | Kế thừa setting của session hiện tại |
+| Cơ chế                      | Permission prompt                    |
+| --------------------------- | ------------------------------------ |
+| Cloud routine (`/schedule`) | Không có — chạy hoàn toàn tự động    |
+| Desktop scheduled task      | Cấu hình được theo từng task         |
+| `/loop`                     | Kế thừa setting của session hiện tại |
 
 Một chi tiết về an toàn đáng biết: kể từ Claude Code v2.1.196, một lần `/loop` chạy theo lịch chỉ tự thực thi skill hay lệnh mà Claude vốn đã được phép gọi mà không cần giám sát — cái nào bị chặn bởi `disable-model-invocation`, luật deny của `skillOverrides`, hay lệnh built-in như `/permissions` thì tới nơi dưới dạng văn bản trơ thay vì chạy. Một lần chạy theo lịch không thể tự leo thang quyền cho chính nó.
 
@@ -65,7 +65,7 @@ Lưu ý mang theo suốt: `/schedule` — và tính năng agent teams riêng, op
 
 Dynamic workflows (workflow động) cho Claude tự viết script điều phối — một file JS với các hàm để spawn và điều phối subagent — ngay tại chỗ. Bản thân code điều phối **không tốn token model**; chỉ việc của các agent được spawn mới tốn. Script định tuyến được từng subagent sang model khác nhau và tuỳ chọn chạy trong git worktree cô lập, nên bạn migrate được mỗi component trong một bản copy riêng không đụng nhau, hay thử ba hướng sửa bug cạnh tranh song song.
 
-Mẫu (pattern) đáng "chôm" cho bất kỳ việc điều phối nào bạn tự xây: cả dynamic workflows lẫn tính năng agent teams thử nghiệm đều ghi cùng một cách chống **self-preferential bias** (thiên vị-tự-tin-vô-kết-quả-của-chính-mình) — một model có xu hướng thiên vị kết quả cũ của chính nó khi bên tạo và bên chấm dùng chung context. Cách chữa nằm ở cấu trúc, không phải ở mẹo viết prompt: chạy giám khảo như một *agent spawn riêng, ở cửa sổ context tách biệt*, chấm output của bên tạo theo rubric. Docs của agent teams mở rộng điều này cụ thể sang debug: nhiều teammate độc lập điều tra và chủ động tìm cách bác bỏ giả thuyết của nhau hội tụ về nguyên nhân gốc thiệt nhanh hơn một agent neo (anchor) vô giả thuyết đầu tiên nó nghĩ ra.
+Mẫu (pattern) đáng "chôm" cho bất kỳ việc điều phối nào bạn tự xây: cả dynamic workflows lẫn tính năng agent teams thử nghiệm đều ghi cùng một cách chống **self-preferential bias** (thiên vị-tự-tin-vô-kết-quả-của-chính-mình) — một model có xu hướng thiên vị kết quả cũ của chính nó khi bên tạo và bên chấm dùng chung context. Cách chữa nằm ở cấu trúc, không phải ở mẹo viết prompt: chạy giám khảo như một _agent spawn riêng, ở cửa sổ context tách biệt_, chấm output của bên tạo theo rubric. Docs của agent teams mở rộng điều này cụ thể sang debug: nhiều teammate độc lập điều tra và chủ động tìm cách bác bỏ giả thuyết của nhau hội tụ về nguyên nhân gốc thiệt nhanh hơn một agent neo (anchor) vô giả thuyết đầu tiên nó nghĩ ra.
 
 Với việc chạy không giám sát, xử lý quyền tập trung ở lead, không phân tán — và có một chi tiết quan trọng nếu bạn nối nhiều agent lại: **classifier của auto mode coi một "sự phê duyệt" được chuyển tiếp từ agent này qua agent khác là input không đáng tin, không bao giờ là sự đồng ý của người dùng.** Một agent không thể thay mặt bạn bảo lãnh cho agent khác.
 
