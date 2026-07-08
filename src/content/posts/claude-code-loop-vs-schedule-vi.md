@@ -21,20 +21,20 @@ Ba mươi phút sau, một lệnh `/loop` tự nhảy ra mà tui đâu có gõ. 
 
 Docs mô tả cả hai như là cách để lặp lại một prompt. Đúng ở mức ý định, và đó cũng là chỗ sự giống nhau dừng lại.
 
-**`/loop` ở chế độ khoảng thời gian cố định chỉ là lớp wrapper mỏng bọc quanh đúng cái primitive mình có thể gọi trực tiếp: `CronCreate`.** Không có engine loop riêng nào hết — `/loop 30m <prompt>` với việc tự tay gọi `CronCreate({cron: "*/30 * * * *", prompt: ...})` là cùng một thứ bên dưới. (Chế độ *dynamic* của `/loop`, tức không cho khoảng thời gian, thì khác — nó tự canh nhịp qua `ScheduleWakeup`, tự chọn độ trễ mỗi lần lặp.)
+**`/loop` ở chế độ khoảng thời gian cố định chỉ là lớp wrapper mỏng bọc quanh đúng cái primitive mình có thể gọi trực tiếp: `CronCreate`.** Không có engine loop riêng nào hết — `/loop 30m <prompt>` với việc tự tay gọi `CronCreate({cron: "*/30 * * * *", prompt: ...})` là cùng một thứ bên dưới. (Chế độ _dynamic_ của `/loop`, tức không cho khoảng thời gian, thì khác — nó tự canh nhịp qua `ScheduleWakeup`, tự chọn độ trễ mỗi lần lặp.)
 
 **`/schedule` thì không đụng gì tới cron của session hết.** Nó gọi một API khác (`RemoteTrigger`), cấp một job trên hạ tầng cloud của Anthropic — một hệ thống hoàn toàn tách biệt với bất cứ thứ gì đang chạy trên máy mình.
 
 Cái tách biệt về cơ chế đó là lý do hai bên khác nhau ở mọi trục thực tế quan trọng:
 
-| | `/loop` (khoảng thời gian cố định) | `/schedule` (routine) |
-| --- | --- | --- |
-| Chạy ở đâu | Máy mình, bên trong session hiện tại | Cloud của Anthropic — mỗi lần chạy là một session biệt lập, mới toanh |
-| Sống sót khi đóng session / tắt máy | Không — chết theo session | Có — chạy không người canh, vô thời hạn |
-| Tuổi thọ | Tự hết hạn sau 7 ngày | Chạy tới khi mình tắt hoặc xóa |
-| Ngữ cảnh | Truy cập đầy đủ session đang sống — file, tool, trạng thái đang chạy | Không có ngữ cảnh trước đó; mỗi lần bắt đầu từ git checkout sạch |
-| Khoảng thời gian tối thiểu | 1 phút | **1 tiếng** |
-| Quyền hạn | Kế thừa trạng thái quyền hiện tại của session | Tự chủ hoàn toàn, không hỏi quyền (research preview) |
+|                                     | `/loop` (khoảng thời gian cố định)                                   | `/schedule` (routine)                                                 |
+| ----------------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| Chạy ở đâu                          | Máy mình, bên trong session hiện tại                                 | Cloud của Anthropic — mỗi lần chạy là một session biệt lập, mới toanh |
+| Sống sót khi đóng session / tắt máy | Không — chết theo session                                            | Có — chạy không người canh, vô thời hạn                               |
+| Tuổi thọ                            | Tự hết hạn sau 7 ngày                                                | Chạy tới khi mình tắt hoặc xóa                                        |
+| Ngữ cảnh                            | Truy cập đầy đủ session đang sống — file, tool, trạng thái đang chạy | Không có ngữ cảnh trước đó; mỗi lần bắt đầu từ git checkout sạch      |
+| Khoảng thời gian tối thiểu          | 1 phút                                                               | **1 tiếng**                                                           |
+| Quyền hạn                           | Kế thừa trạng thái quyền hiện tại của session                        | Tự chủ hoàn toàn, không hỏi quyền (research preview)                  |
 
 Đọc lại bảng này theo cách lẽ ra tui phải đọc từ đầu: **`/loop` là để canh chừng cái gì đó đang diễn ra ngay trước mắt mình.** `/schedule` là cho việc phải xảy ra bất kể mình — hay cái session này — có tồn tại hay không. Hai cái không thay thế nhau được, mà chọn lộn cái nào cho việc gì là y chang cái bug tui vừa gặp.
 
@@ -50,7 +50,7 @@ CronCreate({
 })
 ```
 
-Nghe hợp lý — cái prompt chỉ nói tui muốn làm gì mỗi 30 phút. Nhưng `/loop` là một *skill*, không phải chữ chết. Khi prompt là `/loop 30m <task>`, bắn nó ra không phải chạy `<task>` — mà là **quay lại vô skill `/loop`**, nó parse lại khoảng thời gian với prompt, rồi gọi `CronCreate` lần nữa.
+Nghe hợp lý — cái prompt chỉ nói tui muốn làm gì mỗi 30 phút. Nhưng `/loop` là một _skill_, không phải chữ chết. Khi prompt là `/loop 30m <task>`, bắn nó ra không phải chạy `<task>` — mà là **quay lại vô skill `/loop`**, nó parse lại khoảng thời gian với prompt, rồi gọi `CronCreate` lần nữa.
 
 Lần theo dòng thời gian: cron A bắn → tạo ra cron B → lịch của cron A vẫn còn đó → cron A bắn tiếp → tạo ra cron C → cứ vậy. Không cái nào crash. Không lỗi gì hết. Chỉ là âm thầm chất đống lịch chạy, mỗi cái giờ cũng có khả năng đẻ thêm cái khác, tới lúc — sớm muộn gì — mình có cả đống job chồng lên nhau cùng làm một việc cùng lúc.
 
