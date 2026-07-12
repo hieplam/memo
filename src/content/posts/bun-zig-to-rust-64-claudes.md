@@ -36,22 +36,22 @@ I spent a session trying to verify that suspicion. The result: **my premise was 
 
 First, the actual figures — I'd been quoting them wrong, saying "7k commits":
 
-| Metric | Value |
-| --- | --- |
-| Duration | 11 days, first commit to merge (~May 3–14, 2026) |
-| Commits | 6,502 (excluding merges); 6,778 total |
-| Diff | +1,009,272 lines; ~750,000 lines of Rust |
-| Source files | 1,448 `.zig` files |
+| Metric           | Value                                                                  |
+| ---------------- | ---------------------------------------------------------------------- |
+| Duration         | 11 days, first commit to merge (~May 3–14, 2026)                       |
+| Commits          | 6,502 (excluding merges); 6,778 total                                  |
+| Diff             | +1,009,272 lines; ~750,000 lines of Rust                               |
+| Source files     | 1,448 `.zig` files                                                     |
 | Peak concurrency | 4 workflows × 16 Claudes ≈ **64 Claudes at once**; ~50 workflows total |
-| Peak throughput | 1,300 LOC/min; 695 commits/hour |
-| Tokens | 5.9B uncached input; 690M output; 72B cached input reads |
-| Cost | ~**$165,000** at API pricing |
-| Test suite | ~1.39M `expect()` calls, written in TypeScript |
-| Result | 99.8% of the test suite passing |
-| Model | Pre-release **Claude Fable 5** (Mythos-class) |
-| Infrastructure | One EC2 instance (Jarred forgot to raise the IOPS) |
+| Peak throughput  | 1,300 LOC/min; 695 commits/hour                                        |
+| Tokens           | 5.9B uncached input; 690M output; 72B cached input reads               |
+| Cost             | ~**$165,000** at API pricing                                           |
+| Test suite       | ~1.39M `expect()` calls, written in TypeScript                         |
+| Result           | 99.8% of the test suite passing                                        |
+| Model            | Pre-release **Claude Fable 5** (Mythos-class)                          |
+| Infrastructure   | One EC2 instance (Jarred forgot to raise the IOPS)                     |
 
-Now here's the sanity check I should have run *before* accusing anyone of hiding anything.
+Now here's the sanity check I should have run _before_ accusing anyone of hiding anything.
 
 **690 million output tokens, over 11 days**, is 726 tokens/second, sustained, 24/7, without a break. No single instance sustains that. So far, so good — I was right.
 
@@ -63,7 +63,7 @@ The other numbers collapse the same way:
 
 - 6,502 commits / 11 days / 64 agents ≈ **9 commits per agent per day.**
 - Peak 695 commits/hour / 64 ≈ 11 per agent per hour — one commit every 5½ minutes. And Jarred's rules were: no `git stash`, no `git reset`, **commit one file at a time**. Tiny atomic commits. One every five minutes is unremarkable.
-- Peak 1,300 LOC/min / 64 ≈ **20 lines per minute per agent** — for a *mechanical* 1:1 Zig→Rust translation against an existing guide, not novel design.
+- Peak 1,300 LOC/min / 64 ≈ **20 lines per minute per agent** — for a _mechanical_ 1:1 Zig→Rust translation against an existing guide, not novel design.
 
 Divide by 64 and every superhuman number lands back in the ordinary. That's the whole trick.
 
@@ -73,7 +73,7 @@ Yes — but it isn't a secret architecture. The "VIP" part is four things, and n
 
 **A pre-release model.** The rewrite ran in early May 2026, when Fable 5 wasn't public yet. That's a genuine insider advantage.
 
-**A feature three weeks before public.** Dynamic workflows [launched publicly on May 28, 2026](https://www.infoq.com/news/2026/06/dynamic-workflows-claude-code/) — so Jarred was using them well before anyone else could. *This next part is my inference, not something the blog states:* the Bun rewrite was almost certainly both a real use case and a dogfooding stress test for the feature before it shipped. Jarred's own line supports that reading: *"Claude Code's dynamic workflows kept 64 Claudes running for 11 days (I would've had to write my own harness to pull this off otherwise)."*
+**A feature three weeks before public.** Dynamic workflows [launched publicly on May 28, 2026](https://www.infoq.com/news/2026/06/dynamic-workflows-claude-code/) — so Jarred was using them well before anyone else could. _This next part is my inference, not something the blog states:_ the Bun rewrite was almost certainly both a real use case and a dogfooding stress test for the feature before it shipped. Jarred's own line supports that reading: _"Claude Code's dynamic workflows kept 64 Claudes running for 11 days (I would've had to write my own harness to pull this off otherwise)."_
 
 **Money.** $165k over 11 days is ~$15k/day in API spend. Max 20x is $200 a **month**. So in subscription terms I was completely right — your plan cannot buy this. But that's a **money** barrier, not a **technology** barrier. Fable 5 is GA now. Any company willing to burn $165k through the API could, in principle, reproduce this.
 
@@ -89,7 +89,7 @@ If I had to name **one** thing that decided success or failure here, I wouldn't 
 
 > Bun's test suite is written in **TypeScript**, so it's independent of the runtime's implementation language. Roughly **1.39 million** `expect()` calls.
 
-Sit with that. You are rewriting a runtime from Zig to Rust, and the test suite doesn't change *a single line*, because it tests the runtime's **behavior** through JavaScript rather than its internals. It's a grading machine you already own: impartial, infinitely re-runnable, and not an LLM.
+Sit with that. You are rewriting a runtime from Zig to Rust, and the test suite doesn't change _a single line_, because it tests the runtime's **behavior** through JavaScript rather than its internals. It's a grading machine you already own: impartial, infinitely re-runnable, and not an LLM.
 
 That's why 64 Claudes could run **unattended**. Every phase had a mechanical judge:
 
@@ -107,7 +107,7 @@ Before asking "how do I run 64 agents," ask "what grades them."
 
 There's one problem a stateless agent fundamentally cannot solve: **lifetimes.**
 
-Zig has no lifetimes in its type system. Rust's borrow checker demands them. To know what lifetime `foo: *TCPSocket` needs, you have to trace control flow across a 535k-line codebase. An agent porting *one file* has no shot at that — its context is local and the question is global.
+Zig has no lifetimes in its type system. Rust's borrow checker demands them. To know what lifetime `foo: *TCPSocket` needs, you have to trace control flow across a 535k-line codebase. An agent porting _one file_ has no shot at that — its context is local and the question is global.
 
 So they computed it once, globally, up front, and serialized it to disk:
 
@@ -118,7 +118,7 @@ Both files then went through a cross-review pass to find contradictory suggestio
 
 These two files solve the fatal problem of a stateless architecture: **1,448 files are being translated by hundreds of agents, each with a blank context window.** Without a shared spec you get 1,448 different opinions about the same pattern. `PORTING.md` turns "how do I translate this" from a **judgment call** into a **table lookup**.
 
-*The blog doesn't say why, so this is my guess:* `.tsv` was chosen because it's greppable — an agent looks up one row instead of reading prose. Cheap in tokens, low in ambiguity.
+_The blog doesn't say why, so this is my guess:_ `.tsv` was chosen because it's greppable — an agent looks up one row instead of reading prose. Cheap in tokens, low in ambiguity.
 
 My favorite way to describe these two files: **the planning phase's intelligence, frozen into an artifact** that hundreds of dumb stateless agents can reuse.
 
@@ -137,7 +137,7 @@ flowchart LR
     O --> Q
 ```
 
-The rule, in Jarred's words: *"The implementer doesn't review. The reviewer doesn't implement."*
+The rule, in Jarred's words: _"The implementer doesn't review. The reviewer doesn't implement."_
 
 And he printed the loop itself, as pseudocode, right in the post:
 
@@ -156,7 +156,7 @@ Look at `Promise.all([review(result), review(result)])`. Two reviews running **i
 
 Adversarial review here means: a Claude in a **separate context window**, seeing **the diff and nothing else**, primed with the belief that **this code is wrong by default** and its job is to find out why.
 
-It does **not** see the implementer's reasoning. Deliberately. Jarred's explanation: a Claude that wrote the code wants the code merged; a Claude reviewing it wants to find the bug. Hiding the reasoning keeps the reviewer from being *talked out of* a finding by the author's own justification.
+It does **not** see the implementer's reasoning. Deliberately. Jarred's explanation: a Claude that wrote the code wants the code merged; a Claude reviewing it wants to find the bug. Hiding the reasoning keeps the reviewer from being _talked out of_ a finding by the author's own justification.
 
 Three real bugs this caught — all of which **compiled cleanly** and **looked entirely reasonable**:
 
@@ -170,7 +170,7 @@ Three different classes: async lifetime, numeric semantics, evaluation order. Th
 
 The blog **doesn't explain the number 2**. What follows is my inference:
 
-- **Recall math.** Each reviewer misses a bug with probability `p`. Two **independent** reviewers both miss it with probability `p²`. A reviewer that catches 70% becomes ~91% when you run two independently. When you're merging a million lines nobody will re-read, recall is *everything*.
+- **Recall math.** Each reviewer misses a bug with probability `p`. Two **independent** reviewers both miss it with probability `p²`. A reviewer that catches 70% becomes ~91% when you run two independently. When you're merging a million lines nobody will re-read, recall is _everything_.
 - **Asymmetric economics.** One more review pass costs a few cents. One use-after-free reaching a runtime installed on millions of machines is a CVE.
 - **Why not 5, or 10.** Diminishing returns. The third reviewer onward overlaps heavily and adds few new findings, while tokens and latency grow linearly and the fixer has to reconcile more contradictory feedback.
 
@@ -205,7 +205,7 @@ So the "assume the code is wrong" prior is **not there to make reviewers more co
 
 But there's a trap: **never force a reviewer to always find something.** A reviewer with no legitimate PASS available will Goodhart the metric — out of real bugs, it invents nitpicks and flags harmless things to fill its suspicion quota. The result is **alarm fatigue**: exactly like a Datadog monitor that screams every day until everyone mutes it, and then it screams for real and nobody is listening.
 
-Jarred handled claim quality with a **decision rule** rather than with faith. Verbatim: *if you need a long comment to justify a workaround, the code is wrong — go fix the code.* He converted a fuzzy judgment ("does this smell?") into a near-mechanical criterion that hundreds of agents can apply consistently.
+Jarred handled claim quality with a **decision rule** rather than with faith. Verbatim: _if you need a long comment to justify a workaround, the code is wrong — go fix the code._ He converted a fuzzy judgment ("does this smell?") into a near-mechanical criterion that hundreds of agents can apply consistently.
 
 And when **the two reviewers disagree**? That isn't a system failure — it's a **routing signal**:
 
@@ -213,7 +213,7 @@ And when **the two reviewers disagree**? That isn't a system failure — it's a 
 - One flags, one is silent → a hypothesis for the fixer to weigh.
 - They flag in opposite directions → escalate to a layer with more context (a reconcile pass, or a human).
 
-Agreement between independent samples *is* a confidence measure — and a far cheaper one than demanding a formal proof attached to every claim.
+Agreement between independent samples _is_ a confidence measure — and a far cheaper one than demanding a formal proof attached to every claim.
 
 The power of an adversarial reviewer pair isn't that they **know** more than the implementer. Same model; they don't know anything more. It's that the system **structures doubt into two independent trials and then lets reality adjudicate**.
 
@@ -231,17 +231,17 @@ The queue is produced by a **deterministic tool**. Agents only **consume** it. T
 
 So what's actually wrong with coordinating via an agent? Four things:
 
-1. **The orchestrator's context is the bottleneck.** It plans *and* it receives every report. The longer it runs, the fuller it gets. Anthropic has a name for the failure: **agentic laziness** — it does 35 of 50 items and declares victory. Not because the model is dumb, but because working memory is full, it loses track, and it rationalizes a stopping point. A `for` loop in JavaScript **never forgets item 1,337**.
+1. **The orchestrator's context is the bottleneck.** It plans _and_ it receives every report. The longer it runs, the fuller it gets. Anthropic has a name for the failure: **agentic laziness** — it does 35 of 50 items and declares victory. Not because the model is dumb, but because working memory is full, it loses track, and it rationalizes a stopping point. A `for` loop in JavaScript **never forgets item 1,337**.
 2. **Token cost scales with the number of coordination decisions.** With an orchestrator agent, every route, every collect, every dedupe is a model turn you pay for. A `for` loop costs zero.
 3. **Non-determinism where no judgment is needed.** "Which crate does this error belong to → which worktree does it go to" is 100% deterministic. Handing deterministic work to an LLM buys you risk without buying you value.
 4. **Reproducibility and resume.** A workflow is a script: readable, re-runnable, resumable from where it stopped. An orchestrator agent's "plan" is a chat transcript. You can't re-run it identically.
 
 But don't throw agents out. **The two models solve two different problems:**
 
-| | Workflow-as-code wins | Agent coordination wins |
-| --- | --- | --- |
-| Shape of the task | Known up front, repetitive, uniform | Unknown, shifting as you go |
-| Grading | A mechanical oracle exists | Judgment needed mid-flight |
+|                          | Workflow-as-code wins                         | Agent coordination wins                            |
+| ------------------------ | --------------------------------------------- | -------------------------------------------------- |
+| Shape of the task        | Known up front, repetitive, uniform           | Unknown, shifting as you go                        |
+| Grading                  | A mechanical oracle exists                    | Judgment needed mid-flight                         |
 | Example, from Bun itself | Porting 1,448 files; queue from `cargo check` | The 3-hour conversation that produced `PORTING.md` |
 
 Notice that right-hand column: **it's also in the Bun project.** The `PORTING.md` phase genuinely was an accumulating, human-in-the-loop, adaptive conversation. You cannot script it. But when that phase ended, its product was a **file**. The intelligence froze into an artifact, and hundreds of stateless agents then looked things up in it.
@@ -262,20 +262,20 @@ Nineteen bugs got through 1.39 million assertions **plus** two adversarial revie
 
 The examples share an obvious pattern — they're all **semantic differences between the two languages**:
 
-- **A side effect inside `debug_assert!`.** Zig's `assert` is a *function*. Rust's `debug_assert!` is a *macro* — release builds delete the expression inside it entirely. So `insert_stale()` was never called, and React fast refresh (HMR) broke.
+- **A side effect inside `debug_assert!`.** Zig's `assert` is a _function_. Rust's `debug_assert!` is a _macro_ — release builds delete the expression inside it entirely. So `insert_stale()` was never called, and React fast refresh (HMR) broke.
 - **Odd-length slices.** `Blob.text()` on UTF-16 with a trailing odd byte panicked (bytemuck behaves differently) instead of ignoring it.
 - **`comptime` format strings.** Rust has no equivalent, so they became `macro_rules!` — and the `<r>` color marker corrupted the OSC 8 hyperlink escape sequence in `bun update -i`.
 
 This is precisely the class of bug **a behavior-level TypeScript test suite cannot see.** The test suite asks "what does this function return?" It never asks "does this macro survive a release build?"
 
-The lesson I take: **however strong your oracle, there's a semantic layer beyond its reach.** So the plan needs a safety net *after* the merge. Merging is not the finish line.
+The lesson I take: **however strong your oracle, there's a semantic layer beyond its reach.** So the plan needs a safety net _after_ the merge. Merging is not the finish line.
 
 Jarred didn't treat it as one either:
 
 - **11 rounds of security review**, findings addressed.
 - **Coverage-guided fuzzing running 24/7 against every parser** — roughly **100 billion** executions so far.
 - **Miri in CI**, LeakSanitizer, and the borrow checker as long-term tooling. `unsafe` is ~4% of the codebase (~13,000 keywords across ~780k lines), and they're refactoring it down.
-- After merging, he **didn't release**. Verbatim: *confidence in the rewrite existed but not release confidence.*
+- After merging, he **didn't release**. Verbatim: _confidence in the rewrite existed but not release confidence._
 
 For anyone wondering what the rewrite actually bought:
 
@@ -284,7 +284,7 @@ For anyone wondering what the rewrite actually bought:
 - **Performance**: `Bun.serve` 169.6k → 177.7k req/s (+4.8%); Next.js builds +4.5%.
 - **In production**: Claude Code has shipped on Rust-based Bun since v2.1.181; Linux startup went 517ms → 464ms.
 
-And the human-cost benchmark for that $165k, in Jarred's words: *by hand, I think this would've taken 3 engineers with full context on the codebase about a year.*
+And the human-cost benchmark for that $165k, in Jarred's words: _by hand, I think this would've taken 3 engineers with full context on the codebase about a year._
 
 ## 8. What I took away
 
