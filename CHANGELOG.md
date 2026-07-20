@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.3.0](https://github.com/hieplam/memo/compare/astro-paper-v6-v6.2.0...astro-paper-v6-v6.3.0) (2026-07-20)
+
+
+### Features
+
+* **posts:** add "Gỡ rối chữ semantic" 6-part Vietnamese series ([#20](https://github.com/hieplam/memo/issues/20)) ([10261f7](https://github.com/hieplam/memo/commit/10261f7c4c7dd7ea55be5498c8f9dd388b8ad932))
+* **posts:** add "grep, BM25, semantic — ba tầng tìm kiếm" (deep-dive on Part 2) ([#24](https://github.com/hieplam/memo/issues/24)) ([2d4514d](https://github.com/hieplam/memo/commit/2d4514db74e0377b2668532733ed6e0cf1fca5db))
+* **posts:** add bilingual 'Inside a Claude Code Transcript' deep-dive ([3f1883b](https://github.com/hieplam/memo/commit/3f1883b0af6e071955309fec338629dc4a2f18f9))
+* **posts:** add bilingual 'trunk-based vs release-please' deep-dive ([334210a](https://github.com/hieplam/memo/commit/334210a5947d411f5bd85e46e2dc9f70e6c0c635))
+* **posts:** add bilingual "does reading improve pronunciation" evidence review ([f419d39](https://github.com/hieplam/memo/commit/f419d3918d0c7d5b377a7abb2e1429bed8957a86))
+* **posts:** add bilingual "don't ship the bundle" A/B-eval deep-dive ([#30](https://github.com/hieplam/memo/issues/30)) ([d0ce061](https://github.com/hieplam/memo/commit/d0ce0612f7b8bcae6b8190e49959dc3e37f1bdce))
+* **posts:** add bilingual "prompting anatomy and practice" deep-dive ([895d0c9](https://github.com/hieplam/memo/commit/895d0c99fb6138c02d706b7c72d4333ed5b56ad8))
+* **posts:** add bilingual "Provider Switching & SDK-Mode Internals" deep-dive ([0513638](https://github.com/hieplam/memo/commit/0513638b6bf8471b7de839bcebe53c173aba1315))
+* **posts:** add bilingual Claude Code loop primitives deep-dive ([#27](https://github.com/hieplam/memo/issues/27)) ([4e14818](https://github.com/hieplam/memo/commit/4e148189982ed257980ee9cde6094b8dc07e9db2))
+* **posts:** add bilingual tribe campaign runner orchestrator deep-dive ([4a43047](https://github.com/hieplam/memo/commit/4a43047c2b61771b3782a8c502ca4b45123c0939))
+* **posts:** bilingual deep-dive on Bun's 11-day Zig→Rust rewrite ([#29](https://github.com/hieplam/memo/issues/29)) ([41b9c0d](https://github.com/hieplam/memo/commit/41b9c0d1468b5f703657311af4fbca2ececcb7ce))
+* **posts:** import 'Inside the Brainstorming Skill' 7-part series ([#19](https://github.com/hieplam/memo/issues/19)) ([c8a65b2](https://github.com/hieplam/memo/commit/c8a65b2e7d9fb0c23c4977c39e7ddcab5f70930e))
+* **posts:** import 2 posts — cross-cutting concern + Claude Code workflow vs subagent ([#14](https://github.com/hieplam/memo/issues/14)) ([85c58cc](https://github.com/hieplam/memo/commit/85c58ccb20b8ebb8bfe93eafd94461da0be6d934))
+* **posts:** import 8 research topics as bilingual blog posts ([#25](https://github.com/hieplam/memo/issues/25)) ([a09b53b](https://github.com/hieplam/memo/commit/a09b53b83b1532097c0bcc502809902e956c26ab))
+* **posts:** import agentic AI failure modes deep-dive ([#13](https://github.com/hieplam/memo/issues/13)) ([5a48347](https://github.com/hieplam/memo/commit/5a4834787e47c8d4bd3572e4672f8bcaecd6f0a5))
+* **posts:** import Claude Agent SDK — flow đơn giản và cách viết tool ([cc13992](https://github.com/hieplam/memo/commit/cc1399221c515c8bbe8fa79241368941215a3444))
+* **posts:** publish /loop vs /schedule mechanism + self-multiplying cron bug ([#28](https://github.com/hieplam/memo/issues/28)) ([1f5ed4a](https://github.com/hieplam/memo/commit/1f5ed4a1e01f1f63e259ba738ffdd00137b515c5))
+* **theme:** apply Sage calm re-theme — sage-teal palette, Hanken Grotesk, motion system ([#10](https://github.com/hieplam/memo/issues/10)) ([23efa6e](https://github.com/hieplam/memo/commit/23efa6e097118cfd1cd6a2920d9b0536441d010f))
+
+
+### Bug Fixes
+
+* **diagrams:** add cream background to semantic series SVGs ([#22](https://github.com/hieplam/memo/issues/22)) ([925df37](https://github.com/hieplam/memo/commit/925df3780e912ad952863da59da69b31bdc18086))
+* **posts:** correct future pubDatetime so transcript-anatomy posts publish ([76d9e46](https://github.com/hieplam/memo/commit/76d9e4697929187e126a7d0815974ff6d054e60f))
+
 ## [6.2.0](https://github.com/hieplam/memo/compare/astro-paper-v6-v6.1.0...astro-paper-v6-v6.2.0) (2026-06-13)
 
 
