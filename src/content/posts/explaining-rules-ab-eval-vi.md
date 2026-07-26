@@ -35,7 +35,7 @@ Tui có viết một prompt cho các phiên LLM với một điều khoản "Ant
 
 ## 2. Sai lầm gộp bundle
 
-Tui dán gợi ý từ Gemini vô global Claude rules **và** thêm luôn dòng tự viết của mình ("ground claim with truth, code or fact") — trong cùng một lần sửa. Output tốt hơn. Nhưng thành phần nào có công? Không biết — các biến chưa từng được tách riêng. Lời của chính tui lúc đó: *"có thể là do câu ground claim"* — một giả thuyết, chưa phải một phát hiện. Biến thể persona còn lan qua `CLAUDE.md` của một repo thứ hai: bundle đã trôi giạt thành 2 bản khác nhau trước khi ai kiểm tra xem phần nào trong đó thật sự có ích.
+Tui dán gợi ý từ Gemini vô global Claude rules **và** thêm luôn dòng tự viết của mình ("ground claim with truth, code or fact") — trong cùng một lần sửa. Output tốt hơn. Nhưng thành phần nào có công? Không biết — các biến chưa từng được tách riêng. Lời của chính tui lúc đó: _"có thể là do câu ground claim"_ — một giả thuyết, chưa phải một phát hiện. Biến thể persona còn lan qua `CLAUDE.md` của một repo thứ hai: bundle đã trôi giạt thành 2 bản khác nhau trước khi ai kiểm tra xem phần nào trong đó thật sự có ích.
 
 Hồi đó tui tin cái dòng grounding là chân ái. Sai khá nặng — chuyện đó tới cuối bài mới lòi ra.
 
@@ -82,13 +82,13 @@ Ba lỗi này phát hiện được giữa lúc chạy, đáng có riêng một 
 
 Chỉ tính P1+P2 (P3 bị loại theo §6), n=4/arm, Opus 4.8, trung bình ±sd:
 
-| Arm | M1 undef/1k ↓ | M2 grounding ↑ | M3 over-expl ↓ | words |
-| --- | --- | --- | --- | --- |
-| A0 baseline | 12.18 ±4.30 | 0.38 ±0.12 | 0.25 ±0.50 | 823 |
-| A1 grounding only | 11.17 ±7.69 | 0.44 ±0.32 | 0.25 ±0.50 | 820 |
-| A2 term-discipline only | 5.41 ±2.93 | 0.43 ±0.27 | 1.25 ±1.50 | 780 |
-| **A3 both** | **4.06 ±3.13** | **0.47 ±0.18** | **0.75 ±0.96** | 908 |
-| A4 + reader-model | 10.04 ±4.27 | 0.42 ±0.09 | 0.75 ±0.96 | 1071 |
+| Arm                     | M1 undef/1k ↓  | M2 grounding ↑ | M3 over-expl ↓ | words |
+| ----------------------- | -------------- | -------------- | -------------- | ----- |
+| A0 baseline             | 12.18 ±4.30    | 0.38 ±0.12     | 0.25 ±0.50     | 823   |
+| A1 grounding only       | 11.17 ±7.69    | 0.44 ±0.32     | 0.25 ±0.50     | 820   |
+| A2 term-discipline only | 5.41 ±2.93     | 0.43 ±0.27     | 1.25 ±1.50     | 780   |
+| **A3 both**             | **4.06 ±3.13** | **0.47 ±0.18** | **0.75 ±0.96** | 908   |
+| A4 + reader-model       | 10.04 ±4.27    | 0.42 ±0.09     | 0.75 ±0.96     | 1071  |
 
 A2 là thành phần chủ lực cho M1 (−56% khi đứng một mình) nhưng làm tăng gấp đôi over-explanation khi đứng một mình; A1 đứng một mình **không** làm gì cho M1 (giả thuyết "có thể do câu grounding" của tui **bị bác bỏ** với vai trò động lực chính — nó chỉ giúp nhẹ cho M2); A3 (cặp đôi) áp đảo (−67% M1, M2 tốt nhất, M3 được kìm lại); dòng reader-model của A4 làm **tệ đi** M1 và làm tăng độ dài +18% — bị bác bỏ.
 
