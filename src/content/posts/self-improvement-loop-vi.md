@@ -2,6 +2,7 @@
 title: "Self Improvement Loop: cái vòng lặp tui tìm hoài mà không thấy, tới hôm nay mới thấy"
 description: "Tui đọc được ý niệm self improvement loop từ một bài viết của Boris, nhưng bài đó chỉ nói ý, không nói cách. Hôm nay làm pet project, Claude Code hỏi tui một câu về unwritten convention, và tui chợt nhận ra mình vừa vô tình dựng được cái vòng lặp đó."
 pubDatetime: 2026-07-26T02:00:00Z
+featured: true
 lang: "vi"
 tags:
   - ai-agents

@@ -2,6 +2,7 @@
 title: "The Self-Improvement Loop I Kept Looking For, and Finally Stumbled Into"
 description: "I picked up the idea of a self-improvement loop from a post by Boris, but that post only named the idea — it never showed the mechanics. Then, working on a pet project, Claude Code asked me one question about an unwritten convention, and I realized I had just built the loop by accident."
 pubDatetime: 2026-07-26T02:00:00Z
+featured: true
 lang: "en"
 tags:
   - ai-agents
