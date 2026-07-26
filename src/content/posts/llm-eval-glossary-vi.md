@@ -1,7 +1,7 @@
 ---
 title: "Bộ từ điển eval tui gom được khi cố cắt ngắn một prompt agent 86KB"
 description: "Trước khi dám cắt ngắn prompt khổng lồ của agent warchief, tui phải xây một bộ benchmark A/B để đo xem cắt có làm vỡ luật nào không — và học được cả tá thuật ngữ theo cách đau nhất: từ baseline vs candidate tới việc chính cái thước đo cũng cần bị audit."
-pubDatetime: 2026-07-26T09:05:00Z
+pubDatetime: 2026-07-26T06:05:00Z
 lang: vi
 tags:
   - ai-agents
