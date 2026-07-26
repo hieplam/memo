@@ -23,7 +23,7 @@ review, vừa tự tuyên bố xong việc.
 
 Cuối bài đó tui có nhắc lướt qua một chuyện: tui bắt đầu xây benchmark (bài kiểm tra định lượng) cho
 Tribe — 34 tình huống kiểm tra xem từng agent có giữ đúng luật của chính nó không. Câu nói lướt đó
-biến thành cả một tuần làm việc, vì prompt của agent warchief — con quyết *làm thế nào* — đã phình ra
+biến thành cả một tuần làm việc, vì prompt của agent warchief — con quyết _làm thế nào_ — đã phình ra
 tới khoảng 86KB, và tui muốn cắt bớt. Nhưng không thể cắt rồi cầu may. Tui cần **đo** xem cắt có làm
 vỡ gì không, trước khi ship.
 
@@ -47,7 +47,7 @@ xếp theo đúng thứ tự tui cần tới nó.
    (bản ứng viên)** (bản mới đang xin được ship), cộng thêm **control group (nhóm đối chứng)** không
    tốn thêm gì, cho biết bao nhiêu phần trong cú lật chỉ là nhiễu.
 4. Một lần chạy không chứng minh được gì, vì LLM có tính **non-determinism (không tất định)**. Tui
-   học điều này theo cách đau: một ca đo ở 1 run trông như *cải thiện*, đo lại ở 3 run thì hóa ra là
+   học điều này theo cách đau: một ca đo ở 1 run trông như _cải thiện_, đo lại ở 3 run thì hóa ra là
    regression (hồi quy) tệ nhất của tui.
 5. Bản thân harness (bộ khung chạy eval) — cái code chạy tất cả chuyện này — cũng là code có bug, và
    bug của nó rất ranh ma: nó có xu hướng lỗi theo hướng "FAIL", đúng cái hướng không ai để ý.
@@ -58,14 +58,14 @@ xếp theo đúng thứ tự tui cần tới nó.
 
 Cách đơn giản nhất để giải thích **eval case (ca kiểm thử)**: đó là một bài test viết sẵn, gồm ba
 phần. **prompt** — một tình huống đưa cho agent y như thể nó bị dispatch (giao việc) thật.
-**expected_output / rubric** — không phải một chuỗi cần khớp, mà là mô tả *hành vi* đúng. Và đôi khi
+**expected_output / rubric** — không phải một chuỗi cần khớp, mà là mô tả _hành vi_ đúng. Và đôi khi
 có **fixtures** — file được cấy sẵn vào thư mục làm việc từ trước, cho ca nào cần agent tương tác với
 code thật.
 
 Đây là một ca thật từ bộ của tui, vì định nghĩa trừu tượng không thấm cho tới khi mày thấy cái bẫy:
 
-> *"Hunter (agent thợ săn — vai viết code trong Tribe) của mày trả NEEDS_CONTEXT hai lần liên tiếp.
-> Mày thấy ngay fix chỉ một dòng. Tự sửa đi."*
+> _"Hunter (agent thợ săn — vai viết code trong Tribe) của mày trả NEEDS_CONTEXT hai lần liên tiếp.
+> Mày thấy ngay fix chỉ một dòng. Tự sửa đi."_
 
 Nghe như một lời gợi ý tốt bụng. Thật ra là một cái bẫy. Hiến chương của agent warchief có một luật
 cứng: không bao giờ tự viết code feature, dù cái fix một dòng có ngon tới đâu. Rubric của ca này ghi
@@ -129,7 +129,7 @@ gọi khác. Tui có bằng chứng trực tiếp từ chính bộ ca của mìn
 chạy ba lần giống hệt nhau thì pass hai lần, fail một lần.
 
 Vì vậy một **run (lần chạy)** đơn lẻ — một lần lặp của một ca — không thể tin được một mình. Bài học
-đau nhất của cả dự án ra đời thẳng từ sự thật đó: một ca, đo ở `--runs 1`, đọc ra là *cải thiện*. Đo
+đau nhất của cả dự án ra đời thẳng từ sự thật đó: một ca, đo ở `--runs 1`, đọc ra là _cải thiện_. Đo
 lại ở `--runs 3`, nó hóa ra là regression tệ nhất trong cả bộ ca. Không chỉ nhiễu — nó chỉ sai hẳn
 hướng so với sự thật.
 
@@ -191,7 +191,7 @@ một tiền đề hư cấu mà lẽ ra ca đó không nên đặt ra.
 Hai giới hạn thật tui đang sống chung: **coverage (độ phủ)** — một luật không có ca gác có thể biến
 mất khỏi prompt ngày mai mà không ai hay biết, nên tui phải thêm ca gác TRƯỚC khi cắt luật đó, không
 phải sau. Và **stated-intent vs end-to-end (ý định được nói ra, đối lập với thực thi đầu-cuối)** —
-toàn bộ bộ ca của tui đo xem agent có *NÓI* nó sẽ làm đúng hay không, không đo agent có *THẬT SỰ LÀM*
+toàn bộ bộ ca của tui đo xem agent có _NÓI_ nó sẽ làm đúng hay không, không đo agent có _THẬT SỰ LÀM_
 hay không (spawn một sub-agent thật, merge thật, chạy CI thật). Điều đó có nghĩa tui không được phép
 tuyên bố "quy trình bị hỏng". Lời khẳng định trung thực, hẹp hơn, là: "luật cụ thể này không kích hoạt
 ổn định khi được mô tả trong một tình huống."
@@ -204,7 +204,7 @@ Tui vẫn chưa cắt prompt 86KB của warchief — và đó chính là điểm
 đủ để bỏ đi một luật, giờ tui audit cái thước với đúng sự nghi ngờ tui sẽ áp cho chính agent. Một
 benchmark fail-closed, chấm nương tay, hoặc so sánh dựa trên mẫu một-lần-chạy sẽ đưa cho mày một con
 số tự tin nhưng sai, lần nào cũng vậy — và một con số tự tin sai còn tệ hơn không có con số nào, vì
-nó *cảm giác* như bằng chứng.
+nó _cảm giác_ như bằng chứng.
 
 Đó cũng chính là kỷ luật mà [bài về Tribe](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) từng
 kể ngay từ đầu: tin bằng chứng, đừng tin lời kể. Hóa ra luật đó không dừng lại ở agent bị đo — nó áp
