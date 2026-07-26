@@ -1,7 +1,7 @@
 ---
 title: "The eval glossary I picked up trying to trim an 86KB agent prompt"
 description: "Before I dared cut my warchief agent's giant prompt, I built an A/B benchmark to measure whether trimming it would break anything — and learned a dozen terms the hard way, from baseline vs candidate to why the measuring harness itself needs an audit."
-pubDatetime: 2026-07-26T09:00:00Z
+pubDatetime: 2026-07-26T06:00:00Z
 lang: en
 tags:
   - ai-agents
