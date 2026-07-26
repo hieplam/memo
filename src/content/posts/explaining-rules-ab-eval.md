@@ -20,7 +20,7 @@ That's the mistake this post is about, and how I went back and fixed it with an 
 
 ## TL;DR
 
-- A bundle that "works" tells you nothing about **which ingredient** did the work. I pasted a Gemini session's suggestions into my global Claude rules *and* added my own line ("ground claim with truth, code or fact") **all at once**. Output improved — but I couldn't say why. My own hypothesis at the time ("maybe it's the grounding line") turned out to be wrong.
+- A bundle that "works" tells you nothing about **which ingredient** did the work. I pasted a Gemini session's suggestions into my global Claude rules _and_ added my own line ("ground claim with truth, code or fact") **all at once**. Output improved — but I couldn't say why. My own hypothesis at the time ("maybe it's the grounding line") turned out to be wrong.
 - A follow-up Claude.AI session checked the two literature claims behind the restructuring (affirmative-beats-negated instructions; persona prompting) against primary sources, found both real but dated (2022 / 2024), and designed a proper **A/B kit** instead of shipping more rules on vibes.
 - A Claude Code session re-verified all 4 original citations (**all confirmed**), added newer 2025–26 literature the earlier pass didn't have, then ran the actual eval: **5 arms × 3 prompts × 2 reps = 30 runs**, blind-graded by a different model.
 - **Result: my own favorite line was inert.** The term-discipline rule (A2) is the active ingredient for undefined-term density (−56% alone); my grounding line (A1) alone did **nothing** for that metric. The pair (A3 = A1+A2) dominates every metric. A fourth candidate rule (reader-model framing, A4) actively **regressed** the main metric and was dropped.
@@ -34,7 +34,7 @@ I write a prompt for LLM sessions with an "Antigoal" clause: every new term must
 
 ## 2. The bundle mistake
 
-I pasted the Gemini suggestions into my global Claude rules **and** added my own line ("ground claim with truth, code or fact") — all in the same edit. Output got better. But which ingredient worked? Unknown — the variables were never isolated. My own words at the time: *"có thể là do câu ground claim"* ("maybe it's the grounding line") — a hypothesis, not a finding. The persona variant even drifted into a second repo's `CLAUDE.md`: the bundle had already spread into 2 divergent copies before anyone checked which part of it actually mattered.
+I pasted the Gemini suggestions into my global Claude rules **and** added my own line ("ground claim with truth, code or fact") — all in the same edit. Output got better. But which ingredient worked? Unknown — the variables were never isolated. My own words at the time: _"có thể là do câu ground claim"_ ("maybe it's the grounding line") — a hypothesis, not a finding. The persona variant even drifted into a second repo's `CLAUDE.md`: the bundle had already spread into 2 divergent copies before anyone checked which part of it actually mattered.
 
 ## 3. The verification pass (Claude.AI)
 
@@ -79,13 +79,13 @@ These found during the run are worth their own section — they silently corrupt
 
 P1+P2 only (P3 excluded per §6), n=4/arm, Opus 4.8, mean ±sd:
 
-| Arm | M1 undef/1k ↓ | M2 grounding ↑ | M3 over-expl ↓ | words |
-| --- | --- | --- | --- | --- |
-| A0 baseline | 12.18 ±4.30 | 0.38 ±0.12 | 0.25 ±0.50 | 823 |
-| A1 grounding only | 11.17 ±7.69 | 0.44 ±0.32 | 0.25 ±0.50 | 820 |
-| A2 term-discipline only | 5.41 ±2.93 | 0.43 ±0.27 | 1.25 ±1.50 | 780 |
-| **A3 both** | **4.06 ±3.13** | **0.47 ±0.18** | **0.75 ±0.96** | 908 |
-| A4 + reader-model | 10.04 ±4.27 | 0.42 ±0.09 | 0.75 ±0.96 | 1071 |
+| Arm                     | M1 undef/1k ↓  | M2 grounding ↑ | M3 over-expl ↓ | words |
+| ----------------------- | -------------- | -------------- | -------------- | ----- |
+| A0 baseline             | 12.18 ±4.30    | 0.38 ±0.12     | 0.25 ±0.50     | 823   |
+| A1 grounding only       | 11.17 ±7.69    | 0.44 ±0.32     | 0.25 ±0.50     | 820   |
+| A2 term-discipline only | 5.41 ±2.93     | 0.43 ±0.27     | 1.25 ±1.50     | 780   |
+| **A3 both**             | **4.06 ±3.13** | **0.47 ±0.18** | **0.75 ±0.96** | 908   |
+| A4 + reader-model       | 10.04 ±4.27    | 0.42 ±0.09     | 0.75 ±0.96     | 1071  |
 
 A2 is the active ingredient for M1 (−56% alone) but doubles over-explanation when alone; A1 alone does **nothing** to M1 (my "maybe it's the grounding line" hypothesis is **refuted** as the main driver — it only mildly helps M2); A3 (the pair) dominates (−67% M1, best M2, damped M3); A4's reader-model line **regresses** M1 and inflates length +18% — refuted.
 

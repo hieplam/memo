@@ -28,12 +28,12 @@ Gọi `query()` trả về một object `Query` có **hai vai trò cùng lúc**:
 2. **Control handle** — cùng object đó có các method điều khiển giữa chừng: `interrupt()`, `setModel(name)`, `setPermissionMode(mode)`, `supportedCommands()`.
 
 ```typescript
-import { query } from "@anthropic-ai/claude-agent-sdk"
+import { query } from "@anthropic-ai/claude-agent-sdk";
 
-const session = query({ prompt: "Say hello", options: {} })
+const session = query({ prompt: "Say hello", options: {} });
 // `session` vừa là iterable (for-await) vừa có interrupt/setModel/…
 for await (const message of session) {
-  console.log(message)
+  console.log(message);
 }
 ```
 
@@ -43,16 +43,16 @@ Field `prompt` nhận hoặc một string thường (single-turn) hoặc một `
 
 Không có hàm `auth()` hay `login()` nào để gọi. Auth hoàn toàn là biến môi trường (environment variable). Chọn một trong hai:
 
-| Biến | Mô hình tính phí | Lấy ở đâu |
-|---|---|---|
+| Biến                      | Mô hình tính phí       | Lấy ở đâu                                               |
+| ------------------------- | ---------------------- | ------------------------------------------------------- |
 | `CLAUDE_CODE_OAUTH_TOKEN` | Subscription (Pro/Max) | Chạy `claude setup-token` trên CLI, copy token nó in ra |
-| `ANTHROPIC_API_KEY` | Trả theo token (API) | Anthropic console → API keys |
+| `ANTHROPIC_API_KEY`       | Trả theo token (API)   | Anthropic console → API keys                            |
 
 Set trong shell trước khi chạy, hoặc set `process.env` trong code:
 
 ```typescript
 // Auth đơn giản nhất — set trước khi gọi query()
-process.env.CLAUDE_CODE_OAUTH_TOKEN = "sk-ant-oat-..."  // HOẶC
+process.env.CLAUDE_CODE_OAUTH_TOKEN = "sk-ant-oat-..."; // HOẶC
 // process.env.ANTHROPIC_API_KEY = "sk-ant-api-..."
 ```
 
@@ -63,12 +63,12 @@ SDK đọc biến lúc khởi tạo session. Đó là toàn bộ "auth handshake
 **Subagent** (tác nhân con) trong SDK là một agent được khai báo inline dưới `options.agents`. Main agent gọi nó qua built-in tool `Task` — tool này SDK đã ship sẵn; bạn chỉ cần khai `"Task"` trong `allowedTools` (danh sách tool Claude được phép dùng). Cách gọi chắc ăn nhất là đặt tên subagent thẳng trong prompt.
 
 ```typescript
-import { query } from "@anthropic-ai/claude-agent-sdk"
+import { query } from "@anthropic-ai/claude-agent-sdk";
 
-process.env.CLAUDE_CODE_OAUTH_TOKEN = "sk-ant-oat-..."
+process.env.CLAUDE_CODE_OAUTH_TOKEN = "sk-ant-oat-...";
 
 const session = query({
-  prompt: "Use the warchief agent to implement task A",   // đặt tên thẳng trong prompt
+  prompt: "Use the warchief agent to implement task A", // đặt tên thẳng trong prompt
   options: {
     // allowedTools: danh sách built-in tool Claude được phép dùng.
     // "Task" là tool để spawn subagent — BẮT BUỘC nếu có khai báo agents.
@@ -77,17 +77,18 @@ const session = query({
       // Key = tên subagent mà model dùng trong lời gọi Task tool.
       warchief: {
         description: "Delivery lead. Dùng để triển khai một task end-to-end.",
-        prompt: "Bạn là warchief. Triển khai task được giao hoàn toàn: viết code, chạy test, báo cáo thay đổi.",
-        tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"],  // tool subagent được dùng
-        model: "sonnet",   // có thể khác model của main agent
+        prompt:
+          "Bạn là warchief. Triển khai task được giao hoàn toàn: viết code, chạy test, báo cáo thay đổi.",
+        tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"], // tool subagent được dùng
+        model: "sonnet", // có thể khác model của main agent
       },
     },
   },
-})
+});
 
 for await (const message of session) {
   if (message.type === "result") {
-    console.log("Kết quả cuối:", message.result)
+    console.log("Kết quả cuối:", message.result);
   }
 }
 ```
@@ -110,6 +111,7 @@ Hai helper bạn cần:
 ### `tool(name, description, zodShape, handler)`
 
 Khai báo một tool. Tham số:
+
 - `name` — định danh của tool, ví dụ `"add"`.
 - `description` — mô tả bằng ngôn ngữ tự nhiên về tool làm gì; model đọc cái này để quyết định khi nào gọi.
 - `zodShape` — Zod schema **shape** (object truyền vô `z.object(…).shape`, không phải bản thân schema) mô tả input parameters của tool.
@@ -124,33 +126,37 @@ Khai báo một tool. Tham số:
 ### Ví dụ chạy được ngay
 
 ```typescript
-import { query, createSdkMcpServer, tool } from "@anthropic-ai/claude-agent-sdk"
-import { z } from "zod"
+import {
+  query,
+  createSdkMcpServer,
+  tool,
+} from "@anthropic-ai/claude-agent-sdk";
+import { z } from "zod";
 
 // Bước 1: khai báo tool với tên, mô tả, Zod schema, và handler
 const myServer = createSdkMcpServer({
-  name: "mytools",    // serverName — xuất hiện trong địa chỉ tool
+  name: "mytools", // serverName — xuất hiện trong địa chỉ tool
   tools: [
     tool(
-      "add",                                    // toolName
-      "Cộng hai số và trả về tổng.",            // mô tả cho model
-      { a: z.number(), b: z.number() },         // Zod shape (KHÔNG phải z.object(…), chỉ là shape)
-      async (input) => ({
+      "add", // toolName
+      "Cộng hai số và trả về tổng.", // mô tả cho model
+      { a: z.number(), b: z.number() }, // Zod shape (KHÔNG phải z.object(…), chỉ là shape)
+      async input => ({
         content: [{ type: "text", text: String(input.a + input.b) }],
-      }),
+      })
     ),
   ],
-})
+});
 
 // Bước 2: gắn vào query qua mcpServers, cho phép trong allowedTools
 for await (const m of query({
   prompt: "2 + 3 bằng bao nhiêu? Dùng tool add.",
   options: {
-    mcpServers: { mytools: myServer },         // key = serverName
-    allowedTools: ["mcp__mytools__add"],       // địa chỉ = mcp__<serverName>__<toolName>
+    mcpServers: { mytools: myServer }, // key = serverName
+    allowedTools: ["mcp__mytools__add"], // địa chỉ = mcp__<serverName>__<toolName>
   },
 })) {
-  if (m.type === "result") console.log(m.result)
+  if (m.type === "result") console.log(m.result);
 }
 ```
 
@@ -159,10 +165,10 @@ for await (const m of query({
 Khi tool gặp lỗi và muốn model thấy đó là tool error (không phải process crash), dùng variant lỗi:
 
 ```typescript
-async (input) => ({
+async input => ({
   isError: true,
   content: [{ type: "text", text: "Có lỗi xảy ra: " + reason }],
-})
+});
 ```
 
 ## 5. Mô hình tư duy — tóm một đoạn
