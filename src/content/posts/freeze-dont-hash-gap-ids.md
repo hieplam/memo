@@ -28,9 +28,9 @@ multiLangKey: "freeze-dont-hash-gap-ids"
    human to rule on — promote to rule, promote to anti-rule, record as accepted debt, or dismiss.
    Each gap needs one stable ID across PRs so it is reported once, not re-minted every run.
 2. **The wrong fix:** `hash(pattern_description + path_scope)`. It silently mints a new ID every
-   time the same real issue happens to get described in different words — which is *every time*,
+   time the same real issue happens to get described in different words — which is _every time_,
    because each review is a fresh, memoryless LLM call.
-3. **The working fix:** don't hash what the model *said* — freeze one instance of what it *did*.
+3. **The working fix:** don't hash what the model _said_ — freeze one instance of what it _did_.
    Mint a sequential ID the first time a gap is seen, and freeze the exact **evidence command**
    the agent happened to write as that gap's permanent fingerprint, in an append-only ledger.
    Reconciliation later **replays** the stored fingerprint against the current diff — a command
@@ -46,18 +46,18 @@ multiLangKey: "freeze-dont-hash-gap-ids"
 
 ## 1. The origin: why a code-review gap needs an identity at all
 
-Tracker is a rules-review agent: on every PR it reads the diff and the repo's *written* rules and
+Tracker is a rules-review agent: on every PR it reads the diff and the repo's _written_ rules and
 flags violations. Separately, it also looks for a different kind of signal — a **harness gap**: a
 code pattern that repeats across the codebase but that no written rule currently governs (e.g. "9
 files independently swallow exceptions in a bare `catch {}`"). A harness gap is not a rule
-violation (there is no rule yet); it is a *candidate* for a human to decide on:
+violation (there is no rule yet); it is a _candidate_ for a human to decide on:
 
 - **promote to rule** — write it down, enforce it from now on;
 - **promote to anti-rule** — write down that this pattern is explicitly forbidden;
 - **record as debt** — acknowledged, not fixed yet, tracked;
 - **dismiss** — not actually a problem.
 
-Tracker runs on *every* PR, and it has **no memory between runs** — each invocation is a fresh LLM
+Tracker runs on _every_ PR, and it has **no memory between runs** — each invocation is a fresh LLM
 call with the diff and the rule set as its only input. Without a stable identity, the exact same
 real-world gap would be reported fresh on every single PR, forever, because nothing tells the
 system "you already saw this." A human ruling on a gap once needs that ruling to stick.
@@ -80,14 +80,14 @@ This works if the same input always produces the same description. It doesn't, b
 "input" is not a fixed function call — it's an LLM completion. Concretely, two independent Tracker
 runs over the identical underlying code produced:
 
-| Run | Description | Evidence command |
-|---|---|---|
-| PR #61 | "handlers swallow errors in a bare catch" | `grep -rn 'catch {}' src/handlers/` |
+| Run    | Description                                                | Evidence command                         |
+| ------ | ---------------------------------------------------------- | ---------------------------------------- |
+| PR #61 | "handlers swallow errors in a bare catch"                  | `grep -rn 'catch {}' src/handlers/`      |
 | PR #64 | "empty catch blocks discard exceptions in handler modules" | `grep -rn 'catch\s*{\s*}' src/handlers/` |
 
 Same real code. Same real problem. Two different sentences, two different regexes, and therefore
 **two different hashes**. `hash()` has no way to know these describe one thing — hashing is
-*supposed* to be sensitive to every character of its input, and prose from a fresh LLM call is
+_supposed_ to be sensitive to every character of its input, and prose from a fresh LLM call is
 exactly the kind of input that varies in ways that carry no meaning.
 
 The failure mode this produces is the dangerous kind: **silent**. Nothing crashes. Nothing errors.
@@ -103,7 +103,7 @@ The fix came from noticing that this codebase already solves an adjacent problem
 copying. **C3** is an architecture-documentation system used in this repo: every entity it manages
 — a component, a rule, an architecture-decision record — gets an ID **once, at creation**
 (`c3-215`, `rule-no-squash-merge`), and that ID is **frozen forever**. Crucially, C3 never
-*re-derives* an entity's ID by re-running whatever process created it (re-summarizing the
+_re-derives_ an entity's ID by re-running whatever process created it (re-summarizing the
 component, re-describing the rule). The ID is a pointer assigned at birth, not a hash of the
 entity's current description.
 
@@ -113,10 +113,10 @@ Applied to Tracker's gaps, the same rule reads:
    `G-001`, `G-002`, … Never re-derive it later.
 2. **Freeze the evidence command, not the description.** The exact command the agent happened to
    write to demonstrate the gap — the literal `grep -rn 'catch {}' src/handlers/` from PR #61 — is
-   captured *verbatim* and stored as that gap's permanent fingerprint, in an **append-only ledger**
+   captured _verbatim_ and stored as that gap's permanent fingerprint, in an **append-only ledger**
    (one JSON object per line, JSONL, so history is a diff-friendly audit trail, never overwritten).
 3. **Reconcile by replay, not by comparison.** On every later run, a new candidate gap is matched
-   against the ledger's *open* entries not by comparing its description to old descriptions, but
+   against the ledger's _open_ entries not by comparing its description to old descriptions, but
    by **re-executing every stored fingerprint against the current diff/files**. A shell command
    either produces output or it doesn't — that is deterministic, regardless of whether the LLM that
    originally wrote the command was deterministic.
@@ -138,18 +138,26 @@ the same way every time.
 (the ledger is empty) → mint `G-001`, freeze this exact grep as its fingerprint:
 
 ```json
-{"id":"G-001","event":"opened","category":"error-handling","paths":["src/handlers/"],"fingerprint":"grep -rn 'catch {}' src/handlers/","hits_at_detection":9,"first_seen_pr":61}
+{
+  "id": "G-001",
+  "event": "opened",
+  "category": "error-handling",
+  "paths": ["src/handlers/"],
+  "fingerprint": "grep -rn 'catch {}' src/handlers/",
+  "hits_at_detection": 9,
+  "first_seen_pr": 61
+}
 ```
 
 **Step 2 — PR #64, same real issue, a completely independent Tracker session.** The fresh LLM call
 describes the same underlying pattern in different words ("empty catch blocks discard exceptions
 in handler modules") and writes a different regex to demonstrate it. Reconciliation does not read
-this description at all — it takes `G-001`'s *stored* fingerprint and re-runs it against the
+this description at all — it takes `G-001`'s _stored_ fingerprint and re-runs it against the
 current diff's files. It still fires (now 10 hits, one new file added the pattern) → this is
 recognized as the same gap. Only an append line is written, no new ID:
 
 ```json
-{"id":"G-001","event":"seen","pr":64,"hits_now":10}
+{ "id": "G-001", "event": "seen", "pr": 64, "hits_now": 10 }
 ```
 
 **Step 3 — PR #67, a human rules on it.** A person reviewing the gap promotes it: from now on,
@@ -157,7 +165,12 @@ bare `catch {}` in handlers is an explicit anti-rule. The ledger records the dis
 because the gap is now enforced by a real, written rule, it is suppressed from future reports:
 
 ```json
-{"id":"G-001","event":"ruled","disposition":"anti-rule","ref":"rule-no-bare-catch"}
+{
+  "id": "G-001",
+  "event": "ruled",
+  "disposition": "anti-rule",
+  "ref": "rule-no-bare-catch"
+}
 ```
 
 Three PRs, one identity, one line of ledger per event, zero re-reading of anyone's prose to decide
@@ -165,14 +178,14 @@ Three PRs, one identity, one line of ledger per event, zero re-reading of anyone
 
 ## 5. Honest edge case: what happens when a fingerprint goes stale
 
-This design is not failure-free — it is *safely* imperfect, which is the point. If the underlying
+This design is not failure-free — it is _safely_ imperfect, which is the point. If the underlying
 code changes enough (say, the handlers get refactored so no file matches `catch {}` verbatim
 anymore, even though a structurally identical bug still exists in a different shape), the stored
 fingerprint for `G-001` stops firing. Reconciliation then fails to match the next occurrence of the
 real problem, and a **new** ID gets minted for what is, in truth, the same underlying gap —
 `G-014`, say, sitting right next to `G-001` in the next report.
 
-That is a real cost — a spurious duplicate ID — but compare its *shape* to the hash design's
+That is a real cost — a spurious duplicate ID — but compare its _shape_ to the hash design's
 failure: this one is **visible**. A human looking at that PR's report sees two structurally similar
 gaps show up in the same review and can mark one a duplicate of the other by hand, and a precision
 metric can exclude known-duplicate pairs from its count. The hash-based design's failure was
@@ -192,7 +205,7 @@ something that was already noticed before.
 
 The rule to carry away: **identity for a non-deterministic generator's output is not a property of
 the output's content — it is a decision, made once, and frozen.** If the generator can also emit a
-*mechanical, replayable probe* for what it noticed (a grep, a test, a query, a lint rule), freeze
+_mechanical, replayable probe_ for what it noticed (a grep, a test, a query, a lint rule), freeze
 that probe as the fingerprint and reconcile by replaying it. If it can't, you're stuck comparing
 prose — and prose comparison will always be a similarity judgment, never an identity check.
 

@@ -39,10 +39,10 @@ gap_id = hash(mô_tả_pattern + phạm_vi_đường_dẫn)
 
 Cách này chạy ngon nếu cùng một đầu vào (input) luôn cho ra cùng một mô tả. Nhưng "đầu vào" của Tracker không phải một hàm cố định — nó là một lần LLM hoàn tất câu trả lời (completion), và hai lần hoàn tất khác nhau thì ra chữ khác nhau, dù đang tả đúng một chuyện. Tui thấy tận mắt luôn:
 
-| Lần chạy | Mô tả Tracker viết | Câu lệnh bằng chứng nó dùng |
-|---|---|---|
-| PR #61 | "handler nuốt lỗi bằng catch rỗng" | `grep -rn 'catch {}' src/handlers/` |
-| PR #64 | "khối catch rỗng làm mất exception trong module handler" | `grep -rn 'catch\s*{\s*}' src/handlers/` |
+| Lần chạy | Mô tả Tracker viết                                       | Câu lệnh bằng chứng nó dùng              |
+| -------- | -------------------------------------------------------- | ---------------------------------------- |
+| PR #61   | "handler nuốt lỗi bằng catch rỗng"                       | `grep -rn 'catch {}' src/handlers/`      |
+| PR #64   | "khối catch rỗng làm mất exception trong module handler" | `grep -rn 'catch\s*{\s*}' src/handlers/` |
 
 Cùng code y chang. Cùng vấn đề y chang. Nhưng hai câu chữ khác nhau, hai regex khác nhau → **hai hash khác nhau**. Cái hàm `hash()` không có cách nào biết hai dòng đó đang tả cùng một thứ, vì bản chất hash là phải nhạy với từng ký tự — mà văn xuôi từ một lời gọi LLM mới tinh chính là loại đầu vào đổi kiểu chẳng mang ý nghĩa gì hết.
 
@@ -56,7 +56,7 @@ Chỗ tui bí thì đi soi lại repo coi có ai giải bài toán tương tự 
 
 1. **Đúc ID đúng một lần.** Lần đầu thấy một lỗ hổng, gán ID tuần tự kế tiếp: `G-001`, `G-002`, … Không bao giờ suy ra lại sau đó.
 2. **Đóng băng câu lệnh bằng chứng, không đóng băng mô tả.** Đúng cái câu `grep -rn 'catch {}' src/handlers/` mà Tracker tình cờ viết ra ở PR #61 — tui chụp nguyên văn, lưu làm dấu vân tay (fingerprint) vĩnh viễn của lỗ hổng đó, trong một sổ cái chỉ-thêm-không-sửa (append-only ledger, định dạng JSONL — mỗi dòng một object JSON, không bao giờ ghi đè, nên lịch sử là một audit trail dễ diff).
-3. **Đối chiếu bằng chạy lại, không bằng so sánh.** Mỗi lần Tracker chạy sau, một lỗ hổng ứng viên mới được đem so với các mục *đang mở* trong sổ cái — không phải bằng cách so mô tả mới với mô tả cũ, mà bằng cách **chạy lại từng dấu vân tay đã lưu** lên diff hiện tại. Một câu lệnh shell thì hoặc ra kết quả hoặc không — cái đó tất định (deterministic), dù con LLM viết ra câu lệnh lúc đầu có tất định hay không.
+3. **Đối chiếu bằng chạy lại, không bằng so sánh.** Mỗi lần Tracker chạy sau, một lỗ hổng ứng viên mới được đem so với các mục _đang mở_ trong sổ cái — không phải bằng cách so mô tả mới với mô tả cũ, mà bằng cách **chạy lại từng dấu vân tay đã lưu** lên diff hiện tại. Một câu lệnh shell thì hoặc ra kết quả hoặc không — cái đó tất định (deterministic), dù con LLM viết ra câu lệnh lúc đầu có tất định hay không.
 
 Đây là cốt lõi, tui phát biểu một lần cho gọn:
 
@@ -69,19 +69,32 @@ Băm hỏi "hai mô tả này giống nhau không?" — câu mà văn xuôi tr�
 **PR #61, sổ cái còn trống.** Tracker báo một lỗ hổng ứng viên: 9/9 file trong `src/handlers/` dính `grep -rn 'catch {}' src/handlers/`. Sổ cái trống, không có gì khớp → đúc `G-001`, đóng băng đúng câu grep này làm dấu vân tay:
 
 ```json
-{"id":"G-001","event":"opened","category":"error-handling","paths":["src/handlers/"],"fingerprint":"grep -rn 'catch {}' src/handlers/","hits_at_detection":9,"first_seen_pr":61}
+{
+  "id": "G-001",
+  "event": "opened",
+  "category": "error-handling",
+  "paths": ["src/handlers/"],
+  "fingerprint": "grep -rn 'catch {}' src/handlers/",
+  "hits_at_detection": 9,
+  "first_seen_pr": 61
+}
 ```
 
 **PR #64, cùng vấn đề thật, một phiên Tracker hoàn toàn khác.** Lần gọi LLM mới tinh tả cùng pattern bằng chữ khác hẳn ("khối catch rỗng làm mất exception trong module handler") và viết một regex khác để chứng minh. Đối chiếu **không đọc mô tả này chút nào** — nó lấy dấu vân tay đã lưu của `G-001`, chạy lại lên các file trong diff hiện tại. Vẫn nổ (giờ 10 hit, có thêm một file mới dính) → nhận ra là cùng một lỗ hổng. Ghi thêm một dòng, không đúc ID mới:
 
 ```json
-{"id":"G-001","event":"seen","pr":64,"hits_now":10}
+{ "id": "G-001", "event": "seen", "pr": 64, "hits_now": 10 }
 ```
 
 **PR #67, một con người ra quyết định.** Người review nhìn qua lỗ hổng này rồi promote nó: từ nay `catch {}` trống trong handler là một anti-rule tường minh. Sổ cái ghi lại quyết định đó, và vì lỗ hổng giờ đã được enforce bằng một rule thật, viết ra hẳn hoi, nó bị ẩn khỏi báo cáo từ đây về sau:
 
 ```json
-{"id":"G-001","event":"ruled","disposition":"anti-rule","ref":"rule-no-bare-catch"}
+{
+  "id": "G-001",
+  "event": "ruled",
+  "disposition": "anti-rule",
+  "ref": "rule-no-bare-catch"
+}
 ```
 
 Ba PR, một danh tính, mỗi sự kiện một dòng sổ cái. Không phải đọc lại lời văn của ai để quyết định "đây có phải cùng một lỗ hổng không."
