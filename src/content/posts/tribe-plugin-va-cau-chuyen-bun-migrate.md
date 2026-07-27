@@ -84,3 +84,8 @@ Còn nếu mọi người chỉ mang về một câu, thì mang câu này: **đ�
 ---
 
 _Nguồn cho vụ Bun: [The Register — Bun posts Rust porting guide](https://www.theregister.com/software/2026/05/05/anthrophics-bun-team-trials-port-from-zig-to-rust/5222094), [The Pragmatic Engineer — What can we learn from Bun's rapid Rust rewrite with AI?](https://blog.pragmaticengineer.com/the-pulse-what-can-we-learn-from-buns-rapid-rust-rewrite-with-ai/)._
+
+**Đọc thêm:** con Tracker nhắc ở trên còn giữ một bài toán riêng — soi rule thì dễ, nhưng làm sao
+cho mỗi lỗ hổng nó phát hiện một cái ID sống được qua nhiều lần chạy, trong khi bản thân nó không
+nhớ gì giữa các lần đó? Tui kể trong [Đóng băng, đừng băm: cho một agent không tất định một danh
+tính tất định](/memo/posts/freeze-dont-hash-gap-ids-vi/).
