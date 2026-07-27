@@ -420,3 +420,8 @@ stateDiagram-v2
 5. **Stateless wall** → không hardcode repo/model/campaign.
 6. **Kết thúc structural** → Set `attempted` làm sequence co lại mỗi vòng.
 7. **Ship = verify độc lập** → không tin dòng "SHIPPED" của agent.
+
+**Liên quan:** runner này đẻ ra các executor session mà những agent như Tracker chạy bên trong —
+xem [Đóng băng, đừng băm: cho một agent không tất định một danh tính tất định](/memo/posts/freeze-dont-hash-gap-ids-vi/)
+để biết Tracker cho các phát hiện của nó một ID ổn định xuyên suốt các session độc lập, không nhớ
+gì đó ra sao.
