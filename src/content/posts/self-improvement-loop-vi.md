@@ -1,6 +1,6 @@
 ---
-title: "Self Improvement Loop: cái vòng lặp tui tìm hoài mà không thấy, tới hôm nay mới thấy"
-description: "Tui đọc được ý niệm self improvement loop từ một bài viết của Boris, nhưng bài đó chỉ nói ý, không nói cách. Hôm nay làm pet project, Claude Code hỏi tui một câu về unwritten convention, và tui chợt nhận ra mình vừa vô tình dựng được cái vòng lặp đó."
+title: "Self Improvement Loop: Vòng lặp khép kín"
+description: "Tui đọc được ý niệm self improvement loop từ một bài viết của Boris, nhưng bài đó chỉ nói ý, không nói cách. Hôm nay làm pet project, Claude Code hỏi tui một câu về unwritten convention, và tui ngộ ra nó là gì."
 pubDatetime: 2026-07-26T02:00:00Z
 featured: true
 lang: "vi"
@@ -19,9 +19,9 @@ multiLangKey: "self-improvement-loop"
 
 ---
 
-## 1. Level mấy cũng được, miễn đừng là Level 0
+## 1. Mở Đầu
 
-Tui nhớ tui đã từng đọc một bài viết của Boris, hình như là bài về **4 level adaptation** — bốn cấp độ thích nghi của con người khi làm việc chung với AI. Tui cũng không chắc tui đang ở level mấy, nhưng ít nhất tui mừng vì tui không nằm ở Level 0 😅
+Tui nhớ tui đã từng đọc một bài viết của Boris, hình như là bài về **Steps of AI Adoption** — bốn cấp độ của con người khi AI để code. Tui cũng không chắc tui đang ở level mấy, nhưng ít nhất tui mừng vì tui không nằm ở Level 0 😅
 
 Quay về nội dung chính. Tui nhớ có một ý ở khoảng level 3 hay 4: khi con người càng muốn thoát ra khỏi cái vòng loop của AI trong workflow, thì phải tạo ra được một **self improvement loop** — vòng lặp tự cải thiện.
 
