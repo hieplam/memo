@@ -58,10 +58,10 @@ thư mục ẩn `.git/objects` của repo. Mỗi thứ cất vào đó được 
 
 Có 4 loại object. Ba loại quan trọng nhất:
 
-| Loại | Nó là gì | Ví von |
-|---|---|---|
-| **blob** | nội dung thô của **một file** (không chứa tên file) | ruột của file |
-| **tree** | danh sách "tên → blob/tree con" của **một thư mục** | mục lục thư mục |
+| Loại       | Nó là gì                                             | Ví von                     |
+| ---------- | ---------------------------------------------------- | -------------------------- |
+| **blob**   | nội dung thô của **một file** (không chứa tên file)  | ruột của file              |
+| **tree**   | danh sách "tên → blob/tree con" của **một thư mục**  | mục lục thư mục            |
 | **commit** | một **snapshot** + metadata (ai, khi nào, cha là ai) | một tấm ảnh chụp toàn repo |
 
 Sơ đồ quan hệ ba loại đó:
@@ -148,14 +148,14 @@ flowchart LR
 
 Bảng giải nghĩa:
 
-| Field | Ý nghĩa |
-|---|---|
-| `tree` | con trỏ tới tree object = **snapshot toàn bộ** cây thư mục lúc commit |
-| `parent` | **0 dòng** = commit đầu tiên của repo; **1 dòng** = commit thường; **≥2 dòng** = merge commit |
-| `author` | ai **viết** thay đổi + thời điểm viết |
-| `committer` | ai **tạo ra object commit này** + thời điểm tạo |
-| `gpgsig` | chữ ký GPG xác thực (tuỳ chọn, không phải commit nào cũng có) |
-| dòng trống + phần còn lại | **commit message** |
+| Field                     | Ý nghĩa                                                                                       |
+| ------------------------- | --------------------------------------------------------------------------------------------- |
+| `tree`                    | con trỏ tới tree object = **snapshot toàn bộ** cây thư mục lúc commit                         |
+| `parent`                  | **0 dòng** = commit đầu tiên của repo; **1 dòng** = commit thường; **≥2 dòng** = merge commit |
+| `author`                  | ai **viết** thay đổi + thời điểm viết                                                         |
+| `committer`               | ai **tạo ra object commit này** + thời điểm tạo                                               |
+| `gpgsig`                  | chữ ký GPG xác thực (tuỳ chọn, không phải commit nào cũng có)                                 |
+| dòng trống + phần còn lại | **commit message**                                                                            |
 
 ### 3.3 Điểm gây sốc thứ nhất: commit là snapshot, không phải diff
 
@@ -250,7 +250,7 @@ Hết. Vậy khi bạn commit, git làm đúng hai việc:
 
 ### 5.2 HEAD = "tôi đang đứng ở đâu"
 
-**HEAD** là một con trỏ đặc biệt trả lời câu hỏi *bạn đang đứng trên branch nào*. Nó **không**
+**HEAD** là một con trỏ đặc biệt trả lời câu hỏi _bạn đang đứng trên branch nào_. Nó **không**
 trỏ thẳng vào commit — nó trỏ vào **tên branch** (thuật ngữ: **symbolic ref**, con trỏ tượng trưng):
 
 ```
@@ -442,10 +442,10 @@ parent 53559503d6e17355dd804e1b574be2baca7b6cdf     ← chỉ MỘT dòng
 
 Đây là phát hiện đáng giá nhất của cả bài. Đặt hai kết quả cạnh nhau:
 
-| | Merge commit (7.2) | Squash (7.3) |
-|---|---|---|
-| `tree` | `dff6edc…` | `dff6edc…` **giống hệt** |
-| số dòng `parent` | 2 | 1 |
+|                  | Merge commit (7.2) | Squash (7.3)             |
+| ---------------- | ------------------ | ------------------------ |
+| `tree`           | `dff6edc…`         | `dff6edc…` **giống hệt** |
+| số dòng `parent` | 2                  | 1                        |
 
 **Nội dung file sau merge của hai cách là hoàn toàn như nhau.** Khác biệt **duy nhất** nằm ở
 chỗ có ghi lại cha thứ hai hay không. Mà cái "cha thứ hai" đó chính là sợi dây duy nhất nối
@@ -490,10 +490,10 @@ $ git log --all --graph --oneline --decorate
 
 So sánh trực tiếp:
 
-| Commit | Trước rebase | Sau rebase |
-|---|---|---|
-| `b1` | `bd9ec51` (cha = `C`) | `ddaf64e` (cha = `m2`) |
-| `b2` | `66dfe6f` | `0d29435` |
+| Commit | Trước rebase          | Sau rebase             |
+| ------ | --------------------- | ---------------------- |
+| `b1`   | `bd9ec51` (cha = `C`) | `ddaf64e` (cha = `m2`) |
+| `b2`   | `66dfe6f`             | `0d29435`              |
 
 ```mermaid
 flowchart TB
@@ -515,12 +515,12 @@ Và vì sau rebase `feature` đã nằm thẳng hàng sau `main`, bước merge 
 
 ### 7.5 Bảng tổng kết bốn cách
 
-| Cách | Lệnh git thật | Cơ chế lõi | Commit mới | Giữ hash gốc? |
-|---|---|---|---|---|
-| **Fast-forward** | `git merge` (khi không rẽ nhánh) | ghi đè file ref, hết | 0 | có |
-| **Merge commit** | `git merge --no-ff` | merge-base + three-way + tạo commit 2 cha | 1 | có |
-| **Squash** | `git merge --squash` + `commit` | y hệt trên, nhưng **bỏ** cha thứ 2 | 1 | **không** |
-| **Rebase** | `git rebase` | lặp: diff từng commit → áp lên base mới | n (viết lại) | **không** |
+| Cách             | Lệnh git thật                    | Cơ chế lõi                                | Commit mới   | Giữ hash gốc? |
+| ---------------- | -------------------------------- | ----------------------------------------- | ------------ | ------------- |
+| **Fast-forward** | `git merge` (khi không rẽ nhánh) | ghi đè file ref, hết                      | 0            | có            |
+| **Merge commit** | `git merge --no-ff`              | merge-base + three-way + tạo commit 2 cha | 1            | có            |
+| **Squash**       | `git merge --squash` + `commit`  | y hệt trên, nhưng **bỏ** cha thứ 2        | 1            | **không**     |
+| **Rebase**       | `git rebase`                     | lặp: diff từng commit → áp lên base mới   | n (viết lại) | **không**     |
 
 ---
 
@@ -586,11 +586,11 @@ FEATURE-VERSION
 Thuật toán không có cơ sở nào để quyết bên nào đúng, nên nó **không đoán** — nó giữ cả hai phiên
 bản kèm **conflict marker** (dấu xung đột) cho người chọn:
 
-| Marker | Nghĩa |
-|---|---|
-| `<<<<<<< HEAD` | mở đầu — phía dưới là bản của **nhánh bạn đang đứng** |
-| `=======` | ranh giới giữa hai bản |
-| `>>>>>>> feature` | kết thúc — phía trên là bản của **nhánh đem vào** |
+| Marker            | Nghĩa                                                 |
+| ----------------- | ----------------------------------------------------- |
+| `<<<<<<< HEAD`    | mở đầu — phía dưới là bản của **nhánh bạn đang đứng** |
+| `=======`         | ranh giới giữa hai bản                                |
+| `>>>>>>> feature` | kết thúc — phía trên là bản của **nhánh đem vào**     |
 
 Việc của bạn: sửa file thành bản đúng, xoá cả ba dòng marker, `git add`, rồi `git commit`.
 
@@ -610,7 +610,7 @@ không nằm ở bước **tính tree**.
 
 ### 9.1 Nó là gì
 
-**reflog** (viết tắt của *reference log* — nhật ký con trỏ) ghi lại **mọi lần một ref (HEAD hoặc
+**reflog** (viết tắt của _reference log_ — nhật ký con trỏ) ghi lại **mọi lần một ref (HEAD hoặc
 một branch) đổi hash**: do commit, checkout, merge, rebase, reset — bất kể lý do gì.
 
 Hai tính chất quan trọng: nó **chỉ tồn tại ở máy bạn** (không push lên remote, không ai khác
