@@ -1,7 +1,7 @@
 ---
 title: "Phần 2: Dual-Write Và Retry — Transactional Outbox, Backoff, Circuit Breaker"
 description: "Ghi database xong, publish event thất bại — dual-write không có atomicity xuyên hệ thống. Rồi khi retry, một client thiếu backoff+jitter có thể tự tạo ra retry storm đánh sập chính downstream nó đang chờ hồi phục."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T04:00:00Z
 lang: vi
 tags:
   - event-driven

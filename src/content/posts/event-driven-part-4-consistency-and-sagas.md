@@ -1,7 +1,7 @@
 ---
 title: "Part 4: Eventual Consistency and Sagas — Life Without a Cross-Service ROLLBACK"
 description: "Ms. Tí saves a new address, sees 'Success,' refreshes, and still sees the old one — the consistency gap is a chosen property, not a bug. And when a transaction spans three services and the middle step fails, a saga replaces ROLLBACK with a chain of compensating transactions."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T02:00:00Z
 lang: en
 tags:
   - event-driven

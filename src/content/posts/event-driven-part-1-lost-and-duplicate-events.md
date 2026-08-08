@@ -1,7 +1,7 @@
 ---
 title: "Part 1: Lost and Duplicate Events — Why Idempotency Is the Center of Gravity"
 description: "Ms. Tí's order goes through, the money is charged, but the confirmation email never arrives — an event got lost. Then: she orders 500k, her account is charged 1 million — an event got duplicated. Delivery guarantees, durability, ack, and idempotency, the property everything else in event-driven architecture stands on."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T05:00:00Z
 lang: en
 tags:
   - event-driven

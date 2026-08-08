@@ -1,7 +1,7 @@
 ---
 title: "Event-Driven Architecture, Part 0: Foundations — The Minimum Vocabulary"
 description: "Before the failure modes: why event-driven architecture trades a synchronous call for a broker in the middle, the vocabulary you need (producer, consumer, topic, partition, offset, ack), and the causal map linking all 10 problems ahead — via a running order system called MuaLẹ."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T06:00:00Z
 lang: en
 tags:
   - event-driven

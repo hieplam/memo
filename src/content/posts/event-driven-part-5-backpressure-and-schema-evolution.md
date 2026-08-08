@@ -1,7 +1,7 @@
 ---
 title: "Part 5: Backpressure and Schema Evolution — Overload and the Data Contract"
 description: "The producer pushes 50,000 events a minute, the consumer can only digest 10,000 — lag creeps up in one direction until an OTP email arrives 4 hours late. And when one team renames a field in an event, they've just broken a public contract they didn't know anyone was relying on."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T01:00:00Z
 lang: en
 tags:
   - event-driven
