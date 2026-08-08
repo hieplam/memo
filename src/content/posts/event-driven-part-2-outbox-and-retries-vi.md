@@ -35,7 +35,7 @@ sequenceDiagram
   participant D as Database (của Order)
   participant B as Broker
   participant R as Các service khác
-  O->>D: BEGIN; INSERT order #4711; COMMIT
+  O->>D: BEGIN → INSERT order 4711 → COMMIT ✓
   Note over O: crash ngay tại đây (deploy, OOM, rút điện...)
   O-xB: publish OrderCreated #4711 (không bao giờ chạy tới)
   Note over B,R: không có gì để giao, cả hệ vĩnh viễn không biết đơn #4711

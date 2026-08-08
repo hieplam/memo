@@ -34,7 +34,7 @@ sequenceDiagram
   participant D as Database (Order's own)
   participant B as Broker
   participant R as Other services
-  O->>D: BEGIN; INSERT order #4711; COMMIT
+  O->>D: BEGIN → INSERT order 4711 → COMMIT ✓
   Note over O: crashes right here (deploy, OOM, power loss...)
   O-xB: publish OrderCreated #4711 (never runs)
   Note over B,R: nothing to deliver - the rest of the system never learns about order #4711
