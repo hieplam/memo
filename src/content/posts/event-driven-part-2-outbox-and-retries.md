@@ -1,7 +1,7 @@
 ---
 title: "Part 2: Dual-Write and Retries — the Transactional Outbox, Backoff, Circuit Breakers"
 description: "The database write succeeds but the event publish fails — dual-write has no atomicity across two systems. Then, on retry, a client without backoff+jitter can trigger a retry storm that takes down the very downstream it's waiting to recover."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T04:00:00Z
 lang: en
 tags:
   - event-driven

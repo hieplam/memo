@@ -1,7 +1,7 @@
 ---
 title: "Phần 5: Backpressure Và Schema Evolution — Quá Tải Và Hợp Đồng Dữ Liệu"
 description: "Producer bơm 50.000 event/phút, consumer chỉ tiêu hoá nổi 10.000 — lag bò đều một chiều cho tới khi OTP chậm 4 tiếng. Và khi một team đổi tên field trong event, họ vừa phá vỡ một hợp đồng công khai mà họ không biết ai đang dựa vào."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T01:00:00Z
 lang: vi
 tags:
   - event-driven

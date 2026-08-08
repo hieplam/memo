@@ -23,28 +23,38 @@ export async function getStaticPaths() {
   const posts = await getCollection("posts");
   const sortedPosts = getSortedPosts(posts);
 
-  return sortedPosts.map((post, index) => ({
-    params: { slug: getPostSlug(post.id, post.filePath) },
-    props: {
-      post,
-      prevPost:
-        index > 0
-          ? {
-              id: sortedPosts[index - 1].id,
-              title: sortedPosts[index - 1].data.title,
-              filePath: sortedPosts[index - 1].filePath,
-            }
-          : null,
-      nextPost:
-        index < sortedPosts.length - 1
-          ? {
-              id: sortedPosts[index + 1].id,
-              title: sortedPosts[index + 1].data.title,
-              filePath: sortedPosts[index + 1].filePath,
-            }
-          : null,
-    },
-  }));
+  return sortedPosts.map(post => {
+    // Prev/next must stay within the post's own language — otherwise the
+    // reading flow jumps between a post and unrelated siblings of the other
+    // language whenever timestamps interleave.
+    const sameLangPosts = sortedPosts.filter(
+      p => p.data.lang === post.data.lang
+    );
+    const index = sameLangPosts.findIndex(p => p.id === post.id);
+
+    return {
+      params: { slug: getPostSlug(post.id, post.filePath) },
+      props: {
+        post,
+        prevPost:
+          index > 0
+            ? {
+                id: sameLangPosts[index - 1].id,
+                title: sameLangPosts[index - 1].data.title,
+                filePath: sameLangPosts[index - 1].filePath,
+              }
+            : null,
+        nextPost:
+          index < sameLangPosts.length - 1
+            ? {
+                id: sameLangPosts[index + 1].id,
+                title: sameLangPosts[index + 1].data.title,
+                filePath: sameLangPosts[index + 1].filePath,
+              }
+            : null,
+      },
+    };
+  });
 }
 
 type AdjacentPost = {

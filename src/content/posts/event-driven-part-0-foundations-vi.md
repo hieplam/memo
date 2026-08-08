@@ -1,7 +1,7 @@
 ---
 title: "Event-Driven: 10 Bài Toán Kinh Điển — Phần 0: Nền Tảng, Bộ Từ Vựng Tối Thiểu"
 description: "Trước khi vào 10 bài toán: vì sao event-driven (kiến trúc hướng sự kiện) đánh đổi việc gọi trực tiếp lấy một broker (trung gian) ở giữa, bộ từ vựng tối thiểu (producer, consumer, topic, partition, offset, ack), và bản đồ nhân quả nối cả loạt bài — qua hệ đặt hàng giả định MuaLẹ."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T06:00:00Z
 lang: vi
 tags:
   - event-driven

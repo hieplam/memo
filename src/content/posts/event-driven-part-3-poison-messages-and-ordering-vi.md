@@ -1,7 +1,7 @@
 ---
 title: "Phần 3: Poison Message Và Sai Thứ Tự — Dead Letter Queue, Partition Key, Version Number"
 description: "Một message hỏng, retry vô hạn, chặn nghẽn cả partition — số phận của nó là Dead Letter Queue. Và khi hai event có quan hệ nhân quả đi hai làn song song khác tốc độ, thứ tự có thể đảo ngược mà không ai throw exception nào."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T03:00:00Z
 lang: vi
 tags:
   - event-driven

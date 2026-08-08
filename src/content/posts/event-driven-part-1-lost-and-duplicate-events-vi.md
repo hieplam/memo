@@ -1,7 +1,7 @@
 ---
 title: "Phần 1: Event Bị Mất Và Bị Trùng — Vì Sao Idempotency Là Trọng Tâm"
 description: "Event phát đi mà không ai xử lý là lỗi im lặng; chống mất bằng ack + gửi lại thì sinh trùng lặp. Định nghĩa delivery guarantee, durability, ack, và idempotency (tính luỹ đẳng) — tính chất trung tâm của cả kiến trúc event-driven."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T05:00:00Z
 lang: vi
 tags:
   - event-driven

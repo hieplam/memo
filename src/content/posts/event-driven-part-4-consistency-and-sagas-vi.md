@@ -1,7 +1,7 @@
 ---
 title: "Phần 4: Eventual Consistency Và Saga — Khi Không Còn ROLLBACK Xuyên Service"
 description: "Chị Tí lưu địa chỉ mới, thấy 'Thành công', refresh lại vẫn thấy địa chỉ cũ — khe hở nhất quán là tính chất được chọn, không phải bug. Và khi một giao dịch trải ba service mà bước giữa hỏng, saga thay ROLLBACK bằng chuỗi giao dịch bù."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T02:00:00Z
 lang: vi
 tags:
   - event-driven

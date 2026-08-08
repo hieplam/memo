@@ -1,7 +1,7 @@
 ---
 title: "Part 3: Poison Messages and Out-of-Order Events — Dead Letter Queues, Partition Keys, Version Numbers"
 description: "A broken message retried forever jams an entire partition — its fate is the Dead Letter Queue. And when two causally related events travel down two parallel lanes at different speeds, their order can flip with no exception ever thrown."
-pubDatetime: 2026-08-08T00:00:00Z
+pubDatetime: 2026-08-08T03:00:00Z
 lang: en
 tags:
   - event-driven
