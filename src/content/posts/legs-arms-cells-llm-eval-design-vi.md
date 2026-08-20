@@ -1,7 +1,7 @@
 ---
 title: "Legs, Arms, Cells — cách thiết kế eval cho LLM agent để kết quả là một con số, không phải văn xuôi"
 description: "Phân tích thiết kế một eval phát hiện quy ước thật cho LLM coding agent: arm (kiểm soát thiên lệch bộ nhớ), leg (đường đo lường độc lập theo detector), và cell (leg × arm, lặp lại để hấp thụ tính không xác định), kết thúc bằng hợp đồng đạt/rớt 5 gate bằng số."
-pubDatetime: 2026-08-20T09:00:00Z
+pubDatetime: 2026-08-20T02:00:00Z
 lang: vi
 tags:
   - eval-design

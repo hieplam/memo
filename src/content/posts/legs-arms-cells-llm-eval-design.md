@@ -1,7 +1,7 @@
 ---
 title: "Legs, Arms, and Cells — how to structure an LLM-agent eval so the verdict is a number, not prose"
 description: "A design breakdown of a real detection eval for LLM coding agents: arm (memory bias control), leg (independent detector path), and cell (leg × arm, repeated for nondeterminism), ending in a five-gate numeric pass contract."
-pubDatetime: 2026-08-20T09:00:00Z
+pubDatetime: 2026-08-20T02:00:00Z
 lang: en
 tags:
   - eval-design
