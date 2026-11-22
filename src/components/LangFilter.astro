@@ -1,6 +1,7 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
 import config from "@/config";
+import { DEFAULT_POST_LANG } from "@/utils/getPostLanguages";
 
 type PostLanguage = {
   lang: "vi" | "en";
@@ -23,21 +24,13 @@ const LANG_FLAG: Record<string, string> = {
 ---
 
 <nav aria-label="Filter posts by language" class="mb-6 flex flex-wrap gap-2">
-  <a
-    href={getRelativeLocaleUrl(locale, "posts")}
-    class:list={[
-      "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
-      !active || active === "all"
-        ? "border-accent bg-accent text-accent-foreground"
-        : "border-border text-foreground hover:border-accent hover:text-accent",
-    ]}
-  >
-    All
-  </a>
   {
     languages.map(({ lang, label }) => (
       <a
-        href={getRelativeLocaleUrl(locale, `posts/lang/${lang}`)}
+        href={getRelativeLocaleUrl(
+          locale,
+          lang === DEFAULT_POST_LANG ? "posts" : `posts/lang/${lang}`
+        )}
         class:list={[
           "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
           active === lang
@@ -49,4 +42,15 @@ const LANG_FLAG: Record<string, string> = {
       </a>
     ))
   }
+  <a
+    href={getRelativeLocaleUrl(locale, "posts/all")}
+    class:list={[
+      "rounded-full border px-3 py-1 text-sm font-medium transition-colors",
+      active === "all"
+        ? "border-accent bg-accent text-accent-foreground"
+        : "border-border text-foreground hover:border-accent hover:text-accent",
+    ]}
+  >
+    All
+  </a>
 </nav>

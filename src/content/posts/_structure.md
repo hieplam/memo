@@ -15,7 +15,7 @@ Keep this in sync with `src/content.config.ts`. If the schema drifts, update thi
 | `pubDatetime`  | date             | yes      | —                    | ISO with timezone, e.g. `2026-06-14T00:00:00Z`.                                                                  |
 | `tags`         | string[]         | no       | `["others"]`         | Topical kebab-case tags. Vietnamese posts include a `vietnamese` tag.                                            |
 | `author`       | string           | no       | `config.site.author` | Omit unless overriding.                                                                                          |
-| `lang`         | `"vi"` \| `"en"` | no       | `"vi"`               | Set explicitly for clarity.                                                                                      |
+| `lang`         | `"vi"` \| `"en"` | no       | `"en"`               | Set explicitly for clarity.                                                                                      |
 | `modDatetime`  | date \| null     | no       | —                    | Only when updating an existing post.                                                                             |
 | `featured`     | boolean          | no       | —                    | Pin to featured section.                                                                                         |
 | `draft`        | boolean          | no       | —                    | Hide from build when true.                                                                                       |

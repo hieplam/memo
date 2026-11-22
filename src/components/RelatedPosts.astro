@@ -40,7 +40,7 @@ const LANG_BADGE: Record<string, { flag: string; label: string }> = {
 
       <ul class="mt-5 grid gap-x-6 gap-y-5 sm:grid-cols-2">
         {related.map(rp => {
-          const badge = LANG_BADGE[rp.data.lang ?? "vi"] ?? LANG_BADGE.vi;
+          const badge = LANG_BADGE[rp.data.lang ?? "en"] ?? LANG_BADGE.en;
           return (
             <li class="related-item">
               <a

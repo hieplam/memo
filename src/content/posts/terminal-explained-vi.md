@@ -1,5 +1,6 @@
 ---
 title: 'Terminal là gì? (và "hardware terminal", emulator, PTY)'
+lang: vi
 description: "Bài giải thích bằng ngôn ngữ đời thường, đi từ thiết bị vật lý đến ý niệm trừu tượng, trả lời câu hỏi bàn phím và màn hình của bạn ngày nay có phải là terminal không."
 pubDatetime: 2026-05-30T00:00:00Z
 tags:
