@@ -1,5 +1,6 @@
 ---
 title: "Pseudo-terminals (PTYs): a deep dive"
+lang: en
 description: "A deep dive into pseudo-terminals (PTYs): the software-faked terminal devices that let shells like bash believe they are talking to real hardware while a third program sits in the middle."
 pubDatetime: 2026-05-30T00:00:00Z
 tags:

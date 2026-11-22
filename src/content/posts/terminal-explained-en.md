@@ -1,5 +1,6 @@
 ---
 title: 'What is a Terminal? (and "hardware terminal", emulators, and PTYs)'
+lang: en
 description: "A plain-language explainer building up from the physical terminal device to the abstract idea, answering whether your keyboard and monitor are a terminal today."
 pubDatetime: 2026-05-30T00:00:00Z
 tags:

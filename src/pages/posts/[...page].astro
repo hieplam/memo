@@ -10,12 +10,17 @@ import Footer from "@/components/Footer.astro";
 import Pagination from "@/components/Pagination.astro";
 import LangFilter from "@/components/LangFilter.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
-import { getPostLanguages } from "@/utils/getPostLanguages";
+import { getPostLanguages, DEFAULT_POST_LANG } from "@/utils/getPostLanguages";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
 
 export const getStaticPaths = (async ({ paginate }) => {
-  const posts = await getCollection("posts", ({ data }) => !data.draft);
+  // English is the default language: /posts lists English posts only.
+  // Other languages live under /posts/lang/<lang>, and /posts/all shows every post.
+  const posts = await getCollection(
+    "posts",
+    ({ data }) => !data.draft && data.lang === DEFAULT_POST_LANG
+  );
   return paginate(getSortedPosts(posts), { pageSize: config.posts.perPage });
 }) satisfies GetStaticPaths;
 
@@ -34,7 +39,7 @@ const languages = getPostLanguages(allPosts);
   <Breadcrumb />
 
   <Main pageTitle={t.pages.postsTitle} pageDesc={t.pages.postsDesc}>
-    <LangFilter {languages} active="all" />
+    <LangFilter {languages} active={DEFAULT_POST_LANG} />
     <ul class="post-stream">
       {page.data.map(data => <Card {...data} />)}
     </ul>

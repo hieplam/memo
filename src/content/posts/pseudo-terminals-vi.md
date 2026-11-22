@@ -1,5 +1,6 @@
 ---
 title: "Terminal ảo (PTYs): Tìm hiểu sâu"
+lang: vi
 description: "Tìm hiểu sâu về pseudo-terminal (terminal ảo): cặp thiết bị ảo cho phép một chương trình giả lập làm terminal bàn phím-màn hình cho một chương trình khác."
 pubDatetime: 2026-05-30T00:00:00Z
 tags:

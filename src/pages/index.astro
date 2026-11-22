@@ -12,6 +12,7 @@ import LinkButton from "@/components/LinkButton.astro";
 import { getSortedPosts } from "@/utils/getSortedPosts";
 import { useTranslations } from "@/i18n";
 import config from "@/config";
+import { DEFAULT_POST_LANG } from "@/utils/getPostLanguages";
 
 const { socials, posts: postsConfig } = config;
 
@@ -19,7 +20,11 @@ const locale = Astro.currentLocale ?? config.site.lang;
 const t = useTranslations(locale);
 
 const posts = await getCollection("posts");
-const sortedPosts = getSortedPosts(posts);
+// English is the default language on the home page; other languages are
+// reachable from the language filter on /posts.
+const sortedPosts = getSortedPosts(
+  posts.filter(({ data }) => data.lang === DEFAULT_POST_LANG)
+);
 const featuredPosts = sortedPosts.filter(({ data }) => data.featured);
 const recentPosts = sortedPosts.filter(({ data }) => !data.featured);
 const homePath = getRelativeLocaleUrl(locale, "");
@@ -35,7 +40,7 @@ const homePath = getRelativeLocaleUrl(locale, "");
   >
     <section id="hero" class="border-border border-b pt-8 pb-6">
       <h1 class="my-4 inline-block text-4xl font-bold sm:my-8 sm:text-5xl">
-        Xin chào 👋
+        Hello 👋
       </h1>
       <a
         target="_blank"
@@ -56,7 +61,8 @@ const homePath = getRelativeLocaleUrl(locale, "");
         Welcome to <strong>memo</strong> — my personal blog and notebook, where I
         write long-form deep dives and explainers on software architecture, terminals
         and low-level systems, and whatever else I'm currently researching. Posts
-        are often available in both English and Vietnamese.
+        are in English by default, and many also have a Vietnamese version — use the
+        language filter on the posts page to switch.
       </p>
       <p class="mt-2">
         Read the blog posts or check the

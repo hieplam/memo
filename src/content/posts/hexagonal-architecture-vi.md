@@ -1,5 +1,6 @@
 ---
 title: "Hexagonal Architecture (Ports & Adapters): Tài liệu tham khảo toàn diện"
+lang: vi
 description: "Tài liệu tham khảo toàn diện về Hexagonal Architecture (Kiến trúc lục giác / Ports & Adapters): nguồn gốc, khái niệm cốt lõi về chiều phụ thuộc, và công thức thực tiễn cho backend TypeScript hiện đại."
 pubDatetime: 2026-05-31T00:00:00Z
 tags:

@@ -16,7 +16,7 @@ const LANG_BADGE: Record<string, { flag: string; label: string }> = {
   vi: { flag: "🇻🇳", label: "VI" },
   en: { flag: "🇺🇸", label: "EN" },
 };
-const langBadge = LANG_BADGE[data.lang ?? "vi"] ?? LANG_BADGE["vi"];
+const langBadge = LANG_BADGE[data.lang ?? "en"] ?? LANG_BADGE["en"];
 ---
 
 <li class="my-6">
