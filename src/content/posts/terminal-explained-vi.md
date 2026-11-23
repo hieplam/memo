@@ -19,7 +19,7 @@ tags:
 
 ## 1. Terminal là "điểm cuối" nơi con người gặp máy tính
 
-Từ này bắt nguồn từ **"terminal point"** — nghĩa đen là điểm cuối của sợi dây. Nó
+Từ này bắt nguồn từ **"terminal point"** - nghĩa đen là điểm cuối của sợi dây. Nó
 là thiết bị mà một người dùng để _gửi dữ liệu vào_ và _nhận kết quả ra_ từ máy
 tính. Gõ phím vào, chữ hiện ra. Chỉ vậy thôi.
 
@@ -38,7 +38,7 @@ riêng biệt, đặt trên bàn của bạn, nối với cái máy tính ở xa
   ngu, rẻ tiền                       thông minh, đắt tiền
 ```
 
-Bản thân terminal thì "ngu" (dumb) — gần như không có bộ não. Việc duy nhất của
+Bản thân terminal thì "ngu" (dumb) - gần như không có bộ não. Việc duy nhất của
 nó là: biến phím bạn gõ thành ký tự rồi gửi xuống dây, và nhận ký tự đi ngược lên
 dây để in/hiển thị ra.
 
@@ -46,18 +46,18 @@ dây để in/hiển thị ra.
 
 ## 2. "Hardware terminal" là cái hộp vật lý làm việc đó
 
-**Hardware terminal** (terminal phần cứng) là một thiết bị vật lý thật sự — một
+**Hardware terminal** (terminal phần cứng) là một thiết bị vật lý thật sự - một
 món thiết bị thật mà bạn có thể đặt lên bàn. Có hai thế hệ:
 
-**Teletype (TTY), khoảng 1900s–1960s** — một máy đánh chữ cơ điện. Bạn gõ, nó gửi
+**Teletype (TTY), khoảng 1900s–1960s** - một máy đánh chữ cơ điện. Bạn gõ, nó gửi
 ký tự qua dây và _in vật lý_ câu trả lời của máy tính lên một cuộn giấy. Đây chính
-là nguồn gốc của chữ viết tắt **TTY** (teletypewriter — máy đánh chữ từ xa). Không
-có màn hình — "lịch sử cuộn lên xuống" của bạn chính là tờ giấy chui ra từ máy.
+là nguồn gốc của chữ viết tắt **TTY** (teletypewriter - máy đánh chữ từ xa). Không
+có màn hình - "lịch sử cuộn lên xuống" của bạn chính là tờ giấy chui ra từ máy.
 
-**Video terminal / "glass TTY", từ 1970s trở đi** — ví dụ nổi tiếng là
+**Video terminal / "glass TTY", từ 1970s trở đi** - ví dụ nổi tiếng là
 **DEC VT100** (1978). Cùng ý tưởng, nhưng dùng màn hình CRT thay vì giấy. Một bàn
 phím và màn hình chữ xanh trên nền đen gộp thành một khối, nối với máy tính bằng
-**cáp serial** (RS-232). Vẫn không có sức mạnh tính toán riêng — chỉ "gửi phím,
+**cáp serial** (RS-232). Vẫn không có sức mạnh tính toán riêng - chỉ "gửi phím,
 hiện chữ".
 
 Vậy "hardware terminal" = **cái thiết bị bàn phím-và-màn hình vật lý thật sự**,
@@ -69,7 +69,7 @@ khác với một _chương trình_ giả vờ làm terminal.
 
 Hệ điều hành được xây dựng dựa trên giả định rằng các chương trình nói chuyện với
 một trong những cái hộp vật lý này qua đường truyền serial. Trình điều khiển
-terminal của nhân (cái "line discipline") tồn tại để quản lý cuộc hội thoại đó —
+terminal của nhân (cái "line discipline") tồn tại để quản lý cuộc hội thoại đó -
 hiển thị lại phím gõ, xử lý phím backspace, biến `Ctrl-C` thành tín hiệu (signal).
 
 Rồi hardware terminal **biến mất**. Ngày nay không ai có một cái VT100 trên bàn
@@ -85,7 +85,7 @@ cả. Thay vào đó bạn có:
 ```
 
 Một **terminal emulator** (iTerm, GNOME Terminal, terminal trong VS Code) là một
-phần mềm _bắt chước_ chiếc VT100 trong một cửa sổ — nó thậm chí vẫn nói "ngôn ngữ"
+phần mềm _bắt chước_ chiếc VT100 trong một cửa sổ - nó thậm chí vẫn nói "ngôn ngữ"
 mã điều khiển của VT100 để hiển thị màu sắc và di chuyển con trỏ.
 
 Nhưng hệ điều hành và shell của bạn vẫn mong đợi có một thiết bị terminal thật để
@@ -98,8 +98,8 @@ Ba ý nghĩa, xếp chồng lên nhau:
 
 | Thuật ngữ                        | Nó là gì                                                                                                                 |
 | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| **Terminal** (ý niệm trừu tượng) | Điểm cuối nơi con người gõ vào và đọc ra — một "hợp đồng": phím vào, chữ ra                                              |
-| **Hardware terminal**            | Thiết bị _vật lý_ từng thực hiện hợp đồng đó — teletype, rồi đến video terminal kiểu VT100                               |
+| **Terminal** (ý niệm trừu tượng) | Điểm cuối nơi con người gõ vào và đọc ra - một "hợp đồng": phím vào, chữ ra                                              |
+| **Hardware terminal**            | Thiết bị _vật lý_ từng thực hiện hợp đồng đó - teletype, rồi đến video terminal kiểu VT100                               |
 | **Terminal emulator**            | Một _chương trình_ bắt chước hardware terminal trong một cửa sổ                                                          |
 | **PTY**                          | Đường ống trong nhân giúp một chương trình (emulator, SSH, tmux) đóng thế vai trò của hardware terminal nay đã không còn |
 
@@ -117,7 +117,7 @@ ngày nay đã bị tách ra và phân mảnh trong các hệ thống hiện đ�
 ### Cái bẫy: bàn phím + màn hình vật lý ≠ terminal
 
 Trên chiếc VT100 ngày xưa, bàn phím và màn hình là **một khối duy nhất, tự nó là
-terminal** — nó tự biến phím gõ thành ký tự gửi đi, tự nhận ký tự về và hiển thị.
+terminal** - nó tự biến phím gõ thành ký tự gửi đi, tự nhận ký tự về và hiển thị.
 Toàn bộ "logic terminal" nằm trong cái hộp đó.
 
 Bàn phím và màn hình trên bàn bạn ngày nay thì **"câm" hơn cả VT100**. Chúng không
@@ -126,7 +126,7 @@ biết gì về ký tự, về terminal cả:
 - **Bàn phím** chỉ gửi đi tín hiệu "phím số 38 vừa được nhấn xuống" qua cổng USB.
   Nó không gửi chữ "k", nó gửi một _mã quét_ (scancode).
 - **Màn hình** chỉ nhận một mảng điểm ảnh (pixel) qua cáp HDMI và sáng đèn lên. Nó
-  không biết "chữ" là gì — nó chỉ vẽ các chấm màu.
+  không biết "chữ" là gì - nó chỉ vẽ các chấm màu.
 
 ```
   BÀN PHÍM ──scancode USB──►  ┌──────────────────────────┐
@@ -143,7 +143,7 @@ I/O)**, không phải terminal. Vai trò terminal đã chạy vào trong phần 
 
 Có hai trường hợp:
 
-**Trường hợp 1 — Bạn mở một cửa sổ terminal trong giao diện đồ họa (thường gặp nhất)**
+**Trường hợp 1 - Bạn mở một cửa sổ terminal trong giao diện đồ họa (thường gặp nhất)**
 
 Khi bạn mở iTerm / GNOME Terminal / terminal trong VS Code, cái đóng vai trò
 terminal là **chương trình terminal emulator đó**, chứ không phải phần cứng. Bàn
@@ -155,14 +155,14 @@ Bàn phím vật lý → HĐH → Cửa sổ emulator (TERMINAL thật sự ở 
 Màn hình vật lý ← HĐH ← Cửa sổ emulator ←──────────────────────── PTY ← shell
 ```
 
-**Trường hợp 2 — Bạn nhấn Ctrl+Alt+F3 trên Linux, vào màn hình chữ đen toàn màn hình (không có giao diện đồ họa)**
+**Trường hợp 2 - Bạn nhấn Ctrl+Alt+F3 trên Linux, vào màn hình chữ đen toàn màn hình (không có giao diện đồ họa)**
 
 Lúc này **không có chương trình emulator nào cả**. Chính **nhân Linux** giả lập
 một terminal bằng phần mềm, gọi là **virtual console** (console ảo, ví dụ
 `/dev/tty1`). Nhân đọc thẳng scancode từ bàn phím và vẽ chữ thẳng lên màn hình.
 
 Trong trường hợp này, có thể nói **toàn bộ tổ hợp "bàn phím + màn hình + đoạn code
-giả lập terminal trong nhân" mới là một terminal** — và nó gần với tinh thần
+giả lập terminal trong nhân" mới là một terminal** - và nó gần với tinh thần
 "terminal vật lý" ngày xưa nhất. Nhưng lưu ý: cái làm cho nó _thành_ terminal vẫn
 là phần mềm trong nhân, không phải bản thân cái bàn phím với màn hình.
 
@@ -181,7 +181,7 @@ Bàn phím và màn hình chỉ "tham gia" vào terminal, chứ không _là_ ter
 
 | Thời                                | "Terminal" thực sự là gì                                          |
 | ----------------------------------- | ----------------------------------------------------------------- |
-| VT100 ngày xưa                      | Cái hộp phần cứng — bàn phím + màn hình + logic, tất cả trong một |
+| VT100 ngày xưa                      | Cái hộp phần cứng - bàn phím + màn hình + logic, tất cả trong một |
 | Ngày nay, trong GUI                 | Chương trình **terminal emulator** (iTerm, v.v.)                  |
 | Ngày nay, console đen toàn màn hình | **Virtual console** do nhân Linux giả lập bằng phần mềm           |
 

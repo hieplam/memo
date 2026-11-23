@@ -12,31 +12,31 @@ tags:
 
 ## Tóm tắt nhanh (TL;DR)
 
-- **Hexagonal Architecture** (Kiến trúc lục giác — còn được gọi là **Ports & Adapters**, tức Cổng và Bộ chuyển đổi) là một architectural pattern (mẫu kiến trúc phần mềm) được phát minh bởi **Alistair Cockburn**. Nó được vẽ lần đầu năm 1994, được đặt tên trên trang WikiWikiWeb của Ward Cunningham vào khoảng năm 2004, và được hình thức hóa (chính thức hóa) trong bài viết kinh điển của ông đề ngày **4 tháng 9 năm 2005**. Mục tiêu được tuyên bố rõ ràng của nó là _"cho phép một application (ứng dụng) có thể được điều khiển ngang nhau bởi người dùng, bởi các chương trình, bởi automated test (kiểm thử tự động) hay batch script (kịch bản chạy theo lô), đồng thời có thể được phát triển và kiểm thử một cách tách biệt khỏi các thiết bị run-time (lúc chạy) và database (cơ sở dữ liệu) cuối cùng của nó."_ Pattern này giải quyết vấn đề business logic (logic nghiệp vụ) bị quấn chặt vào code của UI (giao diện người dùng), database, và framework (khung lập trình) — một vấn đề kinh niên của traditional layered architecture (kiến trúc phân tầng truyền thống).
+- **Hexagonal Architecture** (Kiến trúc lục giác - còn được gọi là **Ports & Adapters**, tức Cổng và Bộ chuyển đổi) là một architectural pattern (mẫu kiến trúc phần mềm) được phát minh bởi **Alistair Cockburn**. Nó được vẽ lần đầu năm 1994, được đặt tên trên trang WikiWikiWeb của Ward Cunningham vào khoảng năm 2004, và được hình thức hóa (chính thức hóa) trong bài viết kinh điển của ông đề ngày **4 tháng 9 năm 2005**. Mục tiêu được tuyên bố rõ ràng của nó là _"cho phép một application (ứng dụng) có thể được điều khiển ngang nhau bởi người dùng, bởi các chương trình, bởi automated test (kiểm thử tự động) hay batch script (kịch bản chạy theo lô), đồng thời có thể được phát triển và kiểm thử một cách tách biệt khỏi các thiết bị run-time (lúc chạy) và database (cơ sở dữ liệu) cuối cùng của nó."_ Pattern này giải quyết vấn đề business logic (logic nghiệp vụ) bị quấn chặt vào code của UI (giao diện người dùng), database, và framework (khung lập trình) - một vấn đề kinh niên của traditional layered architecture (kiến trúc phân tầng truyền thống).
 
-- **Chìa khóa khái niệm duy nhất** mà bạn đang hỏi đến chính là sự phân biệt giữa **direction of source-code dependency** (chiều phụ thuộc của mã nguồn — phải trỏ vào trong, hướng về domain core / lõi nghiệp vụ) và **direction of control flow / runtime call** (chiều của luồng điều khiển / lời gọi lúc chạy — thường lại trỏ ra ngoài, ví dụ từ một use case gọi tới database). Hai chiều này được dung hòa nhờ **Dependency Inversion Principle** (Nguyên lý đảo ngược phụ thuộc): phần core _định nghĩa ra_ một interface (giao diện) — gọi là **port** (cổng) — và một adapter (bộ chuyển đổi) ở vòng ngoài sẽ _triển khai_ (implement) nó. Nhờ vậy mũi tên phụ thuộc lúc biên dịch trỏ vào trong, mặc dù mũi tên lời gọi lúc chạy trỏ ra ngoài. Robert C. Martin (tức "Uncle Bob") diễn đạt chính xác điều này: _"chúng ta tận dụng dynamic polymorphism (đa hình động) để tạo ra các source code dependency (phụ thuộc mã nguồn) đi ngược lại với flow of control (luồng điều khiển)."_
+- **Chìa khóa khái niệm duy nhất** mà bạn đang hỏi đến chính là sự phân biệt giữa **direction of source-code dependency** (chiều phụ thuộc của mã nguồn - phải trỏ vào trong, hướng về domain core / lõi nghiệp vụ) và **direction of control flow / runtime call** (chiều của luồng điều khiển / lời gọi lúc chạy - thường lại trỏ ra ngoài, ví dụ từ một use case gọi tới database). Hai chiều này được dung hòa nhờ **Dependency Inversion Principle** (Nguyên lý đảo ngược phụ thuộc): phần core _định nghĩa ra_ một interface (giao diện) - gọi là **port** (cổng) - và một adapter (bộ chuyển đổi) ở vòng ngoài sẽ _triển khai_ (implement) nó. Nhờ vậy mũi tên phụ thuộc lúc biên dịch trỏ vào trong, mặc dù mũi tên lời gọi lúc chạy trỏ ra ngoài. Robert C. Martin (tức "Uncle Bob") diễn đạt chính xác điều này: _"chúng ta tận dụng dynamic polymorphism (đa hình động) để tạo ra các source code dependency (phụ thuộc mã nguồn) đi ngược lại với flow of control (luồng điều khiển)."_
 
-- Hexagonal (Cockburn, 2005), **Onion Architecture** (Kiến trúc củ hành — Jeffrey Palermo, 2008), và **Clean Architecture** (Kiến trúc sạch — Robert C. Martin, 2012) là ba anh em trong cùng một gia đình. Cả ba đều đẩy domain (miền nghiệp vụ) vào trung tâm, đưa infrastructure (hạ tầng) ra ngoài, và bắt buộc các source dependency phải trỏ vào trong. Chúng chỉ khác nhau chủ yếu ở mức độ chi tiết của các vòng bên trong và ở thuật ngữ. Với hầu hết các backend (hệ thống phía máy chủ) viết bằng TypeScript ngày nay, công thức thực tiễn là: **(1)** một core gồm domain/use-case không phụ thuộc framework, **(2)** các port (định nghĩa bằng `interface` của TypeScript) được định nghĩa _bởi_ chính core, **(3)** các driving adapter (bộ chuyển đổi điều khiển — như HTTP controller, CLI, message consumer) gọi vào các port, và **(4)** các driven adapter (bộ chuyển đổi bị điều khiển — như repository, HTTP client, queue producer) triển khai các port. Tất cả được nối với nhau lúc khởi động chương trình thông qua dependency injection (tiêm phụ thuộc).
+- Hexagonal (Cockburn, 2005), **Onion Architecture** (Kiến trúc củ hành - Jeffrey Palermo, 2008), và **Clean Architecture** (Kiến trúc sạch - Robert C. Martin, 2012) là ba anh em trong cùng một gia đình. Cả ba đều đẩy domain (miền nghiệp vụ) vào trung tâm, đưa infrastructure (hạ tầng) ra ngoài, và bắt buộc các source dependency phải trỏ vào trong. Chúng chỉ khác nhau chủ yếu ở mức độ chi tiết của các vòng bên trong và ở thuật ngữ. Với hầu hết các backend (hệ thống phía máy chủ) viết bằng TypeScript ngày nay, công thức thực tiễn là: **(1)** một core gồm domain/use-case không phụ thuộc framework, **(2)** các port (định nghĩa bằng `interface` của TypeScript) được định nghĩa _bởi_ chính core, **(3)** các driving adapter (bộ chuyển đổi điều khiển - như HTTP controller, CLI, message consumer) gọi vào các port, và **(4)** các driven adapter (bộ chuyển đổi bị điều khiển - như repository, HTTP client, queue producer) triển khai các port. Tất cả được nối với nhau lúc khởi động chương trình thông qua dependency injection (tiêm phụ thuộc).
 
 ---
 
 ## Các phát hiện chính (Key Findings)
 
-1. **Nguồn gốc**: Cockburn đã vẽ sơ đồ lục giác từ sớm nhất là năm **1994** (trong ghi chú khóa học của riêng ông), bàn về nó từ năm 1998, đăng nó lên c2 wiki của Ward Cunningham vào khoảng năm 2004, và xuất bản bài viết kinh điển trên trang của ông vào ngày **4 tháng 9 năm 2005** (HaT Technical Report 2005.02). "Khoảnh khắc lóe sáng" của pattern — nhận ra rằng các mặt (facet) của hình lục giác chính là _port_, còn các đối tượng làm cầu nối chính là _adapter_ — đến với ông vào **tháng 6 năm 2005**. Sau đó ông đề xuất tên gọi thay thế là **"Ports and Adapters"** (mà hiện nay ông coi là chính xác hơn so với "Hexagonal").
+1. **Nguồn gốc**: Cockburn đã vẽ sơ đồ lục giác từ sớm nhất là năm **1994** (trong ghi chú khóa học của riêng ông), bàn về nó từ năm 1998, đăng nó lên c2 wiki của Ward Cunningham vào khoảng năm 2004, và xuất bản bài viết kinh điển trên trang của ông vào ngày **4 tháng 9 năm 2005** (HaT Technical Report 2005.02). "Khoảnh khắc lóe sáng" của pattern - nhận ra rằng các mặt (facet) của hình lục giác chính là _port_, còn các đối tượng làm cầu nối chính là _adapter_ - đến với ông vào **tháng 6 năm 2005**. Sau đó ông đề xuất tên gọi thay thế là **"Ports and Adapters"** (mà hiện nay ông coi là chính xác hơn so với "Hexagonal").
 
 2. **Tại sao lại là hình lục giác?** Cockburn nói rõ: _"Hình lục giác không phải là lục giác vì con số sáu quan trọng, mà là để cho những người vẽ sơ đồ có chỗ trống để chèn các port và adapter khi họ cần, không bị bó buộc bởi một bản vẽ phân tầng một chiều."_ Con số 6 là tùy ý; điều quan trọng là hình dạng đó không phải hình chữ nhật và có tính đối xứng.
 
 3. **Hiểu biết cốt lõi** nằm ở _sự bất đối xứng giữa trong và ngoài_ (inside-outside asymmetry), chứ không phải _trái-phải_ (UI đối lại DB). Cockburn nói: _"Sự bất đối xứng cần khai thác không phải là giữa phía bên trái và phía bên phải của application, mà là giữa bên trong và bên ngoài của application. Quy tắc phải tuân theo là: code thuộc về phần bên trong không được rò rỉ ra phần bên ngoài."_
 
-4. **Primary (driving) đối lại secondary (driven)** — tức phía chủ động điều khiển đối lại phía bị điều khiển — là một sự tinh chỉnh _thứ cấp_ mà Cockburn bổ sung về sau trong cùng bài viết đó. Một **primary actor** (tác nhân chủ động) sẽ _điều khiển_ application (như REST controller, CLI, test fixture); một **secondary actor** (tác nhân thụ động) thì _bị application điều khiển_ (như database, message bus, dịch vụ gửi email). Phía driving gọi _vào trong_ hình lục giác; phía driven thì _bị_ hình lục giác gọi ra.
+4. **Primary (driving) đối lại secondary (driven)** - tức phía chủ động điều khiển đối lại phía bị điều khiển - là một sự tinh chỉnh _thứ cấp_ mà Cockburn bổ sung về sau trong cùng bài viết đó. Một **primary actor** (tác nhân chủ động) sẽ _điều khiển_ application (như REST controller, CLI, test fixture); một **secondary actor** (tác nhân thụ động) thì _bị application điều khiển_ (như database, message bus, dịch vụ gửi email). Phía driving gọi _vào trong_ hình lục giác; phía driven thì _bị_ hình lục giác gọi ra.
 
-5. **The Dependency Rule** (Quy tắc phụ thuộc) — trung tâm của Clean Architecture và hiện diện một cách ngầm định trong Hexagonal/Onion — phát biểu rằng (Uncle Bob, 2012): _"Source code dependency chỉ có thể trỏ vào trong. Không thứ gì ở vòng trong được biết bất cứ điều gì về thứ gì đó ở vòng ngoài."_
+5. **The Dependency Rule** (Quy tắc phụ thuộc) - trung tâm của Clean Architecture và hiện diện một cách ngầm định trong Hexagonal/Onion - phát biểu rằng (Uncle Bob, 2012): _"Source code dependency chỉ có thể trỏ vào trong. Không thứ gì ở vòng trong được biết bất cứ điều gì về thứ gì đó ở vòng ngoài."_
 
 6. **Chiều phụ thuộc đối lại chiều luồng điều khiển** là hai trục độc lập với nhau. Ở phía _driving_ chúng tình cờ trùng nhau (controller → use case, cả lúc biên dịch lẫn lúc chạy). Ở phía _driven_ chúng **ngược nhau**: lúc chạy, use case _gọi_ repository (luồng điều khiển hướng ra ngoài), nhưng lúc biên dịch, repository lại _phụ thuộc vào_ (triển khai) port được định nghĩa trong core (phụ thuộc hướng vào trong). Sự đảo ngược này chính là toàn bộ ý nghĩa của Dependency Inversion Principle trong kiến trúc này.
 
-7. **Onion (Palermo, 2008)** và **Clean (Martin, 2012)** là những bước tiến hóa bổ sung thêm các lớp đồng tâm _bên trong_ lòng hình lục giác (như entities, use cases, application services...). Bản thân Hexagonal không nói gì về cách tổ chức bên trong — điều đó được để dành cho lập trình viên tự quyết (và thường được lấp đầy bằng các building block của DDD).
+7. **Onion (Palermo, 2008)** và **Clean (Martin, 2012)** là những bước tiến hóa bổ sung thêm các lớp đồng tâm _bên trong_ lòng hình lục giác (như entities, use cases, application services...). Bản thân Hexagonal không nói gì về cách tổ chức bên trong - điều đó được để dành cho lập trình viên tự quyết (và thường được lấp đầy bằng các building block của DDD).
 
-8. **Kiểm chứng thực tế**: Đội Studio Workflow của Netflix — trong một bài viết của Damir Svrtan và Sergii Makagon có tiêu đề _"Ready for Changes with Hexagonal Architecture"_ (Sẵn sàng cho thay đổi với Kiến trúc lục giác), đăng ngày **10 tháng 3 năm 2020** trên Netflix TechBlog — cho biết pattern này đã cho phép họ di chuyển một read path (đường đọc dữ liệu) từ một API monolith dạng JSON sang một microservice GraphQL chỉ trong **khoảng 2 tiếng đồng hồ**, với một thay đổi vỏn vẹn một dòng. Họ viết: _"Lý do chính giúp chúng tôi làm được nhanh đến vậy là nhờ Hexagonal architecture … Một thay đổi đơn giản chỉ một dòng là tất cả những gì chúng tôi cần để bắt đầu đọc từ một nguồn dữ liệu khác."_
+8. **Kiểm chứng thực tế**: Đội Studio Workflow của Netflix - trong một bài viết của Damir Svrtan và Sergii Makagon có tiêu đề _"Ready for Changes with Hexagonal Architecture"_ (Sẵn sàng cho thay đổi với Kiến trúc lục giác), đăng ngày **10 tháng 3 năm 2020** trên Netflix TechBlog - cho biết pattern này đã cho phép họ di chuyển một read path (đường đọc dữ liệu) từ một API monolith dạng JSON sang một microservice GraphQL chỉ trong **khoảng 2 tiếng đồng hồ**, với một thay đổi vỏn vẹn một dòng. Họ viết: _"Lý do chính giúp chúng tôi làm được nhanh đến vậy là nhờ Hexagonal architecture … Một thay đổi đơn giản chỉ một dòng là tất cả những gì chúng tôi cần để bắt đầu đọc từ một nguồn dữ liệu khác."_
 
 9. **Lời chỉ trích chính** là việc over-engineering (làm quá phức tạp một cách không cần thiết) đối với những application CRUD đơn giản. Phần thưởng của pattern này chỉ thực sự được hiện thực hóa ở **những application có vòng đời dài, với business logic không tầm thường**, tức những hệ thống sống lâu hơn nhiều thế hệ lựa chọn hạ tầng.
 
@@ -46,13 +46,13 @@ tags:
 
 ### 1. Hexagonal Architecture là gì?
 
-**Hexagonal Architecture (kiến trúc lục giác)** là một structural pattern (mẫu cấu trúc) tổ chức một application xoay quanh một **core không phụ thuộc công nghệ** (gọi là "hexagon" / hình lục giác, "domain" / miền nghiệp vụ, hoặc "application" / ứng dụng). Cái core này giao tiếp với thế giới bên ngoài _chỉ thông qua_ những interface được định nghĩa rõ ràng gọi là **port** (cổng). Các công nghệ cụ thể — HTTP, SQL, Kafka, AWS SDK, React, command-line (dòng lệnh) — đều bị giam giữ bên trong các **adapter** (bộ chuyển đổi) cắm vào những port đó.
+**Hexagonal Architecture (kiến trúc lục giác)** là một structural pattern (mẫu cấu trúc) tổ chức một application xoay quanh một **core không phụ thuộc công nghệ** (gọi là "hexagon" / hình lục giác, "domain" / miền nghiệp vụ, hoặc "application" / ứng dụng). Cái core này giao tiếp với thế giới bên ngoài _chỉ thông qua_ những interface được định nghĩa rõ ràng gọi là **port** (cổng). Các công nghệ cụ thể - HTTP, SQL, Kafka, AWS SDK, React, command-line (dòng lệnh) - đều bị giam giữ bên trong các **adapter** (bộ chuyển đổi) cắm vào những port đó.
 
 Định nghĩa về ý đồ của Cockburn, trích nguyên văn từ bài viết năm 2005:
 
 > _"Cho phép một application có thể được điều khiển ngang nhau bởi người dùng, bởi các chương trình, bởi automated test hay batch script, đồng thời có thể được phát triển và kiểm thử một cách tách biệt khỏi các thiết bị run-time và database cuối cùng của nó."_
 
-**Vấn đề mà nó giải quyết** là cái mà Cockburn gọi là _"một trong những con ngáo ộp lớn của các application phần mềm qua nhiều năm: sự xâm nhập của business logic vào trong code của user interface"_ — cùng với vấn đề đối xứng tương tự ở phía database. Cả hai đều phát sinh từ cùng một nguyên nhân gốc rễ: _"sự quấn chặt giữa business logic và việc tương tác với các thực thể bên ngoài."_ "Giải pháp" trong lịch sử — thêm vào thêm một lớp nữa kèm lời hứa rằng "lần này, thật sự và chắc chắn, sẽ không có business logic nào bị đặt vào lớp mới này" — liên tục thất bại, bởi vì không có cơ chế _mang tính cấu trúc_ nào ép buộc lời hứa đó. Hexagonal Architecture cung cấp đúng cái cơ chế cấu trúc đó thông qua ranh giới ports-and-adapters.
+**Vấn đề mà nó giải quyết** là cái mà Cockburn gọi là _"một trong những con ngáo ộp lớn của các application phần mềm qua nhiều năm: sự xâm nhập của business logic vào trong code của user interface"_ - cùng với vấn đề đối xứng tương tự ở phía database. Cả hai đều phát sinh từ cùng một nguyên nhân gốc rễ: _"sự quấn chặt giữa business logic và việc tương tác với các thực thể bên ngoài."_ "Giải pháp" trong lịch sử - thêm vào thêm một lớp nữa kèm lời hứa rằng "lần này, thật sự và chắc chắn, sẽ không có business logic nào bị đặt vào lớp mới này" - liên tục thất bại, bởi vì không có cơ chế _mang tính cấu trúc_ nào ép buộc lời hứa đó. Hexagonal Architecture cung cấp đúng cái cơ chế cấu trúc đó thông qua ranh giới ports-and-adapters.
 
 ### 2. Lịch sử và Nguồn gốc
 
@@ -64,12 +64,12 @@ Dòng thời gian, được tái dựng từ chính cuộc phỏng vấn của C
 | **1998**               | Cockburn bắt đầu nói về pattern này một cách công khai. Kevin Rutherford sau này viết: _"Kể từ khi nghe về nó (khoảng năm 1998 hay tầm đó) tôi vẫn luôn cố thuyết phục mọi người tư duy theo mô hình hexagonal architecture của Alistair Cockburn."_                                                                                                                                                                                                                                       |
 | **~2004**              | Cockburn đăng nó lên WikiWikiWeb của Ward Cunningham (c2.com) dưới trang _HexagonalArchitecture_.                                                                                                                                                                                                                                                                                                                                                                                          |
 | **Tháng 6 năm 2005**   | _"Khoảnh khắc lóe sáng"_: Cockburn nhận ra các mặt của hình lục giác chính là **port**, và các đối tượng nằm giữa hai hình lục giác chính là **adapter**. Ông đề xuất tên gọi thay thế _Ports and Adapters Architecture_.                                                                                                                                                                                                                                                                  |
-| **4 tháng 9 năm 2005** | Xuất bản bài viết kinh điển _"Hexagonal (Ports & Adapters) Architecture — HaT Technical Report 2005.02"_ trên alistair.cockburn.us, kèm theo code Java mẫu hoạt động được và các ví dụ FIT.                                                                                                                                                                                                                                                                                                |
+| **4 tháng 9 năm 2005** | Xuất bản bài viết kinh điển _"Hexagonal (Ports & Adapters) Architecture - HaT Technical Report 2005.02"_ trên alistair.cockburn.us, kèm theo code Java mẫu hoạt động được và các ví dụ FIT.                                                                                                                                                                                                                                                                                                |
 | **2009**               | Steve Freeman và Nat Pryce xuất bản _Growing Object-Oriented Software, Guided by Tests_ (Pearson/Addison-Wesley, 2009), mang lại cho pattern sự ủng hộ ở quy mô một cuốn sách nổi bật đầu tiên trong cộng đồng OO/TDD rộng lớn hơn.                                                                                                                                                                                                                                                        |
 | **~2010–2012**         | Cộng đồng Domain-Driven Design (Thiết kế hướng miền nghiệp vụ) tiếp nhận pattern này _"để dựng một bức tường quanh domain model và đẩy công nghệ ra khỏi đường đi của họ"_ (theo cách diễn giải của Cockburn).                                                                                                                                                                                                                                                                             |
 | **2015**               | Cockburn hình thức hóa thuật ngữ driving / driven và quy ước đặt tên interface theo kiểu `for_doing_something` (cho việc làm-gì-đó).                                                                                                                                                                                                                                                                                                                                                       |
 | **2020**               | Netflix Tech Blog xuất bản case study (nghiên cứu tình huống) ủng hộ pattern.                                                                                                                                                                                                                                                                                                                                                                                                              |
-| **Tháng 4 năm 2024**   | Cockburn và Juan Manuel Garrido de Paz xuất bản _Hexagonal Architecture Explained_ — cuốn sách ở quy mô đầy đủ đầu tiên do chính tác giả của pattern viết.                                                                                                                                                                                                                                                                                                                                 |
+| **Tháng 4 năm 2024**   | Cockburn và Juan Manuel Garrido de Paz xuất bản _Hexagonal Architecture Explained_ - cuốn sách ở quy mô đầy đủ đầu tiên do chính tác giả của pattern viết.                                                                                                                                                                                                                                                                                                                                 |
 
 **Động cơ** (Cockburn, bài viết gốc): vấn đề phía người dùng (business logic rò rỉ vào UI; không thể được điều khiển theo lô; không thể kiểm thử mà không có GUI) và vấn đề phía database (lập trình viên bị chặn đứng khi DB không sẵn sàng; không thể tráo SQL bằng mock/in-memory) thực ra là _cùng một vấn đề khi nhìn theo cách đối xứng_. Việc nhận ra sự đối xứng này chính là trái tim của pattern.
 
@@ -79,7 +79,7 @@ Dòng thời gian, được tái dựng từ chính cuộc phỏng vấn của C
 
 Bản thân Cockburn ưa thích tên **"Ports and Adapters"** hơn, bởi vì nó gọi tên các _bộ phận_ của cấu trúc. Trong cuộc phỏng vấn năm 2017 với InfoQ, ông một lần nữa khẳng định điều này. _Hình dạng_ lục giác chỉ đơn thuần là một sự tiện lợi khi vẽ sơ đồ.
 
-#### 3.2 Onion Architecture (Kiến trúc củ hành — Jeffrey Palermo, 2008)
+#### 3.2 Onion Architecture (Kiến trúc củ hành - Jeffrey Palermo, 2008)
 
 Jeffrey Palermo xuất bản một loạt bài blog gồm bốn phần, bắt đầu lúc **8 giờ 8 phút sáng ngày 29 tháng 7 năm 2008** với bài _"The Onion Architecture: part 1"_. Phần 2 nối tiếp lúc **8 giờ 14 phút sáng ngày 30 tháng 7 năm 2008**; **Phần 3 mang dấu thời gian chính xác trên blog là "Jeffrey Palermo 9:34 am ngày 4 tháng 8 năm 2008"**; và **Phần 4 ("Onion Architecture: Part 4 – After Four Years", tức Sau Bốn Năm) mang dấu thời gian "Jeffrey Palermo 8:19 am ngày 19 tháng 8 năm 2013"**.
 
@@ -97,7 +97,7 @@ Các lớp có tên mà Palermo định nghĩa trong Phần 1 là:
 - **Application core** (lõi ứng dụng) là thuật ngữ tập thể chỉ các vòng bên trong
 - **UI, Infrastructure, và Tests** là những mép ngoài cùng
 
-(Các nhãn "Domain Services / Application Services" được lặp lại rộng rãi _không_ nằm trong cách diễn đạt gốc năm 2008 của Palermo — chúng được những người bình luận và những sơ đồ về sau bổ sung vào.)
+(Các nhãn "Domain Services / Application Services" được lặp lại rộng rãi _không_ nằm trong cách diễn đạt gốc năm 2008 của Palermo - chúng được những người bình luận và những sơ đồ về sau bổ sung vào.)
 
 **Điểm khác biệt chính so với N-tier**, trích nguyên văn từ Phần 3: _"Khác biệt lớn nằm ở chỗ bất kỳ lớp bên ngoài nào cũng có thể gọi trực tiếp bất kỳ lớp bên trong nào. Với kiến trúc phân tầng truyền thống, một lớp chỉ có thể gọi lớp nằm ngay bên dưới nó. Đây là một trong những điểm mấu chốt khiến Onion Architecture khác với kiến trúc phân tầng truyền thống."_
 
@@ -105,20 +105,20 @@ Các lớp có tên mà Palermo định nghĩa trong Phần 1 là:
 
 Vậy nên Onion = Hexagonal + một tập hợp các lớp đồng tâm _bên trong_ có quan điểm rõ ràng.
 
-#### 3.3 Clean Architecture (Kiến trúc sạch — Robert C. Martin / "Uncle Bob", 2012)
+#### 3.3 Clean Architecture (Kiến trúc sạch - Robert C. Martin / "Uncle Bob", 2012)
 
 Được xuất bản trên blog của ông vào ngày **13 tháng 8 năm 2012** (bài "The Clean Architecture"), và sau này được mở rộng thành cuốn sách năm 2017 _Clean Architecture: A Craftsman's Guide to Software Structure and Design_. Martin định vị nó một cách rõ ràng như một sự _tích hợp_ các pattern có trước:
 
 > _"Sơ đồ ở đầu bài viết này là một nỗ lực tích hợp tất cả những kiến trúc đó vào một ý tưởng đơn lẻ có thể hành động được."_
-
-— với việc trích dẫn Hexagonal (Cockburn), Onion (Palermo), DCI (Coplien/Reenskaug), BCE (Jacobson), và Screaming Architecture của chính ông như những đầu vào.
+ -
+với việc trích dẫn Hexagonal (Cockburn), Onion (Palermo), DCI (Coplien/Reenskaug), BCE (Jacobson), và Screaming Architecture của chính ông như những đầu vào.
 
 Clean Architecture định nghĩa bốn vòng đồng tâm kinh điển (từ trong ra ngoài):
 
-1. **Entities** (Thực thể) — _"đóng gói các business rule (quy tắc nghiệp vụ) ở quy mô toàn doanh nghiệp"_
-2. **Use Cases** (Ca sử dụng) — _"các business rule đặc thù cho application"_
-3. **Interface Adapters** (Bộ chuyển đổi giao diện) — _"một tập hợp các adapter chuyển đổi dữ liệu từ định dạng thuận tiện nhất cho use case và entity, sang định dạng thuận tiện nhất cho một cơ quan bên ngoài nào đó như Database hay Web"_
-4. **Frameworks and Drivers** (Khung lập trình và Trình điều khiển) — _"Database, Web Framework, v.v. Nói chung bạn không viết nhiều code trong lớp này ngoài glue code (code keo dán) giao tiếp với vòng kế tiếp bên trong."_
+1. **Entities** (Thực thể) - _"đóng gói các business rule (quy tắc nghiệp vụ) ở quy mô toàn doanh nghiệp"_
+2. **Use Cases** (Ca sử dụng) - _"các business rule đặc thù cho application"_
+3. **Interface Adapters** (Bộ chuyển đổi giao diện) - _"một tập hợp các adapter chuyển đổi dữ liệu từ định dạng thuận tiện nhất cho use case và entity, sang định dạng thuận tiện nhất cho một cơ quan bên ngoài nào đó như Database hay Web"_
+4. **Frameworks and Drivers** (Khung lập trình và Trình điều khiển) - _"Database, Web Framework, v.v. Nói chung bạn không viết nhiều code trong lớp này ngoài glue code (code keo dán) giao tiếp với vòng kế tiếp bên trong."_
 
 Quy tắc then chốt, **The Dependency Rule** (Quy tắc phụ thuộc), trích nguyên văn:
 
@@ -138,9 +138,9 @@ Herberto Graça tóm tắt khá hay: Onion _xây dựng dựa trên_ Ports & Ada
 
 #### 3.5 Mối quan hệ với Domain-Driven Design (DDD)
 
-Hexagonal Architecture và DDD **bổ trợ cho nhau nhưng độc lập với nhau**. Chính Cockburn lưu ý rằng cộng đồng DDD đã tiếp nhận pattern của ông vào khoảng 2010–2012 _"để dựng một bức tường quanh domain model và đẩy công nghệ ra khỏi đường đi của họ."_ Pattern này _không quy định_ cách tổ chức code _bên trong_ hình lục giác — khoảng trống đó được lấp đầy một cách tự nhiên bởi các tactical pattern (mẫu chiến thuật) của DDD: **Entities, Value Objects (Đối tượng giá trị), Aggregates (Khối tổng hợp), Domain Services (Dịch vụ miền nghiệp vụ), Application Services (Dịch vụ ứng dụng), Repositories (Kho chứa)**. Cuốn _Growing Object-Oriented Software, Guided by Tests_ (2009) của Freeman và Pryce là một sự ghép đôi có ảnh hưởng từ sớm. Ngày nay, khi lập trình viên nói "DDD + Hexagonal", họ thường ngụ ý: một hình lục giác cho mỗi **Bounded Context** (Ngữ cảnh giới hạn), với các tactical pattern của DDD lấp đầy bên trong.
+Hexagonal Architecture và DDD **bổ trợ cho nhau nhưng độc lập với nhau**. Chính Cockburn lưu ý rằng cộng đồng DDD đã tiếp nhận pattern của ông vào khoảng 2010–2012 _"để dựng một bức tường quanh domain model và đẩy công nghệ ra khỏi đường đi của họ."_ Pattern này _không quy định_ cách tổ chức code _bên trong_ hình lục giác - khoảng trống đó được lấp đầy một cách tự nhiên bởi các tactical pattern (mẫu chiến thuật) của DDD: **Entities, Value Objects (Đối tượng giá trị), Aggregates (Khối tổng hợp), Domain Services (Dịch vụ miền nghiệp vụ), Application Services (Dịch vụ ứng dụng), Repositories (Kho chứa)**. Cuốn _Growing Object-Oriented Software, Guided by Tests_ (2009) của Freeman và Pryce là một sự ghép đôi có ảnh hưởng từ sớm. Ngày nay, khi lập trình viên nói "DDD + Hexagonal", họ thường ngụ ý: một hình lục giác cho mỗi **Bounded Context** (Ngữ cảnh giới hạn), với các tactical pattern của DDD lấp đầy bên trong.
 
-### 4. The Dependency Rule — Chiều phụ thuộc đối lại Chiều luồng điều khiển
+### 4. The Dependency Rule - Chiều phụ thuộc đối lại Chiều luồng điều khiển
 
 Đây là bản lề khái niệm của toàn bộ gia đình pattern này, và là điểm hay bị hiểu sai nhất. Đây cũng chính là điều bạn đã hỏi tới một cách rõ ràng.
 
@@ -148,9 +148,9 @@ Hexagonal Architecture và DDD **bổ trợ cho nhau nhưng độc lập với n
 
 Giữa hai module (mô-đun) phần mềm bất kỳ là `A` và `B`, luôn tồn tại **hai mũi tên**:
 
-1. **Source-code dependency** (phụ thuộc mã nguồn — mũi tên lúc biên dịch, _chiều phụ thuộc_): "module A _import_ (nhập) / _tham chiếu tới tên của_ module B." Đây là một quan hệ _tĩnh, mang tính văn bản_, có thể nhìn thấy bằng lệnh `grep`. Nếu bạn xóa file B đi, file A sẽ không biên dịch được.
+1. **Source-code dependency** (phụ thuộc mã nguồn - mũi tên lúc biên dịch, _chiều phụ thuộc_): "module A _import_ (nhập) / _tham chiếu tới tên của_ module B." Đây là một quan hệ _tĩnh, mang tính văn bản_, có thể nhìn thấy bằng lệnh `grep`. Nếu bạn xóa file B đi, file A sẽ không biên dịch được.
 
-2. **Flow of control / call direction** (luồng điều khiển / chiều lời gọi — mũi tên lúc chạy, _chiều gọi hàm_): "lúc chạy, code trong A _triệu gọi_ code trong B." Đây là quan hệ _động_. Đó là cái mà debugger (trình gỡ lỗi) cho bạn thấy.
+2. **Flow of control / call direction** (luồng điều khiển / chiều lời gọi - mũi tên lúc chạy, _chiều gọi hàm_): "lúc chạy, code trong A _triệu gọi_ code trong B." Đây là quan hệ _động_. Đó là cái mà debugger (trình gỡ lỗi) cho bạn thấy.
 
 Trong code ngây thơ (chưa áp dụng kỹ thuật gì), hai mũi tên này trỏ _cùng một hướng_: nếu `A` gọi `B` lúc chạy, thì file mã nguồn của `A` sẽ `import` class của `B`. **Dependency Inversion** chính là kỹ thuật cho phép bạn làm cho hai mũi tên này trỏ về hai hướng _ngược nhau_.
 
@@ -167,9 +167,9 @@ Người dùng nhấn một nút → framework HTTP triệu gọi `UserControlle
 - **Luồng điều khiển**: Controller → UseCase ✓ (từ ngoài vào trong)
 - **Phụ thuộc mã nguồn**: Controller `import` UseCase (vì nó buộc phải biết tên của UseCase) ✓ (từ ngoài vào trong)
 
-Cả hai mũi tên đều trỏ _vào trong_. Ở đây Dependency Inversion _không bắt buộc về mặt nghiêm ngặt_, mặc dù nhiều codebase (mã nguồn dự án) vẫn đưa vào một inbound port (một interface cho use case) để controller phụ thuộc vào một abstraction (sự trừu tượng) thay vì một service cụ thể — điều này mang lại khả năng mock (giả lập) và một API mang tính hợp đồng cho core. Tom Hombergs, trong cuốn _Get Your Hands Dirty on Clean Architecture_ (Packt Publishing, tháng 9 năm 2019, ISBN 978-1-839211-96-6; ấn bản thứ hai năm 2023), sử dụng quy ước này — ông gọi chúng là **incoming port** / **driving port**, thường được đặt tên theo kiểu `for_doing_something` mà Cockburn khuyến nghị, ví dụ `ForRegisteringUsers`.
+Cả hai mũi tên đều trỏ _vào trong_. Ở đây Dependency Inversion _không bắt buộc về mặt nghiêm ngặt_, mặc dù nhiều codebase (mã nguồn dự án) vẫn đưa vào một inbound port (một interface cho use case) để controller phụ thuộc vào một abstraction (sự trừu tượng) thay vì một service cụ thể - điều này mang lại khả năng mock (giả lập) và một API mang tính hợp đồng cho core. Tom Hombergs, trong cuốn _Get Your Hands Dirty on Clean Architecture_ (Packt Publishing, tháng 9 năm 2019, ISBN 978-1-839211-96-6; ấn bản thứ hai năm 2023), sử dụng quy ước này - ông gọi chúng là **incoming port** / **driving port**, thường được đặt tên theo kiểu `for_doing_something` mà Cockburn khuyến nghị, ví dụ `ForRegisteringUsers`.
 
-#### 4.4 Phía outbound (driven): hai mũi tên ngược nhau — đây mới là chìa khóa
+#### 4.4 Phía outbound (driven): hai mũi tên ngược nhau - đây mới là chìa khóa
 
 Một use case cần lưu một user → lúc chạy luồng điều khiển đi `UseCase → Repository → SQL`.
 
@@ -177,13 +177,13 @@ Nếu ta viết một cách ngây thơ (`UseCase` `import` trực tiếp `Postgr
 
 **Mẹo** (Dependency Inversion):
 
-1. Trong **core**, định nghĩa một interface `UserRepository` (đây là **secondary / driven port** — cổng thụ động).
+1. Trong **core**, định nghĩa một interface `UserRepository` (đây là **secondary / driven port** - cổng thụ động).
 2. **Use case** phụ thuộc vào `UserRepository` (cái interface này nằm _bên trong_ core).
 3. Trong lớp **adapter** (bên ngoài core), class `PostgresUserRepository` _triển khai_ (implement) `UserRepository`.
 
 Bây giờ:
 
-- **Luồng điều khiển**: UseCase → PostgresUserRepository ✓ (từ trong ra ngoài lúc chạy — use case thực sự gọi tới database)
+- **Luồng điều khiển**: UseCase → PostgresUserRepository ✓ (từ trong ra ngoài lúc chạy - use case thực sự gọi tới database)
 - **Phụ thuộc mã nguồn**: PostgresUserRepository `import` và `implement` UserRepository ✓ (từ ngoài vào trong lúc biên dịch)
 
 Hai mũi tên _ngược nhau_. Adapter ở ngoài phụ thuộc vào core (vì nó triển khai interface của core); còn core thì _không_ phụ thuộc vào _bất cứ thứ gì_ bên ngoài nó.
@@ -289,7 +289,7 @@ Sự đảo ngược này mở khóa mọi lợi ích mà pattern được quả
 
 #### 5.1 Port (cổng)
 
-Một **port** là _"một cuộc đối thoại có mục đích"_ (a purposeful conversation) giữa application và thế giới bên ngoài (theo Cockburn). Trong code, nó hầu như luôn là một **interface** (`interface` hoặc abstract class — lớp trừu tượng — của TypeScript) _được định nghĩa bởi và sống bên trong core_. Nó được diễn đạt bằng **từ vựng nghiệp vụ**, chứ không phải bằng thuật ngữ công nghệ — Cockburn khuyến nghị những cái tên như `ForRegisteringUsers` (cho việc đăng ký người dùng), `ForObtainingRates` (cho việc lấy tỷ giá), `ForStoringPermits` (cho việc lưu giấy phép). Port mô tả _cái gì_ mà application cần từ hoặc cung cấp cho bên ngoài, chứ không bao giờ mô tả _bằng cách nào_.
+Một **port** là _"một cuộc đối thoại có mục đích"_ (a purposeful conversation) giữa application và thế giới bên ngoài (theo Cockburn). Trong code, nó hầu như luôn là một **interface** (`interface` hoặc abstract class - lớp trừu tượng - của TypeScript) _được định nghĩa bởi và sống bên trong core_. Nó được diễn đạt bằng **từ vựng nghiệp vụ**, chứ không phải bằng thuật ngữ công nghệ - Cockburn khuyến nghị những cái tên như `ForRegisteringUsers` (cho việc đăng ký người dùng), `ForObtainingRates` (cho việc lấy tỷ giá), `ForStoringPermits` (cho việc lưu giấy phép). Port mô tả _cái gì_ mà application cần từ hoặc cung cấp cho bên ngoài, chứ không bao giờ mô tả _bằng cách nào_.
 
 #### 5.2 Adapter (bộ chuyển đổi)
 
@@ -297,38 +297,38 @@ Một **adapter** là phần triển khai _đặc thù cho công nghệ_, nối 
 
 Bản thân adapter pattern chính là mẫu _Adapter_ của GoF (Gamma và cộng sự, 1995); Cockburn nói rõ Ports & Adapters là _"một cách sử dụng cụ thể của Adapter pattern."_
 
-#### 5.3 Primary (driving) ports và adapters — phía bên trái
+#### 5.3 Primary (driving) ports và adapters - phía bên trái
 
 - **Primary / driving / inbound** (chủ động / điều khiển / hướng vào) = một thứ gì đó _bên ngoài_ điều khiển application.
-- **Primary port** = chính là _API của application_ — tập hợp các thao tác mà core _cung cấp_ (thường được gọi là "use case" trong cách nói của DDD/Clean).
+- **Primary port** = chính là _API của application_ - tập hợp các thao tác mà core _cung cấp_ (thường được gọi là "use case" trong cách nói của DDD/Clean).
 - **Primary adapter** = công nghệ chuyển dịch một sự kiện bên ngoài thành một lời gọi vào primary port.
 
-Ví dụ về primary adapter: một **REST controller**, một **GraphQL resolver**, một **điểm vào CLI**, một **message-queue consumer** (bộ tiêu thụ hàng đợi tin nhắn — đúng vậy, một Kafka listener là một adapter _điều khiển_, vì tin nhắn _điều khiển_ application), một **HTTP webhook handler**, một **test fixture** (FIT, Cucumber, hoặc một bài test Jest thuần túy chạy thẳng use case), hoặc một **scheduled job** (công việc theo lịch) được kích hoạt bởi `cron`.
+Ví dụ về primary adapter: một **REST controller**, một **GraphQL resolver**, một **điểm vào CLI**, một **message-queue consumer** (bộ tiêu thụ hàng đợi tin nhắn - đúng vậy, một Kafka listener là một adapter _điều khiển_, vì tin nhắn _điều khiển_ application), một **HTTP webhook handler**, một **test fixture** (FIT, Cucumber, hoặc một bài test Jest thuần túy chạy thẳng use case), hoặc một **scheduled job** (công việc theo lịch) được kích hoạt bởi `cron`.
 
 Mối quan hệ: _driver adapter_ có một **phụ thuộc có thể cấu hình được** vào _driver port_, và _driver port_ thì _được triển khai bởi_ core (cụ thể là bởi class use-case / application-service).
 
-#### 5.4 Secondary (driven) ports và adapters — phía bên phải
+#### 5.4 Secondary (driven) ports và adapters - phía bên phải
 
 - **Secondary / driven / outbound** (thụ động / bị điều khiển / hướng ra) = một thứ gì đó _bên ngoài_ bị application điều khiển.
-- **Secondary port** = một interface mà core _cần được đáp ứng_ (một "Service Provider Interface" — Giao diện nhà cung cấp dịch vụ, viết tắt SPI).
+- **Secondary port** = một interface mà core _cần được đáp ứng_ (một "Service Provider Interface" - Giao diện nhà cung cấp dịch vụ, viết tắt SPI).
 - **Secondary adapter** = công nghệ đáp ứng nó.
 
-Ví dụ về secondary adapter: một **database repository** (Postgres, Mongo, DynamoDB), một **bộ gửi email** (SMTP, SendGrid), một **REST/gRPC client bên ngoài** (Stripe, hoặc một microservice nội bộ), một **message-queue producer** (bộ sản xuất hàng đợi tin nhắn), một **bộ ghi file / S3**, một **logger** (bộ ghi nhật ký), một **clock** (đồng hồ — đúng vậy, ngay cả `new Date()` cũng nên được trừu tượng hóa sau một port để phục vụ kiểm thử; cả Hombergs lẫn đội QWAN đều lưu ý rằng ngay cả các thư viện cho thời gian, UUID, và logging cũng _"có xu hướng cản đường"_ và được hưởng lợi khi được bọc lại).
+Ví dụ về secondary adapter: một **database repository** (Postgres, Mongo, DynamoDB), một **bộ gửi email** (SMTP, SendGrid), một **REST/gRPC client bên ngoài** (Stripe, hoặc một microservice nội bộ), một **message-queue producer** (bộ sản xuất hàng đợi tin nhắn), một **bộ ghi file / S3**, một **logger** (bộ ghi nhật ký), một **clock** (đồng hồ - đúng vậy, ngay cả `new Date()` cũng nên được trừu tượng hóa sau một port để phục vụ kiểm thử; cả Hombergs lẫn đội QWAN đều lưu ý rằng ngay cả các thư viện cho thời gian, UUID, và logging cũng _"có xu hướng cản đường"_ và được hưởng lợi khi được bọc lại).
 
 Mối quan hệ: _core_ có một phụ thuộc có thể cấu hình được vào _driven port_; còn _driven adapter triển khai_ port đó. Đây chính là nơi Dependency Inversion diễn ra (xem mục 4.4).
 
 #### 5.5 Sự bất đối xứng giữa hai phía (tinh tế nhưng quan trọng)
 
-Cockburn nhấn mạnh điều này trong phần _Application Notes_ của bài viết: mặc dù các port được vẽ một cách đối xứng quanh hình lục giác, nhưng trong triển khai chúng lại bất đối xứng — _"các thao tác của driver port được gọi bởi một adapter, trong khi các thao tác của driven port được triển khai bởi một adapter"_ (Garrido de Paz). Đây cũng là lý do tại sao chiến lược kiểm thử cũng bất đối xứng: thiết lập kinh điển của Cockburn dùng **FIT/Cucumber fixture** làm test adapter mặc định ở phía driving, và dùng các **bản triển khai mock/in-memory** làm test adapter mặc định ở phía driven.
+Cockburn nhấn mạnh điều này trong phần _Application Notes_ của bài viết: mặc dù các port được vẽ một cách đối xứng quanh hình lục giác, nhưng trong triển khai chúng lại bất đối xứng - _"các thao tác của driver port được gọi bởi một adapter, trong khi các thao tác của driven port được triển khai bởi một adapter"_ (Garrido de Paz). Đây cũng là lý do tại sao chiến lược kiểm thử cũng bất đối xứng: thiết lập kinh điển của Cockburn dùng **FIT/Cucumber fixture** làm test adapter mặc định ở phía driving, và dùng các **bản triển khai mock/in-memory** làm test adapter mặc định ở phía driven.
 
 #### 5.6 Khả năng kiểm thử và khả năng tráo đổi nảy sinh như thế nào
 
 Bởi vì core chỉ phụ thuộc vào các port:
 
-- **Kiểm thử core hoàn toàn tách biệt**: cung cấp các test-double adapter (adapter đóng thế dùng cho kiểm thử) cho cả hai phía. Không cần HTTP server, không cần database, không cần container của Spring/Nest. Các bài test nhanh và tất định (deterministic). (Đây chính là cái Cockburn gọi là chạy application ở chế độ _"fully isolated mode"_ — chế độ cô lập hoàn toàn.)
+- **Kiểm thử core hoàn toàn tách biệt**: cung cấp các test-double adapter (adapter đóng thế dùng cho kiểm thử) cho cả hai phía. Không cần HTTP server, không cần database, không cần container của Spring/Nest. Các bài test nhanh và tất định (deterministic). (Đây chính là cái Cockburn gọi là chạy application ở chế độ _"fully isolated mode"_ - chế độ cô lập hoàn toàn.)
 - **Kiểm thử tích hợp từng adapter một cách riêng lẻ** so với công nghệ thật của nó (chẳng hạn một Postgres thật trong Testcontainers).
 - **Kiểm thử toàn hệ thống** chỉ ở các mép ngoài.
-- **Tráo đổi các bản triển khai** lúc khởi động. Trường hợp Netflix đã được ghi nhận: họ thay một repository adapter dạng JSON-API bằng một bản dùng GraphQL để vượt qua một ràng buộc về tốc độ đọc — _"Một thay đổi đơn giản chỉ một dòng là tất cả những gì chúng tôi cần để bắt đầu đọc từ một nguồn dữ liệu khác"_ (Svrtan & Makagon, Netflix TechBlog, 10 tháng 3 năm 2020). Logic của use case hoàn toàn không bị động chạm.
+- **Tráo đổi các bản triển khai** lúc khởi động. Trường hợp Netflix đã được ghi nhận: họ thay một repository adapter dạng JSON-API bằng một bản dùng GraphQL để vượt qua một ràng buộc về tốc độ đọc - _"Một thay đổi đơn giản chỉ một dòng là tất cả những gì chúng tôi cần để bắt đầu đọc từ một nguồn dữ liệu khác"_ (Svrtan & Makagon, Netflix TechBlog, 10 tháng 3 năm 2020). Logic của use case hoàn toàn không bị động chạm.
 
 ### 6. So sánh với Traditional Layered (N-tier) Architecture
 
@@ -358,13 +358,13 @@ Các triệu chứng cụ thể:
 | Vị trí của database             | Là nền móng, ở dưới đáy                             | Là một _chi tiết bên ngoài_, nằm ở phía ngoài |
 | Số lượng "port"                 | Hai port ngầm định (trên, dưới)                     | Số lượng bất kỳ (Cockburn nói thực tế là 2–4) |
 | Domain phụ thuộc vào            | Data access                                         | Không gì bên ngoài nó cả                      |
-| Khả năng kiểm thử business rule | Đòi hỏi các lớp bên dưới phải sẵn sàng hoặc bị mock | Tầm thường — core là thuần túy                |
+| Khả năng kiểm thử business rule | Đòi hỏi các lớp bên dưới phải sẵn sàng hoặc bị mock | Tầm thường - core là thuần túy                |
 | Phù hợp nhất với                | CRUD đơn giản, app nhỏ                              | Domain phức tạp, hệ thống sống lâu            |
 
 #### 6.4 Ưu điểm của hexagonal
 
 - Độc lập khỏi framework, UI, database, và các cơ quan bên ngoài (năm thuộc tính của Uncle Bob).
-- Khả năng kiểm thử cao — các business rule được kiểm thử mà không cần UI, DB, hay web server.
+- Khả năng kiểm thử cao - các business rule được kiểm thử mà không cần UI, DB, hay web server.
 - Xử lý đối xứng giữa các nguồn đầu vào và đầu ra.
 - Ăn khớp tự nhiên với DDD và Bounded Context.
 - Bền bỉ trước thay đổi hạ tầng (câu chuyện Netflix).
@@ -372,7 +372,7 @@ Các triệu chứng cụ thể:
 #### 6.5 Nhược điểm của hexagonal
 
 - Phức tạp hơn ngay từ đầu: nhiều interface hơn, nhiều file hơn, nhiều lớp gián tiếp hơn.
-- Nhiều boilerplate (code mẫu lặp đi lặp lại) hơn trong các dự án nhỏ — có thể thoái hóa thành những "interface vô dụng" mà mỗi cái chỉ có một bản triển khai duy nhất.
+- Nhiều boilerplate (code mẫu lặp đi lặp lại) hơn trong các dự án nhỏ - có thể thoái hóa thành những "interface vô dụng" mà mỗi cái chỉ có một bản triển khai duy nhất.
 - Đường cong học tập dốc hơn, đặc biệt với những lập trình viên quen với ngăn xếp kiểu Rails hay Spring-MVC.
 - Việc ánh xạ giữa đối tượng - port - DTO làm tăng thêm code (Hombergs dành hẳn một chương cho các chiến lược ánh xạ: _No-Mapping_ (Không ánh xạ), _Two-Way_ (Hai chiều), _Full_ (Đầy đủ), và _One-Way_ (Một chiều)).
 - Với những bài toán thực sự mang hình hài CRUD, các sự trừu tượng hóa này mang lại rất ít giá trị.
@@ -385,21 +385,21 @@ Phù hợp mạnh:
 
 - **Các application nghiệp vụ sống lâu** nơi độ phức tạp của domain vượt quá mức CRUD.
 - Các hệ thống nơi **các điểm tích hợp có khả năng sẽ thay đổi** trong suốt vòng đời của hệ thống (database, nhà cung cấp thanh toán, nhà cung cấp danh tính, message broker).
-- Các codebase hưởng lợi từ một **test pyramid (kim tự tháp kiểm thử) vững chắc** — các bài unit test nhanh cho core, các bài integration test hẹp hơn cho adapter.
+- Các codebase hưởng lợi từ một **test pyramid (kim tự tháp kiểm thử) vững chắc** - các bài unit test nhanh cho core, các bài integration test hẹp hơn cho adapter.
 - **Bounded context trong một chiến lược DDD**, hoặc các microservice nơi mỗi service sở hữu một hình lục giác.
-- Các đội đang áp dụng **TDD** — kiến trúc và TDD củng cố lẫn nhau (Cockburn, Hombergs, và Valentina Cupać đều nhấn mạnh điều này).
+- Các đội đang áp dụng **TDD** - kiến trúc và TDD củng cố lẫn nhau (Cockburn, Hombergs, và Valentina Cupać đều nhấn mạnh điều này).
 
 Phù hợp yếu:
 
 - Các bản prototype dùng một lần, các MVP, và các trang quản trị (admin panel) nơi tốc độ ra thị trường là tối thượng.
 - CRUD đơn giản nơi "domain" về cơ bản chỉ là `INSERT / SELECT / UPDATE / DELETE`.
-- Các đội chưa có sự hiểu biết chung về dependency inversion — pattern sẽ thất bại một cách rõ ràng nếu thiếu nền tảng đó.
+- Các đội chưa có sự hiểu biết chung về dependency inversion - pattern sẽ thất bại một cách rõ ràng nếu thiếu nền tảng đó.
 
 #### 7.2 Các sai lầm thường gặp
 
 - **Interface vô dụng**: đưa vào một port chỉ có đúng một bản triển khai trong môi trường production và không hề được dùng trong kiểm thử. Lời khuyên của Victor Rentea: _"loại bỏ chúng trừ khi có ≥2 bản triển khai hoặc đang dùng cho Dependency Inversion."_
 - **Business logic nằm trong adapter**: một controller tính toán chiết khấu, hoặc một repository quyết định các quy tắc nghiệp vụ. Adapter chỉ nên _chuyển dịch và ủy thác, không bao giờ chứa business logic_ (Hombergs).
-- **Core thiếu máu (anemic core)**: use case trở thành một kẻ chuyển tiếp đơn thuần tới repository. Nếu use case của bạn chỉ dài một dòng — `return this.repo.findById(id)` — thì bạn không có domain, bạn chỉ có một REST proxy mỏng. Hãy gộp các lớp lại.
+- **Core thiếu máu (anemic core)**: use case trở thành một kẻ chuyển tiếp đơn thuần tới repository. Nếu use case của bạn chỉ dài một dòng - `return this.repo.findById(id)` - thì bạn không có domain, bạn chỉ có một REST proxy mỏng. Hãy gộp các lớp lại.
 - **Phân lớp quá nghiêm ngặt**: cấm controller tham chiếu trực tiếp tới một domain entity, ép buộc phải sao chép qua ba lớp. Cả Onion lẫn Clean đều cho phép bất kỳ lớp ngoài nào gọi trực tiếp bất kỳ lớp trong nào.
 - **Sự phụ thuộc lẫn nhau giữa các use case**: một application service gọi một application service khác. Điều này tạo ra một anti-pattern (mẫu phản diện) kiểu "tổng đài điện thoại". Các use case nên là anh em chia sẻ chung domain, chứ không phải cha mẹ của nhau.
 - **Framework nằm ở trung tâm**: các annotation của Spring, các decorator của NestJS, `@Entity` của TypeORM gắn lên các class domain. Core nên là các class TypeScript thuần túy.
@@ -413,7 +413,7 @@ Phù hợp yếu:
 
 #### 7.4 Các sơ đồ nên vẽ trong phần giải thích
 
-Ba sơ đồ truyền đạt được mô hình khái niệm — như được mô tả trong các nguồn:
+Ba sơ đồ truyền đạt được mô hình khái niệm - như được mô tả trong các nguồn:
 
 1. **Sơ đồ hình lục giác** (Cockburn, Hình 2 trong bài viết 2005): một hình lục giác trung tâm dán nhãn "Application"; nhiều port trên đường biên của nó; các port phía trái được bao quanh bởi các driving adapter (REST, CLI, Test); các port phía phải được bao quanh bởi các driven adapter (Postgres, Mock DB, External API). Các mũi tên cho thấy các actor đi vào từ bên trái và bị gọi ra ở bên phải.
 
@@ -442,7 +442,7 @@ Ba sơ đồ truyền đạt được mô hình khái niệm — như được m
               Hình lục giác = ranh giới giữa TRONG và NGOÀI
 ```
 
-2. **Sơ đồ chiều-phụ-thuộc-đối-lại-luồng-điều-khiển** (phần phụ ở góc dưới phải của Uncle Bob trong _Clean Architecture_): hai mũi tên băng qua ranh giới — một _mũi tên nét liền_ cho luồng điều khiển (ví dụ Use Case → Presenter) và một _mũi tên nét đứt_ cho phụ thuộc mã nguồn trỏ về hướng ngược lại (Presenter → Output Port interface ← Use Case). Đây là sơ đồ quan trọng nhất cho mục tiêu học tập mà bạn đã nêu (xem lại mục 4.5).
+2. **Sơ đồ chiều-phụ-thuộc-đối-lại-luồng-điều-khiển** (phần phụ ở góc dưới phải của Uncle Bob trong _Clean Architecture_): hai mũi tên băng qua ranh giới - một _mũi tên nét liền_ cho luồng điều khiển (ví dụ Use Case → Presenter) và một _mũi tên nét đứt_ cho phụ thuộc mã nguồn trỏ về hướng ngược lại (Presenter → Output Port interface ← Use Case). Đây là sơ đồ quan trọng nhất cho mục tiêu học tập mà bạn đã nêu (xem lại mục 4.5).
 
 3. **Củ hành đồng tâm** (Palermo / Martin): các vòng Entities → Use Cases → Interface Adapters → Frameworks, với một mũi tên một chiều dán nhãn "The Dependency Rule: source dependency chỉ trỏ vào trong."
 
@@ -479,7 +479,7 @@ Ba sơ đồ truyền đạt được mô hình khái niệm — như được m
 5. **Phân giai đoạn cho lời khuyên về việc áp dụng** dành cho độc giả tiếng Việt của bạn:
    - **Bắt đầu** với N-tier trên các dự án nhỏ/CRUD.
    - **Áp dụng hexagonal một cách có chọn lọc** khi hệ thống có hoặc là (a) một domain không tầm thường, hoặc (b) có hơn hai cách để được điều khiển (HTTP + CLI + queue), hoặc (c) có hơn một công nghệ lưu trữ khả dĩ trong suốt vòng đời của nó.
-   - **Tái cấu trúc hướng tới hexagonal** khi bạn cảm thấy một trong hai nỗi đau — business logic rò rỉ hoặc code không kiểm thử được.
+   - **Tái cấu trúc hướng tới hexagonal** khi bạn cảm thấy một trong hai nỗi đau - business logic rò rỉ hoặc code không kiểm thử được.
    - **Ngưỡng để khuyến nghị thay đổi**: nếu bạn có một REST controller duy nhất gọi một ORM duy nhất, bạn không cần nó. Nếu bạn có ≥2 driving adapter hoặc ≥2 driven adapter (hiện tại hoặc dự kiến), thì bạn cần.
 
 6. **Trích dẫn các nguồn kinh điển** trong bài viết tiếng Việt, tất cả đều có sẵn miễn phí: bài viết 2005 của Cockburn, các Phần 1–3 năm 2008 của Palermo, bài đăng 2012 của Martin, case study ngày 10 tháng 3 năm 2020 của Netflix (Svrtan & Makagon), và cuốn sách Packt của Hombergs (ấn bản 1 năm 2019; ấn bản 2 năm 2023). Hãy tránh trích dẫn hàng chục bài viết trên Medium chỉ diễn giải lại mà không bổ sung được hiểu biết gì mới.
@@ -490,17 +490,17 @@ Ba sơ đồ truyền đạt được mô hình khái niệm — như được m
 
 ## Các điểm cần lưu ý / cảnh báo (Caveats)
 
-- Từ "**layer**" (lớp/tầng) chính xác không hề xuất hiện trong bài viết 2005 của Cockburn — những bài mô tả Hexagonal Architecture như "một dạng kiến trúc phân tầng" đang áp đặt một khung nhìn mà chính tác giả gốc bác bỏ. Chỉ có _bên trong_ và _bên ngoài_.
+- Từ "**layer**" (lớp/tầng) chính xác không hề xuất hiện trong bài viết 2005 của Cockburn - những bài mô tả Hexagonal Architecture như "một dạng kiến trúc phân tầng" đang áp đặt một khung nhìn mà chính tác giả gốc bác bỏ. Chỉ có _bên trong_ và _bên ngoài_.
 
 - "**Primary / secondary / driving / driven / inbound / outbound / incoming / outgoing**" là sáu cặp từ chỉ hai khái niệm. Các nguồn khác nhau; hãy lường trước sự va chạm khi pha trộn các tài liệu tham khảo. Cockburn dùng _primary / secondary_ năm 2005 và chuyển sang _driver / driven_ vào năm 2015.
 
 - **Hexagonal ≠ Onion ≠ Clean** ở mức độ chi tiết, mặc dù chúng chia sẻ cùng một ý tưởng hồn cốt. Nếu một bài hướng dẫn tiếng Việt gộp chúng làm một như thể giống hệt nhau thì sai; nếu nó coi chúng như những kiến trúc xa lạ với nhau thì cũng sai. Cách diễn đạt trung thực là "cùng một gia đình, khác nhau về mức độ chi tiết."
 
-- Tuyên bố được lặp lại rộng rãi rằng **"Spotify báo cáo giảm 40% thời gian phát triển tính năng"** nhờ hexagonal architecture chỉ xuất hiện trong một bài viết Medium đơn lẻ (của tác giả Tushark-16bit) và thiếu bất kỳ nguồn nào từ blog kỹ thuật của Spotify — hãy coi đây là thông tin chưa được kiểm chứng. Ngược lại, **case study của Netflix** được xuất bản trên chính blog kỹ thuật của Netflix bởi các tác giả có tên (Svrtan & Makagon) và là một nguồn vững chắc.
+- Tuyên bố được lặp lại rộng rãi rằng **"Spotify báo cáo giảm 40% thời gian phát triển tính năng"** nhờ hexagonal architecture chỉ xuất hiện trong một bài viết Medium đơn lẻ (của tác giả Tushark-16bit) và thiếu bất kỳ nguồn nào từ blog kỹ thuật của Spotify - hãy coi đây là thông tin chưa được kiểm chứng. Ngược lại, **case study của Netflix** được xuất bản trên chính blog kỹ thuật của Netflix bởi các tác giả có tên (Svrtan & Makagon) và là một nguồn vững chắc.
 
-- **Hiệu năng**: Hexagonal Architecture thêm vào việc ánh xạ đối tượng/DTO và các lớp gián tiếp tại mỗi ranh giới. Với code nhạy cảm về độ trễ (giao dịch tần suất cao, hệ thống nhúng, game thời gian thực), pattern này có thể không phải là lựa chọn mặc định đúng đắn — wiki Metapatterns lưu ý rằng _"các interface chung chung giữa core và các adapter cản trở việc tối ưu hóa toàn hệ thống."_ Với các backend web/nghiệp vụ điển hình, chi phí phụ trội này là không đáng kể.
+- **Hiệu năng**: Hexagonal Architecture thêm vào việc ánh xạ đối tượng/DTO và các lớp gián tiếp tại mỗi ranh giới. Với code nhạy cảm về độ trễ (giao dịch tần suất cao, hệ thống nhúng, game thời gian thực), pattern này có thể không phải là lựa chọn mặc định đúng đắn - wiki Metapatterns lưu ý rằng _"các interface chung chung giữa core và các adapter cản trở việc tối ưu hóa toàn hệ thống."_ Với các backend web/nghiệp vụ điển hình, chi phí phụ trội này là không đáng kể.
 
-- **Frameworks**: Hầu hết các backend framework của TypeScript (NestJS, Express, Fastify, Hono) đều _ổn_ với hexagonal — chúng sống ở vòng ngoài với vai trò các driving adapter. Pattern chỉ rõ ràng chống lại những framework đòi hỏi phải là trung tâm (chẳng hạn những ORM nặng nề muốn domain của bạn phải kế thừa các lớp cơ sở của chúng).
+- **Frameworks**: Hầu hết các backend framework của TypeScript (NestJS, Express, Fastify, Hono) đều _ổn_ với hexagonal - chúng sống ở vòng ngoài với vai trò các driving adapter. Pattern chỉ rõ ràng chống lại những framework đòi hỏi phải là trung tâm (chẳng hạn những ORM nặng nề muốn domain của bạn phải kế thừa các lớp cơ sở của chúng).
 
 - **Các nhãn "Domain Services" và "Application Services" của Onion** thường được gán cho Palermo thực ra _không_ nằm trong các bài viết gốc năm 2008 của ông. Palermo chỉ đặt tên cho Domain Model, các repository interface, application core (thuật ngữ tập thể), và lớp ngoài cùng UI / Infrastructure / Tests. Các tên vòng chi tiết hơn đi vào kho tàng kiến thức chung thông qua những người diễn giải về sau.
 

@@ -22,7 +22,7 @@
     <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
   </defs>
 
-  <text x="30" y="34" font-size="22" font-weight="700" fill="#0f172a">The brainstorming skill — end-to-end lifecycle</text>
+  <text x="30" y="34" font-size="22" font-weight="700" fill="#0f172a">The brainstorming skill - end-to-end lifecycle</text>
   <text x="30" y="56" font-size="13" fill="#64748b">From a creative request to the single legal exit: invoking writing-plans. Source: skills/brainstorming/SKILL.md</text>
 
   <!-- spine edges -->
@@ -76,11 +76,11 @@
 
   <!-- the Socratic heart -->
   <rect class="proc" x="130" y="400" width="320" height="56" rx="10" stroke-width="3"/>
-  <text class="star" x="290" y="424" text-anchor="middle">★ 3 · Ask clarifying questions — ONE at a time</text>
+  <text class="star" x="290" y="424" text-anchor="middle">★ 3 · Ask clarifying questions - ONE at a time</text>
   <text class="ts" x="290" y="444" text-anchor="middle">the Socratic loop · see Diagram 02</text>
 
   <rect class="side" x="476" y="402" width="300" height="52" rx="8"/>
-  <text class="nt" x="490" y="424">2 · Visual companion offered just-in-time —</text>
+  <text class="nt" x="490" y="424">2 · Visual companion offered just-in-time - </text>
   <text class="nt" x="490" y="442">only when a question is clearer shown than told</text>
 
   <rect class="proc" x="130" y="496" width="320" height="56" rx="10"/>
@@ -109,7 +109,7 @@
 
   <rect class="term" x="130" y="1006" width="320" height="52" rx="10"/>
   <text class="t" x="290" y="1028" text-anchor="middle" font-weight="700">9 · Invoke writing-plans skill</text>
-  <text class="ts" x="290" y="1046" text-anchor="middle">the ONLY exit — no other implementation skill</text>
+  <text class="ts" x="290" y="1046" text-anchor="middle">the ONLY exit - no other implementation skill</text>
 
   <!-- legend -->
   <g transform="translate(610,150)">

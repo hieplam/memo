@@ -3,7 +3,7 @@
 // Shiki emits a ```mermaid fence as `<pre data-language="mermaid">` whose source
 // is split into one `<span class="line">` per line (joined by literal newlines).
 // This script reconstructs that source, swaps each block for a
-// `<div class="mermaid">`, and renders it with Mermaid — lazily (the library only
+// `<div class="mermaid">`, and renders it with Mermaid - lazily (the library only
 // loads on pages that actually contain a diagram) and theme-aware (re-rendering
 // when the reader toggles light/dark). It re-runs after every ClientRouter view
 // transition via the `astro:page-load` event.

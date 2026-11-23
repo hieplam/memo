@@ -16,7 +16,7 @@ const LANG_META: PostLanguage[] = [
 
 /**
  * Returns the distinct set of languages that have at least one non-draft post,
- * in a fixed order (en first — the site default — then vi).
+ * in a fixed order (en first - the site default - then vi).
  *
  * - Drafts and scheduled posts are excluded via `postFilter()`
  * - Only languages actually represented in the post set are returned

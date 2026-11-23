@@ -51,7 +51,7 @@
 
   <!-- the loop back-edge -->
   <path class="loop" d="M190,696 L80,696 L80,258 L170,258" marker-end="url(#al)"/>
-  <text class="elo" x="92" y="455">no — a gap remains,</text>
+  <text class="elo" x="92" y="455">no - a gap remains,</text>
   <text class="elo" x="92" y="471">or an answer contradicted</text>
   <text class="elo" x="92" y="487">earlier → re-clarify</text>
   <text class="elo" x="92" y="503">(be flexible)</text>

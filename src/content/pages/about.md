@@ -3,7 +3,7 @@ title: "About"
 description: "A bit about me and this blog."
 ---
 
-Hi, I'm **Hiep Lam**. This is **memo** — my personal blog and notebook where I
+Hi, I'm **Hiep Lam**. This is **memo** - my personal blog and notebook where I
 write up things I'm researching and learning: software architecture, terminals
 and low-level systems, and whatever else I happen to be digging into.
 

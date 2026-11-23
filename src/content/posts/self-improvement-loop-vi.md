@@ -21,17 +21,17 @@ multiLangKey: "self-improvement-loop"
 
 ## 1. Mở Đầu
 
-Tui nhớ tui đã từng đọc một bài viết của Boris, hình như là bài về **Steps of AI Adoption** — bốn cấp độ của con người khi AI để code. Tui cũng không chắc tui đang ở level mấy, nhưng ít nhất tui mừng vì tui không nằm ở Level 0 😅
+Tui nhớ tui đã từng đọc một bài viết của Boris, hình như là bài về **Steps of AI Adoption** - bốn cấp độ của con người khi AI để code. Tui cũng không chắc tui đang ở level mấy, nhưng ít nhất tui mừng vì tui không nằm ở Level 0 😅
 
-Quay về nội dung chính. Tui nhớ có một ý ở khoảng level 3 hay 4: khi con người càng muốn thoát ra khỏi cái vòng loop của AI trong workflow, thì phải tạo ra được một **self improvement loop** — vòng lặp tự cải thiện.
+Quay về nội dung chính. Tui nhớ có một ý ở khoảng level 3 hay 4: khi con người càng muốn thoát ra khỏi cái vòng loop của AI trong workflow, thì phải tạo ra được một **self improvement loop** - vòng lặp tự cải thiện.
 
 Đại loại theo tui hiểu là phải dựng được một workflow mà AI có thể tự sửa lỗi của nó, hoặc tự tốt lên dần dần. Bài viết chỉ thuần đưa ra ý niệm, không hề chỉ cách làm như thế nào. Nên tui cứ suy nghĩ hoài: làm sao để làm được việc đó?
 
-Và tui cũng chợt nhận ra: từ ngày tui xài Claude Code, tui gần như không còn code nữa — cả project công ty lẫn project cá nhân. Nhưng tui vẫn chưa hề tạo ra được một self improvement loop nào như vậy cả.
+Và tui cũng chợt nhận ra: từ ngày tui xài Claude Code, tui gần như không còn code nữa - cả project công ty lẫn project cá nhân. Nhưng tui vẫn chưa hề tạo ra được một self improvement loop nào như vậy cả.
 
 ## 2. Linh cảm: 1% mỗi ngày, nhưng phải làm đều đặn
 
-Dựa theo kinh nghiệm bản thân, tui lờ mờ đoán được là nó phải có **incremental improvement** — cải thiện từng chút một.
+Dựa theo kinh nghiệm bản thân, tui lờ mờ đoán được là nó phải có **incremental improvement** - cải thiện từng chút một.
 
 Nghĩa là không cần phải cải thiện ngay tức thì. Mỗi lần 1% là đủ. Cái cốt lõi là phải luôn **resilience**, nghĩa là phải liên tục làm được điều đó. Không nhất thiết phải ngày qua ngày, miễn là vẫn kiên trì.
 
@@ -53,13 +53,13 @@ Một trong các option Claude Code đưa cho tui là: **chỉ report lại thô
 
 Điều này làm tui chợt nhớ tới một cái lỗi mà LLM rất hay mắc phải.
 
-Ví dụ, dự án ở công ty tui dùng **MediatR** — một thư viện .NET, thay vì gọi thẳng service, mọi thao tác được gói thành một `Command` hoặc `Query`, rồi bắn qua một trung gian để tìm đúng `Handler` xử lý.
+Ví dụ, dự án ở công ty tui dùng **MediatR** - một thư viện .NET, thay vì gọi thẳng service, mọi thao tác được gói thành một `Command` hoặc `Query`, rồi bắn qua một trung gian để tìm đúng `Handler` xử lý.
 
 Pattern này không xấu. Nhưng với đa số scope của dự án tụi tui thì nó hơi overkill. Cái pain point của nó là engineer đặt naming cho handler không đúng, dẫn tới việc rất khó tìm ra handler. Và một pain point nữa cũng về naming: đặt tên là `Command` nhưng bên trong lại chỉ query DB, hoặc đặt là `Query` nhưng bên trong lại update DB...
 
 Team tui cũng dần không muốn dùng nó nữa, thay vào đó viết thẳng class service cho dễ trace.
 
-Và khi LLM gen code, nó thường check surrounding context — thấy xung quanh toàn MediatR — rồi lại viết code mới bằng MediatR.
+Và khi LLM gen code, nó thường check surrounding context - thấy xung quanh toàn MediatR - rồi lại viết code mới bằng MediatR.
 
 Đó chính xác là unwritten convention. Không ai ghi ra rằng "dự án này dùng MediatR". Cũng không ai ghi ra rằng "tụi tui đang bỏ MediatR". LLM chỉ nhìn code cũ rồi đoán. Và nó đoán theo hướng ngược lại với ý team.
 
@@ -100,7 +100,7 @@ Tui vẫn chưa dám nói là mình đã dựng xong một self improvement loop
 
 Hóa ra nó không nằm ở chỗ làm cái gì đó thật to. Nó nằm ở chỗ: mỗi lần agent định cho một thứ mơ hồ đi qua, mình chặn lại và bắt nó ghi ra thành chữ.
 
-Mà nghĩ kỹ lại, cốt lõi của cái self improvement loop này vẫn y chang như thời chưa có AI. Trong team lúc nào cũng có một cách để tự improve — vòng retrospective cuối mỗi sprint là một ví dụ điển hình.
+Mà nghĩ kỹ lại, cốt lõi của cái self improvement loop này vẫn y chang như thời chưa có AI. Trong team lúc nào cũng có một cách để tự improve - vòng retrospective cuối mỗi sprint là một ví dụ điển hình.
 
 Nhưng thời đó AI chưa phổ cập, phần lớn con người phải tự quyết định. Mà con người thì lười, không kỷ luật. Nên đa phần mấy vòng loop đó không được tuân thủ chặt chẽ.
 

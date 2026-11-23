@@ -22,12 +22,12 @@
   <!-- LEFT: lexical -->
   <rect class="lbox" x="30" y="140" width="400" height="240" rx="14"/>
   <circle cx="58" cy="170" r="7" fill="#64748b"/>
-  <text class="ph" x="74" y="175" fill="#334155">LEXICAL — so từ khoá (grep, BM25)</text>
+  <text class="ph" x="74" y="175" fill="#334155">LEXICAL - so từ khoá (grep, BM25)</text>
   <text class="meta" x="50" y="200">Khớp khi tài liệu chứa đúng chữ “tăng tốc”.</text>
 
-  <text class="hit"  x="50" y="232">✓ “mẹo tăng tốc app mobile”  — trùng chữ</text>
+  <text class="hit"  x="50" y="232">✓ “mẹo tăng tốc app mobile” - trùng chữ</text>
   <text class="miss" x="50" y="262">✗ “giảm latency, tối ưu hiệu năng”</text>
-  <text class="miss" x="68" y="280">— cùng nghĩa nhưng KHÁC chữ → bỏ sót</text>
+  <text class="miss" x="68" y="280"> - cùng nghĩa nhưng KHÁC chữ → bỏ sót</text>
   <text class="miss" x="50" y="310">✗ “profiling để bớt nghẽn CPU” → bỏ sót</text>
 
   <text class="meta" x="50" y="350">Nhanh, rẻ, chính xác chữ. Mù trước từ đồng nghĩa.</text>
@@ -36,13 +36,13 @@
   <!-- RIGHT: semantic -->
   <rect class="mbox" x="470" y="140" width="400" height="240" rx="14"/>
   <circle cx="498" cy="170" r="7" fill="#6366f1"/>
-  <text class="ph" x="514" y="175" fill="#4338ca">SEMANTIC — so nghĩa (embeddings)</text>
+  <text class="ph" x="514" y="175" fill="#4338ca">SEMANTIC - so nghĩa (embeddings)</text>
   <text class="meta" x="490" y="200">Biến câu thành vector; gần nghĩa = gần trong không gian.</text>
 
   <text class="hit" x="490" y="232">✓ “mẹo tăng tốc app mobile”</text>
   <text class="hit" x="490" y="262">✓ “giảm latency, tối ưu hiệu năng”</text>
   <text class="hit" x="490" y="292">✓ “profiling để bớt nghẽn CPU”</text>
-  <text class="meta" x="508" y="310">— bắt được dù không trùng từ nào</text>
+  <text class="meta" x="508" y="310"> - bắt được dù không trùng từ nào</text>
 
   <text class="meta" x="490" y="350">Hiểu đồng nghĩa. Tốn embed + cần vector DB.</text>
   <text class="mono" x="490" y="370" fill="#6366f1">cấu trúc: vector + cosine similarity</text>

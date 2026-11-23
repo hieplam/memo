@@ -29,12 +29,12 @@ const allPosts = await getCollection("posts");
 const languages = getPostLanguages(allPosts);
 ---
 
-<Layout title={`${t.pages.postsTitle} — All | ${config.site.title}`}>
+<Layout title={`${t.pages.postsTitle} - All | ${config.site.title}`}>
   <Header />
 
   <Breadcrumb />
 
-  <Main pageTitle={`${t.pages.postsTitle} — All`} pageDesc={t.pages.postsDesc}>
+  <Main pageTitle={`${t.pages.postsTitle} - All`} pageDesc={t.pages.postsDesc}>
     <LangFilter {languages} active="all" />
     <ul class="post-stream">
       {page.data.map(data => <Card {...data} />)}

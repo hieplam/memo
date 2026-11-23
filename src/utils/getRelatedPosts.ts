@@ -2,7 +2,7 @@ import type { CollectionEntry } from "astro:content";
 import { postFilter } from "./postFilter";
 
 /**
- * Returns up to `limit` posts to suggest after reading `post` — the "keep
+ * Returns up to `limit` posts to suggest after reading `post` - the "keep
  * reading" wayfinding that points a reader toward a second worthwhile post.
  *
  * Ranking:

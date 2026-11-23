@@ -13,15 +13,15 @@ tags:
 multiLangKey: "test-quality-metrics-5"
 ---
 
-> **"Beyond Coverage: Test Quality for the Agentic Loop" — Part 5 of 7.** This is the part the
+> **"Beyond Coverage: Test Quality for the Agentic Loop" - Part 5 of 7.** This is the part the
 > whole series has been building toward: how to grade a test an AI wrote, so a merge gate can
 > trust it without a human re-checking every case by hand.
 
 Raw LLM-generated tests are **roughly half junk** (compile failures, flakes, vacuous asserts),
 and the ones that look fine carry a unique danger: they tend to assert _what the code currently
-does_ — **locking in existing bugs**. The fix is a **filter gauntlet** modeled on Meta's
+does_ - **locking in existing bugs**. The fix is a **filter gauntlet** modeled on Meta's
 TestGen-LLM: a test is admitted only if it **builds, passes, is stable, and kills a mutant no
-existing test killed** — and behaviour-defining oracles on critical paths are owned by a
+existing test killed** - and behaviour-defining oracles on critical paths are owned by a
 spec/human, not the model.
 
 ---
@@ -35,7 +35,7 @@ tests anything meaningful.
 
 And the survivors have characteristic defects:
 
-- **Magic Number Test smell is near-universal** in LLM-generated suites — present in
+- **Magic Number Test smell is near-universal** in LLM-generated suites - present in
   **99.78–100%** of class-level suites across GPT-3.5, GPT-4, Mistral 7B, and Mixtral 8×7B.
   <sup>[smellsllm]</sup>
 - Auto-generated tests exhibit **13 categories of test smell** uncommon in human tests, grouped
@@ -43,17 +43,17 @@ And the survivors have characteristic defects:
   _Failed Setup_, and _Testing Only Field Accessors/Constants._ <sup>[autosmells]</sup>
 
 So "the AI wrote tests and coverage went up" is _not_ evidence of safety. It may be evidence of
-vacuous tests that execute code and assert nothing — the exact Goodhart failure from Part 0.
+vacuous tests that execute code and assert nothing - the exact Goodhart failure from Part 0.
 
 ## The unique danger: bug-locking oracles
 
 This is the one that will bite an autonomous loop hardest. LLMs generating test **oracles**
 (the assertions) are _"biased toward the actual (possibly buggy) implementation rather than the
-intended behaviour"_ — their oracle-classification accuracy _"considerably drops in the
+intended behaviour"_ - their oracle-classification accuracy _"considerably drops in the
 presence of buggy code."_ <sup>[bias]</sup>
 
 Concretely: point an LLM at a function that computes commission slightly wrong, and it will
-happily write `Assert.Equal(wrongValue, result)` — a test that **passes, raises coverage, and
+happily write `Assert.Equal(wrongValue, result)` - a test that **passes, raises coverage, and
 permanently cements the bug.** Worse, every future correct change now "breaks a test," so the
 agent (or a tired human) will tend to _update the test to match the buggy code_ rather than fix
 the code.
@@ -72,7 +72,7 @@ _discarded half of the genuinely fault-finding tests._ <sup>[coverage-discard]</
 
 > **Gate AI tests on mutants killed, not on coverage gained.** A test that kills a
 > previously-surviving mutant is provably strengthening your oracle. A test that only adds
-> coverage is, at best, reachability — and at worst, vacuous.
+> coverage is, at best, reachability - and at worst, vacuous.
 
 ## The grading gauntlet (use this as your accept/reject pipeline)
 
@@ -95,7 +95,7 @@ skip and the one that actually separates a real test from a vacuous one.** Gates
 against the AI-specific failure modes above.
 
 This is the operational meaning of _"Assured LLM-based Software Engineering"_: never trust raw
-model output — keep only changes whose value is **mechanically measured**.
+model output - keep only changes whose value is **mechanically measured**.
 
 ## What this gets you toward the full loop
 
@@ -108,7 +108,7 @@ achievable, but the trust is earned by the **gauntlet**, not by the model:
 - Surviving mutants on the diff that _nothing_ kills → the gate **blocks the merge** and tells
   the agent exactly what to test next.
 
-In this design you're not trusting the AI's judgment — you're trusting a **measurement** the AI
+In this design you're not trusting the AI's judgment - you're trusting a **measurement** the AI
 has to satisfy. That's the difference between "vibe-merging" and an autonomous loop you can
 defend. The final part turns this into concrete thresholds and a maturity ladder.
 
@@ -117,7 +117,7 @@ defend. The final part turns this into concrete thresholds and a maturity ladder
 ### Sources
 
 - **[testgen]** Alshahwan et al., _Automated Unit Test Improvement using LLMs at Meta
-  (TestGen-LLM)_, FSE 2024. https://arxiv.org/abs/2402.09171 — _75%/57% build-pass rates and 5×
+  (TestGen-LLM)_, FSE 2024. https://arxiv.org/abs/2402.09171 - _75%/57% build-pass rates and 5×
   flake filter from the paper._
 - **[coverage-discard]** Meta follow-up on mutation-guided LLM test generation (277/571 add no
   coverage). https://arxiv.org/abs/2501.12862
@@ -129,11 +129,11 @@ defend. The final part turns this into concrete thresholds and a maturity ladder
   https://arxiv.org/html/2405.03786
 - _Quotes in this chapter are extracted from the primary sources above; the headline
   TestGen-LLM and oracle-bias findings were the basis of confirmed claims, but several
-  per-figure details were not independently re-verified in this run — confirm against the
+  per-figure details were not independently re-verified in this run - confirm against the
   papers before quoting externally._
 
 ---
 
-← **Previous:** [Part 4 — Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · **Next:** [Part 6 — The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/) →
+← **Previous:** [Part 4 - Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · **Next:** [Part 6 - The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/) →
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · **5 · Grading AI-Generated Tests (you are here)** · [6 · The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/)
+**The series - Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · **5 · Grading AI-Generated Tests (you are here)** · [6 · The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/)

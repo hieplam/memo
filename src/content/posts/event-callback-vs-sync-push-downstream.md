@@ -13,10 +13,10 @@ tags:
 
 ## TL;DR
 
-- The decision bundles two nested questions: **async-decoupled-pull vs. sync-coupled-push** (temporal coupling, failure isolation, latency, backpressure), and — more decisive for a shared service — **who depends on whom**.
+- The decision bundles two nested questions: **async-decoupled-pull vs. sync-coupled-push** (temporal coupling, failure isolation, latency, backpressure), and - more decisive for a shared service - **who depends on whom**.
 - A direct sync push forces a generic, shared upstream service to hard-code knowledge of one specific downstream (its auth, schema, uptime, quirks). That grows into O(N) point-to-point integrations and a distributed monolith as consumers multiply.
-- A thin event + callback keeps the upstream service ignorant of its consumers, buys free backpressure/buffering/dead-lettering, and lets the callback re-read the freshest state at consume time — at the cost of an extra round trip and an eventual-consistency window.
-- Whichever you pick, if the upstream service publishes events at all, wrap the write in a **Transactional Outbox** — otherwise a crash between "persist" and "notify" silently drops the message with nothing to replay.
+- A thin event + callback keeps the upstream service ignorant of its consumers, buys free backpressure/buffering/dead-lettering, and lets the callback re-read the freshest state at consume time - at the cost of an extra round trip and an eventual-consistency window.
+- Whichever you pick, if the upstream service publishes events at all, wrap the write in a **Transactional Outbox** - otherwise a crash between "persist" and "notify" silently drops the message with nothing to replay.
 - A **fat event** (event-carried state transfer) is the underrated third option: the same decoupling as the event approach, no callback round-trip, at the cost of putting sensitive data on the bus.
 
 ---
@@ -24,7 +24,7 @@ tags:
 ## 1. The setup
 
 > A generalized architecture study. The concrete trigger was a fintech-lender setup where an
-> upstream **Facade** service (abstracts all bank-data complexity for the whole platform —
+> upstream **Facade** service (abstracts all bank-data complexity for the whole platform -
 > statements, balances, credit signals) must tell a downstream **CRM** that a customer
 > connected a new bank. "Salesforce" appears as the concrete CRM example because its real
 > platform limits change the analysis. The pattern generalizes to any _generic upstream →
@@ -35,7 +35,7 @@ tags:
 - Platform is event-driven; messaging is NServiceBus over Azure Service Bus.
 - Bank data is sensitive (financial PII).
 
-**Approach 1 — Event notification + callback (thin event / claim-check):**
+**Approach 1 - Event notification + callback (thin event / claim-check):**
 
 ```
 Bank connects → Facade persists → Facade publishes "BankConnected{customerId, connectionId}" (thin)
@@ -45,7 +45,7 @@ Bank connects → Facade persists → Facade publishes "BankConnected{customerId
 
 On the wire: **IDs only** on the bus; sensitive payload travels over one authenticated callback, read **fresh at consume time**.
 
-**Approach 2 — Direct synchronous API push (command):**
+**Approach 2 - Direct synchronous API push (command):**
 
 ```
 Bank connects → Facade persists → Facade calls CRM POST /bankinfo {full payload}
@@ -93,14 +93,14 @@ Legend: **A1** = event+callback, **A2** = direct push, **↔** = depends.
 |      | A1                                                                                                          | A2                                                                                                                                                                                                       |
 | ---- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Pros | **Publish once, N consumers.** Queue buffers bursts; consumers drain at their own rate (free backpressure). | Trivial at tiny volume with one consumer.                                                                                                                                                                |
-| Cons | Burst can stampede the callback endpoint (thundering herd) — mitigate with caching/ETags/concurrency caps.  | No buffer — spikes hit the CRM directly, burning **Salesforce daily API request quota** + the ~25 concurrent long-running-request cap; 429s must be handled. Fan-out to M consumers = M calls per event. |
+| Cons | Burst can stampede the callback endpoint (thundering herd) - mitigate with caching/ETags/concurrency caps.  | No buffer - spikes hit the CRM directly, burning **Salesforce daily API request quota** + the ~25 concurrent long-running-request cap; 429s must be handled. Fan-out to M consumers = M calls per event. |
 
 ### Failure modes, blast radius & isolation → **Tilts A1 (strongly)**
 
 |      | A1                                                                                                                                           | A2                                                                                                                                                                                                      |
 | ---- | -------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Pros | Failures isolated behind the bus; poison message → DLQ without touching the Facade; one broken consumer doesn't affect others (bulkheading). | Failures visible synchronously and immediately.                                                                                                                                                         |
-| Cons | DLQ triage is its own skill.                                                                                                                 | **CRM outage/slowness directly degrades the Facade** (thread/connection exhaustion, cascading failure into a core shared service). "One bad downstream takes down the facade" — canonical anti-pattern. |
+| Cons | DLQ triage is its own skill.                                                                                                                 | **CRM outage/slowness directly degrades the Facade** (thread/connection exhaustion, cascading failure into a core shared service). "One bad downstream takes down the facade" - canonical anti-pattern. |
 
 ### Security & data sensitivity (financial PII) → **Tilts A1 (thin) / ↔ vs fat-event**
 
@@ -114,7 +114,7 @@ Legend: **A1** = event+callback, **A2** = direct push, **↔** = depends.
 |      | A1                                                                                                                                        | A2                                                                                                                  |
 | ---- | ----------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | Pros | If you already run NServiceBus/Azure Service Bus, marginal cost is low; DLQ/retry tooling exists.                                         | Simplest possible: "just an HTTP call." No broker to run/pay/monitor. Single call stack = trivial tracing.          |
-| Cons | More moving parts (topic/subscription, endpoint config, DLQ monitoring, callback API). Tracing across an async hop needs correlation IDs. | You must **build** the observability/retry/idempotency the bus gives free — and that home-grown layer is what rots. |
+| Cons | More moving parts (topic/subscription, endpoint config, DLQ monitoring, callback API). Tracing across an async hop needs correlation IDs. | You must **build** the observability/retry/idempotency the bus gives free - and that home-grown layer is what rots. |
 
 ### Evolvability, versioning, contract ownership & extensibility → **Tilts A1 (strongly)**
 
@@ -140,7 +140,7 @@ Legend: **A1** = event+callback, **A2** = direct push, **↔** = depends.
 | **CRM down**                        | Event waits durably; CRM drains on recovery. Facade unaffected.                                  | Call fails. Inline → Facade flow degrades; background → must own a retry store or notification is **lost**.                             |
 | **Facade down**                     | Nothing published (correct); with **outbox**, pending event publishes on recovery.               | Connect didn't happen → nothing to push (symmetric).                                                                                    |
 | **Burst/spike**                     | Queue buffers; consumers drain at pace. Risk: callback thundering herd → cache/concurrency caps. | No buffer; CRM hammered, burns **daily API quota**, hits concurrency cap, 429s to back off on.                                          |
-| **Poison message**                  | Retried then parked in **DLQ**; rest of stream flows.                                            | No DLQ — block forever, drop, or build bespoke quarantine.                                                                              |
+| **Poison message**                  | Retried then parked in **DLQ**; rest of stream flows.                                            | No DLQ - block forever, drop, or build bespoke quarantine.                                                                              |
 | **Duplicate** (at-least-once)       | Idempotent upsert on `connectionId` → no-op.                                                     | Needs idempotency key or risks double-write/overwrite.                                                                                  |
 | **Out-of-order connect/disconnect** | Callback re-reads **current** truth → converges.                                                 | Snapshot ordering can land stale; needs version/timestamp guards.                                                                       |
 | **CRM hits governor limit**         | Indirect: only CRM's outbound callout + write consume limits; bus throttles naturally.           | Direct: every connect consumes inbound API quota; sustained volume can **exhaust the org's daily budget** and block other integrations. |
@@ -149,7 +149,7 @@ Legend: **A1** = event+callback, **A2** = direct push, **↔** = depends.
 
 ## 4. The dependency-direction insight (the one to internalize)
 
-A facade exists to be the **single place that abstracts complexity for everyone**. A2 makes that generic, shared, upstream service hold a hard-coded dependency on **one specific downstream** — its URL, auth, schema, uptime, rate limits. One integration today; three consumers = three sets of outbound code, three credentials, three failure modes, three reasons to redeploy the facade when a _downstream_ changes. That is how a clean facade decays into a distributed monolith.
+A facade exists to be the **single place that abstracts complexity for everyone**. A2 makes that generic, shared, upstream service hold a hard-coded dependency on **one specific downstream** - its URL, auth, schema, uptime, rate limits. One integration today; three consumers = three sets of outbound code, three credentials, three failure modes, three reasons to redeploy the facade when a _downstream_ changes. That is how a clean facade decays into a distributed monolith.
 
 A1 inverts the arrow: the facade states a fact once; each consumer owns its dependency _on the facade_ and its own reaction. The generic service stays generic. Hence: for a facade with a growing consumer set, **event-notification is the default and direct push is the exception you justify**.
 
@@ -189,19 +189,19 @@ A1 inverts the arrow: the facade states a fact once; each consumer owns its depe
 ## 8. Key open questions that flip the decision
 
 1. **Consumer count** now and in 12–24mo? (biggest lever)
-2. **Latency SLA** — <1s (human waiting) or seconds–minutes fine?
+2. **Latency SLA** - <1s (human waiting) or seconds–minutes fine?
 3. **Volume / burst** vs the CRM's daily API budget + concurrency cap?
-4. **Data-on-bus policy** — is PII allowed on the broker? (thin vs fat event)
-5. **Contract & on-call ownership** — who owns it, who's paged?
-6. **Existing events** — does the facade already publish domain events? (if yes, A1 ~free)
-7. **Transactional integrity** — is the connect write transactional with the notify? (→ outbox)
-8. **Downstream→facade connectivity** — can the CRM reliably call back within its callout limits? (if not → favor fat event / push)
+4. **Data-on-bus policy** - is PII allowed on the broker? (thin vs fat event)
+5. **Contract & on-call ownership** - who owns it, who's paged?
+6. **Existing events** - does the facade already publish domain events? (if yes, A1 ~free)
+7. **Transactional integrity** - is the connect write transactional with the notify? (→ outbox)
+8. **Downstream→facade connectivity** - can the CRM reliably call back within its callout limits? (if not → favor fat event / push)
 
 ---
 
 > **One-line takeaways**
 >
-> - It's _async-decoupled-pull vs sync-coupled-push_ **and** _who-knows-whom_ — the second usually decides it for a facade.
+> - It's _async-decoupled-pull vs sync-coupled-push_ **and** _who-knows-whom_ - the second usually decides it for a facade.
 > - Direct push from a generic facade to a specific downstream is the smell to watch: O(N) integrations, cascading failure, distributed monolith.
 > - Thin-event + callback = freshest data + PII off the bus + self-healing; the cost is a second round-trip and async debugging.
 > - Whatever you pick, if the facade emits events, use a **Transactional Outbox**; the dual-write will bite otherwise.

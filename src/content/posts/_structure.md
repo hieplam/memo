@@ -10,20 +10,20 @@ Keep this in sync with `src/content.config.ts`. If the schema drifts, update thi
 
 | Field          | Type             | Required | Default              | Notes                                                                                                            |
 | -------------- | ---------------- | -------- | -------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| `title`        | string           | yes      | —                    | Quote it; may contain `:` and inner quotes.                                                                      |
-| `description`  | string           | yes      | —                    | One–two sentences that actually summarize the piece.                                                             |
-| `pubDatetime`  | date             | yes      | —                    | ISO with timezone, e.g. `2026-06-14T00:00:00Z`.                                                                  |
+| `title`        | string           | yes      | - | Quote it; may contain `:` and inner quotes.                                                                      |
+| `description`  | string           | yes      | - | One–two sentences that actually summarize the piece.                                                             |
+| `pubDatetime`  | date             | yes      | - | ISO with timezone, e.g. `2026-06-14T00:00:00Z`.                                                                  |
 | `tags`         | string[]         | no       | `["others"]`         | Topical kebab-case tags. Vietnamese posts include a `vietnamese` tag.                                            |
 | `author`       | string           | no       | `config.site.author` | Omit unless overriding.                                                                                          |
 | `lang`         | `"vi"` \| `"en"` | no       | `"en"`               | Set explicitly for clarity.                                                                                      |
-| `modDatetime`  | date \| null     | no       | —                    | Only when updating an existing post.                                                                             |
-| `featured`     | boolean          | no       | —                    | Pin to featured section.                                                                                         |
-| `draft`        | boolean          | no       | —                    | Hide from build when true.                                                                                       |
-| `ogImage`      | image \| string  | no       | —                    | Custom social card.                                                                                              |
-| `canonicalURL` | string           | no       | —                    | When syndicated from elsewhere.                                                                                  |
-| `hideEditPost` | boolean          | no       | —                    | Hide the "edit this post" link.                                                                                  |
-| `timezone`     | string           | no       | —                    | IANA tz override for display.                                                                                    |
-| `multiLangKey` | string           | no       | —                    | Shared key linking translations of the same post. Not currently used by any post, but available for en/vi pairs. |
+| `modDatetime`  | date \| null     | no       | - | Only when updating an existing post.                                                                             |
+| `featured`     | boolean          | no       | - | Pin to featured section.                                                                                         |
+| `draft`        | boolean          | no       | - | Hide from build when true.                                                                                       |
+| `ogImage`      | image \| string  | no       | - | Custom social card.                                                                                              |
+| `canonicalURL` | string           | no       | - | When syndicated from elsewhere.                                                                                  |
+| `hideEditPost` | boolean          | no       | - | Hide the "edit this post" link.                                                                                  |
+| `timezone`     | string           | no       | - | IANA tz override for display.                                                                                    |
+| `multiLangKey` | string           | no       | - | Shared key linking translations of the same post. Not currently used by any post, but available for en/vi pairs. |
 
 ## Filename & naming convention
 
@@ -45,5 +45,5 @@ Keep this in sync with `src/content.config.ts`. If the schema drifts, update thi
 - Bilingual glossing in Vietnamese posts: introduce an English technical term and
   immediately gloss it in Vietnamese in parentheses, e.g. `context engineering (kỹ thuật ngữ cảnh)`.
 - Mermaid diagrams, tables, code fences, and callouts are all supported and used.
-- Keep the substance, tables, diagrams, and citations of the source intact — shape
+- Keep the substance, tables, diagrams, and citations of the source intact - shape
   the opening and headings to match the blog, don't strip meaning.

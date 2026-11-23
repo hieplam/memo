@@ -13,14 +13,14 @@ tags:
 multiLangKey: "test-quality-metrics-6"
 ---
 
-> **"Beyond Coverage: Test Quality for the Agentic Loop" — Part 6 of 7 (closing part).** Six
+> **"Beyond Coverage: Test Quality for the Agentic Loop" - Part 6 of 7 (closing part).** Six
 > parts of metrics, evidence, tooling, and AI-test grading converge here into one scorecard and
-> a rollout plan — scored on the diff, module by module, never on the repo as a whole.
+> a rollout plan - scored on the diff, module by module, never on the repo as a whole.
 
 Score the **diff**, not the repo. A change is safe to merge without manual testing when, on the
 lines it touches: mutation score ≥ 80%, diff coverage ≥ 90%, zero test smells, ~0% flakiness,
 and critical paths carry strong (mutation + property) oracles. You reach the loop
-**module-by-module**, hardening the crown jewels first — never by chasing one repo-wide number.
+**module-by-module**, hardening the crown jewels first - never by chasing one repo-wide number.
 
 ---
 
@@ -39,27 +39,27 @@ and critical paths carry strong (mutation + property) oracles. You reach the loo
 _"Is my legacy suite good enough to merge AI changes without manual testing?" Score the diff, not the whole repo._
 
 These are **starting defaults** (Stryker.NET's `high:80 / low:60` baseline; Meta/industry diff
-gates), to be **tuned per module risk** — not laws of nature. The payment path should be
+gates), to be **tuned per module risk** - not laws of nature. The payment path should be
 stricter; a logging helper can be looser.
 
-## The autonomy ladder — earn each rung with evidence
+## The autonomy ladder - earn each rung with evidence
 
 You don't flip a switch to "autonomous." You climb:
 
-- **L0 · Manual** — coverage only, smells present, flaky. Human tests every PR. _(Most legacy
+- **L0 · Manual** - coverage only, smells present, flaky. Human tests every PR. _(Most legacy
   code starts here.)_
-- **L1 · Assisted** — diff-coverage gate + smell scan are green. Human still reviews and
+- **L1 · Assisted** - diff-coverage gate + smell scan are green. Human still reviews and
   lightly tests.
-- **L2 · Supervised auto** — diff-**mutation** gate green + flakiness budget held. Merge on
+- **L2 · Supervised auto** - diff-**mutation** gate green + flakiness budget held. Merge on
   green, human spot-checks.
-- **L3 · Autonomous** — all six scorecard dimensions green on the diff, critical paths carry
+- **L3 · Autonomous** - all six scorecard dimensions green on the diff, critical paths carry
   properties. **No manual test before merge.**
 
 The jump that actually buys you the loop is **L1 → L2**: adding the _mutation_ gate. Coverage
-gates (L1) stop obviously-untested merges; mutation gates (L2) stop _vacuously_-tested merges —
+gates (L1) stop obviously-untested merges; mutation gates (L2) stop _vacuously_-tested merges -
 including the AI's vacuous tests (Part 5).
 
-## "Is my legacy suite good enough?" — the decision procedure
+## "Is my legacy suite good enough?" - the decision procedure
 
 Run this, in order, scoped to the code a given change touches:
 
@@ -75,7 +75,7 @@ Run this, in order, scoped to the code a given change touches:
 5. **Flake-free & fast?** 5× rerun stable; run completes in minutes.
 
 If 1–5 pass on the diff, that change is **loop-ready** even if the _rest_ of the legacy repo is
-a swamp. That's the whole point: **you don't have to fix the legacy repo to start the loop —
+a swamp. That's the whole point: **you don't have to fix the legacy repo to start the loop -
 you have to fix the blast radius of each change.**
 
 ## Rollout strategy for a legacy codebase
@@ -85,13 +85,13 @@ you have to fix the blast radius of each change.**
    orchestration, **payment idempotency** (a unique reference), **due-date** rules, money
    rounding (`decimal(18,2)`).
 2. **Baseline them.** Run mutation once on those modules. The survivor list _is_ your
-   test-hardening backlog — prioritized by risk, handed to you (or the agent) for free.
+   test-hardening backlog - prioritized by risk, handed to you (or the agent) for free.
 3. **Turn on the diff gate** (`--since` / `--diff`) in CI for those modules at L2 thresholds.
 4. **Add properties to the math.** Invariants over generated inputs ("paid ≤ owed", "rounding
    conserves cents", "due date always lands on the configured business day") catch the classes of bug examples
    miss.
 5. **Quarantine flakes ruthlessly.** A flaky gate is no gate. Time-dependent logic
-   (`DateTime.Now`, a scheduled-date calc) is the usual culprit — inject the clock so tests are
+   (`DateTime.Now`, a scheduled-date calc) is the usual culprit - inject the clock so tests are
    deterministic.
 6. **Expand outward** module by module. Track _coverage of the diff_ and _mutation score of the
    diff_ over time, not a repo-wide percentage.
@@ -103,10 +103,10 @@ Not a coverage number. **Enough** is when, for the code you're changing:
 
 > there are **no surviving non-equivalent mutants**, the **assertions are behavioural and
 > smell-free**, the **critical invariants are properties**, and the **suite is fast and
-> flake-free** — so a passing build is genuine evidence the change is safe.
+> flake-free** - so a passing build is genuine evidence the change is safe.
 
 When that holds on a module, you can let the agent change that module and merge on green
-without manually testing — because the _measurement_, not the model's confidence, is what's
+without manually testing - because the _measurement_, not the model's confidence, is what's
 vouching for the change. That is the full agentic loop, earned rather than assumed.
 
 ## One-screen checklist (pin this)
@@ -125,7 +125,7 @@ PER-PR MERGE-GATE (scoped to the diff)
 ```
 
 > **The whole series in one line:** coverage tells you what you're blind to; mutation score
-> tells you what your tests would actually catch; neither is a silver bullet alone — but scoped
+> tells you what your tests would actually catch; neither is a silver bullet alone - but scoped
 > to the diff, combined, and used as a gate rather than a grade, they're enough to let an agent
 > merge on green.
 
@@ -145,6 +145,6 @@ PER-PR MERGE-GATE (scoped to the diff)
 
 ---
 
-← **Previous:** [Part 5 — Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · This closes the series.
+← **Previous:** [Part 5 - Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · This closes the series.
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · **6 · The Readiness Rubric (you are here)**
+**The series - Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · **6 · The Readiness Rubric (you are here)**
