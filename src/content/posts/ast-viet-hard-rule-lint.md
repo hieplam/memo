@@ -8,9 +8,9 @@ lang: "vi"
 ---
 
 > **Series "Giải mã chữ semantic" — Phần 4/5.**
-> ← [Phần 3: "Roslyn có semantic model" — tầng nghĩa dựng trên AST](/memo/posts/semantic-model-roslyn-go-types/)
-> → [Phần 5: Ghì cương AI agent bằng kiến trúc, không bằng lời dặn](/memo/posts/ghi-cuong-ai-agent-bang-construction/)
-> Đọc từ đầu: [mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
+> ← [Phần 3: "Roslyn có semantic model" — tầng nghĩa dựng trên AST](/posts/semantic-model-roslyn-go-types/)
+> → [Phần 5: Ghì cương AI agent bằng kiến trúc, không bằng lời dặn](/posts/ghi-cuong-ai-agent-bang-construction/)
+> Đọc từ đầu: [mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/)
 
 ## Tóm tắt nhanh
 
@@ -18,7 +18,7 @@ lang: "vi"
 - **Luật về cấu trúc** (cấm import package X, cấm câu `for-range` trên loại Y) → **AST là đủ**, không cần tầng semantic.
 - **Luật về ý nghĩa** (cấm gọi hàm `os.Getenv` thật sự) → **phải qua go/types** (hoặc SemanticModel trong Roslyn), vì chỉ có tầng đó mới biết cái `.Getenv()` đó là của `os` hay của một struct giả tên giống.
 - Demo Go chạy thật, **exit 1 là cố ý** — đúng như harness phải làm: có vi phạm thì chặn.
-- Đây chính là cái cổng mà [Phần 5](/memo/posts/ghi-cuong-ai-agent-bang-construction/) sẽ gắn vô để ghì cương AI agent.
+- Đây chính là cái cổng mà [Phần 5](/posts/ghi-cuong-ai-agent-bang-construction/) sẽ gắn vô để ghì cương AI agent.
 
 ---
 
@@ -114,7 +114,7 @@ if obj != nil && obj.Pkg() != nil &&
 > [!NOTE]
 > Theo tài liệu `go/types`, `types.Info.Uses` map ánh xạ mỗi `*ast.Ident` (tên định danh) tới `Object` mà nó **tham chiếu** tới — và `Object.Pkg()` cho biết package chứa symbol đó. Đây là phân giải tên (name resolution) — một trong ba việc `go/types` làm cùng lúc với type deduction và constant folding. ([pkg.go.dev/go/types](https://pkg.go.dev/go/types))
 
-![Sơ đồ: luật cú pháp chỉ đi qua AST, luật ngữ nghĩa đi qua go/types để phân giải symbol](/memo/diagrams/semantic/04-syntactic-vs-semantic-rule.svg)
+![Sơ đồ: luật cú pháp chỉ đi qua AST, luật ngữ nghĩa đi qua go/types để phân giải symbol](/diagrams/semantic/04-syntactic-vs-semantic-rule.svg)
 
 _Luật cú pháp (Luật A) chỉ cần đi qua AST — khớp node là xong. Luật ngữ nghĩa (Luật B) phải xuống tầng go/types để phân giải symbol, tránh dính oan f.Getenv của struct fake._
 
@@ -173,9 +173,9 @@ Phần 5 sẽ đi sâu vô cách nối cái cổng đó vô luồng AI agent th�
 
 ---
 
-**Tiếp theo:** [Phần 5 — Ghì cương AI agent bằng kiến trúc, không bằng lời dặn](/memo/posts/ghi-cuong-ai-agent-bang-construction/)
+**Tiếp theo:** [Phần 5 — Ghì cương AI agent bằng kiến trúc, không bằng lời dặn](/posts/ghi-cuong-ai-agent-bang-construction/)
 
-**Quay lại:** [Phần 3 — "Roslyn có semantic model" — tầng nghĩa dựng trên AST](/memo/posts/semantic-model-roslyn-go-types/) | [Mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
+**Quay lại:** [Phần 3 — "Roslyn có semantic model" — tầng nghĩa dựng trên AST](/posts/semantic-model-roslyn-go-types/) | [Mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/)
 
 ---
 

@@ -50,7 +50,7 @@ that distinction is the point of the whole series.
 
 ## The whole lifecycle, top-down
 
-![End-to-end lifecycle of the brainstorming skill](/memo/diagrams/brainstorming-skill/00-lifecycle.svg)
+![End-to-end lifecycle of the brainstorming skill](/diagrams/brainstorming-skill/00-lifecycle.svg)
 
 Read the diagram top to bottom and you have the entire skill. A creative request trips the
 skill; a hard gate slams down; the agent works through a nine-step checklist; and the only
@@ -134,6 +134,6 @@ itself: the six principles that shape every question the skill asks.
 
 ---
 
-**Next:** [Part 1 — Dialogue, Not Interrogation](/memo/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) →
+**Next:** [Part 1 — Dialogue, Not Interrogation](/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) →
 
-**The series — Inside the Brainstorming Skill:** **0 · The Map (you are here)** · [1 · Dialogue, Not Interrogation](/memo/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/memo/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/memo/posts/brainstorming-skill-part-5-the-visual-companion/) · [6 · Under the Hood](/memo/posts/brainstorming-skill-part-6-under-the-hood/)
+**The series — Inside the Brainstorming Skill:** **0 · The Map (you are here)** · [1 · Dialogue, Not Interrogation](/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/posts/brainstorming-skill-part-5-the-visual-companion/) · [6 · Under the Hood](/posts/brainstorming-skill-part-6-under-the-hood/)

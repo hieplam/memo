@@ -35,7 +35,7 @@ and critical paths carry strong (mutation + property) oracles. You reach the loo
 | **Critical paths**    | Mutation + property tests on money/auth/data-loss | gaps           | covered        | **≥ 90% mutation + invariants** |
 | **Speed**             | Suite + diff-mutation runtime                     | hours          | ~10 min        | **diff-scoped, minutes**        |
 
-![Agentic merge-gate readiness scorecard, scoring six dimensions from not-ready to loop-ready](/memo/diagrams/test-quality-metrics/05-readiness-scorecard.svg)
+![Agentic merge-gate readiness scorecard, scoring six dimensions from not-ready to loop-ready](/diagrams/test-quality-metrics/05-readiness-scorecard.svg)
 _"Is my legacy suite good enough to merge AI changes without manual testing?" Score the diff, not the whole repo._
 
 These are **starting defaults** (Stryker.NET's `high:80 / low:60` baseline; Meta/industry diff
@@ -145,6 +145,6 @@ PER-PR MERGE-GATE (scoped to the diff)
 
 ---
 
-← **Previous:** [Part 5 — Grading AI-Generated Tests](/memo/posts/test-quality-part-5-grading-ai-tests/) · This closes the series.
+← **Previous:** [Part 5 — Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · This closes the series.
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/memo/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/memo/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/memo/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/memo/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/memo/posts/test-quality-part-5-grading-ai-tests/) · **6 · The Readiness Rubric (you are here)**
+**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · **6 · The Readiness Rubric (you are here)**

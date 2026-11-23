@@ -28,7 +28,7 @@ multiLangKey: "test-quality-metrics-1"
 | **3 · Risk targeting**  | Are the _changed_ and _critical_ parts tested?  | Diff/changed-line coverage, critical-path coverage, property-based testing | Positive (scoped)                          |
 | **4 · Trust & health**  | Is the signal reliable enough to gate a merge?  | Flakiness rate, suite speed, determinism, pass-on-rerun                    | Gate prerequisite                          |
 
-![The test-quality metric stack: four layers, each answering a different question about the suite](/memo/diagrams/test-quality-metrics/03-metric-stack.svg)
+![The test-quality metric stack: four layers, each answering a different question about the suite](/diagrams/test-quality-metrics/03-metric-stack.svg)
 _No single number is "test quality." Read the suite as four layers, and gate bottom-anchored._
 
 You build **up** the stack and you gate **bottom-anchored**: fix the coverage zeros, then prove
@@ -140,6 +140,6 @@ sharpest instrument we have for it, and Part 2 is a proper explanation of how it
 
 ---
 
-← **Previous:** [Part 0 — Why Coverage Lies](/memo/posts/test-quality-part-0-why-coverage-lies/) · **Next:** [Part 2 — Mutation Testing, Properly Explained](/memo/posts/test-quality-part-2-mutation-testing/) →
+← **Previous:** [Part 0 — Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · **Next:** [Part 2 — Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) →
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/memo/posts/test-quality-part-0-why-coverage-lies/) · **1 · The Metric Catalog (you are here)** · [2 · Mutation Testing, Properly Explained](/memo/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/memo/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/memo/posts/test-quality-part-5-grading-ai-tests/) · [6 · The Readiness Rubric](/memo/posts/test-quality-part-6-readiness-rubric/)
+**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · **1 · The Metric Catalog (you are here)** · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · [6 · The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/)

@@ -13,7 +13,7 @@ tags:
 multiLangKey: "event-driven-top10-2"
 ---
 
-> **"Event-Driven: 10 Bài Toán Kinh Điển" — Phần 2/7.** 14:00, Tèo deploy phiên bản mới. Đúng lúc đó một instance `OrderService` bị kill giữa chừng: đơn của chị Tí đã nằm trong database, nhưng event `OrderCreated` chưa kịp publish. Rồi ở chương sau: `PaymentService` gọi cổng thanh toán, cổng timeout vì quá tải — code retry ngay lập tức, nhân với 200 instance đang làm y hệt, cổng thanh toán vừa ngoi lên lại bị dập tiếp. Hai bài toán khác nhau, cùng một bài học: hạ tầng phân tán không cho không thứ gì, kể cả việc "thử lại". [← Phần 1 — Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
+> **"Event-Driven: 10 Bài Toán Kinh Điển" — Phần 2/7.** 14:00, Tèo deploy phiên bản mới. Đúng lúc đó một instance `OrderService` bị kill giữa chừng: đơn của chị Tí đã nằm trong database, nhưng event `OrderCreated` chưa kịp publish. Rồi ở chương sau: `PaymentService` gọi cổng thanh toán, cổng timeout vì quá tải — code retry ngay lập tức, nhân với 200 instance đang làm y hệt, cổng thanh toán vừa ngoi lên lại bị dập tiếp. Hai bài toán khác nhau, cùng một bài học: hạ tầng phân tán không cho không thứ gì, kể cả việc "thử lại". [← Phần 1 — Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
 
 - **Dual-write** (ghi kép): DB và broker không chia sẻ transaction — không thứ tự nào của "ghi DB" và "publish event" là an toàn. Lời giải: **transactional outbox**, ghi event vào chính DB của mình rồi để một relay publish sau.
 - **Retry** tưởng đơn giản nhưng ẩn 4 câu hỏi: lỗi nào đáng thử lại, khi nào, mấy lần, và message phía sau có bị chặn không.
@@ -138,10 +138,10 @@ flowchart LR
 > **Tính chất — Circuit breaker (cầu dao ngắt mạch).** Cơ chế tự vệ _chủ động ngừng gọi_ một dịch vụ đang lỗi nặng, thay vì tiếp tục dồn tải lên nó. Khác retry về triết lý: retry lạc quan ("chắc lần này được"), breaker bi quan có tổ chức ("nghỉ đã, lát thăm dò"). Hai cơ chế bổ sung nhau: retry xử lý lỗi _lẻ tẻ_, breaker xử lý lỗi _hàng loạt_. Thư viện phổ biến: Resilience4j (Java), Polly (.NET), opossum (Node.js).
 
 > [!WARNING]
-> **Điều kiện tiên quyết bị quên nhiều nhất.** Mọi lần retry là một lần _có thể_ tạo side effect trùng (lần thử trước có khi đã thành công một nửa — đã trừ tiền nhưng timeout ở bước trả lời). **Chưa có idempotency thì chưa được bật retry.** Thứ tự triển khai đúng: idempotent consumer trước ([Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)), chính sách retry sau.
+> **Điều kiện tiên quyết bị quên nhiều nhất.** Mọi lần retry là một lần _có thể_ tạo side effect trùng (lần thử trước có khi đã thành công một nửa — đã trừ tiền nhưng timeout ở bước trả lời). **Chưa có idempotency thì chưa được bật retry.** Thứ tự triển khai đúng: idempotent consumer trước ([Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)), chính sách retry sau.
 
 ---
 
-← **Trước:** [Phần 1 — Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · **Tiếp theo:** [Phần 3 — Poison & Thứ Tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) →
+← **Trước:** [Phần 1 — Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · **Tiếp theo:** [Phần 3 — Poison & Thứ Tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) →
 
-**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · **2 · Outbox & Retry (đang ở đây)** · [3 · Poison & Thứ tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/memo/posts/event-driven-part-6-observability-and-recap-vi/)
+**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · **2 · Outbox & Retry (đang ở đây)** · [3 · Poison & Thứ tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/posts/event-driven-part-6-observability-and-recap-vi/)

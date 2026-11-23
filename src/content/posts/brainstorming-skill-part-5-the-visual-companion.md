@@ -41,7 +41,7 @@ the same per-question judgment.
 The skill is emphatic about _when_ to offer the companion: not at the start, but at the first
 moment a question genuinely needs it.
 
-![Visual companion — offered just-in-time, decided per question](/memo/diagrams/brainstorming-skill/05-visual-companion-decision.svg)
+![Visual companion — offered just-in-time, decided per question](/diagrams/brainstorming-skill/05-visual-companion-decision.svg)
 
 > "Do NOT offer it upfront. Wait until a question would genuinely be clearer shown than told — a
 > real mockup / layout / diagram question, not merely a UI _topic_. The first time that happens,
@@ -101,7 +101,7 @@ individual question shifts. The companion is a channel, not a different conversa
 When a question does go to the browser, it runs through a tight per-turn loop. The mechanics
 come from the companion guide's "The Loop" section (`visual-companion.md:105–137`).
 
-![The browser screen loop](/memo/diagrams/brainstorming-skill/05-visual-companion-loop.svg)
+![The browser screen loop](/diagrams/brainstorming-skill/05-visual-companion-loop.svg)
 
 How it actually works, per the guide:
 
@@ -187,6 +187,6 @@ opens the hood of the visual companion and looks at the machinery underneath.
 
 ---
 
-← **Previous:** [Part 4 — The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) · **Next:** [Part 6 — Under the Hood (appendix)](/memo/posts/brainstorming-skill-part-6-under-the-hood/) →
+← **Previous:** [Part 4 — The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) · **Next:** [Part 6 — Under the Hood (appendix)](/posts/brainstorming-skill-part-6-under-the-hood/) →
 
-**The series — Inside the Brainstorming Skill:** [0 · The Map](/memo/posts/brainstorming-skill-part-0-the-map/) · [1 · Dialogue, Not Interrogation](/memo/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/memo/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) · **5 · The Visual Companion (you are here)** · [6 · Under the Hood](/memo/posts/brainstorming-skill-part-6-under-the-hood/)
+**The series — Inside the Brainstorming Skill:** [0 · The Map](/posts/brainstorming-skill-part-0-the-map/) · [1 · Dialogue, Not Interrogation](/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) · **5 · The Visual Companion (you are here)** · [6 · Under the Hood](/posts/brainstorming-skill-part-6-under-the-hood/)

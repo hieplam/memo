@@ -14,7 +14,7 @@ multiLangKey: "freeze-dont-hash-gap-ids"
 ---
 
 > This grew out of the same **tribe** multi-agent code-review system covered in
-> [Campaign Runner: reading a TypeScript orchestrator through C# eyes](/memo/posts/tribe-campaign-runner-orchestrator/)
+> [Campaign Runner: reading a TypeScript orchestrator through C# eyes](/posts/tribe-campaign-runner-orchestrator/)
 > — this time about **Tracker**, tribe's rules-review agent, and a problem specific to it: giving
 > its findings a stable identity across independent, memoryless review runs. The design that
 > finally worked borrows an existing idiom from **C3**, an architecture-documentation tool used in
@@ -213,10 +213,10 @@ prose — and prose comparison will always be a similarity judgment, never an id
 
 - Internal: a private `tribe` multi-agent code-review system (Tracker, Warchief, Hunter, Skinner)
   and the harness-gap detector design this post distills — cited for provenance only.
-- On this blog: [Campaign Runner: reading a TypeScript orchestrator through C# eyes](/memo/posts/tribe-campaign-runner-orchestrator/)
+- On this blog: [Campaign Runner: reading a TypeScript orchestrator through C# eyes](/posts/tribe-campaign-runner-orchestrator/)
   — the deep dive on tribe's orchestrator, the module that spawns and supervises the executor
   sessions Tracker and its siblings run inside.
-- On this blog (Vietnamese, Southern-dialect narrative): [Bun port 1 triệu dòng code trong 11 ngày — và cái plugin tui viết vì hết tin nổi chữ "done"](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/)
+- On this blog (Vietnamese, Southern-dialect narrative): [Bun port 1 triệu dòng code trong 11 ngày — và cái plugin tui viết vì hết tin nổi chữ "done"](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/)
   — the origin story of the whole tribe design, including why Tracker exists at all.
 - The identity idiom borrowed here is **C3**'s entity-ID model: identity is assigned once at entity
   creation and never re-derived from re-running the process that produced the entity — the same

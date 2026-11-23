@@ -37,7 +37,7 @@ call this the **R-I-P-R** model:
 **Coverage stops measuring at gate 1.** Everything that makes a test _valuable_ — infection,
 propagation, and especially the assertion that reveals the fault — is invisible to coverage.
 
-![The R-I-P-R funnel: coverage only proves reachability, not that a test would catch a bug](/memo/diagrams/test-quality-metrics/01-ripr-funnel.svg)
+![The R-I-P-R funnel: coverage only proves reachability, not that a test would catch a bug](/diagrams/test-quality-metrics/01-ripr-funnel.svg)
 _Four gates stand between "the test ran this line" and "the test would catch a bug here" — coverage only proves the first._
 
 This is why a suite can show 90% line coverage and still be blind: it runs all the code and
@@ -63,7 +63,7 @@ coverage and < 20% mutation score, at least 12 had multiple missing `assert` sta
 tests that ran the code but failed to catch obvious injected defects. ✅ _(confirmed, 3-0)_
 <sup>[oraclegap]</sup>
 
-![Scatter plot of coverage vs mutation score per file, showing a wide gap below the diagonal](/memo/diagrams/test-quality-metrics/02-oracle-gap.svg)
+![Scatter plot of coverage vs mutation score per file, showing a wide gap below the diagonal](/diagrams/test-quality-metrics/02-oracle-gap.svg)
 _Each dot is a source file. The distance below the diagonal is code that's run but not actually verified — the "oracle gap."_
 
 **Branch coverage doesn't save you either.** A 2021 industrial study found branch coverage and
@@ -124,6 +124,6 @@ layer.
 
 ---
 
-**Next:** [Part 1 — The Metric Catalog](/memo/posts/test-quality-part-1-metric-catalog/) →
+**Next:** [Part 1 — The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) →
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** **0 · Why Coverage Lies (you are here)** · [1 · The Metric Catalog](/memo/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/memo/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/memo/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/memo/posts/test-quality-part-5-grading-ai-tests/) · [6 · The Readiness Rubric](/memo/posts/test-quality-part-6-readiness-rubric/)
+**The series — Beyond Coverage: Test Quality for the Agentic Loop:** **0 · Why Coverage Lies (you are here)** · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · [5 · Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · [6 · The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/)

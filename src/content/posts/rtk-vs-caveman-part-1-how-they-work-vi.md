@@ -127,8 +127,8 @@ Số liệu benchmark do nhà phát hành công bố._
 
 ---
 
-**Next:** [Phần 2 — Phân tích bảo mật](/memo/posts/rtk-vs-caveman-part-2-security-vi/) →
+**Next:** [Phần 2 — Phân tích bảo mật](/posts/rtk-vs-caveman-part-2-security-vi/) →
 
 **Loạt bài — RTK vs Caveman:** **1 · Hai công cụ hoạt động thế nào (bạn đang ở đây)** ·
-[2 · Phân tích bảo mật](/memo/posts/rtk-vs-caveman-part-2-security-vi/) ·
-[3 · Đào sâu: sentinel NUL & SQLite](/memo/posts/rtk-vs-caveman-part-3-shrink-deep-dive-vi/)
+[2 · Phân tích bảo mật](/posts/rtk-vs-caveman-part-2-security-vi/) ·
+[3 · Đào sâu: sentinel NUL & SQLite](/posts/rtk-vs-caveman-part-3-shrink-deep-dive-vi/)

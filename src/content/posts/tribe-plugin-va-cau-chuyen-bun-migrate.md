@@ -88,4 +88,4 @@ _Nguồn cho vụ Bun: [The Register — Bun posts Rust porting guide](https://w
 **Đọc thêm:** con Tracker nhắc ở trên còn giữ một bài toán riêng — soi rule thì dễ, nhưng làm sao
 cho mỗi lỗ hổng nó phát hiện một cái ID sống được qua nhiều lần chạy, trong khi bản thân nó không
 nhớ gì giữa các lần đó? Tui kể trong [Đóng băng, đừng băm: cho một agent không tất định một danh
-tính tất định](/memo/posts/freeze-dont-hash-gap-ids-vi/).
+tính tất định](/posts/freeze-dont-hash-gap-ids-vi/).

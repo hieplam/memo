@@ -32,8 +32,8 @@ multiLangKey: "event-driven-top10-6"
 - **Correlation ID:** sinh một ID duy nhất tại điểm vào đầu tiên (lúc chị Tí bấm Đặt hàng), rồi _chép tiếp vào header của mọi event và mọi dòng log_ phát sinh từ nghiệp vụ đó, qua mọi service. Search một ID → toàn bộ câu chuyện của đơn #4711 hiện ra theo dòng thời gian. Rẻ, thủ công, hiệu quả tức thì.
 - **Distributed tracing:** phiên bản công nghiệp của ý tưởng trên — chuẩn **OpenTelemetry**: mỗi bước xử lý là một _span_ (đoạn có thời điểm đầu-cuối), các span nối thành _trace_ (cây phả hệ của request); trace context truyền qua header của message; backend (Jaeger, Tempo, Datadog...) vẽ thành sơ đồ thời gian.
 - **Structured logging:** log dạng JSON có field chuẩn (`correlationId`, `eventId`, `orderId`) thay vì chuỗi văn tự do — để "search một ID" là một câu query, không phải một buổi grep.
-- **Bộ metric tối thiểu** — bốn đồng hồ phải có trên dashboard, mỗi cái canh một phần của loạt bài: **consumer lag** ([Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) — hệ có đang ứ?), **DLQ depth** ([Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) — có message chết chưa ai khám?), **processing error rate** ([Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) — retry đang gồng cho cái gì?), **end-to-end latency** ([Phần 4](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) — khe hở nhất quán đang rộng bao nhiêu?).
-- **Event replay:** đặc quyền của broker kiểu log như Kafka (message không bị xoá khi đọc — chỉ có con trỏ offset di chuyển): cho consumer _tua lại_ đọc từ offset quá khứ. Ứng dụng: dựng lại read model từ đầu sau khi fix bug, cho service mới "học" lịch sử, kiểm chứng giả thuyết sự cố. Điều kiện an toàn để tua: consumer idempotent — [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/), lần cuối cùng loạt bài nhắc đến nó.
+- **Bộ metric tối thiểu** — bốn đồng hồ phải có trên dashboard, mỗi cái canh một phần của loạt bài: **consumer lag** ([Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) — hệ có đang ứ?), **DLQ depth** ([Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) — có message chết chưa ai khám?), **processing error rate** ([Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/) — retry đang gồng cho cái gì?), **end-to-end latency** ([Phần 4](/posts/event-driven-part-4-consistency-and-sagas-vi/) — khe hở nhất quán đang rộng bao nhiêu?).
+- **Event replay:** đặc quyền của broker kiểu log như Kafka (message không bị xoá khi đọc — chỉ có con trỏ offset di chuyển): cho consumer _tua lại_ đọc từ offset quá khứ. Ứng dụng: dựng lại read model từ đầu sau khi fix bug, cho service mới "học" lịch sử, kiểm chứng giả thuyết sự cố. Điều kiện an toàn để tua: consumer idempotent — [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/), lần cuối cùng loạt bài nhắc đến nó.
 
 ```mermaid
 flowchart LR
@@ -69,27 +69,27 @@ Correlation ID chảy xuyên hệ thống như chất nhuộm màu trong mạch 
 
 ### Glossary — mọi tính chất trong một màn hình
 
-- **At-most-once / At-least-once / Exactly-once** — ba mức đảm bảo giao nhận (delivery guarantee): mỗi event được xử lý tối đa 1 lần (có thể mất) / ít nhất 1 lần (có thể trùng) / đúng 1 lần (chỉ đạt được end-to-end bằng at-least-once + idempotency). [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
-- **Durability** (độ bền) — dữ liệu đã xác nhận thì sống sót qua crash: đã ghi đĩa và/hoặc đã nhân bản. [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
-- **Acknowledgement/ack** (xác nhận xử lý) — tín hiệu chuyển giao trách nhiệm consumer → broker; đặt sau xử lý = at-least-once, đặt trước = at-most-once. [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
-- **Idempotency** (tính luỹ đẳng) — làm nhiều lần kết quả như một lần: f(f(x)) = f(x). Tính chất trung tâm của cả loạt bài. [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
-- **Deduplication** (khử trùng lặp) — chặn xử lý lặp bằng định danh duy nhất trong một cửa sổ thời gian. [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
-- **Atomicity** (tính nguyên tử) — nhóm thao tác cùng thành công hoặc cùng thất bại, chỉ có sẵn trong phạm vi một database. [Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/)
-- **Exponential backoff + jitter** (lùi cấp số nhân, có nhiễu) — khoảng chờ retry nhân đôi dần + thành phần ngẫu nhiên chống đồng pha. [Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/)
-- **Circuit breaker** (cầu dao ngắt mạch) — ngừng gọi dịch vụ đang lỗi nặng trong một khoảng nghỉ, bổ sung cho retry. [Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/)
-- **Head-of-line blocking** (kẹt từ đầu hàng) — một message chậm/hỏng ở đầu hàng chặn mọi message phía sau. [Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/), [Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
-- **Dead Letter Queue (DLQ)** (hàng đợi thư chết) — nơi cách ly message thất bại lặp lại, đi cùng alert + quy trình redrive. [Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
-- **Ordering guarantee** (đảm bảo thứ tự) — total (toàn cục) vs per-key (theo khoá — mức nghiệp vụ thường cần). [Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
-- **Commutativity** (tính giao hoán) — đổi thứ tự thực hiện không đổi kết quả, thiết kế được thì bài toán ordering tự biến mất. [Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
-- **Eventual consistency** (nhất quán sau cùng) — ngừng ghi thì mọi nơi rồi sẽ hội tụ; đo bằng staleness, quản bằng SLO. [Phần 4](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/)
-- **Read-your-own-writes** (đọc thấy điều mình vừa ghi) — mức nhất quán tối thiểu cho UX. [Phần 4](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/)
-- **Saga & Compensating transaction** (chuỗi giao dịch + giao dịch bù) — transaction lớn = chuỗi transaction nhỏ; bước sau hỏng thì chạy thao tác nghiệp vụ đảo ngược cho các bước trước. [Phần 4](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/)
-- **Semantic lock** (khoá ngữ nghĩa) — trạng thái trung gian (PENDING) đánh dấu dữ liệu đang trong saga dở dang. [Phần 4](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/)
-- **Consumer lag** (độ trễ tiêu thụ) — số message đã vào topic nhưng chưa được xử lý. [Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
-- **Backpressure** (áp lực ngược) — hạ nguồn báo thượng nguồn chậm lại thay vì chết chìm trong im lặng. [Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
-- **Failover & Rebalancing** (tự chuyển vai khi node chết) — vai trò của node chết được node sống tiếp quản tự động, cần sẵn bản sao, và sinh duplicate lúc chuyển giao. [Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
-- **Hot partition** (làn quá nóng) — partition key phân bố lệch dồn tải vào một làn; thêm consumer không cứu được. [Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
-- **Backward / Forward compatibility** (tương thích lùi / tiến) — mới đọc được đồ cũ / cũ đọc được đồ mới; đạt cả hai (full) thì các team deploy không cần hẹn nhau. [Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
+- **At-most-once / At-least-once / Exactly-once** — ba mức đảm bảo giao nhận (delivery guarantee): mỗi event được xử lý tối đa 1 lần (có thể mất) / ít nhất 1 lần (có thể trùng) / đúng 1 lần (chỉ đạt được end-to-end bằng at-least-once + idempotency). [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
+- **Durability** (độ bền) — dữ liệu đã xác nhận thì sống sót qua crash: đã ghi đĩa và/hoặc đã nhân bản. [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
+- **Acknowledgement/ack** (xác nhận xử lý) — tín hiệu chuyển giao trách nhiệm consumer → broker; đặt sau xử lý = at-least-once, đặt trước = at-most-once. [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
+- **Idempotency** (tính luỹ đẳng) — làm nhiều lần kết quả như một lần: f(f(x)) = f(x). Tính chất trung tâm của cả loạt bài. [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
+- **Deduplication** (khử trùng lặp) — chặn xử lý lặp bằng định danh duy nhất trong một cửa sổ thời gian. [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/)
+- **Atomicity** (tính nguyên tử) — nhóm thao tác cùng thành công hoặc cùng thất bại, chỉ có sẵn trong phạm vi một database. [Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/)
+- **Exponential backoff + jitter** (lùi cấp số nhân, có nhiễu) — khoảng chờ retry nhân đôi dần + thành phần ngẫu nhiên chống đồng pha. [Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/)
+- **Circuit breaker** (cầu dao ngắt mạch) — ngừng gọi dịch vụ đang lỗi nặng trong một khoảng nghỉ, bổ sung cho retry. [Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/)
+- **Head-of-line blocking** (kẹt từ đầu hàng) — một message chậm/hỏng ở đầu hàng chặn mọi message phía sau. [Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/), [Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
+- **Dead Letter Queue (DLQ)** (hàng đợi thư chết) — nơi cách ly message thất bại lặp lại, đi cùng alert + quy trình redrive. [Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
+- **Ordering guarantee** (đảm bảo thứ tự) — total (toàn cục) vs per-key (theo khoá — mức nghiệp vụ thường cần). [Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
+- **Commutativity** (tính giao hoán) — đổi thứ tự thực hiện không đổi kết quả, thiết kế được thì bài toán ordering tự biến mất. [Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/)
+- **Eventual consistency** (nhất quán sau cùng) — ngừng ghi thì mọi nơi rồi sẽ hội tụ; đo bằng staleness, quản bằng SLO. [Phần 4](/posts/event-driven-part-4-consistency-and-sagas-vi/)
+- **Read-your-own-writes** (đọc thấy điều mình vừa ghi) — mức nhất quán tối thiểu cho UX. [Phần 4](/posts/event-driven-part-4-consistency-and-sagas-vi/)
+- **Saga & Compensating transaction** (chuỗi giao dịch + giao dịch bù) — transaction lớn = chuỗi transaction nhỏ; bước sau hỏng thì chạy thao tác nghiệp vụ đảo ngược cho các bước trước. [Phần 4](/posts/event-driven-part-4-consistency-and-sagas-vi/)
+- **Semantic lock** (khoá ngữ nghĩa) — trạng thái trung gian (PENDING) đánh dấu dữ liệu đang trong saga dở dang. [Phần 4](/posts/event-driven-part-4-consistency-and-sagas-vi/)
+- **Consumer lag** (độ trễ tiêu thụ) — số message đã vào topic nhưng chưa được xử lý. [Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
+- **Backpressure** (áp lực ngược) — hạ nguồn báo thượng nguồn chậm lại thay vì chết chìm trong im lặng. [Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
+- **Failover & Rebalancing** (tự chuyển vai khi node chết) — vai trò của node chết được node sống tiếp quản tự động, cần sẵn bản sao, và sinh duplicate lúc chuyển giao. [Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
+- **Hot partition** (làn quá nóng) — partition key phân bố lệch dồn tải vào một làn; thêm consumer không cứu được. [Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
+- **Backward / Forward compatibility** (tương thích lùi / tiến) — mới đọc được đồ cũ / cũ đọc được đồ mới; đạt cả hai (full) thì các team deploy không cần hẹn nhau. [Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/)
 - **Correlation ID** (mã định danh xuyên chuỗi) — một ID sinh ở điểm vào, chép vào mọi event và log — sợi dây nối lại câu chuyện khi không còn call stack. Phần 6 (bài này)
 
 ## 3. Nguồn
@@ -104,6 +104,6 @@ Correlation ID chảy xuyên hệ thống như chất nhuộm màu trong mạch 
 
 ---
 
-← **Trước:** [Phần 5 — Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · Đây là phần khép loạt bài.
+← **Trước:** [Phần 5 — Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · Đây là phần khép loạt bài.
 
-**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · **6 · Observability & Tổng kết (đang ở đây)**
+**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · **6 · Observability & Tổng kết (đang ở đây)**

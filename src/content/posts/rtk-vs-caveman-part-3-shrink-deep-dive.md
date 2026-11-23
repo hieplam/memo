@@ -272,6 +272,6 @@ confirming the facts while correcting the severity framing in each direction). F
 ---
 
 **The series — Shrinking the Agent Loop: RTK vs Caveman:**
-[1 · How They Work](/memo/posts/rtk-vs-caveman-part-1-how-they-work/) ·
-[2 · Living Inside the Trust Boundary](/memo/posts/rtk-vs-caveman-part-2-security/) ·
+[1 · How They Work](/posts/rtk-vs-caveman-part-1-how-they-work/) ·
+[2 · Living Inside the Trust Boundary](/posts/rtk-vs-caveman-part-2-security/) ·
 **3 · A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext (you are here)**

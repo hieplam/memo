@@ -24,7 +24,7 @@ criteria. Now the skill changes mode. It stops drawing things _out_ of you and s
 concrete design _in front of_ you. But the Socratic discipline doesn't switch off; it just
 changes shape. The design is still validated incrementally, still one piece at a time.
 
-![From answers to design — incremental validation](/memo/diagrams/brainstorming-skill/03-design-validation.svg)
+![From answers to design — incremental validation](/diagrams/brainstorming-skill/03-design-validation.svg)
 
 ## First: never let the first idea win by default
 
@@ -140,6 +140,6 @@ human sign-off before any planning begins. That is the spec pipeline, and it is 
 
 ---
 
-← **Previous:** [Part 2 — The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) · **Next:** [Part 4 — The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) →
+← **Previous:** [Part 2 — The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) · **Next:** [Part 4 — The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) →
 
-**The series — Inside the Brainstorming Skill:** [0 · The Map](/memo/posts/brainstorming-skill-part-0-the-map/) · [1 · Dialogue, Not Interrogation](/memo/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) · **3 · From Answers to Design (you are here)** · [4 · The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/memo/posts/brainstorming-skill-part-5-the-visual-companion/) · [6 · Under the Hood](/memo/posts/brainstorming-skill-part-6-under-the-hood/)
+**The series — Inside the Brainstorming Skill:** [0 · The Map](/posts/brainstorming-skill-part-0-the-map/) · [1 · Dialogue, Not Interrogation](/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) · **3 · From Answers to Design (you are here)** · [4 · The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/posts/brainstorming-skill-part-5-the-visual-companion/) · [6 · Under the Hood](/posts/brainstorming-skill-part-6-under-the-hood/)

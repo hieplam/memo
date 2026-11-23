@@ -15,7 +15,7 @@ multiLangKey: "llm-eval-glossary"
 
 ## Bài này nối tiếp từ đâu
 
-Tui từng [viết một bài](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) về **Tribe** — plugin
+Tui từng [viết một bài](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) về **Tribe** — plugin
 5-agent tui viết cho Claude Code sau khi đọc chuyện team Bun port 1 triệu dòng code từ Zig sang Rust
 trong 11 ngày. Tóm tắt bài đó: thay vì cố làm cho một agent đáng tin hơn bằng cách năn nỉ nó kỹ hơn
 trong prompt, hãy **tách quyền ra nhiều agent** để không con nào vừa viết code, vừa dispatch, vừa
@@ -206,7 +206,7 @@ benchmark fail-closed, chấm nương tay, hoặc so sánh dựa trên mẫu m�
 số tự tin nhưng sai, lần nào cũng vậy — và một con số tự tin sai còn tệ hơn không có con số nào, vì
 nó _cảm giác_ như bằng chứng.
 
-Đó cũng chính là kỷ luật mà [bài về Tribe](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) từng
+Đó cũng chính là kỷ luật mà [bài về Tribe](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) từng
 kể ngay từ đầu: tin bằng chứng, đừng tin lời kể. Hóa ra luật đó không dừng lại ở agent bị đo — nó áp
 dụng y hệt cho chính cái đang làm nhiệm vụ đo lường.
 

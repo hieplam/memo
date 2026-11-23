@@ -14,7 +14,7 @@ multiLangKey: "llm-eval-glossary"
 
 ## Where this picks up
 
-I [wrote before](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) about **Tribe** — the 5-agent
+I [wrote before](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) about **Tribe** — the 5-agent
 plugin I built for Claude Code after reading about Bun's 11-day Zig-to-Rust rewrite. The short version
 of that post: instead of trying to make one agent more trustworthy by begging it harder in the prompt,
 split the powers up so no single agent can write code, dispatch, review, _and_ declare itself done.
@@ -203,7 +203,7 @@ to the agent itself. A benchmark that fails closed, grades leniently, or runs it
 one-shot samples will hand you a confident, wrong number every time — and a confident wrong number is
 worse than no number at all, because it _feels_ like evidence.
 
-That's the same discipline the [Tribe post](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) was
+That's the same discipline the [Tribe post](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) was
 about in the first place: trust artifacts, not narration. Turns out that rule doesn't stop at the
 agent under test — it applies just as hard to the thing doing the measuring.
 

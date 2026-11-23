@@ -216,4 +216,4 @@ print('runs:', len(P), '| taskId trùng:', [t for t,n in Counter(t for t,_ in P)
 
 ---
 
-> **Liên quan:** [Claude Code: Dynamic Workflow vs Subagent — phân biệt đầy đủ](/memo/posts/claude-code-dynamic-workflows-vs-subagents/) — khi nào dùng workflow vs subagent ("ai giữ kế hoạch").
+> **Liên quan:** [Claude Code: Dynamic Workflow vs Subagent — phân biệt đầy đủ](/posts/claude-code-dynamic-workflows-vs-subagents/) — khi nào dùng workflow vs subagent ("ai giữ kế hoạch").

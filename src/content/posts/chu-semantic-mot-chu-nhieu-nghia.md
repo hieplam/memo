@@ -38,7 +38,7 @@ Sai. Sai khá nặng. Và phải mất kha khá năm tui mới gỡ được cá
 
 Vấn đề nằm ở chỗ tiếng Anh lười: chữ **semantic** (gốc Hy Lạp _semantikos_, nghĩa là "thuộc về ý nghĩa") bị mượn cho hai ngành khác hẳn nhau. Nghe giống nhau, viết giống nhau, nhưng bên trong là **hai cái máy không liên quan gì**.
 
-![Sơ đồ: chữ “semantic” và hai thế giới — semantic model (compiler) và semantic search (embeddings)](/memo/diagrams/semantic/00-two-worlds.svg)
+![Sơ đồ: chữ “semantic” và hai thế giới — semantic model (compiler) và semantic search (embeddings)](/diagrams/semantic/00-two-worlds.svg)
 
 _Cùng một gốc chữ "ý nghĩa", nhưng một bên là bảng ký hiệu của compiler, một bên là vector embeddings. Đừng gộp._
 
@@ -72,11 +72,11 @@ Và đó là cú nối tới một series liên kết của bài này — _"Bắ
 
 | #   | Bài                                                                                             | Trả lời câu hỏi                | Bằng chứng               |
 | --- | ----------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------ |
-| 1   | [Cú pháp vs Ngữ nghĩa: AST thật ra là gì](/memo/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)          | "semantic dính gì tới AST?"    | Go `go/ast` chạy thật    |
-| 2   | ["Tool này không có semantic search" nghĩa là gì](/memo/posts/semantic-search-la-gi/)           | chữ semantic kiểu _embeddings_ | sơ đồ lexical vs vector  |
-| 3   | ["Roslyn có semantic model" — tầng nghĩa trên AST](/memo/posts/semantic-model-roslyn-go-types/) | chữ semantic kiểu _compiler_   | Go `go/types` + Roslyn   |
-| 4   | [Lấy AST viết hard-rule: cái lint chặn code sai](/memo/posts/ast-viet-hard-rule-lint/)          | "AST viết harness hard-rule"   | Go linter ~40 dòng       |
-| 5   | [Ghì cương AI agent bằng kiến trúc](/memo/posts/ghi-cuong-ai-agent-bang-construction/)          | "...trong AI agent"            | nối series constrain-llm |
+| 1   | [Cú pháp vs Ngữ nghĩa: AST thật ra là gì](/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)          | "semantic dính gì tới AST?"    | Go `go/ast` chạy thật    |
+| 2   | ["Tool này không có semantic search" nghĩa là gì](/posts/semantic-search-la-gi/)           | chữ semantic kiểu _embeddings_ | sơ đồ lexical vs vector  |
+| 3   | ["Roslyn có semantic model" — tầng nghĩa trên AST](/posts/semantic-model-roslyn-go-types/) | chữ semantic kiểu _compiler_   | Go `go/types` + Roslyn   |
+| 4   | [Lấy AST viết hard-rule: cái lint chặn code sai](/posts/ast-viet-hard-rule-lint/)          | "AST viết harness hard-rule"   | Go linter ~40 dòng       |
+| 5   | [Ghì cương AI agent bằng kiến trúc](/posts/ghi-cuong-ai-agent-bang-construction/)          | "...trong AI agent"            | nối series constrain-llm |
 
 ## 5. Giao kèo: không tin báo nào, chạy được mới tin
 
@@ -90,4 +90,4 @@ Có vài chỗ blog ngoài kia hay nói sai mà nghe rất xuôi tai — ví d�
 
 Rồi, đủ dạo đầu. Vào bài 1 — ta mổ cái AST ra xem bên trong nó _thật sự_ biết gì và không biết gì.
 
-→ [Phần 1: Cú pháp vs Ngữ nghĩa — AST thật ra là gì (và không là gì)](/memo/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)
+→ [Phần 1: Cú pháp vs Ngữ nghĩa — AST thật ra là gì (và không là gì)](/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)

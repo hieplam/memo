@@ -87,7 +87,7 @@ A machine-generated test is admitted to the suite **only if it clears every gate
 | 5   | **Clean**              | has a test smell                 | scan: no assertion-free / magic-number / conditional-logic / act-assert-mismatch      |
 | 6   | **Behavioural oracle** | asserts implementation, not spec | on critical paths, oracle traces to a human-owned spec/property, not "current output" |
 
-![The AI-generated-test gauntlet: six gates a candidate test must clear before it merges](/memo/diagrams/test-quality-metrics/04-ai-test-gauntlet.svg)
+![The AI-generated-test gauntlet: six gates a candidate test must clear before it merges](/diagrams/test-quality-metrics/04-ai-test-gauntlet.svg)
 _Never trust raw LLM output. Only a test that survives every filter earns a place in the suite (after Meta's TestGen-LLM, FSE 2024)._
 
 Gates 1–3 are Meta's published filter (build → pass → no-flake). **Gate 4 is the one most teams
@@ -134,6 +134,6 @@ defend. The final part turns this into concrete thresholds and a maturity ladder
 
 ---
 
-← **Previous:** [Part 4 — Tooling for Go and .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet/) · **Next:** [Part 6 — The Readiness Rubric](/memo/posts/test-quality-part-6-readiness-rubric/) →
+← **Previous:** [Part 4 — Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · **Next:** [Part 6 — The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/) →
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/memo/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/memo/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/memo/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/memo/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet/) · **5 · Grading AI-Generated Tests (you are here)** · [6 · The Readiness Rubric](/memo/posts/test-quality-part-6-readiness-rubric/)
+**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · [4 · Tooling for Go and .NET](/posts/test-quality-part-4-tooling-go-dotnet/) · **5 · Grading AI-Generated Tests (you are here)** · [6 · The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/)

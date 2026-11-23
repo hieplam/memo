@@ -17,7 +17,7 @@ lang: "vi"
 ---
 
 > **Series "Giải mã chữ semantic"** — bạn đang đọc Phần 3.
-> ← [Phần 2: "Semantic search" là gì](/memo/posts/semantic-search-la-gi/) | [Mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/) | [Phần 4: Lấy AST viết hard-rule →](/memo/posts/ast-viet-hard-rule-lint/)
+> ← [Phần 2: "Semantic search" là gì](/posts/semantic-search-la-gi/) | [Mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/) | [Phần 4: Lấy AST viết hard-rule →](/posts/ast-viet-hard-rule-lint/)
 
 ## Tóm tắt nhanh
 
@@ -122,7 +122,7 @@ Ba trường chính:
 
 Lý do thiết kế như vậy? `go/types` phải làm ba việc cùng lúc vì chúng phụ thuộc lẫn nhau: phân giải tên (name resolution), suy kiểu (type deduction), và tính hằng (constant folding). Giá trị của `unsafe.Sizeof(x)` phụ thuộc kiểu; kiểu mảng `[N]T` phụ thuộc hằng `N`; key của composite literal `T{k:0}` phụ thuộc việc biết `T`. Không làm riêng lẻ được. [(pkg.go.dev/go/types — verbatim)](https://pkg.go.dev/go/types)
 
-![Sơ đồ: bốn node x trong AST được go/types phân giải thành hai biến qua side-map types.Info](/memo/diagrams/semantic/03-ast-vs-model.svg)
+![Sơ đồ: bốn node x trong AST được go/types phân giải thành hai biến qua side-map types.Info](/diagrams/semantic/03-ast-vs-model.svg)
 
 _Bốn node `x` trông y hệt trong AST được phân giải thành 2 biến khác nhau qua map riêng `types.Info` — không phải "tô màu" lên cây._
 
@@ -201,7 +201,7 @@ Một rule "không import package X" chỉ cần AST — nhìn import path là �
 
 Phần 4 sẽ viết thật một linter nhỏ, đi qua từng loại câu hỏi đó. Biết ranh giới cú pháp / ngữ nghĩa thì mới biết chọn đúng tool.
 
-→ [Phần 4: Lấy AST viết hard-rule — cái lint chặn code sai](/memo/posts/ast-viet-hard-rule-lint/)
+→ [Phần 4: Lấy AST viết hard-rule — cái lint chặn code sai](/posts/ast-viet-hard-rule-lint/)
 
 ---
 
@@ -213,4 +213,4 @@ Phần 4 sẽ viết thật một linter nhỏ, đi qua từng loại câu hỏi
 - [Microsoft Learn — Compiler API model](https://learn.microsoft.com/en-us/dotnet/csharp/roslyn-sdk/compiler-api-model) — mô tả ba tầng Roslyn, verbatim quotes
 - [Microsoft Learn — SemanticModel API ref](https://learn.microsoft.com/en-us/dotnet/api/microsoft.codeanalysis.semanticmodel) — GetSemanticModel signature
 
-← [Phần 2: "Semantic search" là gì](/memo/posts/semantic-search-la-gi/) | [Mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/) | [Phần 4: Lấy AST viết hard-rule →](/memo/posts/ast-viet-hard-rule-lint/)
+← [Phần 2: "Semantic search" là gì](/posts/semantic-search-la-gi/) | [Mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/) | [Phần 4: Lấy AST viết hard-rule →](/posts/ast-viet-hard-rule-lint/)

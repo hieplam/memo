@@ -44,7 +44,7 @@ Serve as the single Astro 6 static site that builds all blog content, routes, an
 - Build all pages to static HTML via `astro build` using bun as the package manager and task runner.
 - Validate content frontmatter at build time via Zod schemas defined in `src/content.config.ts`.
 - Serve a Pagefind search index generated as a post-build step.
-- Deploy deterministically to GitHub Pages from the `dist/` output on every push to `main`, served from the `/memo/` project subpath (Astro `base`).
+- Deploy deterministically to GitHub Pages from the `dist/` output on every push to `main`, served from the custom domain `https://lamhiep.com/` (root path, no Astro `base`).
 - Maintain SEO correctness: canonical URLs, sitemap, RSS feed, robots.txt, and OG images.
 - Enforce accessibility and responsive layout via TailwindCSS 4 utility classes and semantic HTML.
 - Run CI (lint, format check, build) on every push and pull request, and automate releases via release-please on merges to `main`.

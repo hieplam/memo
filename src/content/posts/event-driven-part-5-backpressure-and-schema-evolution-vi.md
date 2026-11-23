@@ -24,20 +24,20 @@ multiLangKey: "event-driven-top10-5"
 
 ## 1. Consumer lag & backpressure — producer chạy 100, consumer chạy 10
 
-**What — vấn đề là gì?** **Consumer lag** (độ trễ tiêu thụ): khoảng cách giữa vị trí mới nhất của topic và vị trí consumer đã xử lý tới — đo bằng số message đang xếp hàng. Lag ổn định ở mức nhỏ là bình thường (hàng đợi sinh ra để đệm!); vấn đề là **lag tăng không ngừng**: tốc độ vào > tốc độ ra kéo dài. Hệ quả dây chuyền: mọi khe hở nhất quán của [Phần 4](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) giãn từ mili giây thành giờ; hết hạn retention của topic thì message chưa kịp đọc bị broker xoá — lag biến thành **mất event** ([Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) quay lại bằng cửa sau).
+**What — vấn đề là gì?** **Consumer lag** (độ trễ tiêu thụ): khoảng cách giữa vị trí mới nhất của topic và vị trí consumer đã xử lý tới — đo bằng số message đang xếp hàng. Lag ổn định ở mức nhỏ là bình thường (hàng đợi sinh ra để đệm!); vấn đề là **lag tăng không ngừng**: tốc độ vào > tốc độ ra kéo dài. Hệ quả dây chuyền: mọi khe hở nhất quán của [Phần 4](/posts/event-driven-part-4-consistency-and-sagas-vi/) giãn từ mili giây thành giờ; hết hạn retention của topic thì message chưa kịp đọc bị broker xoá — lag biến thành **mất event** ([Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) quay lại bằng cửa sau).
 
 **Why — vì sao xảy ra?**
 
 - **Bất đối xứng bẩm sinh:** producer thường chỉ ghi một message (rẻ, hàng chục nghìn/giây); consumer phải làm việc thật — gọi API, ghi database, render email (đắt, hàng trăm/giây mỗi instance).
 - **Burst theo sự kiện thật:** flash sale, chiến dịch marketing, đầu giờ sáng.
 - **Consumer chậm đi vì downstream:** database quá tải, API bên thứ ba giới hạn tốc độ (rate limit).
-- **Hot partition** (làn quá nóng): hệ quả ngược của partition key ở [Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) — key phân bố lệch (một khách hàng doanh nghiệp chiếm 40% đơn) thì mọi event của key đó dồn vào _một_ partition; partition đó nghẽn trong khi các làn khác rảnh, và _thêm consumer không giúp gì_ vì một partition chỉ một consumer đọc.
+- **Hot partition** (làn quá nóng): hệ quả ngược của partition key ở [Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) — key phân bố lệch (một khách hàng doanh nghiệp chiếm 40% đơn) thì mọi event của key đó dồn vào _một_ partition; partition đó nghẽn trong khi các làn khác rảnh, và _thêm consumer không giúp gì_ vì một partition chỉ một consumer đọc.
 
 Chân dung sự cố: lag không nhảy vọt — nó _bò đều một chiều_ (vào 50k/phút, ra 10k/phút = phình 40k/phút, tuyến tính). Vì tăng đều nên dễ bị ngó lơ lúc còn xanh; alert đúng phải đặt trên _xu hướng_ (lag tăng liên tục X phút) chứ không chỉ trên ngưỡng tuyệt đối.
 
 **How — giải quyết thế nào? Ba đòn: chảy nhanh hơn, chảy chậm lại, và chọn việc mà bỏ.**
 
-**1. Tăng tốc độ ra (scale out + tối ưu consumer).** Thêm instance consumer vào group — broker tự chia lại partition (xem hộp failover dưới). **Trần cứng: số consumer hữu ích ≤ số partition** (mỗi partition chỉ một người đọc trong group). Vì tăng partition về sau vừa phiền vừa phá thứ tự theo key (bẫy ở [Phần 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/)), hãy chọn số partition _dư dả từ đầu_. Song song đó, tối ưu từng instance: xử lý theo lô (batch — gom 100 email một lần gọi API thay vì 100 lần), I/O bất đồng bộ.
+**1. Tăng tốc độ ra (scale out + tối ưu consumer).** Thêm instance consumer vào group — broker tự chia lại partition (xem hộp failover dưới). **Trần cứng: số consumer hữu ích ≤ số partition** (mỗi partition chỉ một người đọc trong group). Vì tăng partition về sau vừa phiền vừa phá thứ tự theo key (bẫy ở [Phần 3](/posts/event-driven-part-3-poison-messages-and-ordering-vi/)), hãy chọn số partition _dư dả từ đầu_. Song song đó, tối ưu từng instance: xử lý theo lô (batch — gom 100 email một lần gọi API thay vì 100 lần), I/O bất đồng bộ.
 
 **2. Backpressure — cho hạ nguồn quyền nói "chậm lại".**
 
@@ -59,9 +59,9 @@ Tổng lag trông "chia đều thì ổn", nhưng 97% dồn ở một làn vì m
 > [!NOTE]
 > **Tính chất — Failover & Rebalancing (tự chuyển vai khi node chết).** **Failover:** khi một node đang giữ vai trò nào đó chết, một node khác _tự động tiếp quản vai trò ấy_ — hệ tiếp tục chạy, không cần người can thiệp. Điều kiện tiên quyết: phải có sẵn bản sao/ứng viên — không thể failover sang thứ không tồn tại.
 >
-> **Phía broker:** mỗi partition có 1 leader (nhận đọc/ghi) + n follower sao chép dữ liệu. Node chứa leader chết → một follower đã có đủ dữ liệu được bầu làm leader mới (leader election). Durability ở [Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) chính là điều kiện để failover ở đây không mất dữ liệu.
+> **Phía broker:** mỗi partition có 1 leader (nhận đọc/ghi) + n follower sao chép dữ liệu. Node chứa leader chết → một follower đã có đủ dữ liệu được bầu làm leader mới (leader election). Durability ở [Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) chính là điều kiện để failover ở đây không mất dữ liệu.
 >
-> **Phía consumer:** một instance trong consumer group chết (hoặc ngừng gửi heartbeat) → broker kích hoạt **rebalance**: chia lại các partition mà instance đó đang giữ cho những instance còn sống. Cùng cơ chế đó chạy khi _thêm_ instance (scale out). Hai cái giá phải biết: (1) rebalance kiểu cổ điển làm cả group tạm dừng một nhịp (Kafka đời mới dùng cooperative rebalancing để chỉ dừng phần bị chia lại); (2) message instance chết đang xử lý dở sẽ được giao lại cho người khác — lại một nguồn duplicate nữa ([Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) đứng ra bảo hiểm).
+> **Phía consumer:** một instance trong consumer group chết (hoặc ngừng gửi heartbeat) → broker kích hoạt **rebalance**: chia lại các partition mà instance đó đang giữ cho những instance còn sống. Cùng cơ chế đó chạy khi _thêm_ instance (scale out). Hai cái giá phải biết: (1) rebalance kiểu cổ điển làm cả group tạm dừng một nhịp (Kafka đời mới dùng cooperative rebalancing để chỉ dừng phần bị chia lại); (2) message instance chết đang xử lý dở sẽ được giao lại cho người khác — lại một nguồn duplicate nữa ([Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) đứng ra bảo hiểm).
 >
 > Tóm bằng một câu: _failover = vai diễn không chết theo diễn viên; rebalance = chia lại vai cho diễn viên còn lại._
 
@@ -69,7 +69,7 @@ Tổng lag trông "chia đều thì ổn", nhưng 97% dồn ở một làn vì m
 
 **What — vấn đề là gì?** Team Order dọn code: đổi field `total` (số) thành `totalAmount` (object có `value` và `currency` — "chuẩn hơn mà!"), deploy chiều thứ Sáu. Tối đó, `NotificationService` của team khác — vốn đọc `event.total` — nhận `undefined`, throw hàng loạt, DLQ ngập 200 nghìn message. Không ai sai cú pháp, không ai quên test — hai team chỉ quên rằng họ đang nói chuyện với nhau qua một bản hợp đồng không ai viết ra.
 
-Cấu trúc dữ liệu của event (**schema**: có field nào, kiểu gì, bắt buộc hay không) thay đổi theo thời gian. Nhưng schema của event không phải chuyện nội bộ của producer: **nó là hợp đồng công khai** mà mọi consumer — kể cả những consumer producer _không biết tồn tại_ (chính decoupling ở [Phần 0](/memo/posts/event-driven-part-0-foundations-vi/) tạo ra sự "không biết" đó!) — đang dựa vào.
+Cấu trúc dữ liệu của event (**schema**: có field nào, kiểu gì, bắt buộc hay không) thay đổi theo thời gian. Nhưng schema của event không phải chuyện nội bộ của producer: **nó là hợp đồng công khai** mà mọi consumer — kể cả những consumer producer _không biết tồn tại_ (chính decoupling ở [Phần 0](/posts/event-driven-part-0-foundations-vi/) tạo ra sự "không biết" đó!) — đang dựa vào.
 
 **Why — vì sao xảy ra? "Deploy cùng lúc" không tồn tại.** Trong monolith, đổi struct thì compiler quét mọi chỗ dùng, sửa hết, deploy _một_ binary. Trong hệ event-driven, ba sự thật xoá bỏ điều đó: **deploy độc lập** — mục tiêu số một của microservice — nghĩa là luôn tồn tại khoảng thời gian producer mới chạy cạnh consumer cũ (hoặc ngược lại); **event cũ không biến mất** — topic giữ message theo retention, consumer mới vẫn phải đọc được event ghi từ tuần trước; và **không có compiler nào đứng giữa** hai codebase.
 
@@ -109,6 +109,6 @@ Thay vì một cú đổi phá vỡ, đi ba thì: nở (ghi song song cũ+mới,
 
 ---
 
-← **Trước:** [Phần 4 — Consistency & Saga](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) · **Tiếp theo:** [Phần 6 — Observability & Tổng Kết](/memo/posts/event-driven-part-6-observability-and-recap-vi/) →
+← **Trước:** [Phần 4 — Consistency & Saga](/posts/event-driven-part-4-consistency-and-sagas-vi/) · **Tiếp theo:** [Phần 6 — Observability & Tổng Kết](/posts/event-driven-part-6-observability-and-recap-vi/) →
 
-**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) · **5 · Backpressure & Schema (đang ở đây)** · [6 · Observability & Tổng kết](/memo/posts/event-driven-part-6-observability-and-recap-vi/)
+**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/posts/event-driven-part-4-consistency-and-sagas-vi/) · **5 · Backpressure & Schema (đang ở đây)** · [6 · Observability & Tổng kết](/posts/event-driven-part-6-observability-and-recap-vi/)

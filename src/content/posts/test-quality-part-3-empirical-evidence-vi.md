@@ -12,7 +12,7 @@ tags:
 multiLangKey: "test-quality-metrics-3"
 ---
 
-> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 3/7.** Phiên bản trung thực của những gì nghiên cứu thực nghiệm thực sự nói về coverage, mutation score, và khả năng dự đoán lỗi thực tế. Tiếp theo [Phần 2](/memo/posts/test-quality-part-2-mutation-testing-vi/) về cơ chế mutation testing.
+> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 3/7.** Phiên bản trung thực của những gì nghiên cứu thực nghiệm thực sự nói về coverage, mutation score, và khả năng dự đoán lỗi thực tế. Tiếp theo [Phần 2](/posts/test-quality-part-2-mutation-testing-vi/) về cơ chế mutation testing.
 
 - Không có metric đơn lẻ nào — kể cả mutation score — là một dự đoán độc lập mạnh mẽ cho việc phát hiện lỗi thực tế khi kiểm soát theo kích thước bộ test.
 - Điều đó **không** cứu coverage — coverage vẫn là metric yếu nhất trong danh mục; nó chỉ có nghĩa metric nên được dùng như một **danh mục công cụ chẩn đoán cộng với phán đoán**, không phải một con số kỳ diệu.
@@ -24,7 +24,7 @@ multiLangKey: "test-quality-metrics-3"
 
 **Inozemtseva & Holmes (ICSE 2014).** Coverage tương quan với hiệu quả test _khi bạn bỏ qua kích thước bộ test_ — nhưng tương quan đó **thấp khi kích thước bộ test được kiểm soát.** Các bộ test lớn hơn phủ nhiều hơn _và_ bắt nhiều hơn, vì vậy các tương quan ngây thơ bị thổi phồng bởi kích thước. ✅ _(cách diễn đạt này được xác minh, 3-0)_ <sup>[survey]</sup>
 
-**Just et al. (FSE 2014).** Cả mutation score và statement coverage đều tương quan với phát hiện lỗi thực tế, với **mutant cho thấy tương quan cao hơn** — và 73% lỗi thực tế kết hợp với các mutant phổ biến ([Phần 2](/memo/posts/test-quality-part-2-mutation-testing-vi/)). Đây là kết quả ủng hộ mutation mạnh nhất. <sup>[just2014]</sup>
+**Just et al. (FSE 2014).** Cả mutation score và statement coverage đều tương quan với phát hiện lỗi thực tế, với **mutant cho thấy tương quan cao hơn** — và 73% lỗi thực tế kết hợp với các mutant phổ biến ([Phần 2](/posts/test-quality-part-2-mutation-testing-vi/)). Đây là kết quả ủng hộ mutation mạnh nhất. <sup>[just2014]</sup>
 
 **Chekam et al. (ICSE 2017).** Có mối liên hệ _mạnh_ giữa đạt được coverage và phát hiện lỗi cho **strong mutation**, nhưng chỉ là **yếu** cho statement, branch, và weak mutation. ✅ _(đã xác minh, 3-0)_ <sup>[survey]</sup> Diễn giải: _độ mạnh_ của tiêu chí quan trọng; các tiêu chí yếu (bao gồm coverage thông thường) hầu như không có tác động.
 
@@ -52,14 +52,14 @@ Nghiên cứu giết chết giấc mơ về một con số duy nhất. Nó ủng
 1. **Coverage = nền tảng.** Chỉ sử dụng như một bộ lọc âm (tìm các chỗ bằng không). Rẻ, đáng tin cậy cho công việc duy nhất đó.
 2. **Mutation score = công cụ chẩn đoán độ mạnh oracle.** Chạy nó để _tìm các mutant sống sót_ và sửa chúng. Điểm là một xu hướng, không phải điểm số. Sản phẩm thực sự của nó là **danh sách công việc của các survivor**, không phải tỷ lệ phần trăm.
 3. **Kích thước bộ test là yếu tố gây nhiễu, không phải đức tính.** "Chúng tôi có 4.000 test" không có nghĩa gì. Đừng khen thưởng số lượng; khen thưởng mutant bị kill trên code rủi ro.
-4. **Hướng mục tiêu, đừng lấy trung bình.** Vì không có con số toàn cầu nào đáng tin cậy, hãy _giới hạn phạm vi_ mọi metric vào diff và các đường dẫn quan trọng ([Phần 6](/memo/posts/test-quality-part-6-readiness-rubric-vi/)). Điểm toàn repo yếu với điểm mạnh trên đường dẫn thanh toán là ổn; ngược lại là nguy hiểm.
+4. **Hướng mục tiêu, đừng lấy trung bình.** Vì không có con số toàn cầu nào đáng tin cậy, hãy _giới hạn phạm vi_ mọi metric vào diff và các đường dẫn quan trọng ([Phần 6](/posts/test-quality-part-6-readiness-rubric-vi/)). Điểm toàn repo yếu với điểm mạnh trên đường dẫn thanh toán là ổn; ngược lại là nguy hiểm.
 5. **Phán đoán vẫn trong vòng lặp.** Metric kiểm soát câu hỏi _cơ học_ ("các test này có thể bắt regression ở đây không?"). Chúng không thay thế một con người quyết định _hành vi nào quan trọng_. Vòng lặp agentic tự động hóa câu hỏi trước; bạn vẫn phải sở hữu câu hỏi sau thông qua spec và critical-path oracle.
 
 Đây là cầu nối sang phần thực tế: vì metric là công cụ chẩn đoán chứ không phải điểm số, rubric ở Phần 6 cố ý kết hợp **nhiều** tín hiệu, tất cả **giới hạn phạm vi vào thay đổi** — để không có một con số nào có thể bị gian lận quyết định một lần merge.
 
 ---
 
-← [Phần 2: Mutation Testing, được giải thích đúng đắn](/memo/posts/test-quality-part-2-mutation-testing-vi/) · [Phần 4: Công cụ cho Go và .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet-vi/) →
+← [Phần 2: Mutation Testing, được giải thích đúng đắn](/posts/test-quality-part-2-mutation-testing-vi/) · [Phần 4: Công cụ cho Go và .NET](/posts/test-quality-part-4-tooling-go-dotnet-vi/) →
 
 ---
 

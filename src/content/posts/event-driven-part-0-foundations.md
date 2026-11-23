@@ -132,6 +132,6 @@ In between are **Property** boxes — definitions from first principles for term
 
 ---
 
-**Next:** [Part 1 — Lost and Duplicate Events](/memo/posts/event-driven-part-1-lost-and-duplicate-events/) →
+**Next:** [Part 1 — Lost and Duplicate Events](/posts/event-driven-part-1-lost-and-duplicate-events/) →
 
-**The series — Event-Driven Architecture: The Top 10 Classic Problems:** **0 · Foundations (you are here)** · [1 · Lost & Duplicate Events](/memo/posts/event-driven-part-1-lost-and-duplicate-events/) · [2 · Outbox & Retries](/memo/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/memo/posts/event-driven-part-3-poison-messages-and-ordering/) · [4 · Consistency & Sagas](/memo/posts/event-driven-part-4-consistency-and-sagas/) · [5 · Backpressure & Schema Evolution](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) · [6 · Observability & Recap](/memo/posts/event-driven-part-6-observability-and-recap/)
+**The series — Event-Driven Architecture: The Top 10 Classic Problems:** **0 · Foundations (you are here)** · [1 · Lost & Duplicate Events](/posts/event-driven-part-1-lost-and-duplicate-events/) · [2 · Outbox & Retries](/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/posts/event-driven-part-3-poison-messages-and-ordering/) · [4 · Consistency & Sagas](/posts/event-driven-part-4-consistency-and-sagas/) · [5 · Backpressure & Schema Evolution](/posts/event-driven-part-5-backpressure-and-schema-evolution/) · [6 · Observability & Recap](/posts/event-driven-part-6-observability-and-recap/)

@@ -421,5 +421,5 @@ stateDiagram-v2
 7. **Ship = independent verify** → never trust the agent's own "SHIPPED" line.
 
 **Related:** the runner spawns the executor sessions that agents like Tracker run inside — see
-[Freeze, don't hash: giving a non-deterministic agent's findings a deterministic identity](/memo/posts/freeze-dont-hash-gap-ids/)
+[Freeze, don't hash: giving a non-deterministic agent's findings a deterministic identity](/posts/freeze-dont-hash-gap-ids/)
 for how Tracker gives its findings a stable ID across those independent, memoryless sessions.
