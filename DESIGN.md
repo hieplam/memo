@@ -1,6 +1,6 @@
 # Design
 
-The visual system for `memo` — a calm, unhurried, eye-comfortable reading
+The visual system for `memo` - a calm, unhurried, eye-comfortable reading
 environment. Two first-class themes: **Sage / Fog** (light) and **Sage / Dusk**
 (dark). Built on Tailwind v4 design tokens (`src/styles/theme.css`), a
 color-wheel-derived scale + motion layer (`src/styles/tokens.css`), and the
@@ -8,14 +8,14 @@ Astro Fonts API.
 
 ## Design Direction
 
-A quiet study with the blinds half-drawn — soft daylight on warm paper, read
+A quiet study with the blinds half-drawn - soft daylight on warm paper, read
 without hurry. Low-contrast, warm-neutral surfaces, a single muted sage-teal
 accent. Never harsh, never neon, never "developer-terminal." Color is used
 sparingly; the prose leads and the chrome recedes.
 
 Color strategy: **Restrained, warmed, low-contrast.** Warm fog-gray neutrals
 carry the surfaces; one sage-teal accent does the emphatic work (links, focus,
-key CTAs). Everything else whispers — even the semantic states are deliberately
+key CTAs). Everything else whispers - even the semantic states are deliberately
 muted.
 
 ## Color
@@ -24,7 +24,7 @@ Semantic tokens are authored as hex in `src/styles/theme.css`; the underlying
 tonal ramps and harmonized state colors live in `src/styles/tokens.css`.
 Contrast is verified against WCAG 2.1 AA (body ≥ 4.5:1, large/UI ≥ 3:1).
 
-### Sage / Fog (light) — `:root`, `[data-theme="light"]`
+### Sage / Fog (light) - `:root`, `[data-theme="light"]`
 
 | Token                 | Hex       | Role                                      |
 | --------------------- | --------- | ----------------------------------------- |
@@ -37,7 +37,7 @@ Contrast is verified against WCAG 2.1 AA (body ≥ 4.5:1, large/UI ≥ 3:1).
 | `--border`            | `#e1e0d6` | Hairlines, dividers                       |
 | `--surface`           | `#f9f8f3` | Raised cards / wayfinding panels          |
 
-### Sage / Dusk (dark) — `[data-theme="dark"]`
+### Sage / Dusk (dark) - `[data-theme="dark"]`
 
 | Token                 | Hex       | Role                                      |
 | --------------------- | --------- | ----------------------------------------- |
@@ -59,7 +59,7 @@ The semantic tokens above are drawn from two color-wheel-derived ramps:
 - **Fog** (warm neutral, hue 95°) `--fog-50…900`:
   `#f8f7f3 #f1f0eb #e1e0db #cccac5 #a09e98 #7d7c76 #5c5b56 #41403b #2f2e2a #22221e`
 
-### Harmonized semantic colors (muted on purpose — a callout should *whisper*)
+### Harmonized semantic colors (muted on purpose - a callout should *whisper*)
 
 | Token       | Light                     | Dark                      |
 | ----------- | ------------------------- | ------------------------- |
@@ -83,13 +83,13 @@ background follows `--muted`; selection/highlight tints stay warm. (Set in
 A single calm, all-sans family carries both reading and headings. No serif. The
 mono earns its place only where it adds texture (code, small metadata labels).
 
-- **Reading family (body + headings): `Hanken Grotesk`** — a warm, low-contrast
+- **Reading family (body + headings): `Hanken Grotesk`** - a warm, low-contrast
   grotesk that reads gently at length. Weights 400 / 500 / 600 / 700, italic
   available. Hierarchy comes from weight + size contrast within the one family;
   headings are **not** italic.
   - Loaded via the Astro Fonts API (Google provider) as `--font-hanken`,
     preloaded in `Layout.astro`, mapped to `--font-reading` in `theme.css`.
-- **Mono family: `Google Sans Code`** (kept from the original identity) — code
+- **Mono family: `Google Sans Code`** (kept from the original identity) - code
   blocks, inline code, and small UI metadata (datetime, tags, labels). Also the
   family used by the Satori OG-image generators.
 - **Scale:** modular, ≥ 1.25 ratio between steps; fluid `clamp()` on headings.
@@ -103,7 +103,7 @@ Existing AstroPaper components are preserved and re-skinned via tokens, not
 rewritten: `Header`, `Footer`, `Card`, `Tag`, `Datetime`, `Pagination`,
 `LangFilter`, `Breadcrumb`, `Socials`, `LinkButton`, `RelatedPosts`, search
 (Pagefind). Because every component reads the semantic tokens, re-theming is a
-values-only swap — no component changes.
+values-only swap - no component changes.
 
 Component conventions:
 
@@ -148,10 +148,10 @@ unhurried voice. No bounce/elastic.
 
 ## Token files at a glance
 
-- `src/styles/theme.css` — semantic tokens (the contract every component reads)
+- `src/styles/theme.css` - semantic tokens (the contract every component reads)
   + the Tailwind `@theme inline` bridge and font mapping.
-- `src/styles/tokens.css` — Sage/Fog tonal ramps, harmonized state colors, and
+- `src/styles/tokens.css` - Sage/Fog tonal ramps, harmonized state colors, and
   the full motion scale (durations, easings, transitions, keyframes).
-- `src/styles/global.css` — base layer, utilities, and the motion wiring that
+- `src/styles/global.css` - base layer, utilities, and the motion wiring that
   connects the primitives to components.
-- `src/styles/typography.css` — long-form prose (`.app-prose`) and code blocks.
+- `src/styles/typography.css` - long-form prose (`.app-prose`) and code blocks.

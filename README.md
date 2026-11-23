@@ -5,7 +5,7 @@
 ![GitHub](https://img.shields.io/github/license/hieplam/memo?color=%232F3741&style=for-the-badge)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white&style=for-the-badge)](https://conventionalcommits.org)
 
-**memo** is [Hiep Lam](https://github.com/hieplam)'s personal blog and notebook —
+**memo** is [Hiep Lam](https://github.com/hieplam)'s personal blog and notebook -
 long-form deep dives and explainers on software architecture, terminals and
 low-level systems, and other things worth researching, often in both English
 and Vietnamese.
@@ -60,7 +60,7 @@ sections below for more info.
 └── astro.config.ts
 ```
 
-All blog posts are stored in the `src/content/posts/` directory. You can organise posts into subdirectories — the subdirectory name becomes part of the post URL.
+All blog posts are stored in the `src/content/posts/` directory. You can organise posts into subdirectories - the subdirectory name becomes part of the post URL.
 
 ## 💻 Tech Stack
 

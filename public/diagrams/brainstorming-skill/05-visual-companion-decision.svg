@@ -17,7 +17,7 @@
     <marker id="a" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#94a3b8"/></marker>
   </defs>
 
-  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Visual companion — offered just-in-time, decided per question</text>
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Visual companion - offered just-in-time, decided per question</text>
   <text x="30" y="54" font-size="13" fill="#64748b">A tool, not a mode. Source: SKILL.md 142–159; visual-companion.md 5–25</text>
 
   <!-- spine edges -->
@@ -59,7 +59,7 @@
 
   <rect class="offer" x="180" y="360" width="320" height="56" rx="10"/>
   <text class="ot" x="340" y="384" text-anchor="middle">Offer it as its OWN message · then wait</text>
-  <text class="ts" x="340" y="403" text-anchor="middle">only the offer — no question or summary alongside it</text>
+  <text class="ts" x="340" y="403" text-anchor="middle">only the offer - no question or summary alongside it</text>
 
   <polygon class="dec" points="340,438 460,470 340,502 220,470"/>
   <text class="dt" x="340" y="466" text-anchor="middle">Human</text>

@@ -1,6 +1,6 @@
 ---
 title: "Campaign Runner: reading a TypeScript orchestrator through C# eyes"
-description: "A top-down dissection of the tribe plugin's campaign runner — 9 TypeScript modules (~3,400 lines) that orchestrate shipping one card at a time without spending a single token. Explained for C# developers: the seam/DI pattern, discriminated unions, 'the file is data, git is authority', and why 'blocked' must be recomputed to a fixpoint on every call."
+description: "A top-down dissection of the tribe plugin's campaign runner - 9 TypeScript modules (~3,400 lines) that orchestrate shipping one card at a time without spending a single token. Explained for C# developers: the seam/DI pattern, discriminated unions, 'the file is data, git is authority', and why 'blocked' must be recomputed to a fixpoint on every call."
 pubDatetime: 2026-07-20T09:00:00Z
 lang: en
 tags:
@@ -14,9 +14,9 @@ tags:
 multiLangKey: "tribe-campaign-runner-orchestrator"
 ---
 
-The **campaign runner** in the `tribe` plugin is an **orchestrator** (a conductor): it coordinates the "shipping" of each work item in a development campaign — it **writes no code itself and calls no AI/LLM** (zero tokens), it only spawns and supervises execution sessions. This post goes **top-down**: the big picture first, then down into each module. Reader baseline: a **C# developer** who can read basic TypeScript — every TS "sugar syntax" is mapped back to C#.
+The **campaign runner** in the `tribe` plugin is an **orchestrator** (a conductor): it coordinates the "shipping" of each work item in a development campaign - it **writes no code itself and calls no AI/LLM** (zero tokens), it only spawns and supervises execution sessions. This post goes **top-down**: the big picture first, then down into each module. Reader baseline: a **C# developer** who can read basic TypeScript - every TS "sugar syntax" is mapped back to C#.
 
-## 1. The big picture — what does this code do?
+## 1. The big picture - what does this code do?
 
 A few terms (defined before use):
 
@@ -38,7 +38,7 @@ flowchart LR
   B -.->|no cards left| G["done"]
 ```
 
-The overarching principle: the **"stateless-capability wall"** — the runner **hardcodes no** environment value (repo, model, path, campaign value); everything is a **CLI input**. The same script runs for any repo/campaign.
+The overarching principle: the **"stateless-capability wall"** - the runner **hardcodes no** environment value (repo, model, path, campaign value); everything is a **CLI input**. The same script runs for any repo/campaign.
 
 ## 2. The most important idea: "The Seam" (Dependency Injection)
 
@@ -71,15 +71,15 @@ flowchart TB
     SDK["Claude Agent SDK"]
     OS["Clock, PID, Lock"]
   end
-  RUN["run.ts — CLI entrypoint + wiring (DI)"]
-  LOOP["loop.ts — Orchestrator (main loop)"]
-  STATE["state.ts — schema, load/save, nextCard"]
-  SESSION["session.ts — SDK wrapper, spawn/parse"]
-  VERIFY["verify.ts — 6 verification points"]
-  GITHUB["github.ts — commit, PR, merge state"]
-  REPORT["report.ts — JSON + Markdown report"]
-  BRIEF["brief.ts — render template"]
-  TYPES["types.ts — shared models"]
+  RUN["run.ts - CLI entrypoint + wiring (DI)"]
+  LOOP["loop.ts - Orchestrator (main loop)"]
+  STATE["state.ts - schema, load/save, nextCard"]
+  SESSION["session.ts - SDK wrapper, spawn/parse"]
+  VERIFY["verify.ts - 6 verification points"]
+  GITHUB["github.ts - commit, PR, merge state"]
+  REPORT["report.ts - JSON + Markdown report"]
+  BRIEF["brief.ts - render template"]
+  TYPES["types.ts - shared models"]
 
   RUN -->|RunLoopConfig| LOOP
   RUN -.->|inject LoopIO| WORLD
@@ -108,7 +108,7 @@ flowchart TB
 | `brief.ts`   | Renders a brief from a template      | Template renderer             |
 | `types.ts`   | Shared data types                    | POCO/DTO models               |
 
-## 4. One complete flow — how the classes connect
+## 4. One complete flow - how the classes connect
 
 A sequence diagram tracing **one card** from CLI startup to being "shipped":
 
@@ -128,10 +128,10 @@ sequenceDiagram
   U->>R: bun run.ts --repo --state --model
   R->>R: parseArgs(argv) → RunLoopConfig
   R->>L: runLoop(config, LoopIO)
-  L->>L: acquireLock() — prevent 2 instances
+  L->>L: acquireLock() - prevent 2 instances
   L->>ST: loadState() + nextCard()
   ST-->>L: card "X" (advanceable)
-  L->>D: deriveCardPhase(X) — ask git/gh
+  L->>D: deriveCardPhase(X) - ask git/gh
   D-->>L: { kind: 'fresh' }
   L->>SE: runSession(brief)
   SE->>SDK: query(prompt, pinnedOptions)
@@ -139,7 +139,7 @@ sequenceDiagram
   SE->>L: onSessionStart(id) → status='running' (crash-safe)
   SDK-->>SE: result "SHIPPED #42 abc1234"
   SE-->>L: { outcome:'shipped', pr:42 }
-  L->>V: verifyShipped(card) — 6 independent points
+  L->>V: verifyShipped(card) - 6 independent points
   V-->>L: { shipped: true }
   L->>ST: status='shipped' + persistLocalState()
   L->>G: commitStateAndMerge(state.json)
@@ -149,11 +149,11 @@ sequenceDiagram
   R-->>U: exit 0
 ```
 
-**The crux:** the "SHIPPED #42" line from the SDK is _just a signal_. The runner **does not trust it immediately** — it calls `verifyShipped`, which re-runs 6 real checks. Only when verify passes does the card get written as `shipped`.
+**The crux:** the "SHIPPED #42" line from the SDK is _just a signal_. The runner **does not trust it immediately** - it calls `verifyShipped`, which re-runs 6 real checks. Only when verify passes does the card get written as `shipped`.
 
-## 5. `run.ts` — the entrypoint
+## 5. `run.ts` - the entrypoint
 
-This is `Program.Main`. Two parts: **`parseArgs`** (pure, testable) and **`main()`** (assembles the real world, not tested). `parseArgs` returns a **discriminated union** `ParseArgsResult | ParseArgsError` — a pattern that replaces `throw`. The caller checks `if ('error' in parsed)` (≈ `OneOf<Success, Error>` / `Result<T>`).
+This is `Program.Main`. Two parts: **`parseArgs`** (pure, testable) and **`main()`** (assembles the real world, not tested). `parseArgs` returns a **discriminated union** `ParseArgsResult | ParseArgsError` - a pattern that replaces `throw`. The caller checks `if ('error' in parsed)` (≈ `OneOf<Success, Error>` / `Result<T>`).
 
 ```typescript
 const token = argv[i] as string; // 'as' = a compiler-level cast (NO runtime check)
@@ -174,15 +174,15 @@ function realExec(cmd: string[], opts?: { cwd?: string }): Promise<ExecResult> {
 }
 ```
 
-`isProcessAlive` probes the OS for whether a PID is still alive (used by the lock): `process.kill(pid, 0)` — signal 0 ONLY checks existence, it does NOT kill; catching `EPERM` means "exists but no permission → still alive".
+`isProcessAlive` probes the OS for whether a PID is still alive (used by the lock): `process.kill(pid, 0)` - signal 0 ONLY checks existence, it does NOT kill; catching `EPERM` means "exists but no permission → still alive".
 
 Exit codes: `0`=OK, `1`=locked, `2`=escalated, `3`=session-incomplete, `4`=error. A comment stresses: _"the exit code is only a hint, the report is the truth"_.
 
-## 6. `loop.ts` — the main orchestrator (the heart)
+## 6. `loop.ts` - the main orchestrator (the heart)
 
-### 6.1 `deriveCardPhase` — "classifying reality" for resume
+### 6.1 `deriveCardPhase` - "classifying reality" for resume
 
-When the runner restarts (e.g. after a crash), it **does not trust the state in the file** — it **re-asks git/gh**. The golden rule: _"the file is data, git/gh is the authority"_.
+When the runner restarts (e.g. after a crash), it **does not trust the state in the file** - it **re-asks git/gh**. The golden rule: _"the file is data, git/gh is the authority"_.
 
 ```mermaid
 flowchart TD
@@ -216,7 +216,7 @@ export type CardPhase =
   | { kind: "escalation_pending"; escalationPath: string };
 ```
 
-If a PR is OPEN but there is **no** `sessionId` to resume from, spawning a "blind fresh" session would make the new session **open a second PR**. So it injects a `digest` (a state summary) telling the new session "PR #N already exists — do not open a new PR".
+If a PR is OPEN but there is **no** `sessionId` to resume from, spawning a "blind fresh" session would make the new session **open a second PR**. So it injects a `digest` (a state summary) telling the new session "PR #N already exists - do not open a new PR".
 
 ### 6.2 A lock to prevent running 2 instances
 
@@ -238,7 +238,7 @@ export function acquireLock(io: LockIO): LockResult {
 
 It uses a **liveness-probe** instead of a TTL: too short a TTL kills long-running sessions by mistake, too long and a dead lock stays stuck for ages. Probing the process is _accurate in both directions_ and costs exactly one syscall.
 
-### 6.3 `runLoop` — the main loop (park-and-continue)
+### 6.3 `runLoop` - the main loop (park-and-continue)
 
 ```mermaid
 flowchart TD
@@ -276,19 +276,19 @@ persistLocalState(state, resolved, io);   // flush the blocked state computed at
 
 Three costly-but-worth-it design choices:
 
-1. **`attempted` (a Set) vs `worked` (a number) kept separate.** `attempted` guarantees _definite termination_ — each card is picked at most once per pass, so the sequence handed to `nextCard` **shrinks every iteration** ⇒ no infinite loop. `worked` only counts real work (ship/escalate/stop) so it honors `--max-cards`. A merely "parked" card (an old escalation) costs no budget.
-2. **Park-and-continue:** an escalate/stop does _not_ halt the whole pass — the next iteration simply picks up the next card.
+1. **`attempted` (a Set) vs `worked` (a number) kept separate.** `attempted` guarantees _definite termination_ - each card is picked at most once per pass, so the sequence handed to `nextCard` **shrinks every iteration** ⇒ no infinite loop. `worked` only counts real work (ship/escalate/stop) so it honors `--max-cards`. A merely "parked" card (an old escalation) costs no budget.
+2. **Park-and-continue:** an escalate/stop does _not_ halt the whole pass - the next iteration simply picks up the next card.
 3. **Soft STOP file:** stops _between_ cards, never interrupting a card mid-run. It uses `finally { releaseLock(io) }` (≈ C# `finally`).
 
 **Resume-with-fallback:** it only falls back to fresh when the outcome is `'error'`, **NOT** on `'timeout'` (a timeout means the old session may _still be running_, and spawning another would duplicate it).
 
-## 7. `state.ts` — schema, load/save, card selection
+## 7. `state.ts` - schema, load/save, card selection
 
 **Zod** = a runtime schema-validation library (closest C#: FluentValidation + inferred types). `z.looseObject` **keeps unknown fields** ⇒ a load→save round-trip is **byte-identical**. `dependsOn` deliberately has **no** `.default([])` so no new key is injected into the file; the caller applies `card.dependsOn ?? []` itself. Four custom errors are rejected _at load time_: an unknown version, a `sequence`/`dependsOn` pointing at a non-existent card, and a **cycle** (gray/white DFS).
 
-### `blocked` is a DERIVED state — the core idea
+### `blocked` is a DERIVED state - the core idea
 
-`blocked` is **never trusted from the file** — it is recomputed to a **fixpoint** on every call:
+`blocked` is **never trusted from the file** - it is recomputed to a **fixpoint** on every call:
 
 ```typescript
 while (changed) {
@@ -312,9 +312,9 @@ while (changed) {
 }
 ```
 
-**Why a single pass is wrong:** with `A escalated`, `B dependsOn A`, `C dependsOn B` — a single pass over `[C,B,A]` sees B as "not yet shipped" rather than "blocked" when evaluating C ⇒ it misses C. The fixpoint makes the result **order-independent**. `Object.entries` ≈ `foreach kvp`; `for (const [k,v] of …)` is **array destructuring** (like C# tuple deconstruction).
+**Why a single pass is wrong:** with `A escalated`, `B dependsOn A`, `C dependsOn B` - a single pass over `[C,B,A]` sees B as "not yet shipped" rather than "blocked" when evaluating C ⇒ it misses C. The fixpoint makes the result **order-independent**. `Object.entries` ≈ `foreach kvp`; `for (const [k,v] of …)` is **array destructuring** (like C# tuple deconstruction).
 
-## 8. `session.ts` — the Claude Agent SDK wrapper (the ONLY module touching the SDK)
+## 8. `session.ts` - the Claude Agent SDK wrapper (the ONLY module touching the SDK)
 
 If the SDK is upgraded, only this file changes. **Pinned options**:
 
@@ -331,9 +331,9 @@ It parses from the **typed `result`**, NOT by scraping stdout:
 const SHIPPED_RE = /SHIPPED\s+#?(\d+)\s+([0-9a-f]{7,40})/i; // "SHIPPED #123 abc1234"
 ```
 
-`SessionMessage` has an index signature `[key: string]: unknown` — "an object with any extra string keys, of type `unknown`". `unknown` ≈ `object` but safer (you must narrow it before use). Streaming + timeout via `Promise.race([sessionPromise, timeoutPromise])` (≈ `Task.WhenAny`); the timeout calls `abortController.abort()` (≈ `CancellationToken`). **`runSession` never throws** — every error becomes a `SessionResult` with an explicit `outcome`.
+`SessionMessage` has an index signature `[key: string]: unknown` - "an object with any extra string keys, of type `unknown`". `unknown` ≈ `object` but safer (you must narrow it before use). Streaming + timeout via `Promise.race([sessionPromise, timeoutPromise])` (≈ `Task.WhenAny`); the timeout calls `abortController.abort()` (≈ `CancellationToken`). **`runSession` never throws** - every error becomes a `SessionResult` with an explicit `outcome`.
 
-## 9. `verify.ts` — 6 "is it shipped" verification points
+## 9. `verify.ts` - 6 "is it shipped" verification points
 
 It runs **6 independent checks with no short-circuit** so it can report _every_ failing point (which feeds the escalation file):
 
@@ -355,15 +355,15 @@ flowchart LR
 
 - **Step 2 (2 parents):** a regular merge has 2 parents; squash/rebase has only 1 ⇒ this enforces the "no-squash" rule.
 - **Step 4 flake-waiver:** it only forgives when the _sole_ red check matches "SonarCloud 504" **and** the diff is docs-only. An empty `docsOnlyPaths` ⇒ **fail-closed** (forgives nothing).
-- `{owner}`/`{repo}` in `gh api repos/{owner}/{repo}/pulls/N` are gh's own placeholders (gh substitutes them from the repo in the cwd) — not string interpolation ⇒ this preserves the stateless wall.
+- `{owner}`/`{repo}` in `gh api repos/{owner}/{repo}/pulls/N` are gh's own placeholders (gh substitutes them from the repo in the cwd) - not string interpolation ⇒ this preserves the stateless wall.
 
-## 10. `github.ts` — commit/push/PR/merge state
+## 10. `github.ts` - commit/push/PR/merge state
 
-An automated "docs-PR" helper: commit state onto a `campaign-state/<card>` branch, open a PR, poll CI, **merge regular** (no squash), delete the branch, ff-sync the base. Everything returns a **structured outcome and NEVER throws** (because it also runs on the escalation path — where the very reason for escalating is often that CI is broken).
+An automated "docs-PR" helper: commit state onto a `campaign-state/<card>` branch, open a PR, poll CI, **merge regular** (no squash), delete the branch, ff-sync the base. Everything returns a **structured outcome and NEVER throws** (because it also runs on the escalation path - where the very reason for escalating is often that CI is broken).
 
 `CommitStateAndMergeResult = MergedResult | EscalateResult | CommitFailedResult`. It polls CI via `io.sleep` (a seam) ⇒ tests run in milliseconds while prod waits a real 10 minutes. It is idempotent: it uses `git checkout -B` (create-or-reset) + `push --force`, and **always restores the base branch on every exit path** (best-effort).
 
-## 11. `report.ts` — emitting the report
+## 11. `report.ts` - emitting the report
 
 It builds **one shared `CampaignReport` structure** and renders it to **both JSON and Markdown** ⇒ JSON↔MD parity is _structural_, not a "hand-kept promise". Two decisions are split into separately-testable pure functions:
 
@@ -378,7 +378,7 @@ export function shouldWriteReport(p: {
 }
 ```
 
-Reading `card.status` is **authoritative** here — it does not re-run the `dependsOn` fixpoint (state.ts already owns that).
+Reading `card.status` is **authoritative** here - it does not re-run the `dependsOn` fixpoint (state.ts already owns that).
 
 ## 12. `brief.ts` + `types.ts`
 
@@ -392,7 +392,7 @@ return template.replace(/\{\{(\w+)\}\}/g, (match, key: string) => {
 });
 ```
 
-`\{\{(\w+)\}\}` matches `{{NAME}}` — `\{` must be escaped because `{` is a regex special character. `types.ts` holds the shared models (`Card`, `CampaignState`, `CardStatus`…) ≈ a `Models/` folder.
+`\{\{(\w+)\}\}` matches `{{NAME}}` - `\{` must be escaped because `{` is a regex special character. `types.ts` holds the shared models (`Card`, `CampaignState`, `CardStatus`…) ≈ a `Models/` folder.
 
 ## 13. A Card's lifecycle (state machine)
 
@@ -410,7 +410,7 @@ stateDiagram-v2
 
 `running` is always re-derived from git/gh (never trusted from the file); `blocked` is _derived_, recomputed each time.
 
-## 14. Wrap-up — 7 design points to remember
+## 14. Wrap-up - 7 design points to remember
 
 1. **Seam / DI everywhere** → pure & 100% testable without touching real git/network/SDK.
 2. **"The file is data, git/gh is the authority"** → `deriveCardPhase` always re-asks reality (crash/resume-safe, never opens a duplicate PR).
@@ -420,6 +420,6 @@ stateDiagram-v2
 6. **Structural termination** → the `attempted` Set makes the sequence shrink every iteration.
 7. **Ship = independent verify** → never trust the agent's own "SHIPPED" line.
 
-**Related:** the runner spawns the executor sessions that agents like Tracker run inside — see
+**Related:** the runner spawns the executor sessions that agents like Tracker run inside - see
 [Freeze, don't hash: giving a non-deterministic agent's findings a deterministic identity](/posts/freeze-dont-hash-gap-ids/)
 for how Tracker gives its findings a stable ID across those independent, memoryless sessions.

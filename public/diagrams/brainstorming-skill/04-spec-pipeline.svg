@@ -20,7 +20,7 @@
     <marker id="al" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto"><path d="M0,0 L7,3 L0,6 Z" fill="#f59e0b"/></marker>
   </defs>
 
-  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Locking it down — the spec pipeline</text>
+  <text x="30" y="32" font-size="22" font-weight="700" fill="#0f172a">Locking it down - the spec pipeline</text>
   <text x="30" y="54" font-size="13" fill="#64748b">Capture the design as a committed spec, self-review, then a human gate before handoff. Source: SKILL.md 102–131</text>
 
   <!-- spine -->
@@ -45,7 +45,7 @@
   <text class="ts" x="340" y="194" text-anchor="middle">docs/superpowers/specs/YYYY-MM-DD-&lt;topic&gt;-design.md</text>
 
   <rect class="proc" x="180" y="240" width="320" height="56" rx="10"/>
-  <text class="t" x="340" y="264" text-anchor="middle">Spec self-review — fresh eyes</text>
+  <text class="t" x="340" y="264" text-anchor="middle">Spec self-review - fresh eyes</text>
   <text class="ts" x="340" y="283" text-anchor="middle">fix issues inline · no re-review needed</text>
 
   <g>
@@ -53,7 +53,7 @@
     <text x="574" y="252" font-size="12.5" font-weight="700" fill="#0f172a">Self-review checks</text>
     <text x="574" y="274" font-size="12" fill="#334155">1 · placeholders / TODO / TBD?</text>
     <text x="574" y="294" font-size="12" fill="#334155">2 · internal contradictions?</text>
-    <text x="574" y="314" font-size="12" fill="#334155">3 · scope — one plan, or split?</text>
+    <text x="574" y="314" font-size="12" fill="#334155">3 · scope - one plan, or split?</text>
     <text x="574" y="334" font-size="12" fill="#334155">4 · ambiguous two ways? pick one</text>
   </g>
 
@@ -73,5 +73,5 @@
 
   <rect class="term" x="180" y="540" width="320" height="52" rx="10"/>
   <text class="t" x="340" y="563" text-anchor="middle" font-weight="700">Invoke writing-plans skill</text>
-  <text class="ts" x="340" y="581" text-anchor="middle">the only exit — implementation planning begins</text>
+  <text class="ts" x="340" y="581" text-anchor="middle">the only exit - implementation planning begins</text>
 </svg>

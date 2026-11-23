@@ -50,7 +50,7 @@
 
   <!-- nodes -->
   <rect class="start" x="200" y="80" width="280" height="40" rx="20"/>
-  <text class="t" x="340" y="105" text-anchor="middle">Companion running — browser open</text>
+  <text class="t" x="340" y="105" text-anchor="middle">Companion running - browser open</text>
 
   <rect class="proc" x="180" y="144" width="320" height="50" rx="10"/>
   <text class="t" x="340" y="166" text-anchor="middle">Check the server is alive</text>

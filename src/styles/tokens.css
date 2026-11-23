@@ -1,5 +1,5 @@
 /* ============================================================
-   memo — design tokens
+   memo - design tokens
    Color system (color-wheel derived) + motion system.
    Import AFTER theme.css. Semantic --* tokens live in theme.css;
    these are the underlying scales + motion primitives.
@@ -40,7 +40,7 @@
   --danger-soft: #fedbd5; /* complementary clay  */
 
   /* ============ Motion system ============ */
-  /* durations — calm, never snappy/harsh */
+  /* durations - calm, never snappy/harsh */
   --dur-1: 120ms; /* micro: icon, color swap        */
   --dur-2: 200ms; /* default: hover, link underline */
   --dur-3: 320ms; /* cards, panels, transforms      */

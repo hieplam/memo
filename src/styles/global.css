@@ -162,9 +162,9 @@
   opacity: 0.7;
 }
 
-/* Tooltip — pure CSS, driven by the item's data-tip attribute. Anchored to the
+/* Tooltip - pure CSS, driven by the item's data-tip attribute. Anchored to the
    legend bar itself (a positioned/transformed containing block), not the chip, so
-   it can never spill past the bar's — and therefore the viewport's — edge. */
+   it can never spill past the bar's - and therefore the viewport's - edge. */
 .ev-legend__item::after {
   content: attr(data-tip);
   position: absolute;

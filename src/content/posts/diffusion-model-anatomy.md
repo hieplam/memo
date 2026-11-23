@@ -1,6 +1,6 @@
 ---
-title: "UNet, VAE, Text Encoder — the three parts of a diffusion model, and why some need three files"
-description: "A model download page says 6.46 GB, one file. Another says you also need a text encoder and a VAE. Same job, different packaging — here is what each part does, why the split exists, and how to read a .safetensors header to tell which kind you are holding."
+title: "UNet, VAE, Text Encoder - the three parts of a diffusion model, and why some need three files"
+description: "A model download page says 6.46 GB, one file. Another says you also need a text encoder and a VAE. Same job, different packaging - here is what each part does, why the split exists, and how to read a .safetensors header to tell which kind you are holding."
 pubDatetime: 2026-08-23T01:00:00Z
 lang: en
 tags:
@@ -15,7 +15,7 @@ multiLangKey: "diffusion-model-anatomy"
 
 ## The question that started this
 
-I downloaded an image-generation model — one `.safetensors` file, 6.46 GB — and asked what should
+I downloaded an image-generation model - one `.safetensors` file, 6.46 GB - and asked what should
 have been a simple question:
 
 > Do I also need a VAE and a text encoder for this one?
@@ -24,7 +24,7 @@ It is a reasonable question, because the model I had imported the day before **d
 7.7 GB model file, an 8.3 GB text encoder, and a 255 MB VAE, all three loaded separately or nothing
 worked. Two models, same job, completely different packaging.
 
-The answer turned out to be no — and the _reason_ is worth more than the answer.
+The answer turned out to be no - and the _reason_ is worth more than the answer.
 
 ## TL;DR
 
@@ -35,13 +35,13 @@ The answer turned out to be no — and the _reason_ is worth more than the answe
 3. **Every model needs all three roles. Not every model ships three files.** That distinction is
    invisible on a download page and is the thing that trips people up.
 4. **Read the tensor header instead of guessing.** It takes five seconds and is definitive.
-5. Every way of getting this wrong fails **silently** — a bad image, never an error message.
+5. Every way of getting this wrong fails **silently** - a bad image, never an error message.
 
 ---
 
 ## First, the problem all three parts exist to solve
 
-A 1024×1024 colour image is **3,145,728 numbers** — 1024 × 1024 × 3 colour channels. Nothing turns a
+A 1024×1024 colour image is **3,145,728 numbers** - 1024 × 1024 × 3 colour channels. Nothing turns a
 sentence into three million correlated numbers in one shot.
 
 So the work is split into three stages, each solving a different problem:
@@ -58,12 +58,12 @@ flowchart LR
   V --> I["PNG<br/>1024×1024"]
 ```
 
-Think of them as a translator, an artist, and a printer. They run in that order — except the artist,
+Think of them as a translator, an artist, and a printer. They run in that order - except the artist,
 who runs once **per step**.
 
 ---
 
-## ① The text encoder — turning words into meaning
+## ① The text encoder - turning words into meaning
 
 **In:** your prompt. **Out:** a list of numbers representing what the words mean. It draws nothing.
 
@@ -85,12 +85,12 @@ hidream:  llama-3.1 (Recommend) or t5
 minimax:  MiniMax H3 Qwen3-VL or Music3 Qwen/RVQ
 ```
 
-Set `type` wrong and the artist downstream receives fluent gibberish. **You get no error** — just a
+Set `type` wrong and the artist downstream receives fluent gibberish. **You get no error** - just a
 bad image, with nothing pointing at the cause.
 
 ---
 
-## ② The UNet — the artist, working blindfolded
+## ② The UNet - the artist, working blindfolded
 
 **In:** random noise, plus the meaning-numbers. **Out:** a finished (but not yet viewable) image.
 
@@ -114,22 +114,22 @@ That CFG row causes real pain. Distilled "turbo" models are trained to need almo
 turbo value (1.0) on a normal model and you get a washed-out mess; use a normal value (5) on a turbo
 model and the image burns out. **Same number, opposite outcomes, no warning either way.**
 
-The UNet is **always the biggest part** — it holds essentially everything the model learned about
+The UNet is **always the biggest part** - it holds essentially everything the model learned about
 imagery.
 
 > **A note on the name.** "UNet" is the architecture the field started with, back in 2015. Most
-> current models are not UNets at all — one model I tested logs `model_type FLUX` on load. The name
+> current models are not UNets at all - one model I tested logs `model_type FLUX` on load. The name
 > stuck anyway. ComfyUI hedges by calling the folder `diffusion_models` while keeping a node named
 > `UNETLoader`.
 
 ---
 
-## ③ The VAE — and the trick that makes all this affordable
+## ③ The VAE - and the trick that makes all this affordable
 
 **In:** the finished latent. **Out:** actual pixels.
 
 Now the key idea. Running 28 steps over 3.1 million numbers would be brutally slow. So the UNet
-doesn't work on the image at all. It works on a **latent** — a compressed representation of roughly
+doesn't work on the image at all. It works on a **latent** - a compressed representation of roughly
 128 × 128 × 4 = **65,536 numbers**.
 
 That is about **48× smaller**. Nearly all of the practicality of modern image generation comes from
@@ -142,11 +142,11 @@ But a latent isn't viewable. It's a compressed sketch in a format only the model
 - **encode**: pixels → latent. This is how img2img and inpainting get an _existing_ image _into_
   latent space so the UNet can modify it.
 
-The VAE is **always the smallest part** — usually 200 MB to 1.5 GB, against a multi-gigabyte UNet.
+The VAE is **always the smallest part** - usually 200 MB to 1.5 GB, against a multi-gigabyte UNet.
 
 **And it must match the latent format its UNet was trained on.** A real example: one image model I
-use pairs with a VAE named `qwen_image_vae.safetensors` — named after a _completely different_ model
-family — because the two share a latent format. Nothing in either filename hints at this. Use a VAE
+use pairs with a VAE named `qwen_image_vae.safetensors` - named after a _completely different_ model
+family - because the two share a latent format. Nothing in either filename hints at this. Use a VAE
 from the wrong family and your perfectly correct latent decodes into colourful mush. Silently.
 
 ---
@@ -173,12 +173,12 @@ The two models from my opening question, side by side:
 | Typical steps | ~28            | 8                                             |
 
 **Why newer models split.** Thousands of fine-tuned variants share the _same_ text encoder and the
-_same_ VAE — only the UNet gets retrained. Shipping a 7.7 GB UNet instead of a 16 GB bundle avoids
+_same_ VAE - only the UNet gets retrained. Shipping a 7.7 GB UNet instead of a 16 GB bundle avoids
 re-downloading the identical encoder every single time. One VAE file serves an entire family.
 
 **And why the folder matters.** `CheckpointLoaderSimple` reads _only_ the `checkpoints/` folder. Drop
 an all-in-one file into `diffusion_models/` next to the bare UNets and it simply won't appear in the
-dropdown — no error, just an absence. This is the most common "my download must be corrupt" that
+dropdown - no error, just an absence. This is the most common "my download must be corrupt" that
 isn't a corrupt download.
 
 ---
@@ -186,7 +186,7 @@ isn't a corrupt download.
 ## How to tell in five seconds: read the header
 
 Every `.safetensors` file begins with a JSON header listing all its tensor names. The top-level
-prefixes tell you exactly which parts are inside — faster and more reliable than reading the model
+prefixes tell you exactly which parts are inside - faster and more reliable than reading the model
 card:
 
 ```bash
@@ -203,7 +203,7 @@ Real output from the 6.46 GB file from my opening question:
 Counter({'model': 1680, 'conditioner': 587, 'first_stage_model': 248})
 ```
 
-Three groups — so all three parts are inside. Here's the decoder ring:
+Three groups - so all three parts are inside. Here's the decoder ring:
 
 | Prefix you see                       | Means                     | So                         |
 | ------------------------------------ | ------------------------- | -------------------------- |
@@ -233,11 +233,11 @@ The three roles differ so much in size that a directory listing usually gives it
 "Three parts" is a strong convention, not a law:
 
 **Some models have no VAE at all.** ComfyUI's VAE dropdown contains a literal `pixel_space` entry
-next to the real VAE files. That's for models that denoise directly in pixels — no compression, no
+next to the real VAE files. That's for models that denoise directly in pixels - no compression, no
 codec. Slower per step, but one fewer thing to mismatch.
 
-**Some need more than three.** A video model on the same machine ships **two** VAEs — one for video,
-one for audio — because it generates both. Two output types, two codecs.
+**Some need more than three.** A video model on the same machine ships **two** VAEs - one for video,
+one for audio - because it generates both. Two output types, two codecs.
 
 ---
 
@@ -253,13 +253,13 @@ Here is the pattern behind every mistake described above:
 | Turbo CFG on a normal model | washed-out image       | CFG was the cause                  |
 
 ComfyUI ships a `validate_workflow` check that verifies node types, valid setting values, and
-wiring — and **all four mistakes pass every one of those checks.** Not because the checker is weak,
+wiring - and **all four mistakes pass every one of those checks.** Not because the checker is weak,
 but because each wrong value is a perfectly _valid_ option. Validation proves your graph is
 well-formed. It cannot prove your model set makes sense together.
 
 Which leaves exactly two defences, and they're both unglamorous:
 
-1. **Run it end to end and look at the picture.** Not "does it validate" — does it produce something
+1. **Run it end to end and look at the picture.** Not "does it validate" - does it produce something
    that looks right.
 2. **Write the pairing down** somewhere the next person will actually read.
 

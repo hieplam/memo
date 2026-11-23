@@ -13,7 +13,7 @@ lang: "vi"
 ---
 
 > Bài này sinh ra từ một câu hỏi rất thật: vừa merge xong một pull request, gõ `git pull`,
-> terminal in ra chữ **`Fast-forward`** — và không hiểu chữ đó nghĩa là gì.
+> terminal in ra chữ **`Fast-forward`** - và không hiểu chữ đó nghĩa là gì.
 > Mọi đoạn output trong bài đều là **chạy thật** trên các repo demo dựng bằng `git init`,
 > không phải minh hoạ bịa ra.
 > Ngày: 2026-08-03
@@ -25,7 +25,7 @@ lang: "vi"
 - Git **không** lưu lịch sử dạng đường thẳng theo thời gian. Nó lưu một **đồ thị**, mỗi commit trỏ ngược về cha nó.
 - Một **commit** là một **snapshot** (bản chụp toàn bộ thư mục), **không phải** một diff.
 - **Branch** chỉ là một file text chứa **một** mã hash. **HEAD** là con trỏ trỏ vào tên branch.
-- **Fast-forward** không phải một "kiểu merge" — nó là chuyện git chỉ **trượt con trỏ** vì không có gì để trộn.
+- **Fast-forward** không phải một "kiểu merge" - nó là chuyện git chỉ **trượt con trỏ** vì không có gì để trộn.
 - **Merge commit** và **squash** cho ra **tree giống hệt nhau**; khác biệt duy nhất là có ghi lại "cha thứ hai" hay không.
 - **Rebase** viết lại từng commit thành object mới → **hash đổi hết**.
 - **`git reflog`** là lưới an toàn: cứu được commit đã "biến mất" sau `reset --hard`.
@@ -45,16 +45,16 @@ Fast-forward
  11 files changed, 21 insertions(+), 331 deletions(-)
 ```
 
-"Fast-forward" — tua nhanh. Tua nhanh cái gì? Muốn trả lời được, phải đi xuống một tầng:
+"Fast-forward" - tua nhanh. Tua nhanh cái gì? Muốn trả lời được, phải đi xuống một tầng:
 **git thực ra lưu dữ liệu như thế nào.**
 
 ---
 
-## 2. Git lưu cái gì? — Object database
+## 2. Git lưu cái gì? - Object database
 
 Trước hết một thuật ngữ: **object database** (kho object) là nơi git cất mọi thứ, nằm trong
 thư mục ẩn `.git/objects` của repo. Mỗi thứ cất vào đó được gọi là một **object**, và được
-đặt tên bằng chính **mã băm SHA** của nội dung nó — cái dãy `bd9ec51...` bạn thấy hằng ngày.
+đặt tên bằng chính **mã băm SHA** của nội dung nó - cái dãy `bd9ec51...` bạn thấy hằng ngày.
 
 Có 4 loại object. Ba loại quan trọng nhất:
 
@@ -106,7 +106,7 @@ Ba lệnh, ba tầng: commit → tree → blob. Đúng như sơ đồ.
 ### 3.1 Bốn cách xem
 
 ```bash
-git cat-file -p <hash>            # plumbing: in raw object — thấp nhất, thật nhất
+git cat-file -p <hash>            # plumbing: in raw object - thấp nhất, thật nhất
 git cat-file -t <hash>            # object này loại gì? -> in ra "commit"/"tree"/"blob"
 git log -1 --format=raw <hash>    # cũng ra field thô, khỏi cần nhớ cat-file
 git show <hash>                   # porcelain: bản dễ đọc, kèm luôn diff
@@ -174,7 +174,7 @@ flowchart LR
 ```
 
 (Về mặt lưu trữ, git có nén các object giống nhau lại bằng cơ chế **packfile** để tiết kiệm ổ
-cứng, nhưng đó là chuyện tối ưu bên dưới — mô hình logic vẫn là snapshot.)
+cứng, nhưng đó là chuyện tối ưu bên dưới - mô hình logic vẫn là snapshot.)
 
 ### 3.4 Điểm gây sốc thứ hai: `author` và `committer` có thể khác nhau
 
@@ -196,25 +196,25 @@ trên web là bên **thực sự chạy lệnh tạo ra object này**, còn ngư
 gốc. `git rebase` cũng tách hai field y hệt vậy: giữ nguyên `author` gốc, đặt `committer` là
 người/máy chạy rebase. Đó là lý do hai field này tồn tại riêng.
 
-Và để ý: commit này có **2 dòng `parent`** — dấu hiệu nhận biết một merge commit.
+Và để ý: commit này có **2 dòng `parent`** - dấu hiệu nhận biết một merge commit.
 
 ---
 
-## 4. Git tổ chức commit như thế nào — DAG, không phải timeline
+## 4. Git tổ chức commit như thế nào - DAG, không phải timeline
 
 Trực giác thông thường: "git là một danh sách commit xếp theo thời gian". Gần đúng, nhưng
-không phải. Git lưu một **DAG** — viết tắt của **Directed Acyclic Graph** (đồ thị có hướng,
+không phải. Git lưu một **DAG** - viết tắt của **Directed Acyclic Graph** (đồ thị có hướng,
 không chu trình):
 
 - **Directed** (có hướng): mỗi commit chỉ trỏ **ngược về quá khứ**, qua field `parent`. Không
   commit nào biết con nó là ai.
-- **Acyclic** (không chu trình): không thể có vòng lặp — bạn không thể là ông nội của chính mình.
+- **Acyclic** (không chu trình): không thể có vòng lặp - bạn không thể là ông nội của chính mình.
 
 ```mermaid
 flowchart RL
   M2["m2"] -->|parent| M1["m1"] -->|parent| C["C: base"]
   B2["b2"] -->|parent| B1["b1"] -->|parent| C
-  C -->|parent| NULL["(không có — commit đầu repo)"]
+  C -->|parent| NULL["(không có - commit đầu repo)"]
 ```
 
 Mũi tên **chỉ về bên phải**, tức về phía quá khứ. Thứ tự thời gian mà bạn thấy trong `git log`
@@ -251,7 +251,7 @@ Hết. Vậy khi bạn commit, git làm đúng hai việc:
 ### 5.2 HEAD = "tôi đang đứng ở đâu"
 
 **HEAD** là một con trỏ đặc biệt trả lời câu hỏi _bạn đang đứng trên branch nào_. Nó **không**
-trỏ thẳng vào commit — nó trỏ vào **tên branch** (thuật ngữ: **symbolic ref**, con trỏ tượng trưng):
+trỏ thẳng vào commit - nó trỏ vào **tên branch** (thuật ngữ: **symbolic ref**, con trỏ tượng trưng):
 
 ```
 $ cat .git/HEAD
@@ -268,7 +268,7 @@ flowchart LR
 ```
 
 `git checkout feature` làm gì? Chỉ đổi nội dung file `.git/HEAD` thành `ref: refs/heads/feature`
-(rồi cập nhật file trong thư mục làm việc cho khớp). Nhẹ hều — đó là lý do checkout nhanh.
+(rồi cập nhật file trong thư mục làm việc cho khớp). Nhẹ hều - đó là lý do checkout nhanh.
 
 **Detached HEAD** (HEAD tách rời): nếu bạn checkout thẳng một hash thay vì tên branch, `.git/HEAD`
 sẽ chứa luôn hash đó, không qua branch nào. Hệ quả: commit mới tạo tiếp **không có branch nào
@@ -314,7 +314,7 @@ gitGraph
    commit id: "m2"
 ```
 
-Một thuật ngữ quan trọng xuất hiện ở đây: **merge-base** (điểm gốc chung / tổ tiên chung) — là
+Một thuật ngữ quan trọng xuất hiện ở đây: **merge-base** (điểm gốc chung / tổ tiên chung) - là
 commit cuối cùng mà **cả hai** nhánh đều có. Ở đây là `C`. Git tự tìm được nó:
 
 ```
@@ -322,7 +322,7 @@ $ git merge-base main feature
 94cb66e752a67f47f8bfd937c660bd99ecfc61a2      # chính là C
 ```
 
-Ghi nhớ con số này — phần 7 sẽ dùng lại nó.
+Ghi nhớ con số này - phần 7 sẽ dùng lại nó.
 
 ---
 
@@ -332,7 +332,7 @@ Ghi nhớ con số này — phần 7 sẽ dùng lại nó.
 pull request" chỉ gọi đúng những lệnh git mà bạn chạy tay ở local được. Dưới đây là từng cách,
 kèm cơ chế thật bên dưới.
 
-### 7.1 Fast-forward — không tạo commit nào cả
+### 7.1 Fast-forward - không tạo commit nào cả
 
 **Điều kiện:** nhánh đích (ví dụ `main`) **không có** commit mới nào kể từ lúc rẽ nhánh. Lịch sử
 nằm thẳng hàng → **không có gì để trộn**.
@@ -356,7 +356,7 @@ $ git log --all --graph --oneline --decorate    # sau
 * 0126fff C1
 ```
 
-Để ý dòng cuối: `(HEAD -> main, feature)` — **hai branch giờ trỏ vào đúng cùng một commit**.
+Để ý dòng cuối: `(HEAD -> main, feature)` - **hai branch giờ trỏ vào đúng cùng một commit**.
 Không object nào được tạo ra.
 
 ```mermaid
@@ -419,7 +419,7 @@ rõ "chỗ này hai nhánh gặp nhau".
 
 ### 7.3 "Squash and merge" = `git merge --squash` + `git commit`
 
-**Cơ chế:** dùng **đúng cùng thuật toán three-way merge** như trên để tính ra tree — nhưng
+**Cơ chế:** dùng **đúng cùng thuật toán three-way merge** như trên để tính ra tree - nhưng
 `--squash` cố tình **không ghi cha thứ hai**, chỉ để tree kết quả nằm sẵn trong staging area.
 Bạn tự `git commit` sau, tạo ra một commit **một cha** bình thường.
 
@@ -473,7 +473,7 @@ truy ngược từng commit gốc.
 Cơ chế **khác hẳn** ba cái trên: không tạo merge commit nào cả.
 
 Với **từng** commit trên `feature` (theo thứ tự `b1` rồi `b2`), git tính ra **diff** mà commit đó
-tạo ra so với cha của chính nó, rồi **áp lại** cái diff đó lên đỉnh mới của `main` — bản chất
+tạo ra so với cha của chính nó, rồi **áp lại** cái diff đó lên đỉnh mới của `main` - bản chất
 giống chạy `git cherry-pick` liên tiếp. Vì cha đã đổi (`C` → `m2`), mỗi commit buộc phải trở
 thành **object mới, hash mới**:
 
@@ -502,7 +502,7 @@ flowchart TB
     TC["C"] --> TM1["m1"] --> TM2["m2 ← main"]
     TC --> TB1["b1<br/>bd9ec51"] --> TB2["b2<br/>66dfe6f ← feature"]
   end
-  subgraph S["SAU rebase — thẳng hàng, hash mới"]
+  subgraph S["SAU rebase - thẳng hàng, hash mới"]
     direction LR
     SC["C"] --> SM1["m1"] --> SM2["m2 ← main"] --> SB1["b1'<br/>ddaf64e"] --> SB2["b2'<br/>0d29435 ← feature"]
   end
@@ -529,10 +529,10 @@ Và vì sau rebase `feature` đã nằm thẳng hàng sau `main`, bước merge 
 ### 8.1 Vì sao phải là "ba chiều"?
 
 Tưởng tượng cách ngây thơ: chỉ so hai bản A và B với nhau (**two-way merge**). Gặp một dòng có
-ở A mà không có ở B — không thể biết là **A vừa thêm dòng đó** hay **B vừa xoá nó đi**. Hai
+ở A mà không có ở B - không thể biết là **A vừa thêm dòng đó** hay **B vừa xoá nó đi**. Hai
 tình huống trái ngược, cùng một hiện tượng.
 
-Cách giải: nhìn thêm **điểm thứ ba** — bản gốc chung (merge-base) trước khi hai bên rẽ nhánh.
+Cách giải: nhìn thêm **điểm thứ ba** - bản gốc chung (merge-base) trước khi hai bên rẽ nhánh.
 Đó là **three-way merge**: `base`, `A`, `B`.
 
 ```mermaid
@@ -583,14 +583,14 @@ FEATURE-VERSION
 >>>>>>> feature
 ```
 
-Thuật toán không có cơ sở nào để quyết bên nào đúng, nên nó **không đoán** — nó giữ cả hai phiên
+Thuật toán không có cơ sở nào để quyết bên nào đúng, nên nó **không đoán** - nó giữ cả hai phiên
 bản kèm **conflict marker** (dấu xung đột) cho người chọn:
 
 | Marker            | Nghĩa                                                 |
 | ----------------- | ----------------------------------------------------- |
-| `<<<<<<< HEAD`    | mở đầu — phía dưới là bản của **nhánh bạn đang đứng** |
+| `<<<<<<< HEAD`    | mở đầu - phía dưới là bản của **nhánh bạn đang đứng** |
 | `=======`         | ranh giới giữa hai bản                                |
-| `>>>>>>> feature` | kết thúc — phía trên là bản của **nhánh đem vào**     |
+| `>>>>>>> feature` | kết thúc - phía trên là bản của **nhánh đem vào**     |
 
 Việc của bạn: sửa file thành bản đúng, xoá cả ba dòng marker, `git add`, rồi `git commit`.
 
@@ -606,12 +606,12 @@ không nằm ở bước **tính tree**.
 
 ---
 
-## 9. `git reflog` — lưới an toàn cứu bạn khi lỡ tay
+## 9. `git reflog` - lưới an toàn cứu bạn khi lỡ tay
 
 ### 9.1 Nó là gì
 
-**reflog** (viết tắt của _reference log_ — nhật ký con trỏ) ghi lại **mọi lần một ref (HEAD hoặc
-một branch) đổi hash**: do commit, checkout, merge, rebase, reset — bất kể lý do gì.
+**reflog** (viết tắt của _reference log_ - nhật ký con trỏ) ghi lại **mọi lần một ref (HEAD hoặc
+một branch) đổi hash**: do commit, checkout, merge, rebase, reset - bất kể lý do gì.
 
 Hai tính chất quan trọng: nó **chỉ tồn tại ở máy bạn** (không push lên remote, không ai khác
 thấy), và nó ghi lại cả những trạng thái mà `git log` **không còn hiển thị**.
@@ -654,7 +654,7 @@ Vì `git log` và object database là **hai chuyện khác nhau**:
 
 ```mermaid
 flowchart LR
-  subgraph OBJ[".git/objects — kho object"]
+  subgraph OBJ[".git/objects - kho object"]
     O1["commit 1"]
     O2["commit 2"]
     O3["commit 3"]
@@ -667,11 +667,11 @@ flowchart LR
 
 `git log` chỉ lần theo dây `parent` từ HEAD hiện tại lùi về. HEAD dời chỗ → những commit không
 còn nằm trên đường đó biến mất khỏi log. Nhưng **object của chúng vẫn nằm nguyên trong
-`.git/objects`**, chỉ là không còn ai trỏ tới (thuật ngữ: **unreachable** — không tới được).
+`.git/objects`**, chỉ là không còn ai trỏ tới (thuật ngữ: **unreachable** - không tới được).
 Reflog giữ hash → bạn trỏ lại được.
 
 **Hạn dùng:** reflog tự hết hạn sau khoảng 90 ngày (với commit còn reachable) hoặc 30 ngày (với
-unreachable), rồi `git gc` (garbage collector — bộ dọn rác) mới xoá thật.
+unreachable), rồi `git gc` (garbage collector - bộ dọn rác) mới xoá thật.
 
 **Dùng khi:** lỡ `reset --hard`, rebase hỏng, xoá nhầm branch, hoặc mất commit vì detached HEAD.
 
@@ -697,9 +697,9 @@ Bảy điều đọng lại:
 2. Branch = một file chứa một hash. HEAD = con trỏ trỏ vào **tên branch**.
 3. Git lưu **DAG**, mũi tên chỉ ngược về quá khứ.
 4. **Fast-forward** là cơ chế trượt con trỏ, không phải chiến lược merge.
-5. Merge commit và squash cho **tree giống hệt nhau** — chỉ khác ở dòng `parent` thứ hai.
+5. Merge commit và squash cho **tree giống hệt nhau** - chỉ khác ở dòng `parent` thứ hai.
 6. Rebase **viết lại object** → hash đổi; `author` giữ nguyên, `committer` đổi.
-7. Reflog cứu được gần như mọi thứ chưa bị `gc` dọn — nhưng chỉ ở máy bạn.
+7. Reflog cứu được gần như mọi thứ chưa bị `gc` dọn - nhưng chỉ ở máy bạn.
 
-Và câu trả lời cho dòng chữ mở đầu bài: `Fast-forward` nghĩa là git **không phải trộn gì cả** —
+Và câu trả lời cho dòng chữ mở đầu bài: `Fast-forward` nghĩa là git **không phải trộn gì cả** -
 nó chỉ dịch một con trỏ từ hash này sang hash kia.

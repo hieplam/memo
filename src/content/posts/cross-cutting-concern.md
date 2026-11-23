@@ -14,9 +14,9 @@ tags:
 
 ## Tóm tắt nhanh (TL;DR)
 
-- **Cross-cutting concern (mối quan tâm xuyên suốt)** là những khía cạnh kỹ thuật lặp lại ở nhiều module — logging, security, transaction, caching, validation — nhưng **không thuộc logic nghiệp vụ riêng** của bất kỳ module nào.
+- **Cross-cutting concern (mối quan tâm xuyên suốt)** là những khía cạnh kỹ thuật lặp lại ở nhiều module - logging, security, transaction, caching, validation - nhưng **không thuộc logic nghiệp vụ riêng** của bất kỳ module nào.
 - Nếu để chúng nằm lẫn trong logic nghiệp vụ, code mắc hai bệnh: **tangling** (rối, đan xen) và **scattering** (phân tán, copy-paste khắp nơi) → khó đọc, khó bảo trì, vi phạm DRY và SRP.
-- Cách chữa là **tách bạch (Separation of Concerns)**: AOP, middleware/pipeline, MediatR pipeline behavior, decorator pattern, DI + interceptor — để mỗi phần code chỉ làm đúng một việc.
+- Cách chữa là **tách bạch (Separation of Concerns)**: AOP, middleware/pipeline, MediatR pipeline behavior, decorator pattern, DI + interceptor - để mỗi phần code chỉ làm đúng một việc.
 
 ---
 
@@ -48,16 +48,16 @@ Hình dung trực quan: nếu bạn vẽ hệ thống thành các "cột dọc" 
 
 ## 2. Các cross-cutting concern phổ biến
 
-- **Logging / Tracing** — ghi log, theo dõi request đi qua hệ thống
-- **Security** — xác thực (authentication), phân quyền (authorization)
-- **Transaction management** — đảm bảo tính toàn vẹn dữ liệu (commit/rollback)
-- **Caching** — lưu cache kết quả để tăng hiệu năng
-- **Error handling** — xử lý ngoại lệ tập trung
-- **Validation** — kiểm tra dữ liệu đầu vào
-- **Monitoring / Metrics** — đo lường hiệu năng, thu thập số liệu
-- **Retry / Resilience** — thử lại, circuit breaker
-- **Auditing** — ghi nhận ai làm gì, khi nào
-- **Internationalization (i18n)** — đa ngôn ngữ
+- **Logging / Tracing** - ghi log, theo dõi request đi qua hệ thống
+- **Security** - xác thực (authentication), phân quyền (authorization)
+- **Transaction management** - đảm bảo tính toàn vẹn dữ liệu (commit/rollback)
+- **Caching** - lưu cache kết quả để tăng hiệu năng
+- **Error handling** - xử lý ngoại lệ tập trung
+- **Validation** - kiểm tra dữ liệu đầu vào
+- **Monitoring / Metrics** - đo lường hiệu năng, thu thập số liệu
+- **Retry / Resilience** - thử lại, circuit breaker
+- **Auditing** - ghi nhận ai làm gì, khi nào
+- **Internationalization (i18n)** - đa ngôn ngữ
 
 ## 3. Tại sao phải quan tâm tới nó?
 
@@ -110,9 +110,9 @@ Cùng một đoạn code kỹ thuật bị **copy-paste lặp đi lặp lại** 
 
 ## 4. Cách giải quyết
 
-Mục tiêu chung: **tách (separate)** cross-cutting concern ra khỏi logic nghiệp vụ — gọi là _Separation of Concerns (SoC)_. Có nhiều kỹ thuật:
+Mục tiêu chung: **tách (separate)** cross-cutting concern ra khỏi logic nghiệp vụ - gọi là _Separation of Concerns (SoC)_. Có nhiều kỹ thuật:
 
-### 4.1. AOP — Aspect-Oriented Programming
+### 4.1. AOP - Aspect-Oriented Programming
 
 Lập trình hướng khía cạnh: tách concern thành các **aspect** riêng, rồi "tiêm" (weave) vào những điểm cần thiết (join points) thông qua **pointcut**.
 
@@ -140,7 +140,7 @@ Trong web framework, request đi qua một chuỗi middleware. Mỗi middleware 
 - ASP.NET Core: **Middleware pipeline**
 - Express.js: **middleware**
 
-### 4.3. Pipeline Behavior (MediatR — .NET)
+### 4.3. Pipeline Behavior (MediatR - .NET)
 
 Trong hệ sinh thái .NET với MediatR, **pipeline behavior** là cách rất gọn để xử lý cross-cutting concern. Mỗi request đi qua các behavior trước/sau handler:
 
@@ -199,4 +199,4 @@ public async Task<Unit> Handle(CreateOrderCommand cmd, CancellationToken ct)
 
 ---
 
-> **Ý chính:** Cross-cutting concern không xấu — chúng _cần thiết_. Vấn đề nằm ở chỗ **đặt chúng ở đâu**. Mục tiêu là tách chúng ra khỏi logic nghiệp vụ để mỗi phần code chỉ làm đúng một việc, theo nguyên tắc _Separation of Concerns_.
+> **Ý chính:** Cross-cutting concern không xấu - chúng _cần thiết_. Vấn đề nằm ở chỗ **đặt chúng ở đâu**. Mục tiêu là tách chúng ra khỏi logic nghiệp vụ để mỗi phần code chỉ làm đúng một việc, theo nguyên tắc _Separation of Concerns_.

@@ -42,13 +42,13 @@ const locale = getUiLocale(Astro);
 const t = useTranslations(locale);
 ---
 
-<Layout title={`${t.pages.postsTitle} — ${langLabel} | ${config.site.title}`}>
+<Layout title={`${t.pages.postsTitle} - ${langLabel} | ${config.site.title}`}>
   <Header />
 
   <Breadcrumb />
 
   <Main
-    pageTitle={`${t.pages.postsTitle} — ${langLabel}`}
+    pageTitle={`${t.pages.postsTitle} - ${langLabel}`}
     pageDesc={t.pages.postsDesc}
   >
     <LangFilter {languages} active={lang} />

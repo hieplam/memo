@@ -24,7 +24,7 @@ export async function getStaticPaths() {
   const sortedPosts = getSortedPosts(posts);
 
   return sortedPosts.map(post => {
-    // Prev/next must stay within the post's own language — otherwise the
+    // Prev/next must stay within the post's own language - otherwise the
     // reading flow jumps between a post and unrelated siblings of the other
     // language whenever timestamps interleave.
     const sameLangPosts = sortedPosts.filter(

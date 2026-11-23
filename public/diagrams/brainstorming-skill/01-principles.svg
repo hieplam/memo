@@ -16,7 +16,7 @@
   <!-- banner -->
   <rect class="banner" x="40" y="74" width="780" height="50" rx="8"/>
   <text x="430" y="96" text-anchor="middle" font-size="14" font-weight="700" fill="#3730a3">“Dialogue, not interrogation.”</text>
-  <text x="430" y="114" text-anchor="middle" font-size="12.5" fill="#475569">Natural collaborative dialogue that refines a rough idea into a validated design — the project calls it “Socratic design refinement.”</text>
+  <text x="430" y="114" text-anchor="middle" font-size="12.5" fill="#475569">Natural collaborative dialogue that refines a rough idea into a validated design - the project calls it “Socratic design refinement.”</text>
 
   <!-- 6 cards -->
   <!-- row 1 -->
@@ -31,7 +31,7 @@
     <rect class="card" x="440" y="146" width="380" height="92" rx="8"/>
     <rect class="accent" x="440" y="146" width="6" height="92" rx="3"/>
     <text class="h" x="462" y="174">2 · Multiple-choice preferred</text>
-    <text class="b" x="462" y="196">Offer A/B/C options when you can — easier to</text>
+    <text class="b" x="462" y="196">Offer A/B/C options when you can - easier to</text>
     <text class="b" x="462" y="214">answer. Open-ended is allowed, not the default.</text>
   </g>
   <!-- row 2 -->
@@ -46,7 +46,7 @@
     <rect class="card" x="440" y="250" width="380" height="92" rx="8"/>
     <rect class="accent" x="440" y="250" width="6" height="92" rx="3"/>
     <text class="h" x="462" y="278">4 · Explore alternatives</text>
-    <text class="b" x="462" y="300">Always float 2–3 approaches before settling —</text>
+    <text class="b" x="462" y="300">Always float 2–3 approaches before settling - </text>
     <text class="b" x="462" y="318">lead with a recommendation and the reasoning.</text>
   </g>
   <!-- row 3 -->
@@ -54,7 +54,7 @@
     <rect class="card" x="40" y="354" width="380" height="92" rx="8"/>
     <rect class="accent" x="40" y="354" width="6" height="92" rx="3"/>
     <text class="h" x="62" y="382">5 · Incremental validation</text>
-    <text class="b" x="62" y="404">Present a piece, get approval, then move on —</text>
+    <text class="b" x="62" y="404">Present a piece, get approval, then move on - </text>
     <text class="b" x="62" y="422">never dump the whole design in one go.</text>
   </g>
   <g>

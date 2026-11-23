@@ -27,7 +27,7 @@
   <!-- LEFT: compiler world -->
   <rect class="cbox" x="30" y="138" width="400" height="312" rx="14"/>
   <circle cx="58" cy="168" r="7" fill="#10b981"/>
-  <text class="panelh" x="74" y="173" fill="#047857">Thế giới COMPILER — “semantic model”</text>
+  <text class="panelh" x="74" y="173" fill="#047857">Thế giới COMPILER - “semantic model”</text>
   <text class="meta" x="50" y="196">Tầng Ý NGHĨA của chương trình, dựng TRÊN cây cú pháp (AST).</text>
 
   <rect class="cbox" x="60" y="212" width="340" height="34" rx="8"/>
@@ -50,7 +50,7 @@
   <!-- RIGHT: IR/ML world -->
   <rect class="mbox" x="470" y="138" width="400" height="312" rx="14"/>
   <circle cx="498" cy="168" r="7" fill="#6366f1"/>
-  <text class="panelh" x="514" y="173" fill="#4338ca">Thế giới IR/ML — “semantic search”</text>
+  <text class="panelh" x="514" y="173" fill="#4338ca">Thế giới IR/ML - “semantic search”</text>
   <text class="meta" x="490" y="196">Tìm theo NGHĨA bằng vector, không dính gì tới compiler.</text>
 
   <rect class="mbox" x="500" y="212" width="340" height="34" rx="8"/>

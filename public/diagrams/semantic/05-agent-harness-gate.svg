@@ -15,7 +15,7 @@
   </style>
 
   <text class="title" x="30" y="40">Ghì cương agent: cổng bằng máy, không bằng lời dặn</text>
-  <text class="sub" x="30" y="64">LLM sinh code thoải mái — nhưng phải lọt qua CỔNG (compile + type + lint AST) mới được nhận.</text>
+  <text class="sub" x="30" y="64">LLM sinh code thoải mái - nhưng phải lọt qua CỔNG (compile + type + lint AST) mới được nhận.</text>
 
   <!-- LLM -->
   <rect class="llm" x="30" y="110" width="170" height="92" rx="12"/>
@@ -27,7 +27,7 @@
 
   <!-- GATE -->
   <rect class="gate" x="250" y="96" width="300" height="120" rx="12"/>
-  <text class="ph" x="400" y="124" text-anchor="middle" fill="#047857">CỔNG — hard rule bằng máy</text>
+  <text class="ph" x="400" y="124" text-anchor="middle" fill="#047857">CỔNG - hard rule bằng máy</text>
   <text class="mono" x="270" y="150" fill="#065f46">• compiler / type-checker</text>
   <text class="mono" x="270" y="172" fill="#065f46">• lint dựa trên AST + semantic</text>
   <text class="mono" x="270" y="194" fill="#065f46">• build gate → exit 1 nếu sai</text>
@@ -46,7 +46,7 @@
   <!-- contrast: instruction -->
   <rect class="soft" x="30" y="250" width="520" height="86" rx="12"/>
   <text class="ph" x="50" y="276" fill="#b45309">Đối lập: “lời dặn” (markdown / prompt rule)</text>
-  <text class="meta" x="50" y="300">“Nhớ đừng xài os.Getenv nha…” — không có gì CHẶN.</text>
+  <text class="meta" x="50" y="300">“Nhớ đừng xài os.Getenv nha…” - không có gì CHẶN.</text>
   <text class="meta" x="50" y="320">LLM bắt chước code xung quanh, dặn xong vẫn đi vòng qua.</text>
 
   <text x="585" y="295" font-size="34" fill="#f59e0b">→ ?</text>
@@ -56,7 +56,7 @@
   <!-- note on grammar-constrained decoding -->
   <rect x="30" y="356" width="840" height="92" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5"/>
   <text x="50" y="382" font-size="13.5" font-weight="700" fill="#0f172a">Đừng nhầm với grammar-constrained decoding (ép lúc SINH token):</text>
-  <text class="note" x="50" y="406">Cái đó ép từng token sinh ra phải hợp ngữ pháp — chặn rác CÚ PHÁP ngay lúc đẻ. Bổ trợ, không thay thế.</text>
+  <text class="note" x="50" y="406">Cái đó ép từng token sinh ra phải hợp ngữ pháp - chặn rác CÚ PHÁP ngay lúc đẻ. Bổ trợ, không thay thế.</text>
   <text class="note" x="50" y="426">Cổng AST/type ở trên là HẬU KIỂM: bắt cái sai NGỮ NGHĨA (gọi hàm không có, phá hợp đồng) mà cú pháp vẫn “đúng”.</text>
 
   <defs>

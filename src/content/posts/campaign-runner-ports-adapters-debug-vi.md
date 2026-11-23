@@ -1,5 +1,5 @@
 ---
-title: "Đọc lại Campaign Runner sau refactor ports & adapters — điểm đầu, luồng chạy, và cách tự debug"
+title: "Đọc lại Campaign Runner sau refactor ports & adapters - điểm đầu, luồng chạy, và cách tự debug"
 description: "Bộ campaign runner trong plugin tribe đã tách lại: run.ts từ entrypoint thành shim 9 dòng, github.ts biến mất, loop.ts thành barrel. Bài này đi từ điểm đầu tới vòng lặp, dựng lại bản đồ kiến trúc 5 tầng, và chỉ cách gắn debugger vô một chương trình chạy bằng Bun."
 pubDatetime: 2026-08-04T02:00:00Z
 lang: "vi"
@@ -16,11 +16,11 @@ multiLangKey: "campaign-runner-ports-adapters-debug"
 
 ## Tóm tắt nhanh (TL;DR)
 
-- **Campaign runner** là một script TypeScript điều phối việc "ship" từng hạng mục roadmap. Bản thân nó **không tốn token LLM nào** — chỉ các phiên Claude nó đẻ ra mới tốn.
+- **Campaign runner** là một script TypeScript điều phối việc "ship" từng hạng mục roadmap. Bản thân nó **không tốn token LLM nào** - chỉ các phiên Claude nó đẻ ra mới tốn.
 - **Điểm đầu có hai lớp:** `run.ts` chỉ là shim 9 dòng; logic thật nằm ở `cli/main.ts`.
 - **Kiến trúc 5 tầng một chiều:** kernel → ports → core → adapters → cli. Chiều import được kiểm bằng test, không phải bằng lời hứa.
 - **`github.ts` đã bị xoá; `loop.ts` giờ chỉ là barrel re-export.** Nếu bạn đọc bài tháng 7 của tui thì phần bản đồ module trong đó đã cũ.
-- **Debug bằng Bun cần adapter riêng** — Node debugger không attach được. Có sandbox `--dry-run` chạy offline hoàn toàn.
+- **Debug bằng Bun cần adapter riêng** - Node debugger không attach được. Có sandbox `--dry-run` chạy offline hoàn toàn.
 
 ---
 
@@ -44,9 +44,9 @@ Chín module thành mười chín, và `github.ts` không còn tồn tại. Bài
 
 Ba thuật ngữ, định nghĩa trước khi dùng:
 
-- **Card (thẻ):** một đơn vị công việc — ví dụ "thêm feature X". Mỗi card có đường dẫn tới một _spec_ (mô tả cần gì) và một _plan_ (các bước làm), cộng với branch/PR của nó khi đã bắt đầu.
+- **Card (thẻ):** một đơn vị công việc - ví dụ "thêm feature X". Mỗi card có đường dẫn tới một _spec_ (mô tả cần gì) và một _plan_ (các bước làm), cộng với branch/PR của nó khi đã bắt đầu.
 - **Campaign (chiến dịch):** một dãy card xếp theo thứ tự build, mô tả trong một file JSON tên `campaign-state.json`.
-- **Executor session (phiên thực thi):** một tiến trình Claude Agent SDK được spawn ra để **thực sự** làm một card — viết code, commit, mở PR, merge.
+- **Executor session (phiên thực thi):** một tiến trình Claude Agent SDK được spawn ra để **thực sự** làm một card - viết code, commit, mở PR, merge.
 
 Mô tả chính thức nằm ngay trong `package.json`:
 
@@ -71,13 +71,13 @@ flowchart LR
 Điểm đáng chú ý: **runner không tự tin vào lời khai của session.** Session nói "SHIPPED" chỉ là một tín hiệu; sự thật do `gh`/`git` trả lời. Nguyên tắc này được viết thẳng trong comment của `core/loop/phase.ts`:
 
 ```
-/** … Never trusts `card.status` — every branch here is driven by a gh/git query or an fs
+/** … Never trusts `card.status` - every branch here is driven by a gh/git query or an fs
  * check, per the design's iron rule ("the file is data, gh/git is authority"). */
 ```
 
 ### "Stateless capability" nghĩa là gì
 
-Cụm này nghe trừu tượng nên phải neo bằng code. Nó nghĩa là script **không hardcode giá trị môi trường nào** — repo nào, model nào, thư mục state ở đâu, tất cả đều là input qua dòng lệnh. Ba flag bắt buộc, và **cố ý không có giá trị mặc định**:
+Cụm này nghe trừu tượng nên phải neo bằng code. Nó nghĩa là script **không hardcode giá trị môi trường nào** - repo nào, model nào, thư mục state ở đâu, tất cả đều là input qua dòng lệnh. Ba flag bắt buộc, và **cố ý không có giá trị mặc định**:
 
 ```typescript
 const REQUIRED_FLAGS: Array<{
@@ -94,12 +94,12 @@ Thiếu một trong ba là lỗi cú pháp, không phải chỗ để đoán. C�
 
 ---
 
-## 2. Điểm đầu — tại sao có tới hai file
+## 2. Điểm đầu - tại sao có tới hai file
 
 Mở thư mục ra, thứ trông giống điểm đầu nhất là `run.ts`. Nó dài đúng 9 dòng:
 
 ```typescript
-// run.ts — CLI contract shim. The real entrypoint is cli/main.ts; this file exists because
+// run.ts - CLI contract shim. The real entrypoint is cli/main.ts; this file exists because
 // external callers (orchestrate-campaign's resolve-runner.sh, test-fresh-machine.sh) prove
 // the runner by this exact path: plugins/tribe/scripts/runner/run.ts.
 import { main } from "./cli/main.ts";
@@ -115,13 +115,13 @@ if (import.meta.main) {
 }
 ```
 
-**Shim** ở đây nghĩa là một lớp mỏng chỉ chuyển tiếp lời gọi, không chứa logic. Lý do nó tồn tại nằm ngay trong comment: hai script bên ngoài — một cái dò xem runner nằm ở đâu, một cái test trên máy mới tinh — đều khẳng định đường dẫn `scripts/runner/run.ts` phải có thật. Đường dẫn đó là **hợp đồng công khai**; logic thì được tự do dời chỗ.
+**Shim** ở đây nghĩa là một lớp mỏng chỉ chuyển tiếp lời gọi, không chứa logic. Lý do nó tồn tại nằm ngay trong comment: hai script bên ngoài - một cái dò xem runner nằm ở đâu, một cái test trên máy mới tinh - đều khẳng định đường dẫn `scripts/runner/run.ts` phải có thật. Đường dẫn đó là **hợp đồng công khai**; logic thì được tự do dời chỗ.
 
-Logic thật nằm ở `cli/main.ts`, và file này có một vai trò có tên riêng: **composition root** — điểm duy nhất trong chương trình được phép dựng các đối tượng chạm thế giới thực rồi tiêm chúng vào phần còn lại. Comment đầu file nói đúng điều đó:
+Logic thật nằm ở `cli/main.ts`, và file này có một vai trò có tên riêng: **composition root** - điểm duy nhất trong chương trình được phép dựng các đối tượng chạm thế giới thực rồi tiêm chúng vào phần còn lại. Comment đầu file nói đúng điều đó:
 
 ```
 // `parseArgs` is pure (no I/O) and fully unit-tested. `main()` below it is the COMPOSITION
-// ROOT: the only module allowed to wire adapters — it builds the production `LoopIO` via
+// ROOT: the only module allowed to wire adapters - it builds the production `LoopIO` via
 // `buildRealIo` … and hands it to `runLoop`.
 ```
 
@@ -144,9 +144,9 @@ export async function main(): Promise<void> {
 
 Hai chi tiết đáng học ở đây:
 
-**Một — `parseArgs` trả về union thay vì `throw`.** Kiểu trả về là `ParseArgsResult | ParseArgsError`, caller phân biệt bằng `if ('error' in parsed)`. Không có exception nào bay lên, nên hàm này test được bằng cách gọi thẳng với một mảng chuỗi.
+**Một - `parseArgs` trả về union thay vì `throw`.** Kiểu trả về là `ParseArgsResult | ParseArgsError`, caller phân biệt bằng `if ('error' in parsed)`. Không có exception nào bay lên, nên hàm này test được bằng cách gọi thẳng với một mảng chuỗi.
 
-**Hai — flag lạ bị từ chối theo tên, không bị bỏ qua im lặng:**
+**Hai - flag lạ bị từ chối theo tên, không bị bỏ qua im lặng:**
 
 ```typescript
 if (!KNOWN_FLAGS.has(token)) {
@@ -162,7 +162,7 @@ Gõ sai `--max-card` thay vì `--max-cards` thì chương trình dừng và nói
 
 ```mermaid
 flowchart TB
-  RUN["run.ts (shim)"] --> MAIN["cli/main.ts — main()"]
+  RUN["run.ts (shim)"] --> MAIN["cli/main.ts - main()"]
   MAIN --> PA["parseArgs(argv, runId)<br/>thuần, không I/O"]
   MAIN --> BIO["buildRealIo(config)<br/>ráp fs + child_process + SDK"]
   MAIN --> RL["runLoop(config, io)"]
@@ -171,7 +171,7 @@ flowchart TB
   DRY -->|không| LOCK["acquireLock()<br/>chống chạy 2 instance"]
   LOCK --> REC["ghi run.json (atomic)"]
   REC --> CTX["resolveRunContext<br/>base branch + answers + brief"]
-  CTX --> PASS["runPass — vòng lặp card"]
+  CTX --> PASS["runPass - vòng lặp card"]
   PASS --> NC["filteredNextCard"]
   NC --> PH["deriveCardPhase<br/>hỏi gh/git"]
   PH --> ACT["actOnCard<br/>spawn session, verify, ship"]
@@ -189,10 +189,10 @@ let worked = 0;
 const limit = resolved.maxCards ?? Infinity;
 ```
 
-- `attempted` trả lời: _"card này đã được chọn trong lượt chạy này chưa?"_ — mọi card được chọn đều vào set, không điều kiện. Đây là thứ đảm bảo vòng lặp **chắc chắn dừng**: dãy card đưa cho hàm chọn co lại sau mỗi vòng, chặn trên là số card trong campaign.
-- `worked` trả lời: _"đã tiêu bao nhiêu phần ngân sách `--max-cards` mà người vận hành cấp?"_ — chỉ tăng khi card **thật sự** có việc xảy ra.
+- `attempted` trả lời: _"card này đã được chọn trong lượt chạy này chưa?"_ - mọi card được chọn đều vào set, không điều kiện. Đây là thứ đảm bảo vòng lặp **chắc chắn dừng**: dãy card đưa cho hàm chọn co lại sau mỗi vòng, chặn trên là số card trong campaign.
+- `worked` trả lời: _"đã tiêu bao nhiêu phần ngân sách `--max-cards` mà người vận hành cấp?"_ - chỉ tăng khi card **thật sự** có việc xảy ra.
 
-Một card đang bị "park" vì escalation từ lượt chạy trước thì vào `attempted` nhưng **không** vào `worked` — vì lượt này nó không ghi gì, không quyết gì:
+Một card đang bị "park" vì escalation từ lượt chạy trước thì vào `attempted` nhưng **không** vào `worked` - vì lượt này nó không ghi gì, không quyết gì:
 
 ```typescript
 if (phase.kind === "escalation_pending") {
@@ -208,7 +208,7 @@ if (phase.kind === "escalation_pending") {
 
 **Escalation** ở đây nghĩa là runner gặp một câu hỏi nó không có quyền trả lời (ví dụ: đổi shape dữ liệu, thêm quyền mới) nên ghi ra file và để con người quyết.
 
-### 3.2 Exit code — trộn nhiều kết quả thành một số
+### 3.2 Exit code - trộn nhiều kết quả thành một số
 
 Một lượt chạy có thể vừa ship vài card, vừa escalate vài card, vừa có card chết giữa chừng. Thứ tự ưu tiên biến mớ đó thành một exit code:
 
@@ -242,7 +242,7 @@ Bảng đầy đủ (`core/types.ts`):
 
 Và comment cạnh `EXIT_ERROR` nói rõ thứ tự tin cậy: _"the exit code is a hint, the report is the truth"_.
 
-### 3.3 `deriveCardPhase` — phân loại thực tại
+### 3.3 `deriveCardPhase` - phân loại thực tại
 
 Hàm này quyết định phải làm gì với một card, và nó **không đọc `card.status` trong file**. Nhánh đầu tiên là nhánh rẻ nhất:
 
@@ -260,9 +260,9 @@ Cái nhánh `!card.branch` này chính là thứ làm cho sandbox debug ở ph�
 
 ---
 
-## 4. Kiến trúc — pure core, impure edges
+## 4. Kiến trúc - pure core, impure edges
 
-Ý niệm nền: **tách phần "quyết định" khỏi phần "chạm thế giới"**. Phần quyết định (tính toán, rẽ nhánh, biến đổi dữ liệu) phải _thuần_ — cùng input thì cùng output, lần chạy thứ 1 hay thứ 100 cũng vậy. Mọi thứ chạm ra ngoài — file, mạng, đồng hồ, process — chỉ được vào qua một **abstraction do người gọi cung cấp**.
+Ý niệm nền: **tách phần "quyết định" khỏi phần "chạm thế giới"**. Phần quyết định (tính toán, rẽ nhánh, biến đổi dữ liệu) phải _thuần_ - cùng input thì cùng output, lần chạy thứ 1 hay thứ 100 cũng vậy. Mọi thứ chạm ra ngoài - file, mạng, đồng hồ, process - chỉ được vào qua một **abstraction do người gọi cung cấp**.
 
 Trong repo này abstraction đó có tên: **port**. `ports/ports.ts` chỉ chứa khai báo kiểu, không có một giá trị runtime nào:
 
@@ -294,12 +294,12 @@ function realExec(cmd: string[], opts?: { cwd?: string }): Promise<ExecResult> {
 }
 ```
 
-Chú ý: `child.on('error')` cũng `resolve` chứ không `reject` — mọi thất bại đều thành một `ExecResult` có `exitCode: 1`, để phần core chỉ phải xử lý một hình dạng dữ liệu.
+Chú ý: `child.on('error')` cũng `resolve` chứ không `reject` - mọi thất bại đều thành một `ExecResult` có `exitCode: 1`, để phần core chỉ phải xử lý một hình dạng dữ liệu.
 
-Còn đây là toàn bộ file duy nhất được phép import Claude Agent SDK — 13 dòng:
+Còn đây là toàn bộ file duy nhất được phép import Claude Agent SDK - 13 dòng:
 
 ```typescript
-// session.adapter.ts — the runner's ONLY import of `@anthropic-ai/claude-agent-sdk`
+// session.adapter.ts - the runner's ONLY import of `@anthropic-ai/claude-agent-sdk`
 import { query } from "@anthropic-ai/claude-agent-sdk";
 import type { SessionMessage, SpawnSessionParams } from "../core/session.ts";
 
@@ -315,7 +315,7 @@ export function sdkSpawnSession(
 
 SDK nâng version thì sửa đúng file này, không đụng chỗ nào khác.
 
-### Chiều import — và nó được kiểm bằng test
+### Chiều import - và nó được kiểm bằng test
 
 Năm tầng, một chiều:
 
@@ -327,7 +327,7 @@ Năm tầng, một chiều:
 | adapters (`adapters/*.adapter.ts`)          | kernel, ports, core, adapter khác       |
 | cli (`cli/main.ts`) và shim `run.ts`        | tất cả                                  |
 
-Điểm mấu chốt: quy tắc này **không phải lời hứa trong docs** — có `structure.test.ts` đi đệ quy qua `core/`, `ports/`, `adapters/`, `cli/` và `run.ts` để kiểm. Chạy chung với type-check bằng `bun run check`.
+Điểm mấu chốt: quy tắc này **không phải lời hứa trong docs** - có `structure.test.ts` đi đệ quy qua `core/`, `ports/`, `adapters/`, `cli/` và `run.ts` để kiểm. Chạy chung với type-check bằng `bun run check`.
 
 ```
 $ bun test
@@ -337,7 +337,7 @@ $ bun test
 Ran 205 tests across 10 files. [363.00ms]
 ```
 
-205 test trong 363 mili-giây — không cần repo thật, không cần mạng, không cần Claude. Đó chính là phần thưởng của việc giữ core thuần.
+205 test trong 363 mili-giây - không cần repo thật, không cần mạng, không cần Claude. Đó chính là phần thưởng của việc giữ core thuần.
 
 ### Bản đồ module hôm nay
 
@@ -348,16 +348,16 @@ flowchart TB
     FS["File system"]
     SDK["Claude Agent SDK"]
   end
-  RUN["run.ts — shim 9 dòng"] --> CLI["cli/main.ts — composition root"]
-  CLI --> LOOP["core/loop.ts — barrel"]
+  RUN["run.ts - shim 9 dòng"] --> CLI["cli/main.ts - composition root"]
+  CLI --> LOOP["core/loop.ts - barrel"]
   CLI -.->|buildRealIo| ADP
-  LOOP --> L1["loop/run-loop.ts — vòng lặp"]
-  LOOP --> L2["loop/phase.ts — resume matrix"]
-  LOOP --> L3["loop/lock.ts — lock + STOP"]
-  LOOP --> L4["loop/card-actions.ts — việc từng card"]
-  LOOP --> L5["loop/commit-guard.ts — ghi state"]
+  LOOP --> L1["loop/run-loop.ts - vòng lặp"]
+  LOOP --> L2["loop/phase.ts - resume matrix"]
+  LOOP --> L3["loop/lock.ts - lock + STOP"]
+  LOOP --> L4["loop/card-actions.ts - việc từng card"]
+  LOOP --> L5["loop/commit-guard.ts - ghi state"]
   L1 --> CORE["core/: state, verify, report,<br/>brief, session, paths, run-record"]
-  CORE --> PORTS["ports/ports.ts — chỉ type"]
+  CORE --> PORTS["ports/ports.ts - chỉ type"]
   subgraph ADP["adapters/"]
     A1["run-io.adapter.ts"]
     A2["session.adapter.ts"]
@@ -367,12 +367,12 @@ flowchart TB
   A2 -.-> SDK
 ```
 
-Một chi tiết dễ nhầm: `core/loop.ts` **không còn chứa logic**. Nó là barrel — file chỉ re-export lại thứ nằm chỗ khác:
+Một chi tiết dễ nhầm: `core/loop.ts` **không còn chứa logic**. Nó là barrel - file chỉ re-export lại thứ nằm chỗ khác:
 
 ```
 // This module is a PURE re-export surface: the orchestrator's actual logic lives in
 // `core/loop/` … This file exists so every external importer … keeps importing from
-// `./loop.ts`/`../core/loop.ts` unchanged — the directory split under it is an
+// `./loop.ts`/`../core/loop.ts` unchanged - the directory split under it is an
 // implementation detail.
 ```
 
@@ -382,7 +382,7 @@ Tức là code cũ `import { runLoop } from './loop.ts'` vẫn chạy y nguyên 
 
 ## 5. Ba quyết định thiết kế đáng mượn
 
-**Fail closed — mặc định an toàn khi thiếu cấu hình.** Campaign khai báo `docsOnlyPaths`: những đường dẫn được coi là "chỉ tài liệu", dùng để miễn trừ khi CI đỏ vì flake. Nếu tác giả để rỗng:
+**Fail closed - mặc định an toàn khi thiếu cấu hình.** Campaign khai báo `docsOnlyPaths`: những đường dẫn được coi là "chỉ tài liệu", dùng để miễn trừ khi CI đỏ vì flake. Nếu tác giả để rỗng:
 
 > **Fails CLOSED: an empty list means nothing counts as docs-only, so a code diff never auto-waives a red check.**
 
@@ -394,7 +394,7 @@ Danh sách rỗng nghĩa là _không gì được miễn_, chứ không phải _
 git log --grep="Campaign: <campaign-slug>"
 ```
 
-README nói thẳng giới hạn của nó: **"This is instructional, not enforced."** — runner dặn, chứ không kiểm.
+README nói thẳng giới hạn của nó: **"This is instructional, not enforced."** - runner dặn, chứ không kiểm.
 
 **Ghi file kiểu atomic.** Ghi ra file tạm rồi đổi tên, nên người đọc không bao giờ thấy file viết dở:
 
@@ -408,9 +408,9 @@ writeFileAtomic: (resolvedPath, content) => {
 
 ---
 
-## 6. Tự debug — phần bài cũ không có
+## 6. Tự debug - phần bài cũ không có
 
-Runtime là **Bun** — một JavaScript runtime thay thế Node, ở đây là bản 1.3.13. Điều này đổi cách debug: Bun nói **WebKit inspector protocol**, còn debugger của Node nói **Chrome DevTools Protocol**. Hai giao thức khác nhau, nên debugger Node **không attach được**.
+Runtime là **Bun** - một JavaScript runtime thay thế Node, ở đây là bản 1.3.13. Điều này đổi cách debug: Bun nói **WebKit inspector protocol**, còn debugger của Node nói **Chrome DevTools Protocol**. Hai giao thức khác nhau, nên debugger Node **không attach được**.
 
 ### 6.1 Cách không cần cài gì
 
@@ -432,7 +432,7 @@ Inspect in browser:
 
 Mở URL đó là có debugger đầy đủ trong trình duyệt. `--inspect-brk` nghĩa là dừng ngay dòng đầu tiên và chờ.
 
-### 6.2 VS Code — và cái bẫy làm tui mất 20 phút
+### 6.2 VS Code - và cái bẫy làm tui mất 20 phút
 
 Cần extension `oven.bun-vscode` để có debug type `bun`. Cài xong tui bấm F5 thì **không có gì xảy ra**, Debug Console trống trơn, không thấy lỗi.
 
@@ -443,7 +443,7 @@ extension host   PID 24955   khởi động  13:44:06
 oven.bun-vscode  cài xong               13:49:32   ← muộn hơn 5 phút 26 giây
 ```
 
-**Extension host** là tiến trình riêng mà VS Code dùng để chạy toàn bộ extension. Nó chỉ nạp phần đóng góp của một extension mới khi khởi động lại. Trong phần đóng góp đó có debug type `bun` — thứ mà mọi config launch đều khai:
+**Extension host** là tiến trình riêng mà VS Code dùng để chạy toàn bộ extension. Nó chỉ nạp phần đóng góp của một extension mới khi khởi động lại. Trong phần đóng góp đó có debug type `bun` - thứ mà mọi config launch đều khai:
 
 ```json
 { "type": "bun", "request": "launch", "program": "${workspaceFolder}/run.ts" }
@@ -453,11 +453,11 @@ Debug type chưa đăng ký thì VS Code chỉ nhả một toast nhỏ rồi t�
 
 **Cách sửa: `Cmd+Shift+P` → "Developer: Reload Window".** Muốn xem lỗi thật thì `Help → Toggle Developer Tools → Console`.
 
-Cái bẫy thứ hai, rẻ hơn nhưng cũng mất thời gian: **VS Code chỉ đọc `launch.json` ở workspace root.** Thư mục runner hay được mở như một root riêng, nên cần hai bản `launch.json` — một ở gốc repo, một trong thư mục runner.
+Cái bẫy thứ hai, rẻ hơn nhưng cũng mất thời gian: **VS Code chỉ đọc `launch.json` ở workspace root.** Thư mục runner hay được mở như một root riêng, nên cần hai bản `launch.json` - một ở gốc repo, một trong thư mục runner.
 
 ### 6.3 Sandbox chạy offline
 
-Runner đòi một `--home`: thư mục chứa state vận hành của campaign, và nó **không tự tạo** file `campaign-state.json` — file đó phải có sẵn. Nên muốn debug thì phải dựng một cái giả. Card quan trọng trong đó:
+Runner đòi một `--home`: thư mục chứa state vận hành của campaign, và nó **không tự tạo** file `campaign-state.json` - file đó phải có sẵn. Nên muốn debug thì phải dựng một cái giả. Card quan trọng trong đó:
 
 ```json
 "C1": {
@@ -491,25 +491,25 @@ export async function runLoop(config: RunLoopConfig, io: LoopIO): Promise<LoopRe
   const lockResult = acquireLock(io);
 ```
 
-Không lock, không ghi file, không session, không report. **Bỏ `--dry-run` là chạy thật** — lấy lock, ghi state, và spawn một session Claude thật sự commit và mở PR.
+Không lock, không ghi file, không session, không report. **Bỏ `--dry-run` là chạy thật** - lấy lock, ghi state, và spawn một session Claude thật sự commit và mở PR.
 
 ### 6.4 Đặt breakpoint ở đâu trước
 
 | Vị trí                                       | Thấy được gì                            |
 | -------------------------------------------- | --------------------------------------- |
-| `cli/main.ts` — sau `parseArgs`              | toàn bộ input của lượt chạy             |
-| `cli/main.ts` — tại `runLoop(...)`           | ranh giới composition root → core       |
-| `core/loop/run-loop.ts` — `filteredNextCard` | card nào được chọn                      |
-| `core/loop/phase.ts` — `deriveCardPhase`     | quyết định fresh / resume / verify_only |
-| `core/loop/run-loop.ts` — `actOnCard`        | chỗ session thật được spawn             |
+| `cli/main.ts` - sau `parseArgs`              | toàn bộ input của lượt chạy             |
+| `cli/main.ts` - tại `runLoop(...)`           | ranh giới composition root → core       |
+| `core/loop/run-loop.ts` - `filteredNextCard` | card nào được chọn                      |
+| `core/loop/phase.ts` - `deriveCardPhase`     | quyết định fresh / resume / verify_only |
+| `core/loop/run-loop.ts` - `actOnCard`        | chỗ session thật được spawn             |
 
-Một lưu ý về trải nghiệm: dry-run xong là `process.exit` ngay, chạy hết trong khoảng 100 mili-giây. Không đặt breakpoint thì phiên debug chớp một cái là hết — dễ tưởng nhầm là không chạy. Cứ dùng config có `stopOnEntry: true`.
+Một lưu ý về trải nghiệm: dry-run xong là `process.exit` ngay, chạy hết trong khoảng 100 mili-giây. Không đặt breakpoint thì phiên debug chớp một cái là hết - dễ tưởng nhầm là không chạy. Cứ dùng config có `stopOnEntry: true`.
 
 ---
 
 ## 7. Đọng lại
 
-Điều làm tui thích bộ code này không phải vòng lặp — vòng lặp thì đơn giản. Là chỗ nó **đặt ranh giới**:
+Điều làm tui thích bộ code này không phải vòng lặp - vòng lặp thì đơn giản. Là chỗ nó **đặt ranh giới**:
 
 1. **Đường dẫn là hợp đồng, logic thì không.** `run.ts` tồn tại chỉ để một đường dẫn không đổi, còn logic tự do dời sang `cli/main.ts`.
 2. **File là data, `gh`/`git` là thẩm quyền.** State file có thể sai; thực tại thì không.
@@ -517,4 +517,4 @@ Một lưu ý về trải nghiệm: dry-run xong là `process.exit` ngay, chạy
 4. **Một import SDK, 13 dòng.** Muốn biết chi phí của việc nâng SDK, mở đúng một file là biết.
 5. **Thiếu cấu hình thì fail closed.** Danh sách rỗng nghĩa là không miễn trừ gì, không phải miễn trừ tất.
 
-Còn về debug: bài học đắt nhất không nằm trong code mà nằm ở công cụ — **một debug type chưa đăng ký thì lỗi của nó biến mất im lặng.** Gặp "bấm F5 mà không có gì xảy ra", việc đầu tiên nên làm là reload window, việc thứ hai là mở Developer Tools Console.
+Còn về debug: bài học đắt nhất không nằm trong code mà nằm ở công cụ - **một debug type chưa đăng ký thì lỗi của nó biến mất im lặng.** Gặp "bấm F5 mà không có gì xảy ra", việc đầu tiên nên làm là reload window, việc thứ hai là mở Developer Tools Console.

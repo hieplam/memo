@@ -13,12 +13,12 @@
     .obj2  { fill:#eff6ff; stroke:#3b82f6; stroke-width:2; }
   </style>
 
-  <text class="title" x="30" y="40">AST thấy 4 chữ “x” giống hệt — semantic model biết là 2 biến</text>
+  <text class="title" x="30" y="40">AST thấy 4 chữ “x” giống hệt - semantic model biết là 2 biến</text>
   <text class="sub" x="30" y="64">Cùng một tên, nhờ shadowing (che biến). Chỉ tầng ngữ nghĩa mới phân giải đúng. Và nó là MAP RIÊNG.</text>
 
   <!-- LEFT: AST -->
   <rect class="astbox" x="30" y="92" width="300" height="350" rx="14"/>
-  <text class="ph" x="50" y="120" fill="#475569">AST (cú pháp) — 4 node y hệt</text>
+  <text class="ph" x="50" y="120" fill="#475569">AST (cú pháp) - 4 node y hệt</text>
 
   <rect class="node" x="50" y="138" width="260" height="40" rx="8"/>
   <text class="mono" x="66" y="163" fill="#1e293b">Ident{"x"} @6:2</text>
@@ -30,8 +30,8 @@
   <text class="mono" x="66" y="319" fill="#1e293b">Ident{"x"} @11:14</text>
 
   <text class="smono" x="50" y="366" fill="#94a3b8">cả 4 chỉ có .Name = "x"</text>
-  <text class="smono" x="50" y="384" fill="#94a3b8">— không kiểu, không “trỏ đâu”</text>
-  <text class="smono" x="50" y="416" fill="#b45309">AST bất biến — KHÔNG bị tô màu</text>
+  <text class="smono" x="50" y="384" fill="#94a3b8"> - không kiểu, không “trỏ đâu”</text>
+  <text class="smono" x="50" y="416" fill="#b45309">AST bất biến - KHÔNG bị tô màu</text>
 
   <!-- RIGHT: semantic side-map -->
   <rect class="astbox" x="560" y="92" width="310" height="350" rx="14"/>

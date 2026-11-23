@@ -11,7 +11,7 @@ tags:
 ---
 
 > Research report generated via a fan-out / fetch / adversarial-verify / synthesize
-> workflow (105 agents, 23 sources fetched, 97 claims extracted, 25 verified —
+> workflow (105 agents, 23 sources fetched, 97 claims extracted, 25 verified -
 > 15 confirmed, 10 refuted). Findings tagged ✅ were machine-verified; the
 > history section (§5) is flagged as background knowledge that the verification
 > pass could **not** confirm.
@@ -20,7 +20,7 @@ tags:
 
 ---
 
-## 1. The big picture — in one breath
+## 1. The big picture - in one breath
 
 A **pseudo-terminal** is a fake terminal made of software. It's a pair of
 connected virtual devices that lets one program _pretend to be a
@@ -29,21 +29,21 @@ sits in the middle reading and writing everything.
 
 That's the whole trick. A shell like `bash` is written to talk to a physical
 terminal. A PTY lets `bash` keep believing it's wired to real hardware, while in
-reality its "terminal" is just another program — your terminal-emulator window,
+reality its "terminal" is just another program - your terminal-emulator window,
 an SSH server, or `tmux`. The PTY is the impersonation layer that makes this lie
 seamless.
 
 > **Terminology note:** the classic names are **master** and **slave**. POSIX
 > Issue 8 (2024) renamed them **manager** and **subsidiary** for inclusive
 > language, but the Linux kernel and nearly all man pages still use master/slave.
-> The architecture is identical — only the words changed. This document uses
+> The architecture is identical - only the words changed. This document uses
 > master/slave to match the code and docs you'll encounter.
 
 ---
 
 ## 2. First, what's a TTY? (you can't understand PTY without it)
 
-"TTY" is short for **teletypewriter** — a 1900s electromechanical
+"TTY" is short for **teletypewriter** - a 1900s electromechanical
 typewriter-over-wire. In the 1970s, Unix machines were accessed through these
 (and later "glass TTYs," i.e. screen terminals) over serial cables. So in Unix,
 **"tty" became the generic word for "the terminal device a program is attached
@@ -66,22 +66,22 @@ The middle layer, the **line discipline**, is the important one.
 from/to a tty device." Concretely it does the stuff you take for granted at a
 shell prompt:
 
-- **Line editing** — backspace erases a character before the program ever sees
+- **Line editing** - backspace erases a character before the program ever sees
   the line ("cooked mode").
-- **Echo** — what you type appears on screen.
-- **Signal generation** — `Ctrl-C` becomes a SIGINT to the foreground program,
+- **Echo** - what you type appears on screen.
+- **Signal generation** - `Ctrl-C` becomes a SIGINT to the foreground program,
   `Ctrl-Z` a SIGTSTP.
-- **Translation** — e.g. carriage-return ↔ newline mapping.
+- **Translation** - e.g. carriage-return ↔ newline mapping.
 
 A program can switch the line discipline to **raw mode** (vim, less, a password
 prompt) to handle keystrokes itself.
 
-**So: a TTY is the broader concept — the kernel terminal subsystem.** A PTY is a
+**So: a TTY is the broader concept - the kernel terminal subsystem.** A PTY is a
 _specific kind of TTY_ whose "hardware" is replaced by software.
 
 > ⚠️ **Refuted (0–3):** the neat claim that "TTY = physical terminals + PTYs as
 > two subcategories." It's a useful teaching simplification, but the kernel
-> doesn't carve the world that cleanly — a PTY _is_ a tty device that happens to
+> doesn't carve the world that cleanly - a PTY _is_ a tty device that happens to
 > be backed by a software driver, not a separate sibling category. Treat the
 > TTY/PTY split as "general concept vs. software-backed instance," not a strict
 > taxonomy.
@@ -129,21 +129,21 @@ So when you type `ls` in your terminal window:
    screen.
 
 > ⚠️ **Refuted nuance (1–2):** the claim that "the master can directly generate
-> SIGINT to the slave's foreground process group." The reality is subtler —
+> SIGINT to the slave's foreground process group." The reality is subtler -
 > signals come from the **line discipline** interpreting control characters (the
 > master writes `\x03`, the ldisc turns it into SIGINT), not from the master
 > "sending signals" directly.
 
 **Driver-level fact** ✅ _(Verified, kernel tty_internals, voted 3–0):_ PTY
 drivers need _special handling_ inside the kernel, distinct from ordinary TTY
-drivers — they don't allocate the usual port arrays, they apply a special
+drivers - they don't allocate the usual port arrays, they apply a special
 termios reset on first open, and they refuse to let the master be re-opened
 (returns `-EIO`). A PTY only _looks_ like ordinary terminal hardware from the
 outside.
 
 ---
 
-## 4. The APIs — how you actually create one
+## 4. The APIs - how you actually create one
 
 There are two layers: the **portable POSIX (Unix98) sequence**, and the **BSD
 convenience wrappers** that hide it.
@@ -165,23 +165,23 @@ int slave = open(slave_name, O_RDWR);         // open the slave end
 | `unlockpt()`     | Clears the internal lock so the slave can be opened.                                                          | ✅ (sequence 3–0) |
 | `ptsname()`      | Returns the slave device's pathname.                                                                          | ✅                |
 
-✅ _(Verified 3–0)_ The **slave pathname only exists while the master is open** —
+✅ _(Verified 3–0)_ The **slave pathname only exists while the master is open** -
 close the master and the slave node disappears. This is a lifecycle guarantee,
 not a convention.
 
 **Historical footnote** ✅ _(Verified 3–0):_ `grantpt()` used to run a
 set-user-ID helper binary named **`pt_chown`** to fix slave permissions (since a
 normal user can't `chown` a device node). glibc carried this until **version
-2.33**, when it was **removed** — on modern Linux the kernel sets permissions at
+2.33**, when it was **removed** - on modern Linux the kernel sets permissions at
 allocation time, so `grantpt()` is effectively a **no-op**. But portable code
 _must still call it_, because other Unixes (Solaris, the BSDs) may still need it.
 
-> ⚠️ Three POSIX-detail claims were **refuted (0–3)** — useful corrections:
+> ⚠️ Three POSIX-detail claims were **refuted (0–3)** - useful corrections:
 >
 > - `posix_openpt()` does **not** accept "only O_RDWR and O_NOCTTY." Other flags
 >   exist/are permitted.
 > - It's **not** accurate to say posix_openpt + grantpt + unlockpt + ptsname is
->   "the complete standardized PTY API" — that overstates it.
+>   "the complete standardized PTY API" - that overstates it.
 > - The controlling-terminal setup is **not** a single fixed
 >   `TIOCNOTTY → setsid → TIOCSCTTY` recipe; it's more situational.
 
@@ -189,14 +189,14 @@ _must still call it_, because other Unixes (Solaris, the BSDs) may still need it
 
 Almost nobody writes the five-step dance by hand. They use:
 
-- **`openpty()`** — does the whole allocation and hands you back **two separate
+- **`openpty()`** - does the whole allocation and hands you back **two separate
   file descriptors**, one master and one slave, in a single call.
-- **`forkpty()`** — combines `openpty()` + `fork()` + `login_tty()`: it allocates
+- **`forkpty()`** - combines `openpty()` + `fork()` + `login_tty()`: it allocates
   a PTY, forks a child, and attaches the child to the slave as its controlling
   terminal. This is how a terminal emulator spawns your shell in one shot.
-- **`login_tty()`** — the glue that makes the slave the child's _controlling
+- **`login_tty()`** - the glue that makes the slave the child's _controlling
   terminal_. ✅ _(Verified 3–0)_ It performs exactly four steps on the slave fd:
-  1. `setsid()` — start a new session,
+  1. `setsid()` - start a new session,
   2. make the fd the session's controlling terminal,
   3. `dup` it onto stdin/stdout/stderr,
   4. close the original fd.
@@ -205,10 +205,10 @@ This is verifiable in real code: OpenSSH's `sshpty.c` calls
 `openpty(&ptyfd, &ttyfd, ...)` to get its two fds.
 
 > ⚠️ **Refuted (0–3):** the claim that "`openpty()` is literally implemented as
-> posix_openpt→grantpt→unlockpt→ptsname internally" — a plausible-sounding but
+> posix_openpt→grantpt→unlockpt→ptsname internally" - a plausible-sounding but
 > unverified implementation detail; the actual implementation varies by libc.
 
-### 4c. Window size — the one ioctl everyone uses
+### 4c. Window size - the one ioctl everyone uses
 
 When you resize your terminal window, the emulator issues a `TIOCSWINSZ` ioctl
 carrying a `struct winsize` (rows, cols, pixels). The kernel then sends
@@ -228,12 +228,12 @@ carrying a `struct winsize` (rows, cols, pixels). The kernel then sends
 > surviving verified claim_ covered the BSD → System V → Unix98 → devpts
 > timeline. The workflow flagged the history as **substantively unanswered**.
 > What follows is the standard, widely-documented account from background
-> knowledge — **treat it as well-established lore, not machine-verified.**
+> knowledge - **treat it as well-established lore, not machine-verified.**
 
 The evolution, roughly:
 
 ```
-1870s   Physical teletype (TTY) — typewriter over a wire
+1870s   Physical teletype (TTY) - typewriter over a wire
   │
 1960s-70s  Early Unix: serial terminals over UARTs; kernel grows the
   │        tty driver + line discipline to manage them
@@ -256,7 +256,7 @@ The evolution, roughly:
   │     unlockpt/ptsname API. This is why the API above is "the Unix98 API."
   │
   └── Linux devpts: a dedicated virtual filesystem mounted at /dev/pts
-        that implements the Unix98 model — open /dev/ptmx, get master fd,
+        that implements the Unix98 model - open /dev/ptmx, get master fd,
         slave appears as /dev/pts/N. Later gained per-container namespacing
         so each mount namespace has its own private pts numbering.
 ```
@@ -267,7 +267,7 @@ allocated on demand (System V ptmx)** → **standardized (Unix98)** →
 
 ---
 
-## 6. Why PTYs exist — the problems they solve
+## 6. Why PTYs exist - the problems they solve
 
 PTYs are the single primitive behind a surprising amount of everyday
 infrastructure:
@@ -276,15 +276,15 @@ infrastructure:
   There's no serial cable to your GPU. The emulator owns the master, runs your
   shell on the slave via `forkpty()`, and translates between bytes and
   pixels/keystrokes.
-- **Remote login — SSH / Telnet.** The remote shell needs a terminal, but it's on
+- **Remote login - SSH / Telnet.** The remote shell needs a terminal, but it's on
   another machine with no physical console. ✅ The cited OpenSSH `sshpty.c`
-  allocates a PTY so your remote `bash` gets a proper controlling terminal —
+  allocates a PTY so your remote `bash` gets a proper controlling terminal -
   that's what lets `Ctrl-C`, job control, and full-screen apps work over SSH.
-- **Terminal multiplexers — tmux / screen.** Each pane/window is a separate PTY
+- **Terminal multiplexers - tmux / screen.** Each pane/window is a separate PTY
   whose master tmux owns. tmux multiplexes many slave-attached shells into one
   real terminal, and can detach (keep the slaves alive with no master attached)
   and reattach later.
-- **Automation — Expect / pexpect.** Many programs behave differently when they
+- **Automation - Expect / pexpect.** Many programs behave differently when they
   detect they're _not_ talking to a terminal (e.g. `ssh`/`sudo` password prompts
   read straight from the tty, not stdin). ✅ The cited `pexpect` drives such
   programs by putting a PTY between itself and the target, so the program thinks
@@ -294,7 +294,7 @@ infrastructure:
   gets an interactive terminal; without `-t` there's no tty and programs fall
   back to non-interactive behavior. Linux devpts namespacing gives each container
   its own private `/dev/pts`.
-- **`script` / session recording, IDE consoles, serial-console emulation** — all
+- **`script` / session recording, IDE consoles, serial-console emulation** - all
   the same pattern.
 
 The unifying need: **a program insists on a terminal, but no hardware terminal
@@ -303,14 +303,14 @@ terminal).** PTY is the answer every time.
 
 ---
 
-## 7. TTY vs PTY — the crisp summary
+## 7. TTY vs PTY - the crisp summary
 
 |                    | TTY (general)                                                              | PTY (pseudo)                                                     |
 | ------------------ | -------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| Backing            | The kernel terminal subsystem; classically real hardware (serial, console) | Pure software — a master/slave device pair                       |
+| Backing            | The kernel terminal subsystem; classically real hardware (serial, console) | Pure software - a master/slave device pair                       |
 | "Hardware" end     | A UART / physical console                                                  | A program holding the **master** fd                              |
 | Program-facing end | The terminal device                                                        | The **slave** (`/dev/pts/N`), indistinguishable to the program   |
-| Line discipline    | Yes                                                                        | Yes — that's the whole point of the impersonation                |
+| Line discipline    | Yes                                                                        | Yes - that's the whole point of the impersonation                |
 | Examples           | `/dev/ttyS0` (serial), `/dev/tty1` (console)                               | `/dev/pts/3` behind your terminal window, SSH session, tmux pane |
 
 Mental model: **TTY is the interface contract; PTY is a software implementation
@@ -320,7 +320,7 @@ of that contract with another program standing in for the hardware.**
 
 ## 8. Open questions (honest gaps)
 
-The workflow explicitly left these unresolved — good next directions if you want
+The workflow explicitly left these unresolved - good next directions if you want
 to go deeper:
 
 1. The **precise dated history** of BSD pty → System V STREAMS ptmx → Unix98 →
@@ -329,13 +329,13 @@ to go deeper:
    through it before the master's `read()`? (The asymmetry between the two ends
    is genuinely subtle.)
 3. Which **ioctls beyond TIOCSWINSZ** matter in practice (TIOCSCTTY,
-   TIOCGPGRP/TIOCSPGRP) and which side — master or slave — each applies to.
+   TIOCGPGRP/TIOCSPGRP) and which side - master or slave - each applies to.
 4. How **Linux devpts internally** tears down the slave dentry when the master fd
    closes.
 
 ---
 
-## Appendix A — Confirmed findings (verified ✅)
+## Appendix A - Confirmed findings (verified ✅)
 
 1. **PTY = master/slave pair of virtual character devices.** Master controlled by
    emulator/login server; slave emulates a hardware serial port and is used by
@@ -352,7 +352,7 @@ ptsname → open(slave)`; slave pathname exists only while master is open.
    login*tty; `login_tty()` does setsid → set controlling tty → dup to
    stdio → close. *(3–0)\_
 
-## Appendix B — Refuted claims (killed by verification)
+## Appendix B - Refuted claims (killed by verification)
 
 | Claim                                                                          | Vote |
 | ------------------------------------------------------------------------------ | ---- |
@@ -367,32 +367,32 @@ ptsname → open(slave)`; slave pathname exists only while master is open.
 | "Line discipline attached with refcount 1, locked during read+write"           | 0–3  |
 | "PTYs originated 1967 DEC PDP-6 / modern PTYs 1983 Eighth Edition Unix"        | 1–2  |
 
-## Appendix C — Sources
+## Appendix C - Sources
 
 **Primary (highest trust):**
 
-- pty(7) — <https://www.man7.org/linux/man-pages/man7/pty.7.html>
-- posix_openpt(3) — <https://www.man7.org/linux/man-pages/man3/posix_openpt.3.html>
-- grantpt(3) — <https://man7.org/linux/man-pages/man3/grantpt.3.html>
-- POSIX posix_openpt — <https://pubs.opengroup.org/onlinepubs/009695099/functions/posix_openpt.html>
-- Linux kernel — TTY line discipline — <https://docs.kernel.org/driver-api/tty/tty_ldisc.html>
-- Linux kernel — TTY internals — <https://docs.kernel.org/driver-api/tty/tty_internals.html>
-- Oracle forkpty(3C) — <https://docs.oracle.com/cd/E88353_01/html/E37843/forkpty-3c.html>
-- OpenSSH sshpty.c — <https://github.com/openssh/openssh-portable/blob/master/sshpty.c>
+- pty(7) - <https://www.man7.org/linux/man-pages/man7/pty.7.html>
+- posix_openpt(3) - <https://www.man7.org/linux/man-pages/man3/posix_openpt.3.html>
+- grantpt(3) - <https://man7.org/linux/man-pages/man3/grantpt.3.html>
+- POSIX posix_openpt - <https://pubs.opengroup.org/onlinepubs/009695099/functions/posix_openpt.html>
+- Linux kernel - TTY line discipline - <https://docs.kernel.org/driver-api/tty/tty_ldisc.html>
+- Linux kernel - TTY internals - <https://docs.kernel.org/driver-api/tty/tty_internals.html>
+- Oracle forkpty(3C) - <https://docs.oracle.com/cd/E88353_01/html/E37843/forkpty-3c.html>
+- OpenSSH sshpty.c - <https://github.com/openssh/openssh-portable/blob/master/sshpty.c>
 
 **Secondary:**
 
-- Wikipedia: Pseudoterminal — <https://en.wikipedia.org/wiki/Pseudoterminal>
-- HandWiki: Pseudoterminal — <https://handwiki.org/wiki/Software:Pseudoterminal>
-- pexpect — <https://github.com/pexpect/pexpect>
+- Wikipedia: Pseudoterminal - <https://en.wikipedia.org/wiki/Pseudoterminal>
+- HandWiki: Pseudoterminal - <https://handwiki.org/wiki/Software:Pseudoterminal>
+- pexpect - <https://github.com/pexpect/pexpect>
 
 **Background / practitioner blogs:**
 
-- Linus Åkesson — "The TTY demystified" — <https://www.linusakesson.net/programming/tty/>
-- computer.rip — "A History of the TTY" — <https://computer.rip/2024-02-25-a-history-of-the-tty.html>
-- poor.dev — "Terminal anatomy" — <https://poor.dev/blog/terminal-anatomy/>
-- uninformativ.de — writing a terminal — <https://www.uninformativ.de/blog/postings/2018-02-24/0/POSTING-en.html>
-- dev.to/napicella — Linux terminals: tty, pty, shell — <https://dev.to/napicella/linux-terminals-tty-pty-and-shell-192e>
+- Linus Åkesson - "The TTY demystified" - <https://www.linusakesson.net/programming/tty/>
+- computer.rip - "A History of the TTY" - <https://computer.rip/2024-02-25-a-history-of-the-tty.html>
+- poor.dev - "Terminal anatomy" - <https://poor.dev/blog/terminal-anatomy/>
+- uninformativ.de - writing a terminal - <https://www.uninformativ.de/blog/postings/2018-02-24/0/POSTING-en.html>
+- dev.to/napicella - Linux terminals: tty, pty, shell - <https://dev.to/napicella/linux-terminals-tty-pty-and-shell-192e>
 
 ---
 
