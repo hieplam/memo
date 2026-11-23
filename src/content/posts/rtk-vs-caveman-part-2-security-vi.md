@@ -249,9 +249,9 @@ bác)._
 
 ---
 
-← **Previous:** [Phần 1 — Hai công cụ hoạt động thế nào](/memo/posts/rtk-vs-caveman-part-1-how-they-work-vi/)
-· **Next:** [Phần 3 — Đào sâu: sentinel NUL & SQLite](/memo/posts/rtk-vs-caveman-part-3-shrink-deep-dive-vi/) →
+← **Previous:** [Phần 1 — Hai công cụ hoạt động thế nào](/posts/rtk-vs-caveman-part-1-how-they-work-vi/)
+· **Next:** [Phần 3 — Đào sâu: sentinel NUL & SQLite](/posts/rtk-vs-caveman-part-3-shrink-deep-dive-vi/) →
 
-**Loạt bài — RTK vs Caveman:** [1 · Hai công cụ hoạt động thế nào](/memo/posts/rtk-vs-caveman-part-1-how-they-work-vi/)
+**Loạt bài — RTK vs Caveman:** [1 · Hai công cụ hoạt động thế nào](/posts/rtk-vs-caveman-part-1-how-they-work-vi/)
 · **2 · Phân tích bảo mật (bạn đang ở đây)** ·
-[3 · Đào sâu: sentinel NUL & SQLite](/memo/posts/rtk-vs-caveman-part-3-shrink-deep-dive-vi/)
+[3 · Đào sâu: sentinel NUL & SQLite](/posts/rtk-vs-caveman-part-3-shrink-deep-dive-vi/)

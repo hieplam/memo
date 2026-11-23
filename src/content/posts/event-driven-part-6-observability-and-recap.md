@@ -31,8 +31,8 @@ multiLangKey: "event-driven-top10-6"
 - **Correlation ID:** generate one unique ID at the very first entry point (the moment Ms. Tí clicks "Place order"), then _copy it into the headers of every event and every log line_ produced by that transaction, across every service. Search one ID → the entire story of order #4711 appears in chronological order. Cheap, manual, and immediately effective.
 - **Distributed tracing:** the industrial-strength version of the same idea — the **OpenTelemetry** standard: each processing step is a _span_ (a segment with a start and end time), spans chain into a _trace_ (the request's family tree); trace context travels in message headers; a backend (Jaeger, Tempo, Datadog...) renders it as a timeline.
 - **Structured logging:** JSON logs with standard fields (`correlationId`, `eventId`, `orderId`) instead of free-text strings — so "search one ID" becomes a query, not a grepping session.
-- **A minimum metric set** — four gauges every dashboard needs, each one watching a different part of this series: **consumer lag** ([Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) — is the system backing up?), **DLQ depth** ([Part 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering/) — are there dead messages nobody's looked at?), **processing error rate** ([Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/) — what is retry actually straining against?), **end-to-end latency** ([Part 4](/memo/posts/event-driven-part-4-consistency-and-sagas/) — how wide is the consistency gap right now?).
-- **Event replay:** a privilege of log-based brokers like Kafka (a message isn't deleted on read — only an offset pointer moves): let the consumer _rewind_ and read from a past offset. Uses: rebuild a read model from scratch after fixing a bug, let a new service "learn" history, verify an incident hypothesis. The safety condition for replaying: the consumer has to be idempotent — [Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/), making its last appearance in this series.
+- **A minimum metric set** — four gauges every dashboard needs, each one watching a different part of this series: **consumer lag** ([Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/) — is the system backing up?), **DLQ depth** ([Part 3](/posts/event-driven-part-3-poison-messages-and-ordering/) — are there dead messages nobody's looked at?), **processing error rate** ([Part 2](/posts/event-driven-part-2-outbox-and-retries/) — what is retry actually straining against?), **end-to-end latency** ([Part 4](/posts/event-driven-part-4-consistency-and-sagas/) — how wide is the consistency gap right now?).
+- **Event replay:** a privilege of log-based brokers like Kafka (a message isn't deleted on read — only an offset pointer moves): let the consumer _rewind_ and read from a past offset. Uses: rebuild a read model from scratch after fixing a bug, let a new service "learn" history, verify an incident hypothesis. The safety condition for replaying: the consumer has to be idempotent — [Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/), making its last appearance in this series.
 
 ```mermaid
 flowchart LR
@@ -68,27 +68,27 @@ A correlation ID flows through the system like a tracer dye in a water main: sea
 
 ### Glossary — every property in one screen
 
-- **At-most-once / At-least-once / Exactly-once** — three delivery guarantee levels: each event processed at most once (may be lost) / at least once (may be duplicated) / exactly once (only achievable end-to-end via at-least-once + idempotency). [Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/)
-- **Durability** — once acknowledged, data survives a crash: written to disk and/or replicated. [Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/)
-- **Acknowledgement/ack** — the signal that transfers responsibility from consumer to broker; placed after processing = at-least-once, placed before = at-most-once. [Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/)
-- **Idempotency** — doing something multiple times behaves like doing it once: f(f(x)) = f(x). The central property of the entire series. [Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/)
-- **Deduplication** — blocking a repeat using a unique identifier within a time window. [Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/)
-- **Atomicity** — a group of operations succeeding or failing together, only guaranteed within a single database. [Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/)
-- **Exponential backoff + jitter** — a retry wait that doubles each time, plus a random component to break synchronization. [Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/)
-- **Circuit breaker** — pausing calls to a heavily failing service for a cooldown period, complementing retry. [Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/)
-- **Head-of-line blocking** — a slow or broken message at the front of the line blocks everything behind it. [Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/), [Part 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering/)
-- **Dead Letter Queue (DLQ)** — where repeatedly-failing messages are quarantined, paired with alerts and a redrive process. [Part 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering/)
-- **Ordering guarantee** — total (global) vs. per-key (what the business usually actually needs). [Part 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering/)
-- **Commutativity** — swapping execution order doesn't change the result; design for it and the ordering problem disappears. [Part 3](/memo/posts/event-driven-part-3-poison-messages-and-ordering/)
-- **Eventual consistency** — once writes stop, every replica converges; measured as staleness, managed via an SLO. [Part 4](/memo/posts/event-driven-part-4-consistency-and-sagas/)
-- **Read-your-own-writes** — the minimum consistency level users actually notice. [Part 4](/memo/posts/event-driven-part-4-consistency-and-sagas/)
-- **Saga & Compensating transaction** — a large transaction as a chain of small ones; a later failure triggers business-level undos for the earlier steps. [Part 4](/memo/posts/event-driven-part-4-consistency-and-sagas/)
-- **Semantic lock** — an intermediate state (PENDING) marking data as part of an unfinished saga. [Part 4](/memo/posts/event-driven-part-4-consistency-and-sagas/)
-- **Consumer lag** — how many messages have entered the topic but haven't been processed. [Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/)
-- **Backpressure** — downstream telling upstream to slow down, instead of silently drowning. [Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/)
-- **Failover & Rebalancing** — a dead node's role automatically taken over by a live one; requires a standby, and creates duplicates during the handoff. [Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/)
-- **Hot partition** — a skewed partition key dumping load into one lane; adding consumers doesn't help. [Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/)
-- **Backward / Forward compatibility** — new code reads old data / old code reads new data; both together (full) means teams can deploy in any order. [Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/)
+- **At-most-once / At-least-once / Exactly-once** — three delivery guarantee levels: each event processed at most once (may be lost) / at least once (may be duplicated) / exactly once (only achievable end-to-end via at-least-once + idempotency). [Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/)
+- **Durability** — once acknowledged, data survives a crash: written to disk and/or replicated. [Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/)
+- **Acknowledgement/ack** — the signal that transfers responsibility from consumer to broker; placed after processing = at-least-once, placed before = at-most-once. [Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/)
+- **Idempotency** — doing something multiple times behaves like doing it once: f(f(x)) = f(x). The central property of the entire series. [Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/)
+- **Deduplication** — blocking a repeat using a unique identifier within a time window. [Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/)
+- **Atomicity** — a group of operations succeeding or failing together, only guaranteed within a single database. [Part 2](/posts/event-driven-part-2-outbox-and-retries/)
+- **Exponential backoff + jitter** — a retry wait that doubles each time, plus a random component to break synchronization. [Part 2](/posts/event-driven-part-2-outbox-and-retries/)
+- **Circuit breaker** — pausing calls to a heavily failing service for a cooldown period, complementing retry. [Part 2](/posts/event-driven-part-2-outbox-and-retries/)
+- **Head-of-line blocking** — a slow or broken message at the front of the line blocks everything behind it. [Part 2](/posts/event-driven-part-2-outbox-and-retries/), [Part 3](/posts/event-driven-part-3-poison-messages-and-ordering/)
+- **Dead Letter Queue (DLQ)** — where repeatedly-failing messages are quarantined, paired with alerts and a redrive process. [Part 3](/posts/event-driven-part-3-poison-messages-and-ordering/)
+- **Ordering guarantee** — total (global) vs. per-key (what the business usually actually needs). [Part 3](/posts/event-driven-part-3-poison-messages-and-ordering/)
+- **Commutativity** — swapping execution order doesn't change the result; design for it and the ordering problem disappears. [Part 3](/posts/event-driven-part-3-poison-messages-and-ordering/)
+- **Eventual consistency** — once writes stop, every replica converges; measured as staleness, managed via an SLO. [Part 4](/posts/event-driven-part-4-consistency-and-sagas/)
+- **Read-your-own-writes** — the minimum consistency level users actually notice. [Part 4](/posts/event-driven-part-4-consistency-and-sagas/)
+- **Saga & Compensating transaction** — a large transaction as a chain of small ones; a later failure triggers business-level undos for the earlier steps. [Part 4](/posts/event-driven-part-4-consistency-and-sagas/)
+- **Semantic lock** — an intermediate state (PENDING) marking data as part of an unfinished saga. [Part 4](/posts/event-driven-part-4-consistency-and-sagas/)
+- **Consumer lag** — how many messages have entered the topic but haven't been processed. [Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/)
+- **Backpressure** — downstream telling upstream to slow down, instead of silently drowning. [Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/)
+- **Failover & Rebalancing** — a dead node's role automatically taken over by a live one; requires a standby, and creates duplicates during the handoff. [Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/)
+- **Hot partition** — a skewed partition key dumping load into one lane; adding consumers doesn't help. [Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/)
+- **Backward / Forward compatibility** — new code reads old data / old code reads new data; both together (full) means teams can deploy in any order. [Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/)
 - **Correlation ID** — an ID generated at the entry point, copied into every event and log — the thread that reconnects the story once there's no call stack left. Part 6 (this post)
 
 ## 3. Sources
@@ -103,6 +103,6 @@ A correlation ID flows through the system like a tracer dye in a water main: sea
 
 ---
 
-← **Previous:** [Part 5 — Backpressure & Schema Evolution](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) · This closes the series.
+← **Previous:** [Part 5 — Backpressure & Schema Evolution](/posts/event-driven-part-5-backpressure-and-schema-evolution/) · This closes the series.
 
-**The series — Event-Driven Architecture: The Top 10 Classic Problems:** [0 · Foundations](/memo/posts/event-driven-part-0-foundations/) · [1 · Lost & Duplicate Events](/memo/posts/event-driven-part-1-lost-and-duplicate-events/) · [2 · Outbox & Retries](/memo/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/memo/posts/event-driven-part-3-poison-messages-and-ordering/) · [4 · Consistency & Sagas](/memo/posts/event-driven-part-4-consistency-and-sagas/) · [5 · Backpressure & Schema Evolution](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) · **6 · Observability & Recap (you are here)**
+**The series — Event-Driven Architecture: The Top 10 Classic Problems:** [0 · Foundations](/posts/event-driven-part-0-foundations/) · [1 · Lost & Duplicate Events](/posts/event-driven-part-1-lost-and-duplicate-events/) · [2 · Outbox & Retries](/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/posts/event-driven-part-3-poison-messages-and-ordering/) · [4 · Consistency & Sagas](/posts/event-driven-part-4-consistency-and-sagas/) · [5 · Backpressure & Schema Evolution](/posts/event-driven-part-5-backpressure-and-schema-evolution/) · **6 · Observability & Recap (you are here)**

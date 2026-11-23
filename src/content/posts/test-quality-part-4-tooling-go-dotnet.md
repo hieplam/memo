@@ -170,6 +170,6 @@ for the wrong signal — Part 5 is the grading gauntlet that catches it.
 
 ---
 
-← **Previous:** [Part 3 — What the Empirical Research Actually Says](/memo/posts/test-quality-part-3-empirical-evidence/) · **Next:** [Part 5 — Grading AI-Generated Tests](/memo/posts/test-quality-part-5-grading-ai-tests/) →
+← **Previous:** [Part 3 — What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · **Next:** [Part 5 — Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) →
 
-**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/memo/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/memo/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/memo/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/memo/posts/test-quality-part-3-empirical-evidence/) · **4 · Tooling for Go and .NET (you are here)** · [5 · Grading AI-Generated Tests](/memo/posts/test-quality-part-5-grading-ai-tests/) · [6 · The Readiness Rubric](/memo/posts/test-quality-part-6-readiness-rubric/)
+**The series — Beyond Coverage: Test Quality for the Agentic Loop:** [0 · Why Coverage Lies](/posts/test-quality-part-0-why-coverage-lies/) · [1 · The Metric Catalog](/posts/test-quality-part-1-metric-catalog/) · [2 · Mutation Testing, Properly Explained](/posts/test-quality-part-2-mutation-testing/) · [3 · What the Empirical Research Actually Says](/posts/test-quality-part-3-empirical-evidence/) · **4 · Tooling for Go and .NET (you are here)** · [5 · Grading AI-Generated Tests](/posts/test-quality-part-5-grading-ai-tests/) · [6 · The Readiness Rubric](/posts/test-quality-part-6-readiness-rubric/)

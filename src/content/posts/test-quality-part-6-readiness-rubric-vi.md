@@ -12,7 +12,7 @@ tags:
 multiLangKey: "test-quality-metrics-6"
 ---
 
-> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 6/7 (khép lại series).** Rubric sẵn sàng cho merge gate agentic: chấm điểm diff, thang bậc tự trị, và checklist một màn hình để biết khi nào một thay đổi an toàn để merge mà không cần con người kiểm thử tay. Tiếp theo [Phần 5](/memo/posts/test-quality-part-5-grading-ai-tests-vi/) về chấm điểm test AI.
+> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 6/7 (khép lại series).** Rubric sẵn sàng cho merge gate agentic: chấm điểm diff, thang bậc tự trị, và checklist một màn hình để biết khi nào một thay đổi an toàn để merge mà không cần con người kiểm thử tay. Tiếp theo [Phần 5](/posts/test-quality-part-5-grading-ai-tests-vi/) về chấm điểm test AI.
 
 - Chấm điểm **diff**, không phải repo. Một thay đổi an toàn để merge mà không cần kiểm thử thủ công khi, trên các dòng nó chạm vào: mutation score ≥ 80%, diff coverage ≥ 90%, không có test smell, flakiness ≈ 0%, và các đường dẫn quan trọng mang oracle mạnh (mutation + property).
 - Bạn đạt đến vòng lặp **theo từng module**, cứng hóa các viên ngọc quý trước — không bao giờ bằng cách đuổi theo một con số toàn repo.
@@ -31,7 +31,7 @@ multiLangKey: "test-quality-metrics-6"
 | **Đường dẫn quan trọng**   | Mutation + property test trên money/auth/data-loss | có khoảng trống  | được phủ            | **≥ 90% mutation + bất biến**  |
 | **Tốc độ**                 | Thời gian chạy bộ test + diff-mutation             | nhiều giờ        | ~10 phút            | **diff-scoped, vài phút**      |
 
-![Thẻ điểm sẵn sàng: sáu chiều từ độ mạnh oracle đến tốc độ, mỗi chiều có ngưỡng đỏ/vàng/xanh](/memo/diagrams/test-quality-metrics/05-readiness-scorecard.svg)
+![Thẻ điểm sẵn sàng: sáu chiều từ độ mạnh oracle đến tốc độ, mỗi chiều có ngưỡng đỏ/vàng/xanh](/diagrams/test-quality-metrics/05-readiness-scorecard.svg)
 _Sáu chiều, chấm trên diff chứ không phải toàn repo — một PR chỉ "sẵn sàng cho vòng lặp" khi cả sáu đều xanh._
 
 Đây là **giá trị mặc định khởi đầu** (baseline `high:80 / low:60` của Stryker.NET; diff gate của Meta/ngành), cần được **tinh chỉnh theo rủi ro của từng module** — không phải là quy luật tự nhiên. Đường dẫn thanh toán nên chặt hơn; một helper logging có thể lỏng hơn.
@@ -45,7 +45,7 @@ Bạn không lật một công tắc sang "tự trị." Bạn leo lên:
 - **L2 · Tự động có giám sát** — diff-**mutation** gate xanh + ngân sách flakiness được giữ. Merge khi xanh, con người spot-check.
 - **L3 · Tự trị** — tất cả sáu chiều thẻ điểm xanh trên diff, các đường dẫn quan trọng mang property. **Không cần kiểm thử thủ công trước khi merge.**
 
-Bước nhảy thực sự mang lại vòng lặp là **L1 → L2**: thêm cổng _mutation_. Cổng coverage (L1) dừng các merge rõ ràng chưa được kiểm thử; cổng mutation (L2) dừng các merge được kiểm thử _vô nghĩa_ — bao gồm cả các test vô nghĩa của AI ([Phần 5](/memo/posts/test-quality-part-5-grading-ai-tests-vi/)).
+Bước nhảy thực sự mang lại vòng lặp là **L1 → L2**: thêm cổng _mutation_. Cổng coverage (L1) dừng các merge rõ ràng chưa được kiểm thử; cổng mutation (L2) dừng các merge được kiểm thử _vô nghĩa_ — bao gồm cả các test vô nghĩa của AI ([Phần 5](/posts/test-quality-part-5-grading-ai-tests-vi/)).
 
 ## 3. "Bộ test kế thừa của tôi có đủ tốt không?" — quy trình quyết định
 
@@ -67,7 +67,7 @@ Nếu 1–5 pass trên diff, thay đổi đó **sẵn sàng cho vòng lặp** ng
 4. **Thêm property vào toán học.** Các bất biến trên đầu vào được tạo ra ("paid ≤ owed", "rounding bảo toàn xu", "due date luôn rơi vào đúng ngày trong chu kỳ") bắt được các lớp lỗi mà ví dụ bỏ lỡ.
 5. **Cách ly flake không thương tiếc.** Cổng flaky là không có cổng. Logic phụ thuộc thời gian (`DateTime.Now`, tính toán ngày đến hạn theo chu kỳ) thường là thủ phạm — inject clock để test xác định.
 6. **Mở rộng ra ngoài** theo từng module. Theo dõi _coverage của diff_ và _mutation score của diff_ theo thời gian, không phải tỷ lệ toàn repo.
-7. **Kết nối gauntlet AI** ([Phần 5](/memo/posts/test-quality-part-5-grading-ai-tests-vi/)): các test do agent tạo ra phải kill một mutant mới để merge.
+7. **Kết nối gauntlet AI** ([Phần 5](/posts/test-quality-part-5-grading-ai-tests-vi/)): các test do agent tạo ra phải kill một mutant mới để merge.
 
 ## 5. "Đủ test" cuối cùng có nghĩa là gì
 
@@ -94,7 +94,7 @@ PER-PR MERGE-GATE (scoped to the diff)
 
 ---
 
-← [Phần 5: Chấm điểm test do AI viết](/memo/posts/test-quality-part-5-grading-ai-tests-vi/) · [Bắt đầu lại từ Phần 0: Vì sao Code Coverage đánh lừa bạn](/memo/posts/test-quality-part-0-why-coverage-lies-vi/)
+← [Phần 5: Chấm điểm test do AI viết](/posts/test-quality-part-5-grading-ai-tests-vi/) · [Bắt đầu lại từ Phần 0: Vì sao Code Coverage đánh lừa bạn](/posts/test-quality-part-0-why-coverage-lies-vi/)
 
 ---
 

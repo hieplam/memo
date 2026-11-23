@@ -11,11 +11,11 @@ tags:
 multiLangKey: "test-quality-metrics-2"
 ---
 
-> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 2/7.** Mutation testing (kiểm thử đột biến) giải thích đúng đắn: cơ chế, mutant tương đương, và nơi nó vượt trội hơn coverage — cùng nơi nó không. Tiếp theo [Phần 1](/memo/posts/test-quality-part-1-metric-catalog-vi/), nơi mutation score được giới thiệu là metric quyết định của tầng Effectiveness.
+> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 2/7.** Mutation testing (kiểm thử đột biến) giải thích đúng đắn: cơ chế, mutant tương đương, và nơi nó vượt trội hơn coverage — cùng nơi nó không. Tiếp theo [Phần 1](/posts/test-quality-part-1-metric-catalog-vi/), nơi mutation score được giới thiệu là metric quyết định của tầng Effectiveness.
 
 - Mutation testing tiêm các lỗi nhỏ ("mutant") vào code; **mutation score** là tỷ lệ % mà bộ test _kill_ được — phép đo trực tiếp nhất về việc assertion của bạn có phát hiện được regression hay không.
 - Một số mutant là **tương đương** — thay đổi code nhưng không thay đổi hành vi — và phải được lọc thủ công; đừng đuổi theo 100%, hãy đuổi theo zero mutant không tương đương sống sót.
-- Coi mutation score như **công cụ chẩn đoán độ mạnh oracle**, không phải oracle dự đoán lỗi thực tế độc lập (chi tiết ở [Phần 3](/memo/posts/test-quality-part-3-empirical-evidence-vi/)).
+- Coi mutation score như **công cụ chẩn đoán độ mạnh oracle**, không phải oracle dự đoán lỗi thực tế độc lập (chi tiết ở [Phần 3](/posts/test-quality-part-3-empirical-evidence-vi/)).
 
 ---
 
@@ -40,7 +40,7 @@ Một mutant sống sót là một tạo phẩm chính xác, có thể hành đ�
 
 ## 2. Mutant tương đương — thuế thực sự duy nhất
 
-Một số mutant là **tương đương**: chúng thay đổi code nhưng không thay đổi hành vi quan sát được của nó (ví dụ: đột biến một giá trị sau đó bị clamp, hoặc `<` trong vòng lặp không thể đạt đến ranh giới). Không có test nào có thể kill chúng vì chúng thực sự không phải lỗi. Chúng kéo điểm của bạn xuống dưới 100% vô lý và phải được phân loại thủ công. Đây là chi phí chính của mutation testing — và lý do chính bạn **giới hạn phạm vi của nó vào diff** thay vì chạy toàn bộ repo ([Phần 4](/memo/posts/test-quality-part-4-tooling-go-dotnet-vi/)).
+Một số mutant là **tương đương**: chúng thay đổi code nhưng không thay đổi hành vi quan sát được của nó (ví dụ: đột biến một giá trị sau đó bị clamp, hoặc `<` trong vòng lặp không thể đạt đến ranh giới). Không có test nào có thể kill chúng vì chúng thực sự không phải lỗi. Chúng kéo điểm của bạn xuống dưới 100% vô lý và phải được phân loại thủ công. Đây là chi phí chính của mutation testing — và lý do chính bạn **giới hạn phạm vi của nó vào diff** thay vì chạy toàn bộ repo ([Phần 4](/posts/test-quality-part-4-tooling-go-dotnet-vi/)).
 
 Quy tắc thực tế: **đừng đuổi theo 100%.** Hãy đuổi theo _zero mutant không tương đương sống sót trên code bạn quan tâm._
 
@@ -57,17 +57,17 @@ Giữ chúng tách biệt là toàn bộ điểm mấu chốt: _coverage_ cao v�
 
 **Vượt trội hơn coverage:** Nó _có thể bác bỏ_ theo nghĩa Popper. Coverage không thể "sai" — một dòng được phủ là được phủ. Nhưng mutation score đưa ra một tuyên bố cụ thể, có thể kiểm tra được ("lỗi này sẽ bị bắt") mà có thể thất bại. Cuộc khảo sát của Papadakis lưu ý các tiêu chí coverage không phải mutation _"về cơ bản không thể bác bỏ (với mục tiêu phát hiện lỗi),"_ trong khi _"mutation testing tạo ra liên kết trực tiếp giữa lỗi và thành tích test."_ ✅ _(đã xác minh, 2-1)_ <sup>[survey]</sup>
 
-**Không vượt trội hơn coverage ở:** _dự đoán_ phát hiện lỗi thực tế độc lập. Đây là kiểm tra trung thực quan trọng, được đề cập ở phần tiếp theo: khi bạn kiểm soát theo kích thước bộ test, ngay cả mối tương quan của mutation score với phát hiện lỗi thực tế cũng **yếu**, và tuyên bố mạnh "mutation score dự đoán lỗi thực tế tốt hơn coverage, độc lập với kích thước" **không** được xác nhận dưới đánh giá đối nghịch. Mutation score cho bạn biết oracle của bạn _mạnh_; nó không, tự bản thân, cho bạn biết chúng _hướng vào đúng rủi ro_. Đó là lý do tại sao rubric ([Phần 6](/memo/posts/test-quality-part-6-readiness-rubric-vi/)) kết hợp nó với diff coverage và critical-path testing.
+**Không vượt trội hơn coverage ở:** _dự đoán_ phát hiện lỗi thực tế độc lập. Đây là kiểm tra trung thực quan trọng, được đề cập ở phần tiếp theo: khi bạn kiểm soát theo kích thước bộ test, ngay cả mối tương quan của mutation score với phát hiện lỗi thực tế cũng **yếu**, và tuyên bố mạnh "mutation score dự đoán lỗi thực tế tốt hơn coverage, độc lập với kích thước" **không** được xác nhận dưới đánh giá đối nghịch. Mutation score cho bạn biết oracle của bạn _mạnh_; nó không, tự bản thân, cho bạn biết chúng _hướng vào đúng rủi ro_. Đó là lý do tại sao rubric ([Phần 6](/posts/test-quality-part-6-readiness-rubric-vi/)) kết hợp nó với diff coverage và critical-path testing.
 
 ## 5. Cách sử dụng mutation score trong thực tế
 
 - **Như một công cụ tìm khoảng cách, không phải điểm số.** Chạy nó, sau đó _đọc các survivor_. Mỗi cái là một TODO: thêm assertion còn thiếu hoặc trường hợp còn thiếu. Đây là nơi giá trị nằm ở đối với codebase kế thừa — nó trao cho bạn một danh sách công việc.
 - **Giới hạn phạm vi vào diff.** Đừng bao giờ mutate toàn bộ repo mỗi lần chạy (quá chậm, quá nhiều mutant tương đương). Chỉ mutate các dòng thay đổi, hoặc chỉ các dòng được phủ và thay đổi. Cách tiếp cận công nghiệp của Google mutate **dựa trên diff** và bỏ qua các dòng "cằn cỗi" (không có statement coverage / không thú vị), điều này _"làm giảm đáng kể số lượng mutant."_ ✅ _(đã xác minh, 2-1)_ <sup>[google]</sup>
-- **Như một bộ lọc test AI.** Một test được tạo ra **kill một mutant đã sống sót trước đó** là có giá trị có thể chứng minh; một cái chỉ thêm coverage nhưng không kill gì có thể là vô nghĩa ([Phần 5](/memo/posts/test-quality-part-5-grading-ai-tests-vi/)).
+- **Như một bộ lọc test AI.** Một test được tạo ra **kill một mutant đã sống sót trước đó** là có giá trị có thể chứng minh; một cái chỉ thêm coverage nhưng không kill gì có thể là vô nghĩa ([Phần 5](/posts/test-quality-part-5-grading-ai-tests-vi/)).
 
 ---
 
-← [Phần 1: Danh mục metric chất lượng test](/memo/posts/test-quality-part-1-metric-catalog-vi/) · [Phần 3: Nghiên cứu thực sự nói gì](/memo/posts/test-quality-part-3-empirical-evidence-vi/) →
+← [Phần 1: Danh mục metric chất lượng test](/posts/test-quality-part-1-metric-catalog-vi/) · [Phần 3: Nghiên cứu thực sự nói gì](/posts/test-quality-part-3-empirical-evidence-vi/) →
 
 ---
 

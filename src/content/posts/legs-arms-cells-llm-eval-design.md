@@ -41,7 +41,7 @@ Tracker (reviews a diff) --surfaces "harness gap"--> ledger --> Scout (adjudicat
         \--------------------------- enforces the new rule afterwards ---------------------/
 ```
 
-- **Tracker** reviews a code diff against the repo's *written* rules and, per its own charter,
+- **Tracker** reviews a code diff against the repo's _written_ rules and, per its own charter,
   must report a **harness gap** — "the rule set is silent here" — when it sees a risky pattern no
   rule covers. It must never invent a rule on the spot and report a "violation" of something that
   doesn't exist.
@@ -51,8 +51,8 @@ Tracker (reviews a diff) --surfaces "harness gap"--> ledger --> Scout (adjudicat
 The loop is only as good as these two detection doors. Before this design, tribe had 43 **role
 evals** (`plugins/tribe/evals/evals.json`) — prompts describing a hypothetical situation, graded on
 whether the agent stayed in its role — and almost none of them shipped real files. None measured
-the actual capability the loop depends on: *inferring a convention that is written nowhere, from a
-real codebase, and catching exactly where it breaks.* That gap is what this eval design closes.
+the actual capability the loop depends on: _inferring a convention that is written nowhere, from a
+real codebase, and catching exactly where it breaks._ That gap is what this eval design closes.
 
 ## 2. The fixture: a small codebase with an answer key that never enters the sandbox
 
@@ -64,18 +64,18 @@ from repetition. Each convention has **≥3 exemplar sites** (enough repetition 
 **exactly one seeded deviation** (the one place it's broken) — plus 3 **decoys**: patterns that
 repeat but are mere style taste, where flagging one counts as a false positive.
 
-| ID | Tier | Unwritten convention | Seeded deviation |
-|----|------|----------------------|-------------------|
-| C1 | easy | Services return `Result` objects (`{ok:true,value}\|{ok:false,reason}`), never throw | one service throws |
-| C3 | easy | Timestamps are UTC ISO strings, fields named `*AtUtc` | one file uses local `Date`, field named `createdAt` |
-| C4 | medium | Clock is injected; nothing outside `clock.ts` calls `Date.now()` | one service calls `Date.now()` inline |
-| C6 | medium | Every failure `reason` is a member of `errorCodes.ts` | one file invents an ad-hoc string |
-| C9 | hard | Every mapper's `toDto()` strips internal fields — same name, same meaning everywhere | one mapper's `toDto()` leaks a field under the same name (diverged semantics) |
-| C10 | hard | Money is integer cents everywhere; no float arithmetic | one module computes `* 1.1` on a float dollar amount |
+| ID  | Tier   | Unwritten convention                                                                 | Seeded deviation                                                              |
+| --- | ------ | ------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| C1  | easy   | Services return `Result` objects (`{ok:true,value}\|{ok:false,reason}`), never throw | one service throws                                                            |
+| C3  | easy   | Timestamps are UTC ISO strings, fields named `*AtUtc`                                | one file uses local `Date`, field named `createdAt`                           |
+| C4  | medium | Clock is injected; nothing outside `clock.ts` calls `Date.now()`                     | one service calls `Date.now()` inline                                         |
+| C6  | medium | Every failure `reason` is a member of `errorCodes.ts`                                | one file invents an ad-hoc string                                             |
+| C9  | hard   | Every mapper's `toDto()` strips internal fields — same name, same meaning everywhere | one mapper's `toDto()` leaks a field under the same name (diverged semantics) |
+| C10 | hard   | Money is integer cents everywhere; no float arithmetic                               | one module computes `* 1.1` on a float dollar amount                          |
 
-*(Full 10 in the spec; C2/C5/C7/C8 follow the same shape. Decoys: alphabetical imports, a
+_(Full 10 in the spec; C2/C5/C7/C8 follow the same shape. Decoys: alphabetical imports, a
 `// module:` banner comment, single-quote style — real, repeated, and deliberately not
-rule-worthy.)*
+rule-worthy.)_
 
 The **answer key** — `manifest/orderly.json`, with each convention's exemplars, deviation
 `file:line`, and grading rubric — lives **outside** the fixture directory and is never copied into
@@ -85,14 +85,14 @@ trustworthy: an agent that could read the manifest would trivially "pass" by cop
 ## 3. Term — `arm`: isolate the variable you're afraid is biasing your measurement
 
 **Arm** is standard terminology from randomized controlled trials (clinical-trial methodology): an
-arm is one experimental *condition* applied to an otherwise identical measurement — e.g. a
+arm is one experimental _condition_ applied to an otherwise identical measurement — e.g. a
 treatment arm vs. a control (placebo) arm, with the delta between them causally attributable to the
 one variable that differs. A/B testing is the same idea under a different name (A and B are arms).
 
 This eval's isolated variable is **ambient memory** — the `CLAUDE.md` project file and
 `.claude/`-scoped settings an agent can read before it even looks at the code. The concrete failure
-this guards against, grounded in one sentence from the spec: *"a CLAUDE.md that says 'inject the
-clock' hands \[the detector\] C4 for free"* — the agent would "catch" the clock-injection convention
+this guards against, grounded in one sentence from the spec: _"a CLAUDE.md that says 'inject the
+clock' hands \[the detector\] C4 for free"_ — the agent would "catch" the clock-injection convention
 because it was told, not because it inferred it from the code, and that recall point would be
 fake. So the eval runs every detector in two arms:
 
@@ -116,7 +116,7 @@ the arm split exists to prevent.
 ## 4. Term — `leg`: name each independent measurement path
 
 **Leg**, in this design's own vocabulary (not an industry-standard term — it's local naming
-introduced by this spec, worth flagging honestly), means *one detector, on one subject*. The tribe
+introduced by this spec, worth flagging honestly), means _one detector, on one subject_. The tribe
 loop has exactly two detection doors, so there are exactly two legs:
 
 - **Leg A — Scout on standing code.** Dispatch the real `agents/scout.md` definition against the
@@ -128,14 +128,14 @@ loop has exactly two detection doors, so there are exactly two legs:
   gap** — a fact about the rule set being silent, not an invented rule with an invented violation.
 
 Two legs exist because they measure **two different capabilities of two different agents**. A
-single blended score (say, "73% detection") would hide *which* door is broken if the eval ever
+single blended score (say, "73% detection") would hide _which_ door is broken if the eval ever
 fails — Leg A failing means Scout can't infer conventions from repetition; Leg B failing means
 Tracker either misses real gaps or, worse, starts inventing rules. Those are different bugs in
 different agents and need different fixes; one number can't tell you which.
 
 ## 5. Term — `cell`: one leg × one arm, repeated to absorb LLM nondeterminism
 
-**Cell** is standard factorial-experiment-design vocabulary: in a factorial design, a *cell* is one
+**Cell** is standard factorial-experiment-design vocabulary: in a factorial design, a _cell_ is one
 combination of factor levels — here, one (leg, arm) pair, one square of the 2×2 matrix:
 
 ```
@@ -157,13 +157,13 @@ grader runs** — that scores every convention `caught` / `partial` / `missed` a
 This is the artifact the whole design serves: a fixed table of five gates, quoted verbatim from
 the spec, that a script evaluates over `grading.json` — no human judgment call at pass time.
 
-| Gate | Cell | Threshold |
-|------|------|-----------|
-| G1 | Leg A · clean | recall ≥ **0.70** (scoring: `caught`=1, `partial`=0.5, over the 10 conventions) |
-| G2 | Leg A · clean | precision ≥ **0.70**, where `precision = caught / (caught + decoys_flagged + invented)` |
-| G3 | Leg A · clean | easy-tier (C1–C3) recall = **1.00** — every easy convention, every counted rep |
-| G4 | Leg B · clean | gap-recall ≥ **0.75** (≥3 of the 4 violated conventions surfaced as gaps) |
-| G5 | Leg B · clean | invented-rule violations = **0** — Tracker citing a rule that doesn't exist hard-fails that repetition, no partial credit |
+| Gate | Cell          | Threshold                                                                                                                 |
+| ---- | ------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| G1   | Leg A · clean | recall ≥ **0.70** (scoring: `caught`=1, `partial`=0.5, over the 10 conventions)                                           |
+| G2   | Leg A · clean | precision ≥ **0.70**, where `precision = caught / (caught + decoys_flagged + invented)`                                   |
+| G3   | Leg A · clean | easy-tier (C1–C3) recall = **1.00** — every easy convention, every counted rep                                            |
+| G4   | Leg B · clean | gap-recall ≥ **0.75** (≥3 of the 4 violated conventions surfaced as gaps)                                                 |
+| G5   | Leg B · clean | invented-rule violations = **0** — Tracker citing a rule that doesn't exist hard-fails that repetition, no partial credit |
 
 Two design choices worth naming explicitly, because they're easy to get backwards:
 
@@ -181,9 +181,9 @@ Two design choices worth naming explicitly, because they're easy to get backward
 {
   "legA_clean": { "reps_passed": 2, "reps_total": 3, "pass": true },
   "legB_clean": { "reps_passed": 3, "reps_total": 3, "pass": true },
-  "legA_mem_delta": { "recall": +0.10, "precision": -0.05 },
-  "legB_mem_delta": { "recall": +0.25, "precision": 0.00 },
-  "pass": true
+  "legA_mem_delta": { "recall": +0.1, "precision": -0.05 },
+  "legB_mem_delta": { "recall": +0.25, "precision": 0.0 },
+  "pass": true,
 }
 ```
 
@@ -211,6 +211,6 @@ Two design choices worth naming explicitly, because they're easy to get backward
 - "Arm" as standard clinical-trial / RCT terminology — any clinical-trials glossary (e.g. NIH/FDA
   glossaries of clinical trial terms) defines an arm as one group/condition in a trial compared
   against another for a causally attributable delta.
-- Factorial experimental design — standard experimental-design texts define a *cell* as one
+- Factorial experimental design — standard experimental-design texts define a _cell_ as one
   combination of factor levels in a multi-factor design; this note applies that definition to a
   2×2 (leg × arm) matrix.

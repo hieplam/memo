@@ -141,8 +141,8 @@ figures are vendor-reported.
 
 ---
 
-**Next:** [Part 2 — Living Inside the Trust Boundary](/memo/posts/rtk-vs-caveman-part-2-security/) →
+**Next:** [Part 2 — Living Inside the Trust Boundary](/posts/rtk-vs-caveman-part-2-security/) →
 
 **The series — Shrinking the Agent Loop: RTK vs Caveman:** **1 · How They Work (you are here)** ·
-[2 · Living Inside the Trust Boundary](/memo/posts/rtk-vs-caveman-part-2-security/) ·
-[3 · A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext](/memo/posts/rtk-vs-caveman-part-3-shrink-deep-dive/)
+[2 · Living Inside the Trust Boundary](/posts/rtk-vs-caveman-part-2-security/) ·
+[3 · A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext](/posts/rtk-vs-caveman-part-3-shrink-deep-dive/)

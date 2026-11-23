@@ -32,7 +32,7 @@ Một test chỉ bắt được lỗi khi vượt qua **bốn** cổng theo th�
 
 **Coverage chỉ đo đến cổng 1.** Mọi thứ tạo nên giá trị của một test — infection, propagation, và đặc biệt là assertion phát hiện lỗi — đều vô hình với coverage.
 
-![Phễu RIPR: Reachability → Infection → Propagation → Reveal, bốn cổng một test phải vượt qua để bắt được lỗi](/memo/diagrams/test-quality-metrics/01-ripr-funnel.svg)
+![Phễu RIPR: Reachability → Infection → Propagation → Reveal, bốn cổng một test phải vượt qua để bắt được lỗi](/diagrams/test-quality-metrics/01-ripr-funnel.svg)
 _Coverage chỉ đo được cổng đầu tiên (Reachability); ba cổng còn lại — nơi quyết định một test có thực sự "nhận ra" lỗi hay không — nằm ngoài tầm với của nó._
 
 Đây là lý do tại sao một bộ test có thể đạt 90% line coverage mà vẫn "mù": nó chạy toàn bộ code và không kiểm chứng bất cứ điều gì có ý nghĩa.
@@ -45,7 +45,7 @@ _Coverage chỉ đo được cổng đầu tiên (Reachability); ba cổng còn 
 
 Con số cụ thể và đáng lo ngại từ cùng nghiên cứu đó: trong **26 file có statement coverage > 80% và mutation score < 20%, ít nhất 12 file có nhiều câu lệnh `assert` còn thiếu** — các test chạy code nhưng không bắt được các lỗi được đưa vào một cách rõ ràng. ✅ _(đã xác minh, 3-0)_ <sup>[oraclegap]</sup>
 
-![Khoảng cách giữa coverage và mutation score: nhiều file được thực thi đầy đủ nhưng vẫn để lọt mutant vì thiếu assertion](/memo/diagrams/test-quality-metrics/02-oracle-gap.svg)
+![Khoảng cách giữa coverage và mutation score: nhiều file được thực thi đầy đủ nhưng vẫn để lọt mutant vì thiếu assertion](/diagrams/test-quality-metrics/02-oracle-gap.svg)
 _Ở coverage thấp, hai chỉ số đi cùng nhau; càng lên cao, khoảng cách dương giữa coverage và mutation score càng lớn — dấu hiệu của code "được chạy nhưng không được kiểm tra."_
 
 **Branch coverage cũng không cứu bạn.** Một nghiên cứu công nghiệp năm 2021 phát hiện rằng branch coverage và mutation coverage chỉ nhất quán với nhau ở **47%** số class, với tương quan hạng yếu (Kendall τ-b ≈ 0.25). Trong **8% số class, branch coverage cao trong khi mutation coverage thấp** — các test đi qua mọi nhánh nhưng không bắt được bất kỳ lỗi nào được đưa vào. Các tác giả kết luận _"việc chỉ sử dụng branch coverage có thể đánh lừa nhà phát triển về chất lượng của các test."_ ✅ _(đã xác minh, 3-0)_ <sup>[branchcov]</sup>
@@ -58,7 +58,7 @@ _Ở coverage thấp, hai chỉ số đi cùng nhau; càng lên cao, khoảng c�
 
 Tác giả .NET Mark Seemann lập luận trực tiếp rằng coverage như một _mục tiêu bắt buộc_ là tự đánh bại — _"mọi người phản ứng với các động cơ khuyến khích, mặc dù không nhất thiết theo những cách có thể dự đoán được."_ Nói với một nhóm (hoặc một agent AI) phải đạt 80% coverage và họ sẽ đạt 80% coverage: bằng cách viết các test không có assertion, test getter tầm thường, và các nghi thức `Assert.NotNull` thực thi code mà không xác minh bất cứ điều gì. <sup>[ploeh]</sup> Metric trở thành xanh; bộ test _tệ hơn_, vì bây giờ nó đầy nhiễu trông như thể là bảo vệ.
 
-Điều này còn quan trọng gấp đôi đối với vòng lặp agentic. Một LLM được bảo "tăng coverage" là một cỗ máy Goodhart cực kỳ hiệu quả — nó sẽ tạo ra chính xác các test vô nghĩa thỏa mãn đúng nghĩa đen của metric. (Xem [Phần 5](/memo/posts/test-quality-part-5-grading-ai-tests-vi/).)
+Điều này còn quan trọng gấp đôi đối với vòng lặp agentic. Một LLM được bảo "tăng coverage" là một cỗ máy Goodhart cực kỳ hiệu quả — nó sẽ tạo ra chính xác các test vô nghĩa thỏa mãn đúng nghĩa đen của metric. (Xem [Phần 5](/posts/test-quality-part-5-grading-ai-tests-vi/).)
 
 ## 4. Vậy coverage có vô dụng không? Không — đó là nền, không phải trần
 
@@ -72,7 +72,7 @@ Phần còn lại của series này nói về các metric đo lường những g
 
 ---
 
-→ [Phần 1: Danh mục metric chất lượng test](/memo/posts/test-quality-part-1-metric-catalog-vi/)
+→ [Phần 1: Danh mục metric chất lượng test](/posts/test-quality-part-1-metric-catalog-vi/)
 
 ---
 

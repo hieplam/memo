@@ -14,9 +14,9 @@ tags:
 lang: "vi"
 ---
 
-> **Series "Giải mã chữ semantic"** — [xem mục lục đầy đủ](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
-> Phần trước: [Phần 1 — Cú pháp vs Ngữ nghĩa: AST thật ra là gì](/memo/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)
-> Phần sau: [Phần 3 — "Roslyn có semantic model": tầng nghĩa trên AST](/memo/posts/semantic-model-roslyn-go-types/)
+> **Series "Giải mã chữ semantic"** — [xem mục lục đầy đủ](/posts/chu-semantic-mot-chu-nhieu-nghia/)
+> Phần trước: [Phần 1 — Cú pháp vs Ngữ nghĩa: AST thật ra là gì](/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)
+> Phần sau: [Phần 3 — "Roslyn có semantic model": tầng nghĩa trên AST](/posts/semantic-model-roslyn-go-types/)
 
 ## Tóm tắt nhanh
 
@@ -48,7 +48,7 @@ Nguyên lý đơn giản: so **chữ với chữ**. Bạn tìm "hướng dẫn s
 
 Khoảng cách thường dùng nhất là **cosine similarity (độ tương đồng cosine)**: thay vì đo khoảng cách Euclid (gần xa về độ lớn), ta đo **góc** giữa hai vector. Hai vector cùng hướng (góc 0°) → cosine = 1.0; vuông góc (góc 90°) → cosine = 0; ngược hướng → cosine = −1.
 
-![Sơ đồ: lexical search so từ khoá, semantic search so nghĩa bằng vector embeddings](/memo/diagrams/semantic/02-lexical-vs-semantic-search.svg)
+![Sơ đồ: lexical search so từ khoá, semantic search so nghĩa bằng vector embeddings](/diagrams/semantic/02-lexical-vs-semantic-search.svg)
 
 _Cùng một truy vấn, lexical bỏ sót câu s1 (cùng nghĩa, khác chữ); semantic đo góc vector và BẮT được nó._
 
@@ -217,7 +217,7 @@ Còn lại: **khác hoàn toàn.**
 | **Dùng bởi**                 | IR engineer, ML engineer   | Compiler, IDE, linter           |
 | **Liên quan tới AST không?** | Không                      | Có — là tầng xây trên AST       |
 
-Như tui nói ở [mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/): hai cái này như "con chuột" trên bàn và "con chuột" trong hang — cùng nhãn chữ, khác loài hoàn toàn.
+Như tui nói ở [mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/): hai cái này như "con chuột" trên bàn và "con chuột" trong hang — cùng nhãn chữ, khác loài hoàn toàn.
 
 ## 6. Cú punchline: tại sao quan trọng mà biết điều này?
 
@@ -234,11 +234,11 @@ Hai chữ. Hai máy. Một gốc Hy Lạp. Đừng để gốc chữ đó đánh
 
 Phần tiếp theo sẽ mổ xẻ chữ "semantic" theo nghĩa compiler — cụ thể là Roslyn của C# và `go/types` của Go. Đó là tầng **semantic model** thật sự: từ một cái tên trong code, hỏi được _"nó trỏ tới Object nào, kiểu gì, có phải constant không"_ — và tại sao tầng đó là một cấu trúc **riêng biệt**, không phải AST được tô màu.
 
-→ [Phần 3: "Roslyn có semantic model" — tầng ngữ nghĩa trên AST (Go + C#)](/memo/posts/semantic-model-roslyn-go-types/)
+→ [Phần 3: "Roslyn có semantic model" — tầng ngữ nghĩa trên AST (Go + C#)](/posts/semantic-model-roslyn-go-types/)
 
-← [Phần 1: Cú pháp vs Ngữ nghĩa — AST thật ra là gì (và không là gì)](/memo/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)
+← [Phần 1: Cú pháp vs Ngữ nghĩa — AST thật ra là gì (và không là gì)](/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)
 
-[Xem mục lục series →](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
+[Xem mục lục series →](/posts/chu-semantic-mot-chu-nhieu-nghia/)
 
 ---
 

@@ -15,8 +15,8 @@ tags:
 lang: "vi"
 ---
 
-> Phần cuối của series. Đọc từ đầu: [mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/).
-> Bài trước: [Phần 4 — Lấy AST viết hard-rule: cái lint chặn code sai](/memo/posts/ast-viet-hard-rule-lint/).
+> Phần cuối của series. Đọc từ đầu: [mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/).
+> Bài trước: [Phần 4 — Lấy AST viết hard-rule: cái lint chặn code sai](/posts/ast-viet-hard-rule-lint/).
 
 ## Tóm tắt nhanh
 
@@ -49,7 +49,7 @@ Tui hay dùng cái phép so sánh Entity Framework (EF) này: nếu codebase quy
 
 Cái cổng đó trong codebase là **exit 1**: compile lỗi, type-check lỗi, lint lỗi. Bất kỳ code nào sinh ra — từ AI hay từ tay người — đều phải qua đó. Không qua được thì không merge được.
 
-![Sơ đồ: LLM sinh code qua cổng compile + type-check + lint AST; lời dặn markdown thì đi vòng được](/memo/diagrams/semantic/05-agent-harness-gate.svg)
+![Sơ đồ: LLM sinh code qua cổng compile + type-check + lint AST; lời dặn markdown thì đi vòng được](/diagrams/semantic/05-agent-harness-gate.svg)
 
 _LLM sinh code, cổng máy (compile + type-check + lint AST/semantic) chặn cái sai bằng exit 1; lời dặn markdown thì đi vòng được; grammar-constrained decoding ở khâu sinh token — khác, và ở một chỗ khác trong luồng._
 
@@ -134,5 +134,5 @@ Series liên kết _"Bắt LLM code đúng bằng kiến trúc"_ đi sâu hơn v
 
 ---
 
-_← [Phần 4: Lấy AST viết hard-rule — cái lint chặn code sai](/memo/posts/ast-viet-hard-rule-lint/)_
-_↑ [Mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)_
+_← [Phần 4: Lấy AST viết hard-rule — cái lint chặn code sai](/posts/ast-viet-hard-rule-lint/)_
+_↑ [Mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/)_

@@ -133,6 +133,6 @@ Xen giữa là các hộp **Tính chất** (property) — định nghĩa từ đ
 
 ---
 
-**Tiếp theo:** [Phần 1 — Event Bị Mất Và Bị Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) →
+**Tiếp theo:** [Phần 1 — Event Bị Mất Và Bị Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) →
 
-**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** **0 · Nền tảng (đang ở đây)** · [1 · Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/memo/posts/event-driven-part-6-observability-and-recap-vi/)
+**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** **0 · Nền tảng (đang ở đây)** · [1 · Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/posts/event-driven-part-6-observability-and-recap-vi/)

@@ -16,14 +16,14 @@ lang: "vi"
 ---
 
 > **Ghi chú đào sâu — series "Giải mã chữ semantic".**
-> Bài này nới rộng [Phần 2 — "Tool này không có semantic search"](/memo/posts/semantic-search-la-gi/), chỗ tui gộp `grep` và `BM25` chung một rổ "lexical". Gộp vậy đúng về phe, nhưng giấu mất một chuyện: trong cái rổ đó, `grep` và `BM25` **không cùng loại việc**.
-> Đọc từ đầu: [mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
+> Bài này nới rộng [Phần 2 — "Tool này không có semantic search"](/posts/semantic-search-la-gi/), chỗ tui gộp `grep` và `BM25` chung một rổ "lexical". Gộp vậy đúng về phe, nhưng giấu mất một chuyện: trong cái rổ đó, `grep` và `BM25` **không cùng loại việc**.
+> Đọc từ đầu: [mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/)
 
 ## Tóm tắt nhanh
 
 - **grep = cái lọc (filter).** Hỏi "doc này CÓ chứa từ không?" → trả lời có/không. Mọi doc khớp đều ngang nhau, in ra theo thứ tự kho. Không có khái niệm "liên quan hơn".
 - **BM25 = cái xếp hạng (ranker).** Hỏi "doc nào LIÊN QUAN NHẤT?" → chấm điểm rồi sắp xếp. Điểm dựa trên ba thứ grep không có: **TF** (từ xuất hiện nhiều lần), **IDF** (từ càng hiếm càng đắt), **chuẩn hoá độ dài** (doc dài bị phạt).
-- **semantic = cái hiểu nghĩa.** Biến câu thành **vector embedding** rồi đo nghĩa — bắt được câu cùng nghĩa khác chữ. Đây là tầng [Phần 2](/memo/posts/semantic-search-la-gi/) đã mổ.
+- **semantic = cái hiểu nghĩa.** Biến câu thành **vector embedding** rồi đo nghĩa — bắt được câu cùng nghĩa khác chữ. Đây là tầng [Phần 2](/posts/semantic-search-la-gi/) đã mổ.
 - Một dòng nhớ: **grep = có/không theo ký tự · BM25 = xếp hạng theo TỪ · semantic = xếp hạng theo NGHĨA.**
 - Demo Go chạy thật: cùng truy vấn, grep ra 3 hit ngang nhau, BM25 xếp `auth-token (0.90) > middleware (0.63) > login-flow (0.43)`.
 
@@ -33,7 +33,7 @@ lang: "vi"
 
 Tui đang đọc code một con tool tên **ymir** — đại khái nó là **bộ sinh harness (khung ràng buộc) cho Claude Code**: tự dựng rules, lint, CI, và một cái wiki để chứa tri thức dự án. Trong wiki đó có lệnh `wiki query "..."` để tra cứu.
 
-Câu hỏi bật ra rất tự nhiên, đúng cái câu mở màn [Phần 2](/memo/posts/semantic-search-la-gi/): _con này tìm bằng gì — có semantic search không?_
+Câu hỏi bật ra rất tự nhiên, đúng cái câu mở màn [Phần 2](/posts/semantic-search-la-gi/): _con này tìm bằng gì — có semantic search không?_
 
 Tui lần theo code. Lệnh `query` không tự tìm, nó gọi ra một công cụ ngoài tên `qmd`:
 
@@ -292,7 +292,7 @@ Và cái bảng IDF cuối cho thấy điều `grep` không bao giờ biết: ch
 
 Phần 2 chia thế giới làm hai: lexical (grep, BM25) vs semantic. Đúng — nhưng nhìn kỹ thì cái trục thật sự có **ba nấc**, phân theo câu hỏi "khớp theo **đơn vị** gì?":
 
-![Ba tầng tìm kiếm: grep lọc theo ký tự, BM25 xếp hạng theo từ, semantic xếp hạng theo nghĩa](/memo/diagrams/semantic/06-grep-bm25-semantic.svg)
+![Ba tầng tìm kiếm: grep lọc theo ký tự, BM25 xếp hạng theo từ, semantic xếp hạng theo nghĩa](/diagrams/semantic/06-grep-bm25-semantic.svg)
 
 _Cùng một truy vấn. grep chia hai phe theo ký tự; BM25 xếp hạng theo từ có trọng số; semantic xếp hạng theo nghĩa bằng vector._
 
@@ -340,9 +340,9 @@ Một dòng để mang về: **grep chia hai phe, BM25 xếp hạng đám đã k
 
 ---
 
-← [Phần 2: "Tool này không có semantic search" — chữ semantic kiểu embeddings](/memo/posts/semantic-search-la-gi/)
+← [Phần 2: "Tool này không có semantic search" — chữ semantic kiểu embeddings](/posts/semantic-search-la-gi/)
 
-[Xem mục lục series →](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
+[Xem mục lục series →](/posts/chu-semantic-mot-chu-nhieu-nghia/)
 
 ---
 

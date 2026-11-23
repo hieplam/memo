@@ -12,7 +12,7 @@ tags:
 multiLangKey: "test-quality-metrics-4"
 ---
 
-> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 4/7.** Bộ công cụ cụ thể cho .NET và Go — coverage, mutation, property-based testing — cùng bí quyết chạy mutation testing diff-scoped trên codebase kế thừa mà không tốn cả ngày CI. Tiếp theo [Phần 3](/memo/posts/test-quality-part-3-empirical-evidence-vi/).
+> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 4/7.** Bộ công cụ cụ thể cho .NET và Go — coverage, mutation, property-based testing — cùng bí quyết chạy mutation testing diff-scoped trên codebase kế thừa mà không tốn cả ngày CI. Tiếp theo [Phần 3](/posts/test-quality-part-3-empirical-evidence-vi/).
 
 - **.NET:** `coverlet` cho coverage (bộ lọc âm), **Stryker.NET** cho mutation score (công cụ chẩn đoán oracle), `FsCheck`/`CsCheck` cho property.
 - **Go:** `go test -cover` tích hợp sẵn + `go-carpet`, **gremlins** (hoặc `go-mutesting`/`ooze`) cho mutation, `gopter`/`rapid` cho property.
@@ -33,7 +33,7 @@ dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura \
             /p:Threshold=0 /p:ThresholdType=line
 ```
 
-Chỉ sử dụng đầu ra Coverlet để **tìm các dòng thay đổi có coverage bằng không**. Đưa chúng vào ReportGenerator để xem diff view. Đừng đặt `/p:Threshold` cao như một cổng chất lượng — đó là bẫy Goodhart ([Phần 0](/memo/posts/test-quality-part-0-why-coverage-lies-vi/)).
+Chỉ sử dụng đầu ra Coverlet để **tìm các dòng thay đổi có coverage bằng không**. Đưa chúng vào ReportGenerator để xem diff view. Đừng đặt `/p:Threshold` cao như một cổng chất lượng — đó là bẫy Goodhart ([Phần 0](/posts/test-quality-part-0-why-coverage-lies-vi/)).
 
 ### Mutation — Stryker.NET
 
@@ -84,7 +84,7 @@ gremlins unleash --diff main ./...     # diff-scoped (thân thiện với kế t
 gremlins unleash --dry-run             # liệt kê mutant mà không chạy test (ước tính chi phí)
 ```
 
-gremlins báo cáo hai con số riêng biệt — hãy giữ chúng tách biệt ([Phần 2](/memo/posts/test-quality-part-2-mutation-testing-vi/)):
+gremlins báo cáo hai con số riêng biệt — hãy giữ chúng tách biệt ([Phần 2](/posts/test-quality-part-2-mutation-testing-vi/)):
 
 - **Test Efficacy** = `KILLED / (KILLED + LIVED)` → độ mạnh oracle.
 - **Mutant Coverage** = `(KILLED + LIVED) / (KILLED + LIVED + NOT_COVERED)` → reachability.
@@ -119,7 +119,7 @@ Khi bạn đọc về độ trưởng thành của mutation testing, tiêu chu�
 
 ---
 
-← [Phần 3: Nghiên cứu thực sự nói gì](/memo/posts/test-quality-part-3-empirical-evidence-vi/) · [Phần 5: Chấm điểm test do AI viết](/memo/posts/test-quality-part-5-grading-ai-tests-vi/) →
+← [Phần 3: Nghiên cứu thực sự nói gì](/posts/test-quality-part-3-empirical-evidence-vi/) · [Phần 5: Chấm điểm test do AI viết](/posts/test-quality-part-5-grading-ai-tests-vi/) →
 
 ---
 

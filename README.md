@@ -10,7 +10,7 @@ long-form deep dives and explainers on software architecture, terminals and
 low-level systems, and other things worth researching, often in both English
 and Vietnamese.
 
-Read [the blog posts](https://hieplam.github.io/memo/posts/) or browse the
+Read [the blog posts](https://lamhiep.com/posts/) or browse the
 sections below for more info.
 
 ## 🔥 Features

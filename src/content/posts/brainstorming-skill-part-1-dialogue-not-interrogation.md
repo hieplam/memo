@@ -44,7 +44,7 @@ next question. The repo summarizes this posture as _"Socratic design refinement"
 At the bottom of the skill is a section called **Key Principles** (`SKILL.md:133–140`). These
 six rules are the constitution of the dialogue.
 
-![The six principles behind the Socratic dialogue](/memo/diagrams/brainstorming-skill/01-principles.svg)
+![The six principles behind the Socratic dialogue](/diagrams/brainstorming-skill/01-principles.svg)
 
 ### 1. One question at a time
 
@@ -143,6 +143,6 @@ In the next post we watch those rules run as a single tight loop.
 
 ---
 
-← **Previous:** [Part 0 — The Map](/memo/posts/brainstorming-skill-part-0-the-map/) · **Next:** [Part 2 — The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) →
+← **Previous:** [Part 0 — The Map](/posts/brainstorming-skill-part-0-the-map/) · **Next:** [Part 2 — The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) →
 
-**The series — Inside the Brainstorming Skill:** [0 · The Map](/memo/posts/brainstorming-skill-part-0-the-map/) · **1 · Dialogue, Not Interrogation (you are here)** · [2 · The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/memo/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/memo/posts/brainstorming-skill-part-5-the-visual-companion/) · [6 · Under the Hood](/memo/posts/brainstorming-skill-part-6-under-the-hood/)
+**The series — Inside the Brainstorming Skill:** [0 · The Map](/posts/brainstorming-skill-part-0-the-map/) · **1 · Dialogue, Not Interrogation (you are here)** · [2 · The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/posts/brainstorming-skill-part-5-the-visual-companion/) · [6 · Under the Hood](/posts/brainstorming-skill-part-6-under-the-hood/)

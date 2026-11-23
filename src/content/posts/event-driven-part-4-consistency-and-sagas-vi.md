@@ -26,7 +26,7 @@ multiLangKey: "event-driven-top10-4"
 
 **What — vấn đề là gì?** Trong hệ event-driven, dữ liệu ghi ở một nơi và _lan truyền_ sang các nơi khác qua event — luôn với một độ trễ. Trong khoảng trễ đó, ai đọc ở "nơi khác" sẽ thấy **dữ liệu cũ** (stale data). Vấn đề trở thành sự cố khi độ trễ chạm vào con người: người _vừa ghi_ mà đọc lại không thấy thay đổi của chính mình (mất read-your-own-writes), hoặc hai màn hình cạnh nhau hiển thị hai con số khác nhau.
 
-**Why — vì sao xảy ra? Đây là tính chất, không phải bug.** Vì kiến trúc này _được định nghĩa_ bằng sự bất đồng bộ ([Phần 0](/memo/posts/event-driven-part-0-foundations-vi/)): write model trả lời ngay khi phần của nó xong, còn read model (view, dashboard) cập nhật _sau_, khi event lan tới.
+**Why — vì sao xảy ra? Đây là tính chất, không phải bug.** Vì kiến trúc này _được định nghĩa_ bằng sự bất đồng bộ ([Phần 0](/posts/event-driven-part-0-foundations-vi/)): write model trả lời ngay khi phần của nó xong, còn read model (view, dashboard) cập nhật _sau_, khi event lan tới.
 
 ```mermaid
 sequenceDiagram
@@ -46,7 +46,7 @@ sequenceDiagram
   R-->>T: dia chi moi (dung, gia nhu dung bat chi Ti refresh)
 ```
 
-Độ dài khe hở nhất quán = độ trễ lan truyền event = chính là consumer lag của [Phần 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/). Bình thường vài chục ms — không ai để ý; lúc hệ thống ứ đọng thành vài phút — mọi thứ "trông như mất dữ liệu".
+Độ dài khe hở nhất quán = độ trễ lan truyền event = chính là consumer lag của [Phần 5](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/). Bình thường vài chục ms — không ai để ý; lúc hệ thống ứ đọng thành vài phút — mọi thứ "trông như mất dữ liệu".
 
 Nền lý thuyết, gói trong một câu: trong hệ phân tán, khi mạng có thể đứt gãy giữa các node, ta buộc phải chọn giữa _chờ nhau để luôn nhất quán_ (hy sinh tính sẵn sàng và độ trễ) và _trả lời ngay rồi đồng bộ sau_ (hy sinh nhất quán tức thời) — **định lý CAP** mô tả ràng buộc này. Event-driven đã chọn vế thứ hai một cách có chủ đích.
 
@@ -72,9 +72,9 @@ Nền lý thuyết, gói trong một câu: trong hệ phân tán, khi mạng có
 
 **What — vấn đề là gì?** Đặt hàng ở MuaLẹ = trừ tiền (`PaymentService`) + giữ kho (`InventoryService`) + tạo vận đơn (`ShippingService`). Tiền của chị Tí đã trừ xong thì kho báo: hết hàng. Trong monolith, một dòng `ROLLBACK` cứu tất cả. Ở đây, tiền nằm ở database của Payment, kho nằm ở database của Inventory — không có `ROLLBACK` nào với tay qua hai database.
 
-Một **giao dịch nghiệp vụ** (business transaction) trải trên nhiều service, mỗi service một database riêng. Yêu cầu nghiệp vụ vẫn là all-or-nothing như atomicity ở [Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) — "hoặc đơn hoàn tất trọn vẹn, hoặc coi như chưa từng đặt" — nhưng phương tiện kỹ thuật (transaction ACID) chỉ tồn tại _bên trong từng database_.
+Một **giao dịch nghiệp vụ** (business transaction) trải trên nhiều service, mỗi service một database riêng. Yêu cầu nghiệp vụ vẫn là all-or-nothing như atomicity ở [Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/) — "hoặc đơn hoàn tất trọn vẹn, hoặc coi như chưa từng đặt" — nhưng phương tiện kỹ thuật (transaction ACID) chỉ tồn tại _bên trong từng database_.
 
-**Why — vì sao xảy ra?** Gốc rễ là nguyên tắc **database-per-service**: mỗi microservice sở hữu độc quyền database của mình — chính điều đó cho phép các team deploy độc lập, đổi schema tự do (lợi ích cốt lõi của microservice). Còn two-phase commit — giải pháp giáo khoa cho transaction phân tán — đã bị loại từ [Phần 2](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) (không được hạ tầng phổ biến hỗ trợ, giữ khoá qua mạng, điểm chết đơn). Vậy phải xây "all-or-nothing" từ vật liệu khác: nhiều transaction nhỏ + cam kết dọn dẹp.
+**Why — vì sao xảy ra?** Gốc rễ là nguyên tắc **database-per-service**: mỗi microservice sở hữu độc quyền database của mình — chính điều đó cho phép các team deploy độc lập, đổi schema tự do (lợi ích cốt lõi của microservice). Còn two-phase commit — giải pháp giáo khoa cho transaction phân tán — đã bị loại từ [Phần 2](/posts/event-driven-part-2-outbox-and-retries-vi/) (không được hạ tầng phổ biến hỗ trợ, giữ khoá qua mạng, điểm chết đơn). Vậy phải xây "all-or-nothing" từ vật liệu khác: nhiều transaction nhỏ + cam kết dọn dẹp.
 
 **How — giải quyết thế nào? Saga: chuỗi transaction nhỏ + hoàn tác nghiệp vụ.** **Saga** (tên gốc từ bài báo "Sagas" của Garcia-Molina & Salem, 1987 — trước microservice ba thập kỷ) cắt giao dịch lớn thành **chuỗi local transaction**, mỗi bước commit thật sự trong database của service đó; nếu bước thứ k thất bại, chạy **compensating transaction** (giao dịch bù) cho các bước 1..k-1 _theo thứ tự ngược_, đưa hệ thống về trạng thái tương đương ban đầu.
 
@@ -99,7 +99,7 @@ sequenceDiagram
 Để ý: lịch sử "đã trừ rồi hoàn" _vẫn tồn tại_ trên sao kê của chị Tí — saga không xoá quá khứ như ROLLBACK, nó viết thêm một chương sửa sai. Đó là khác biệt bản chất giữa hoàn tác nghiệp vụ và hoàn tác kỹ thuật.
 
 > [!NOTE]
-> **Tính chất — Compensating transaction (giao dịch bù).** Thao tác nghiệp vụ _đảo ngược hiệu ứng_ của một bước đã commit: refund đảo cho charge, nhả-hàng đảo cho giữ-hàng. Khác rollback kỹ thuật ở hai điểm: (1) nó là code nghiệp vụ phải _tự viết và tự test_ cho từng bước tiến; (2) nó không làm quá khứ biến mất — chỉ trung hoà hậu quả. Hệ quả thiết kế: bước nào không bù được (gửi email không "rút lại" được, bắn tiền sang ngân hàng khác không tự đòi được) phải xếp _cuối saga_ — gọi là **pivot transaction**, điểm không quay đầu. Lưu ý ngầm: message giữa các bước saga vẫn là at-least-once — bước "hoàn tiền" cũng có thể được giao 2 lần → compensating transaction _cũng phải idempotent_ ([Phần 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) xuất hiện lần thứ tư).
+> **Tính chất — Compensating transaction (giao dịch bù).** Thao tác nghiệp vụ _đảo ngược hiệu ứng_ của một bước đã commit: refund đảo cho charge, nhả-hàng đảo cho giữ-hàng. Khác rollback kỹ thuật ở hai điểm: (1) nó là code nghiệp vụ phải _tự viết và tự test_ cho từng bước tiến; (2) nó không làm quá khứ biến mất — chỉ trung hoà hậu quả. Hệ quả thiết kế: bước nào không bù được (gửi email không "rút lại" được, bắn tiền sang ngân hàng khác không tự đòi được) phải xếp _cuối saga_ — gọi là **pivot transaction**, điểm không quay đầu. Lưu ý ngầm: message giữa các bước saga vẫn là at-least-once — bước "hoàn tiền" cũng có thể được giao 2 lần → compensating transaction _cũng phải idempotent_ ([Phần 1](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) xuất hiện lần thứ tư).
 
 **Hai cách tổ chức saga: ai là người nhớ kịch bản?**
 
@@ -138,6 +138,6 @@ flowchart TD
 
 ---
 
-← **Trước:** [Phần 3 — Poison & Thứ Tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · **Tiếp theo:** [Phần 5 — Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) →
+← **Trước:** [Phần 3 — Poison & Thứ Tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · **Tiếp theo:** [Phần 5 — Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) →
 
-**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/memo/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · **4 · Consistency & Saga (đang ở đây)** · [5 · Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/memo/posts/event-driven-part-6-observability-and-recap-vi/)
+**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/posts/event-driven-part-0-foundations-vi/) · [1 · Mất & Trùng](/posts/event-driven-part-1-lost-and-duplicate-events-vi/) · [2 · Outbox & Retry](/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · **4 · Consistency & Saga (đang ở đây)** · [5 · Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/posts/event-driven-part-6-observability-and-recap-vi/)

@@ -14,7 +14,7 @@ tags:
 multiLangKey: "freeze-dont-hash-gap-ids"
 ---
 
-Hồi tui kể chuyện [con plugin tribe ra đời vì hết tin nổi chữ "done"](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/), tui có nhắc sơ một vai tên **Tracker** — con soi diff theo luật (rule) đã viết ra của repo. Bài này tui kể kỹ hơn một bài toán riêng của Tracker, nhỏ mà xương: làm sao cho mỗi thứ nó phát hiện một cái ID sống được qua nhiều lần chạy, mà bản thân nó thì **không nhớ gì** giữa các lần chạy đó. Sửa sai một lần, tui học được một bài học tổng quát hơn nhiều: đừng bao giờ băm (hash) lời văn của một con LLM để làm danh tính (identity).
+Hồi tui kể chuyện [con plugin tribe ra đời vì hết tin nổi chữ "done"](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/), tui có nhắc sơ một vai tên **Tracker** — con soi diff theo luật (rule) đã viết ra của repo. Bài này tui kể kỹ hơn một bài toán riêng của Tracker, nhỏ mà xương: làm sao cho mỗi thứ nó phát hiện một cái ID sống được qua nhiều lần chạy, mà bản thân nó thì **không nhớ gì** giữa các lần chạy đó. Sửa sai một lần, tui học được một bài học tổng quát hơn nhiều: đừng bao giờ băm (hash) lời văn của một con LLM để làm danh tính (identity).
 
 ---
 
@@ -113,6 +113,6 @@ Câu tui mang theo: **danh tính của output từ một bộ sinh không tất 
 
 ## Đọc thêm
 
-- [Campaign Runner: một orchestrator TypeScript đọc bằng con mắt dev C#](/memo/posts/tribe-campaign-runner-orchestrator-vi/) — bộ điều phối của tribe, cái spawn ra các phiên thực thi mà Tracker và mấy vai còn lại chạy bên trong.
-- [Bun port 1 triệu dòng code trong 11 ngày — và cái plugin tui viết vì hết tin nổi chữ "done"](/memo/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) — chuyện gốc vì sao tribe (và Tracker) ra đời.
+- [Campaign Runner: một orchestrator TypeScript đọc bằng con mắt dev C#](/posts/tribe-campaign-runner-orchestrator-vi/) — bộ điều phối của tribe, cái spawn ra các phiên thực thi mà Tracker và mấy vai còn lại chạy bên trong.
+- [Bun port 1 triệu dòng code trong 11 ngày — và cái plugin tui viết vì hết tin nổi chữ "done"](/posts/tribe-plugin-va-cau-chuyen-bun-migrate/) — chuyện gốc vì sao tribe (và Tracker) ra đời.
 - Thủ pháp danh tính tui mượn ở đây là mô hình entity-ID của C3: danh tính gán đúng một lần lúc tạo entity, không bao giờ suy ra lại bằng cách chạy lại quy trình đã tạo ra nó — cùng một pattern, áp cho docs thay vì cho finding của agent.

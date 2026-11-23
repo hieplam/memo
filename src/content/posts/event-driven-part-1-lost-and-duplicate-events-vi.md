@@ -13,7 +13,7 @@ tags:
 multiLangKey: "event-driven-top10-1"
 ---
 
-> **"Event-Driven: 10 Bài Toán Kinh Điển" — Phần 1/7.** Chị Tí đặt hàng thành công, tiền đã trừ, nhưng email xác nhận không bao giờ tới — event bị mất. Hoặc: chị Tí đặt một đơn 500 nghìn, tài khoản bị trừ 1 triệu — event bị trùng. Hai bài toán này đi liền nhau vì bài toán sau là hệ quả trực tiếp của cách chữa bài toán trước. [← Phần 0 — Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) nếu bạn chưa quen với producer/consumer/broker/ack.
+> **"Event-Driven: 10 Bài Toán Kinh Điển" — Phần 1/7.** Chị Tí đặt hàng thành công, tiền đã trừ, nhưng email xác nhận không bao giờ tới — event bị mất. Hoặc: chị Tí đặt một đơn 500 nghìn, tài khoản bị trừ 1 triệu — event bị trùng. Hai bài toán này đi liền nhau vì bài toán sau là hệ quả trực tiếp của cách chữa bài toán trước. [← Phần 0 — Nền tảng](/posts/event-driven-part-0-foundations-vi/) nếu bạn chưa quen với producer/consumer/broker/ack.
 
 - Event bị mất là lỗi **im lặng**: producer tưởng đã gửi xong, consumer không biết mình bỏ lỡ gì — chỉ lộ ra ở tầng nghiệp vụ, có khi hàng giờ sau.
 - Có ba điểm rơi khiến event mất: producer bắn-rồi-quên, broker chưa ghi bền, consumer ack trước khi xử lý xong. Bịt cả ba đẩy hệ từ **at-most-once** lên **at-least-once**.
@@ -196,6 +196,6 @@ Trình tự crash nào cũng an toàn: crash trước commit — transaction rol
 
 ---
 
-← **Trước:** [Phần 0 — Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) · **Tiếp theo:** [Phần 2 — Dual-Write Và Retry](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) →
+← **Trước:** [Phần 0 — Nền tảng](/posts/event-driven-part-0-foundations-vi/) · **Tiếp theo:** [Phần 2 — Dual-Write Và Retry](/posts/event-driven-part-2-outbox-and-retries-vi/) →
 
-**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/memo/posts/event-driven-part-0-foundations-vi/) · **1 · Mất & Trùng (đang ở đây)** · [2 · Outbox & Retry](/memo/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/memo/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/memo/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/memo/posts/event-driven-part-6-observability-and-recap-vi/)
+**Loạt bài — Event-Driven: 10 Bài Toán Kinh Điển:** [0 · Nền tảng](/posts/event-driven-part-0-foundations-vi/) · **1 · Mất & Trùng (đang ở đây)** · [2 · Outbox & Retry](/posts/event-driven-part-2-outbox-and-retries-vi/) · [3 · Poison & Thứ tự](/posts/event-driven-part-3-poison-messages-and-ordering-vi/) · [4 · Consistency & Saga](/posts/event-driven-part-4-consistency-and-sagas-vi/) · [5 · Backpressure & Schema](/posts/event-driven-part-5-backpressure-and-schema-evolution-vi/) · [6 · Observability & Tổng kết](/posts/event-driven-part-6-observability-and-recap-vi/)

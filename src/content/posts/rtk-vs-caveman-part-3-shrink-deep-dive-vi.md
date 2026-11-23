@@ -276,8 +276,8 @@ sự thật đồng thời chỉnh khung mức nghiêm trọng theo cả hai hư
 
 ---
 
-← **Previous:** [Phần 2 — Phân tích bảo mật](/memo/posts/rtk-vs-caveman-part-2-security-vi/)
+← **Previous:** [Phần 2 — Phân tích bảo mật](/posts/rtk-vs-caveman-part-2-security-vi/)
 
-**Loạt bài — RTK vs Caveman:** [1 · Hai công cụ hoạt động thế nào](/memo/posts/rtk-vs-caveman-part-1-how-they-work-vi/)
-· [2 · Phân tích bảo mật](/memo/posts/rtk-vs-caveman-part-2-security-vi/) ·
+**Loạt bài — RTK vs Caveman:** [1 · Hai công cụ hoạt động thế nào](/posts/rtk-vs-caveman-part-1-how-they-work-vi/)
+· [2 · Phân tích bảo mật](/posts/rtk-vs-caveman-part-2-security-vi/) ·
 **3 · Đào sâu: sentinel NUL & SQLite (bạn đang ở đây)**

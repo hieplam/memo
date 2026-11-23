@@ -12,7 +12,7 @@ tags:
 multiLangKey: "event-driven-top10-1"
 ---
 
-> **"Event-Driven Architecture: The Top 10 Classic Problems" — Part 1 of 7.** Ms. Tí's order goes through, the payment succeeds, but the confirmation email never arrives — an event got lost. Or: she places a 500k order and her account is charged 1 million — an event got duplicated. These two problems belong together, because the second is a direct consequence of how you fix the first. [← Part 0 — Foundations](/memo/posts/event-driven-part-0-foundations/) if producer/consumer/broker/ack aren't familiar yet.
+> **"Event-Driven Architecture: The Top 10 Classic Problems" — Part 1 of 7.** Ms. Tí's order goes through, the payment succeeds, but the confirmation email never arrives — an event got lost. Or: she places a 500k order and her account is charged 1 million — an event got duplicated. These two problems belong together, because the second is a direct consequence of how you fix the first. [← Part 0 — Foundations](/posts/event-driven-part-0-foundations/) if producer/consumer/broker/ack aren't familiar yet.
 
 - A lost event is a **silent** failure: the producer thinks it sent successfully, the consumer has no idea what it missed — it only surfaces at the business layer, sometimes hours later.
 - There are three places an event can drop: a fire-and-forget producer, a broker that hasn't durably written it yet, and a consumer that acks before it's actually done processing. Plugging all three moves the system from **at-most-once** to **at-least-once**.
@@ -195,6 +195,6 @@ Every possible crash point is safe: crash before commit — the transaction roll
 
 ---
 
-← **Previous:** [Part 0 — Foundations](/memo/posts/event-driven-part-0-foundations/) · **Next:** [Part 2 — Dual-Write & Retries](/memo/posts/event-driven-part-2-outbox-and-retries/) →
+← **Previous:** [Part 0 — Foundations](/posts/event-driven-part-0-foundations/) · **Next:** [Part 2 — Dual-Write & Retries](/posts/event-driven-part-2-outbox-and-retries/) →
 
-**The series — Event-Driven Architecture: The Top 10 Classic Problems:** [0 · Foundations](/memo/posts/event-driven-part-0-foundations/) · **1 · Lost & Duplicate Events (you are here)** · [2 · Outbox & Retries](/memo/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/memo/posts/event-driven-part-3-poison-messages-and-ordering/) · [4 · Consistency & Sagas](/memo/posts/event-driven-part-4-consistency-and-sagas/) · [5 · Backpressure & Schema Evolution](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) · [6 · Observability & Recap](/memo/posts/event-driven-part-6-observability-and-recap/)
+**The series — Event-Driven Architecture: The Top 10 Classic Problems:** [0 · Foundations](/posts/event-driven-part-0-foundations/) · **1 · Lost & Duplicate Events (you are here)** · [2 · Outbox & Retries](/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/posts/event-driven-part-3-poison-messages-and-ordering/) · [4 · Consistency & Sagas](/posts/event-driven-part-4-consistency-and-sagas/) · [5 · Backpressure & Schema Evolution](/posts/event-driven-part-5-backpressure-and-schema-evolution/) · [6 · Observability & Recap](/posts/event-driven-part-6-observability-and-recap/)

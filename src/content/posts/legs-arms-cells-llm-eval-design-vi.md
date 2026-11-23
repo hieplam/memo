@@ -44,7 +44,7 @@ Tracker (review một diff) --phát hiện "harness gap"--> ledger --> Scout (ph
         \------------------------- sau đó thực thi quy tắc mới -----------------------------/
 ```
 
-- **Tracker** review một diff (bản thay đổi code) so với các quy tắc *đã được viết ra* của repo, và
+- **Tracker** review một diff (bản thay đổi code) so với các quy tắc _đã được viết ra_ của repo, và
   theo đúng hiến chương của nó, phải báo cáo một **harness gap** (lỗ hổng trong bộ quy tắc — "bộ
   quy tắc im lặng ở đây") khi thấy một pattern rủi ro mà chưa quy tắc nào bao phủ. Nó tuyệt đối
   không được tự bịa ra một quy tắc tại chỗ rồi báo "vi phạm" một thứ không hề tồn tại.
@@ -55,8 +55,8 @@ Vòng lặp này chỉ tốt bằng hai "cửa phát hiện" (detection door) đ
 **role eval** (eval kiểm tra hành vi theo vai trò, `plugins/tribe/evals/evals.json`) — các prompt
 mô tả một tình huống giả định, chấm điểm dựa trên việc agent có giữ đúng vai trò hay không — và gần
 như không cái nào có kèm file thật. Không cái nào đo năng lực thật sự mà vòng lặp phụ thuộc vào:
-*suy ra một quy ước không được viết ra ở đâu cả, từ một codebase thật, và bắt đúng chỗ nó bị vi
-phạm.* Đó chính là khoảng trống thiết kế này lấp lại.
+_suy ra một quy ước không được viết ra ở đâu cả, từ một codebase thật, và bắt đúng chỗ nó bị vi
+phạm._ Đó chính là khoảng trống thiết kế này lấp lại.
 
 ## 2. Fixture (bộ dữ liệu mẫu): một codebase nhỏ có đáp án không bao giờ vào sandbox
 
@@ -69,18 +69,18 @@ lint rule, không comment nào nói ra; chỉ có thể suy ra từ sự lặp l
 sẵn (chỗ duy nhất nó bị phá vỡ) — cộng với 3 **decoy** (mồi nhử): những pattern có lặp lại nhưng
 chỉ là gu phong cách, gắn cờ một decoy bị tính là false positive (báo động giả).
 
-| ID | Mức | Quy ước không viết ra | Điểm lệch đã cấy |
-|----|-----|------------------------|---------------------|
-| C1 | dễ | Service trả về `Result` object (`{ok:true,value}\|{ok:false,reason}`), không bao giờ throw | một service throw lỗi |
-| C3 | dễ | Timestamp là chuỗi UTC ISO, field tên `*AtUtc` | một file dùng `Date` local, field tên `createdAt` |
-| C4 | vừa | Clock (đồng hồ) được inject (tiêm phụ thuộc); không module nào ngoài `clock.ts` gọi `Date.now()` | một service gọi `Date.now()` trực tiếp |
-| C6 | vừa | Mọi `reason` lỗi phải là thành viên của `errorCodes.ts` | một file tự bịa một chuỗi lỗi tùy tiện |
-| C9 | khó | `toDto()` của mọi mapper đều loại bỏ field nội bộ — cùng tên, cùng ý nghĩa ở mọi nơi | `toDto()` của một mapper để lọt một field dưới cùng cái tên (ý nghĩa đã lệch) |
-| C10 | khó | Tiền luôn là số nguyên cent; không phép tính số thực (float) | một module tính `* 1.1` trên số đô la dạng float |
+| ID  | Mức | Quy ước không viết ra                                                                            | Điểm lệch đã cấy                                                              |
+| --- | --- | ------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------- |
+| C1  | dễ  | Service trả về `Result` object (`{ok:true,value}\|{ok:false,reason}`), không bao giờ throw       | một service throw lỗi                                                         |
+| C3  | dễ  | Timestamp là chuỗi UTC ISO, field tên `*AtUtc`                                                   | một file dùng `Date` local, field tên `createdAt`                             |
+| C4  | vừa | Clock (đồng hồ) được inject (tiêm phụ thuộc); không module nào ngoài `clock.ts` gọi `Date.now()` | một service gọi `Date.now()` trực tiếp                                        |
+| C6  | vừa | Mọi `reason` lỗi phải là thành viên của `errorCodes.ts`                                          | một file tự bịa một chuỗi lỗi tùy tiện                                        |
+| C9  | khó | `toDto()` của mọi mapper đều loại bỏ field nội bộ — cùng tên, cùng ý nghĩa ở mọi nơi             | `toDto()` của một mapper để lọt một field dưới cùng cái tên (ý nghĩa đã lệch) |
+| C10 | khó | Tiền luôn là số nguyên cent; không phép tính số thực (float)                                     | một module tính `* 1.1` trên số đô la dạng float                              |
 
-*(Đầy đủ 10 quy ước nằm trong spec; C2/C5/C7/C8 có hình dạng tương tự. Decoy: import xếp theo bảng
+_(Đầy đủ 10 quy ước nằm trong spec; C2/C5/C7/C8 có hình dạng tương tự. Decoy: import xếp theo bảng
 chữ cái, comment banner `// module:` đầu file, dùng nhất quán dấu nháy đơn — có thật, có lặp lại,
-nhưng cố tình không đáng thành quy tắc.)*
+nhưng cố tình không đáng thành quy tắc.)_
 
 **Đáp án (answer key)** — `manifest/orderly.json`, chứa exemplar, `file:line` của điểm lệch, và
 rubric chấm điểm cho từng quy ước — nằm **ngoài** thư mục fixture và không bao giờ được copy vào
@@ -90,16 +90,16 @@ tin: nếu agent đọc được manifest, nó sẽ "đạt" một cách tầm t
 ## 3. Thuật ngữ — `arm` (nhánh điều kiện): cô lập biến số bạn sợ làm sai lệch phép đo
 
 **Arm** là thuật ngữ chuẩn từ thử nghiệm lâm sàng có đối chứng ngẫu nhiên (randomized controlled
-trial — RCT): một arm là một *điều kiện* thử nghiệm áp lên một phép đo vốn giống hệt nhau ở mọi mặt
+trial — RCT): một arm là một _điều kiện_ thử nghiệm áp lên một phép đo vốn giống hệt nhau ở mọi mặt
 khác — ví dụ nhánh điều trị (treatment arm) so với nhánh đối chứng/giả dược (control/placebo arm),
 với độ chênh lệch giữa hai nhánh được quy về đúng một biến số khác nhau duy nhất. A/B testing chính
 là ý tưởng này dưới tên khác (A và B là hai arm).
 
 Biến số bị cô lập trong eval này là **bộ nhớ xung quanh (ambient memory)** — file project
 `CLAUDE.md` và các setting phạm vi `.claude/` mà agent có thể đọc được trước cả khi nó nhìn vào
-code. Rủi ro cụ thể mà cách làm này chặn lại, trích nguyên văn ý từ spec: *"một `CLAUDE.md` nói
-'hãy inject clock' sẽ trao \[cho detector\] quy ước C4 miễn phí"* — agent sẽ "bắt được" quy ước
-inject-clock vì nó *được cho biết trước*, chứ không phải vì nó tự suy luận từ code, và điểm recall
+code. Rủi ro cụ thể mà cách làm này chặn lại, trích nguyên văn ý từ spec: _"một `CLAUDE.md` nói
+'hãy inject clock' sẽ trao \[cho detector\] quy ước C4 miễn phí"_ — agent sẽ "bắt được" quy ước
+inject-clock vì nó _được cho biết trước_, chứ không phải vì nó tự suy luận từ code, và điểm recall
 (độ bao phủ phát hiện) đó là điểm ảo. Vì vậy eval chạy mỗi detector ở hai arm:
 
 ```
@@ -123,7 +123,7 @@ tách arm này sinh ra để ngăn chặn.
 ## 4. Thuật ngữ — `leg` (chân đo): đặt tên cho từng đường đo lường độc lập
 
 **Leg**, trong từ vựng riêng của thiết kế này (không phải thuật ngữ chuẩn ngành — đây là tên tự đặt
-bởi chính spec này, cần nói thẳng điều đó), nghĩa là *một detector, trên một đối tượng*. Vòng lặp
+bởi chính spec này, cần nói thẳng điều đó), nghĩa là _một detector, trên một đối tượng_. Vòng lặp
 tribe có đúng hai cửa phát hiện, nên có đúng hai leg:
 
 - **Leg A — Scout trên code đang đứng yên (standing code).** Dispatch (điều phối chạy) đúng định
@@ -137,7 +137,7 @@ tribe có đúng hai cửa phát hiện, nên có đúng hai leg:
   quy tắc rồi báo một vi phạm bịa đặt.
 
 Có hai leg vì chúng đo **hai năng lực khác nhau của hai agent khác nhau**. Một điểm số gộp chung
-(ví dụ "phát hiện 73%") sẽ che mất *cửa nào* đang hỏng nếu eval rớt — Leg A rớt nghĩa là Scout
+(ví dụ "phát hiện 73%") sẽ che mất _cửa nào_ đang hỏng nếu eval rớt — Leg A rớt nghĩa là Scout
 không suy ra được quy ước từ sự lặp lại; Leg B rớt nghĩa là Tracker hoặc bỏ sót gap thật, hoặc tệ
 hơn, bắt đầu bịa ra quy tắc. Đó là hai loại lỗi khác nhau ở hai agent khác nhau, cần hai cách sửa
 khác nhau; một con số duy nhất không thể cho biết là lỗi nào.
@@ -145,7 +145,7 @@ khác nhau; một con số duy nhất không thể cho biết là lỗi nào.
 ## 5. Thuật ngữ — `cell` (ô): một cặp leg × arm, lặp lại để hấp thụ tính không xác định của LLM
 
 **Cell** là thuật ngữ chuẩn của thiết kế thí nghiệm giai thừa (factorial design): trong một thiết
-kế giai thừa, một *cell* là một tổ hợp mức của các nhân tố (factor) — ở đây là một cặp (leg, arm),
+kế giai thừa, một _cell_ là một tổ hợp mức của các nhân tố (factor) — ở đây là một cặp (leg, arm),
 một ô vuông trong ma trận 2×2:
 
 ```
@@ -169,13 +169,13 @@ hai, không dùng tool (tool-less) — **12 lượt chấm điểm (grader run)*
 nguyên văn từ spec, được một script đánh giá trên `grading.json` — không có bước con người phán
 đoán tại thời điểm chấm đạt/rớt.
 
-| Gate | Cell | Ngưỡng |
-|------|------|--------|
-| G1 | Leg A · clean | recall ≥ **0.70** (chấm: `caught`=1, `partial`=0.5, trên tổng 10 quy ước) |
-| G2 | Leg A · clean | precision ≥ **0.70**, với `precision = caught / (caught + decoys_flagged + invented)` |
-| G3 | Leg A · clean | recall mức dễ (C1–C3) = **1.00** — mọi quy ước dễ, ở mọi lần lặp được tính |
-| G4 | Leg B · clean | gap-recall ≥ **0.75** (≥3 trong 4 quy ước bị vi phạm phải được báo là gap) |
-| G5 | Leg B · clean | số vi phạm bịa ra (invented-rule) = **0** — Tracker trích dẫn một quy tắc không tồn tại làm lần lặp đó rớt cứng, không có điểm một phần |
+| Gate | Cell          | Ngưỡng                                                                                                                                  |
+| ---- | ------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| G1   | Leg A · clean | recall ≥ **0.70** (chấm: `caught`=1, `partial`=0.5, trên tổng 10 quy ước)                                                               |
+| G2   | Leg A · clean | precision ≥ **0.70**, với `precision = caught / (caught + decoys_flagged + invented)`                                                   |
+| G3   | Leg A · clean | recall mức dễ (C1–C3) = **1.00** — mọi quy ước dễ, ở mọi lần lặp được tính                                                              |
+| G4   | Leg B · clean | gap-recall ≥ **0.75** (≥3 trong 4 quy ước bị vi phạm phải được báo là gap)                                                              |
+| G5   | Leg B · clean | số vi phạm bịa ra (invented-rule) = **0** — Tracker trích dẫn một quy tắc không tồn tại làm lần lặp đó rớt cứng, không có điểm một phần |
 
 Hai lựa chọn thiết kế đáng nói rõ, vì dễ hiểu ngược:
 
@@ -194,9 +194,9 @@ Hai lựa chọn thiết kế đáng nói rõ, vì dễ hiểu ngược:
 {
   "legA_clean": { "reps_passed": 2, "reps_total": 3, "pass": true },
   "legB_clean": { "reps_passed": 3, "reps_total": 3, "pass": true },
-  "legA_mem_delta": { "recall": +0.10, "precision": -0.05 },
-  "legB_mem_delta": { "recall": +0.25, "precision": 0.00 },
-  "pass": true
+  "legA_mem_delta": { "recall": +0.1, "precision": -0.05 },
+  "legB_mem_delta": { "recall": +0.25, "precision": 0.0 },
+  "pass": true,
 }
 ```
 
@@ -227,5 +227,5 @@ Hai lựa chọn thiết kế đáng nói rõ, vì dễ hiểu ngược:
   sàng nào (ví dụ glossary của NIH/FDA) đều định nghĩa arm là một nhóm/điều kiện trong thử nghiệm,
   được so sánh với nhóm khác để quy độ chênh lệch về đúng một biến số.
 - Thiết kế thí nghiệm giai thừa (factorial design) — các giáo trình thiết kế thí nghiệm chuẩn định
-  nghĩa *cell* là một tổ hợp mức của các nhân tố trong thiết kế đa nhân tố; note này áp dụng định
+  nghĩa _cell_ là một tổ hợp mức của các nhân tố trong thiết kế đa nhân tố; note này áp dụng định
   nghĩa đó cho ma trận 2×2 (leg × arm).

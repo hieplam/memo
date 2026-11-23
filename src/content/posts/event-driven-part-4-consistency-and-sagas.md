@@ -25,7 +25,7 @@ multiLangKey: "event-driven-top10-4"
 
 **What is it?** In an event-driven system, data written in one place _propagates_ to other places via events — always with some delay. During that gap, anyone reading from the "other place" sees **stale data**. This turns into an actual incident when the delay touches a human: someone who _just wrote_ something reads it back and doesn't see their own change (losing read-your-own-writes), or two screens sitting side by side show two different numbers.
 
-**Why does it happen? It's a property, not a bug.** This architecture is _defined_ by asynchrony ([Part 0](/memo/posts/event-driven-part-0-foundations/)): the write model replies the moment its own part is done, while the read model (a view, a dashboard) updates _later_, once the event propagates.
+**Why does it happen? It's a property, not a bug.** This architecture is _defined_ by asynchrony ([Part 0](/posts/event-driven-part-0-foundations/)): the write model replies the moment its own part is done, while the read model (a view, a dashboard) updates _later_, once the event propagates.
 
 ```mermaid
 sequenceDiagram
@@ -45,7 +45,7 @@ sequenceDiagram
   R-->>T: new address (correct - if only Ms. Ti hadn't had to refresh)
 ```
 
-The length of the consistency gap equals the propagation delay of the event — which is exactly the consumer lag from [Part 5](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/). Normally it's tens of milliseconds and nobody notices; when the system backs up, it stretches to minutes — and everything "looks like" data loss.
+The length of the consistency gap equals the propagation delay of the event — which is exactly the consumer lag from [Part 5](/posts/event-driven-part-5-backpressure-and-schema-evolution/). Normally it's tens of milliseconds and nobody notices; when the system backs up, it stretches to minutes — and everything "looks like" data loss.
 
 The theory, in one sentence: in a distributed system, where the network between nodes can break, you're forced to choose between _waiting for everyone so you're always consistent_ (sacrificing availability and latency) and _answering immediately, then syncing later_ (sacrificing immediate consistency) — the **CAP theorem** describes this constraint. Event-driven architecture deliberately picks the second option.
 
@@ -71,9 +71,9 @@ The theory, in one sentence: in a distributed system, where the network between 
 
 **What is it?** Placing an order at MuaLẹ means: charge the card (`PaymentService`) + reserve stock (`InventoryService`) + create a shipment (`ShippingService`). Ms. Tí's card gets charged, then inventory reports: out of stock. In a monolith, one `ROLLBACK` fixes everything. Here, the money lives in Payment's database and the stock lives in Inventory's database — no `ROLLBACK` can reach across two databases.
 
-A **business transaction** spans multiple services, each with its own database. The business requirement is still all-or-nothing, exactly like the atomicity from [Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/) — "either the order completes entirely, or it's as if it never happened" — but the technical mechanism for that (an ACID transaction) only exists _inside a single database_.
+A **business transaction** spans multiple services, each with its own database. The business requirement is still all-or-nothing, exactly like the atomicity from [Part 2](/posts/event-driven-part-2-outbox-and-retries/) — "either the order completes entirely, or it's as if it never happened" — but the technical mechanism for that (an ACID transaction) only exists _inside a single database_.
 
-**Why does it happen?** The root cause is the **database-per-service** principle: every microservice exclusively owns its own database — which is exactly what lets teams deploy independently and change schemas freely (the core benefit of microservices). And two-phase commit — the textbook answer for distributed transactions — was already ruled out in [Part 2](/memo/posts/event-driven-part-2-outbox-and-retries/) (unsupported by mainstream infrastructure, holds locks across the network, has a single point of failure). So "all-or-nothing" has to be built from different materials: many small transactions plus a commitment to clean up.
+**Why does it happen?** The root cause is the **database-per-service** principle: every microservice exclusively owns its own database — which is exactly what lets teams deploy independently and change schemas freely (the core benefit of microservices). And two-phase commit — the textbook answer for distributed transactions — was already ruled out in [Part 2](/posts/event-driven-part-2-outbox-and-retries/) (unsupported by mainstream infrastructure, holds locks across the network, has a single point of failure). So "all-or-nothing" has to be built from different materials: many small transactions plus a commitment to clean up.
 
 **How do you fix it? Sagas: a chain of small transactions plus business-level undo.** The **Saga pattern** (from Garcia-Molina & Salem's 1987 paper "Sagas" — three decades before microservices existed) breaks a large transaction into a **chain of local transactions**, each one genuinely committed inside that service's own database; if step k fails, run a **compensating transaction** for steps 1 through k-1, _in reverse order_, bringing the system back to an equivalent starting state.
 
@@ -98,7 +98,7 @@ sequenceDiagram
 Notice: the history of "charged, then refunded" _still exists_ on Ms. Tí's statement — a saga doesn't erase the past the way ROLLBACK does, it writes an additional correcting chapter. That's the fundamental difference between a business-level undo and a technical one.
 
 > [!NOTE]
-> **Property — Compensating transaction.** A business operation that _reverses the effect_ of an already-committed step: a refund reverses a charge, releasing stock reverses a reservation. It differs from a technical rollback in two ways: (1) it's business logic that has to be _written and tested by hand_ for every forward step; (2) it doesn't make the past disappear — it only neutralizes the consequence. Design implication: any step that can't be undone (an email already sent, money wired to a different bank that you can't claw back) has to go _last_ in the saga — the **pivot transaction**, the point of no return. A quiet detail: messages between saga steps are still at-least-once — the "refund" step can also be delivered twice → the compensating transaction _also has to be idempotent_ ([Part 1](/memo/posts/event-driven-part-1-lost-and-duplicate-events/) makes its fourth appearance here).
+> **Property — Compensating transaction.** A business operation that _reverses the effect_ of an already-committed step: a refund reverses a charge, releasing stock reverses a reservation. It differs from a technical rollback in two ways: (1) it's business logic that has to be _written and tested by hand_ for every forward step; (2) it doesn't make the past disappear — it only neutralizes the consequence. Design implication: any step that can't be undone (an email already sent, money wired to a different bank that you can't claw back) has to go _last_ in the saga — the **pivot transaction**, the point of no return. A quiet detail: messages between saga steps are still at-least-once — the "refund" step can also be delivered twice → the compensating transaction _also has to be idempotent_ ([Part 1](/posts/event-driven-part-1-lost-and-duplicate-events/) makes its fourth appearance here).
 
 **Two ways to organize a saga: who remembers the script?**
 
@@ -137,6 +137,6 @@ flowchart TD
 
 ---
 
-← **Previous:** [Part 3 — Poison Messages & Ordering](/memo/posts/event-driven-part-3-poison-messages-and-ordering/) · **Next:** [Part 5 — Backpressure & Schema Evolution](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) →
+← **Previous:** [Part 3 — Poison Messages & Ordering](/posts/event-driven-part-3-poison-messages-and-ordering/) · **Next:** [Part 5 — Backpressure & Schema Evolution](/posts/event-driven-part-5-backpressure-and-schema-evolution/) →
 
-**The series — Event-Driven Architecture: The Top 10 Classic Problems:** [0 · Foundations](/memo/posts/event-driven-part-0-foundations/) · [1 · Lost & Duplicate Events](/memo/posts/event-driven-part-1-lost-and-duplicate-events/) · [2 · Outbox & Retries](/memo/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/memo/posts/event-driven-part-3-poison-messages-and-ordering/) · **4 · Consistency & Sagas (you are here)** · [5 · Backpressure & Schema Evolution](/memo/posts/event-driven-part-5-backpressure-and-schema-evolution/) · [6 · Observability & Recap](/memo/posts/event-driven-part-6-observability-and-recap/)
+**The series — Event-Driven Architecture: The Top 10 Classic Problems:** [0 · Foundations](/posts/event-driven-part-0-foundations/) · [1 · Lost & Duplicate Events](/posts/event-driven-part-1-lost-and-duplicate-events/) · [2 · Outbox & Retries](/posts/event-driven-part-2-outbox-and-retries/) · [3 · Poison Messages & Ordering](/posts/event-driven-part-3-poison-messages-and-ordering/) · **4 · Consistency & Sagas (you are here)** · [5 · Backpressure & Schema Evolution](/posts/event-driven-part-5-backpressure-and-schema-evolution/) · [6 · Observability & Recap](/posts/event-driven-part-6-observability-and-recap/)

@@ -263,9 +263,9 @@ confirmed, 9 refuted)._
 
 ---
 
-**Next:** [Part 3 — A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext](/memo/posts/rtk-vs-caveman-part-3-shrink-deep-dive/) →
+**Next:** [Part 3 — A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext](/posts/rtk-vs-caveman-part-3-shrink-deep-dive/) →
 
 **The series — Shrinking the Agent Loop: RTK vs Caveman:**
-[1 · How They Work](/memo/posts/rtk-vs-caveman-part-1-how-they-work/) ·
+[1 · How They Work](/posts/rtk-vs-caveman-part-1-how-they-work/) ·
 **2 · Living Inside the Trust Boundary (you are here)** ·
-[3 · A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext](/memo/posts/rtk-vs-caveman-part-3-shrink-deep-dive/)
+[3 · A NUL Sentinel, a ReDoS, and a Secret Left in Plaintext](/posts/rtk-vs-caveman-part-3-shrink-deep-dive/)

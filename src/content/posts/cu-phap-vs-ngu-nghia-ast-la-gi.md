@@ -16,7 +16,7 @@ lang: "vi"
 ---
 
 > **Series "Giải mã chữ semantic" — Phần 1/5.**
-> ← [Mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/) · Tiếp theo → [Phần 2: "Semantic search" là gì](/memo/posts/semantic-search-la-gi/)
+> ← [Mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/) · Tiếp theo → [Phần 2: "Semantic search" là gì](/posts/semantic-search-la-gi/)
 
 ## Tóm tắt nhanh
 
@@ -44,7 +44,7 @@ Source code đi qua ba giai đoạn lớn ([nguồn: Crafting Interpreters, "A M
 
 3. **Semantic analysis — phân tích ngữ nghĩa:** Nhận AST, đi qua và hỏi những câu mà cú pháp không trả lời được: cái tên `x` này trỏ tới khai báo nào? Kiểu của biểu thức đó là gì? Phép gán có hợp lệ kiểu không? Khâu này là **ngữ nghĩa (semantics)** — và nó _tiêu thụ_ AST, không _sản xuất_ nó ([nguồn: Crafting Interpreters, "Resolving and Binding"](https://craftinginterpreters.com/resolving-and-binding.html)).
 
-![Sơ đồ đường ống compiler: mã nguồn → tokens → AST (cú pháp) → semantic model (ngữ nghĩa)](/memo/diagrams/semantic/01-pipeline.svg)
+![Sơ đồ đường ống compiler: mã nguồn → tokens → AST (cú pháp) → semantic model (ngữ nghĩa)](/diagrams/semantic/01-pipeline.svg)
 
 _Đường ống compiler: cú pháp (scan → parse → AST) nằm trước ngữ nghĩa. AST là đầu ra của khâu cú pháp, là đầu vào của khâu ngữ nghĩa — hai việc khác nhau._
 
@@ -201,6 +201,6 @@ Ranh giới cú pháp / ngữ nghĩa quyết định bạn dùng tool nào để
 
 Phần 2 sẽ tạm rời compiler để nhảy sang thế giới kia của chữ "semantic": semantic search là gì, nó dùng _vector embeddings_ thay vì _symbol table_, và tại sao hai chữ "semantic" này không nên bị gộp chung.
 
-→ Tiếp theo: [Phần 2 — "Tool này không có semantic search" nghĩa là gì](/memo/posts/semantic-search-la-gi/)
+→ Tiếp theo: [Phần 2 — "Tool này không có semantic search" nghĩa là gì](/posts/semantic-search-la-gi/)
 
-← Quay lại: [Mục lục series](/memo/posts/chu-semantic-mot-chu-nhieu-nghia/)
+← Quay lại: [Mục lục series](/posts/chu-semantic-mot-chu-nhieu-nghia/)

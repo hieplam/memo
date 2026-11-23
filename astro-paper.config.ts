@@ -2,11 +2,11 @@ import { defineAstroPaperConfig } from "./src/types/config";
 
 export default defineAstroPaperConfig({
   site: {
-    url: "https://hieplam.github.io/",
+    url: "https://lamhiep.com/",
     title: "Hiep Lam",
     description: "A minimal, responsive and SEO-friendly Astro blog theme.",
     author: "Hiep Lam",
-    profile: "https://hieplam.github.io/memo/",
+    profile: "https://lamhiep.com/",
     ogImage: "default-og.jpg",
     lang: "en",
     timezone: "Asia/Bangkok",

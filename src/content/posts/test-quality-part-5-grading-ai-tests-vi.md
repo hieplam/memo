@@ -12,7 +12,7 @@ tags:
 multiLangKey: "test-quality-metrics-5"
 ---
 
-> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 5/7.** Chương quyết định mục tiêu của bạn thành hay bại: cách chấm điểm test do AI viết bằng một bộ lọc gauntlet, để chúng không là vô nghĩa. Tiếp theo [Phần 4](/memo/posts/test-quality-part-4-tooling-go-dotnet-vi/) về công cụ Go/.NET.
+> **"Vượt ra ngoài Code Coverage — Metric chất lượng test cho vòng lặp agentic" — Phần 5/7.** Chương quyết định mục tiêu của bạn thành hay bại: cách chấm điểm test do AI viết bằng một bộ lọc gauntlet, để chúng không là vô nghĩa. Tiếp theo [Phần 4](/posts/test-quality-part-4-tooling-go-dotnet-vi/) về công cụ Go/.NET.
 
 - Đầu ra test thô từ LLM **gần một nửa là rác** (lỗi biên dịch, flake, assert vô nghĩa).
 - Mối nguy đặc thù: LLM có xu hướng assert _những gì code hiện tại làm_ — **cementing các lỗi hiện có** thay vì bắt chúng.
@@ -29,7 +29,7 @@ Và các test còn lại có các khiếm khuyết đặc trưng:
 - **Test smell Magic Number Test gần như phổ quát** trong các bộ test được tạo bởi LLM — hiện diện trong **99.78–100%** các bộ test cấp class trên GPT-3.5, GPT-4, Mistral 7B, và Mixtral 8×7B. <sup>[smellsllm]</sup>
 - Các test được tạo tự động thể hiện **13 danh mục test smell (mùi mã test)** không phổ biến trong test của con người, được nhóm thành _Act-Assert Mismatch_ (ví dụ: side effect / giá trị trả về không được assert), _Redundant Code_, _Failed Setup_, và _Testing Only Field Accessors/Constants._ <sup>[autosmells]</sup>
 
-Vì vậy "AI đã viết test và coverage tăng lên" _không_ phải là bằng chứng về an toàn. Nó có thể là bằng chứng về các test vô nghĩa thực thi code và không assert gì cả — chính xác là lỗi Goodhart từ [Phần 0](/memo/posts/test-quality-part-0-why-coverage-lies-vi/).
+Vì vậy "AI đã viết test và coverage tăng lên" _không_ phải là bằng chứng về an toàn. Nó có thể là bằng chứng về các test vô nghĩa thực thi code và không assert gì cả — chính xác là lỗi Goodhart từ [Phần 0](/posts/test-quality-part-0-why-coverage-lies-vi/).
 
 ## 2. Mối nguy duy nhất: oracle lock-in bug
 
@@ -58,7 +58,7 @@ Một test được tạo bởi máy được chấp nhận vào bộ test **ch�
 | 5   | **Sạch**           | có test smell                      | scan: không có assertion-free / magic-number / conditional-logic / act-assert-mismatch                                |
 | 6   | **Oracle hành vi** | assert triển khai, không phải spec | trên các đường dẫn quan trọng, oracle truy nguyên đến spec/property do con người sở hữu, không phải "đầu ra hiện tại" |
 
-![Bộ lọc gauntlet sáu cổng cho test do AI sinh: Build → Pass → Ổn định → Tăng cường (mutant mới) → Sạch → Oracle hành vi](/memo/diagrams/test-quality-metrics/04-ai-test-gauntlet.svg)
+![Bộ lọc gauntlet sáu cổng cho test do AI sinh: Build → Pass → Ổn định → Tăng cường (mutant mới) → Sạch → Oracle hành vi](/diagrams/test-quality-metrics/04-ai-test-gauntlet.svg)
 _Một test do AI viết chỉ merge sau khi vượt hết sáu cổng — cổng 4 là cổng phân tách test thực sự với test vô nghĩa._
 
 Cổng 1–3 là bộ lọc đã xuất bản của Meta (build → pass → không-flake). **Cổng 4 là cổng mà hầu hết các nhóm bỏ qua và là cái thực sự phân tách test thực sự với test vô nghĩa.** Cổng 5–6 bảo vệ khỏi các chế độ lỗi đặc thù của AI ở trên.
@@ -78,7 +78,7 @@ Trong thiết kế này bạn không tin tưởng phán đoán của AI — bạ
 
 ---
 
-← [Phần 4: Công cụ cho Go và .NET](/memo/posts/test-quality-part-4-tooling-go-dotnet-vi/) · [Phần 6: Rubric sẵn sàng cho merge gate agentic](/memo/posts/test-quality-part-6-readiness-rubric-vi/) →
+← [Phần 4: Công cụ cho Go và .NET](/posts/test-quality-part-4-tooling-go-dotnet-vi/) · [Phần 6: Rubric sẵn sàng cho merge gate agentic](/posts/test-quality-part-6-readiness-rubric-vi/) →
 
 ---
 

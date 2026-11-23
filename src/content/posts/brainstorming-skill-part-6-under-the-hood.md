@@ -53,7 +53,7 @@ isn't running between turns, so it can't serve a page or receive a click.
 So the skill inserts a long-lived process between them. And the elegant part is _how_ the agent
 and that process communicate — they don't, directly. They communicate through the **filesystem**.
 
-![Why the skill ships a server — the data flow](/memo/diagrams/brainstorming-skill/06-architecture.svg)
+![Why the skill ships a server — the data flow](/diagrams/brainstorming-skill/06-architecture.svg)
 
 Trace the eight steps in the diagram:
 
@@ -251,6 +251,6 @@ liability. That constraint, met carefully, is the whole story under the hood.
 
 ---
 
-← **Previous:** [Part 5 — The Visual Companion](/memo/posts/brainstorming-skill-part-5-the-visual-companion/) · This appendix closes the series.
+← **Previous:** [Part 5 — The Visual Companion](/posts/brainstorming-skill-part-5-the-visual-companion/) · This appendix closes the series.
 
-**The series — Inside the Brainstorming Skill:** [0 · The Map](/memo/posts/brainstorming-skill-part-0-the-map/) · [1 · Dialogue, Not Interrogation](/memo/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/memo/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/memo/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/memo/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/memo/posts/brainstorming-skill-part-5-the-visual-companion/) · **6 · Under the Hood (you are here)**
+**The series — Inside the Brainstorming Skill:** [0 · The Map](/posts/brainstorming-skill-part-0-the-map/) · [1 · Dialogue, Not Interrogation](/posts/brainstorming-skill-part-1-dialogue-not-interrogation/) · [2 · The Interview Engine](/posts/brainstorming-skill-part-2-the-interview-engine/) · [3 · From Answers to Design](/posts/brainstorming-skill-part-3-from-answers-to-design/) · [4 · The Spec Pipeline](/posts/brainstorming-skill-part-4-the-spec-pipeline/) · [5 · The Visual Companion](/posts/brainstorming-skill-part-5-the-visual-companion/) · **6 · Under the Hood (you are here)**
