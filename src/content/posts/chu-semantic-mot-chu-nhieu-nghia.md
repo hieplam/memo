@@ -70,8 +70,8 @@ Và đó là cú nối tới một series liên kết của bài này — _"Bắ
 
 Đọc theo thứ tự là mượt nhất, nhưng bài nào cũng đứng riêng được.
 
-| #   | Bài                                                                                             | Trả lời câu hỏi                | Bằng chứng               |
-| --- | ----------------------------------------------------------------------------------------------- | ------------------------------ | ------------------------ |
+| #   | Bài                                                                                        | Trả lời câu hỏi                | Bằng chứng               |
+| --- | ------------------------------------------------------------------------------------------ | ------------------------------ | ------------------------ |
 | 1   | [Cú pháp vs Ngữ nghĩa: AST thật ra là gì](/posts/cu-phap-vs-ngu-nghia-ast-la-gi/)          | "semantic dính gì tới AST?"    | Go `go/ast` chạy thật    |
 | 2   | ["Tool này không có semantic search" nghĩa là gì](/posts/semantic-search-la-gi/)           | chữ semantic kiểu _embeddings_ | sơ đồ lexical vs vector  |
 | 3   | ["Roslyn có semantic model" — tầng nghĩa trên AST](/posts/semantic-model-roslyn-go-types/) | chữ semantic kiểu _compiler_   | Go `go/types` + Roslyn   |
