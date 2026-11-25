@@ -1,0 +1,11 @@
+{
+  "name": "memo-mods",
+  "owner": { "name": "hieplam" },
+  "plugins": [
+    {
+      "name": "christmas-night",
+      "source": "./claude-mods/christmas-night",
+      "description": "An animated snowy Christmas night backdrop for the Claude desktop app."
+    }
+  ]
+}
